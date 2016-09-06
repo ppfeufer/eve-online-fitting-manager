@@ -1,5 +1,5 @@
 <?php
-namespace WordPress\Plugin\EveOnlineFittingManager\Libs;
+namespace WordPress\Plugin\EveOnlineFittingManager\Libs\Backend;
 
 #
 #

@@ -14,13 +14,42 @@
 namespace WordPress\Plugin\EveOnlineFittingManager;
 
 class EveOnlineFittingManager {
-	private $textDomain = 'eve-online-fitting-manager';
+	private $textDomain = null;
+	private $localizationDirectory = null;
+	private $pluginDir = null;
+	private $pluginUrl = null;
+	private $optionName = null;
+	private $dbVersionFieldName = null;
+	private $databaseVersion = null;
 
-	public function __construct() {
-		$this->addTextDomain();
+	public function __construct($init = false) {
+		/**
+		 * Initializing Variables
+		 */
+		$this->textDomain = 'eve-online-fitting-manager';
+		$this->localizationDirectory = $this->getPluginDir() . '/l10n/';
+		$this->pluginDir =  \plugin_dir_path(\dirname(__FILE__));
+		$this->pluginUrl = \plugins_url('/', \dirname(__FILE__));
+		$this->optionName = 'eve-online-fitting-manager-options';
+		$this->dbVersionFieldName = 'eve-online-fitting-manager-database-version';
+		$this->databaseVersion = '20160906';
+
+		$this->loadTextDomain();
 
 		/**
-		 * Github Updater
+		 * Initialize the plugin
+		 */
+		if($init === true) {
+			$this->init();
+		} // END if($init === true)
+	} // END public function __construct()
+
+	public function init() {
+		$this->loadLibs();
+		$this->checkDatabaseUpdate();
+
+		/**
+		 * Load Github Updater
 		 */
 		if(\is_admin()) {
 			/**
@@ -28,17 +57,175 @@ class EveOnlineFittingManager {
 			 *
 			 * @since 1.0
 			 */
-			require_once(\plugin_dir_path(__FILE__) . 'libs/GithubUpdater.php');
-			new Libs\GithubPluginUpdater(__FILE__, 'ppfeufer', 'eve-online-fitting-manager');
+			new Libs\Backend\GithubPluginUpdater(__FILE__, 'ppfeufer', 'eve-online-fitting-manager');
 		} // END if(\is_admin())
-	} // END public function __construct()
+	} // END public function init()
+
+	private function checkDatabaseUpdate() {
+		$currentPluginDatabaseVersion = $this->getCurrentPluginDatabaseVersion();
+		$pluginDatabaseVersion = $this->getPluginDatabaseVersion();
+
+		if($pluginDatabaseVersion !== $currentPluginDatabaseVersion) {
+			$this->updateDatabase();
+		} // END if($pluginDatabaseVersion !== $currentPluginDatabaseVersion)
+	} // END private function checkDatabaseUpdate()
+
+	private function updateDatabase() {
+		$defaultSettings = $this->getDefaultSettings();
+		$pluginSettings = $this->getPluginSettings(false);
+
+		if(\is_array($pluginSettings)) {
+			$newOptions = \array_merge($defaultSettings, $pluginSettings);
+		} else {
+			$newOptions = $defaultSettings;
+		} // END if(\is_array($pluginSettings))
+
+		// Update the options
+		\update_option($this->getOptionFieldName(), $newOptions);
+
+		// Update the DB Version
+		\update_option($this->getDatabaseVersionFieldName(), $this->getCurrentPluginDatabaseVersion());
+	} // END private function updateDatabase()
+
+	/**
+	 * Getting the Plugin's settings
+	 *
+	 * @param boolean $merged Merge with default settings (true/false)
+	 * @return array
+	 */
+	public function getPluginSettings($merged = true) {
+		if($merged === true) {
+			$pluginSettings = \get_option($this->getOptionFieldName(), $this->getDefaultSettings());
+		} else {
+			$pluginSettings = \get_option($this->getOptionFieldName());
+		} // END if($merged === true)
+
+		return $pluginSettings;
+	} // END public function getPluginSettings($merged = true)
+
+	/**
+	 * Returning the deualt settings for this plugin
+	 *
+	 * @return array
+	 */
+	public function getDefaultSettings() {
+		$defaultSettings = array(
+			'edk-killboard-host' => '',
+			'edk-killboard-user' => '',
+			'edk-killboard-name' => '',
+			'edk-killboard-password' => ''
+		);
+
+		return $defaultSettings;
+	} // END public function getDefaultSettings()
+
+	/**
+	 * Getting thew options field name
+	 *
+	 * @return string
+	 */
+	public function getOptionFieldName() {
+		return $this->optionName;
+	} // END public function getOptionFieldName()
+
+	/**
+	 * Getting the Database Version field name
+	 *
+	 * @return string
+	 */
+	public function getDatabaseVersionFieldName() {
+		return $this->dbVersionFieldName;
+	} // END public function getDatabaseVersionFieldName()
+
+	/**
+	 * Getting the Database Version from plugin
+	 *
+	 * @return string
+	 */
+	private function getCurrentPluginDatabaseVersion() {
+		return $this->databaseVersion;
+	} // END private function getCurrentPluginDatabaseVersion()
+
+	/**
+	 * Getting the Database Version from options
+	 *
+	 * @return string
+	 */
+	private function getPluginDatabaseVersion() {
+		return \get_option($this->getDatabaseVersionFieldName());
+	} // END private function getDatabaseVersion()
 
 	/**
 	 * Setting up our text domain for translations
 	 */
-	public function addTextDomain() {
+	public function loadTextDomain() {
 		if(\function_exists('\load_plugin_textdomain')) {
-			\load_plugin_textdomain($this->textDomain, \PLUGINDIR . '/' . \dirname(\plugin_basename(__FILE__)) . '/l10n', \dirname(\plugin_basename(__FILE__)) . '/l10n');
-		} // END if(\function_exists('\load_plugin_textdomain'))
+			\load_plugin_textdomain($this->getTextdomain(), false, $this->getLocalizationDirectory());
+		} // END if(function_exists('\load_plugin_textdomain'))
 	} // END public function addTextDomain()
+
+	/**
+	 * Loading all libs
+	 */
+	public function loadLibs() {
+		/**
+		 * Load Backend Libs
+		 */
+		if(\is_admin()) {
+			foreach(\glob($this->getPluginDir() . 'libs/backend/*.php') as $backendLib) {
+				include_once($backendLib);
+			} // END foreach(\glob($this->getPluginDir() . 'libs/backend/*.php') as $lib)
+		} // END if(\is_admin())
+
+		/**
+		 * Load Frontend Libs
+		 */
+		if(!\is_admin()) {
+			foreach(\glob($this->getPluginDir() . 'libs/frontend/*.php') as $frontendLib) {
+				include_once($frontendLib);
+			} // END foreach(\glob($this->getPluginDir() . 'libs/frontend/*.php') as $lib)
+		} // END if(!\is_admin())
+	} // END public function loadLibs()
+
+	/**
+	 * Returning the Plugins relative directory with trailing slash
+	 *
+	 * @return string Plugin Directory
+	 */
+	public function getPluginDir() {
+		return $this->pluginDir;
+	} // END public function getPluginDir()
+
+	/**
+	 * Returning the Plugins URL with trailing slash
+	 *
+	 * @return string Plugin URL
+	 */
+	public function getPluginUrl() {
+		return $this->pluginUrl;
+	} // END public function getPluginUrl()
+
+	/**
+	 * Getting the Plugin's Textdomain for translations
+	 *
+	 * @return string Plugin Textdomain
+	 */
+	public function getTextdomain() {
+		return $this->textDomain;
+	} // END public function getTextdomain()
+
+	/**
+	 * Getting the Plugin's Localization Directory for translations
+	 *
+	 * @return string Plugin Localization Directory
+	 */
+	public function getLocalizationDirectory() {
+		return $this->localizationDirectory;
+	} // END public function getLocalizationDirectory()
 } // END class EveOnlineFittingManager
+
+/**
+ * Load and initialize the plugin
+ */
+$eveOnlineFittingManager = new EveOnlineFittingManager;
+$eveOnlineFittingManager->init();
