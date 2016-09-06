@@ -17,7 +17,7 @@ class EveOnlineFittingManager {
 	private $textDomain = null;
 	private $localizationDirectory = null;
 	private $pluginDir = null;
-	private $pluginUrl = null;
+	private $pluginUri = null;
 	private $optionName = null;
 	private $dbVersionFieldName = null;
 	private $databaseVersion = null;
@@ -28,8 +28,8 @@ class EveOnlineFittingManager {
 		 */
 		$this->textDomain = 'eve-online-fitting-manager';
 		$this->localizationDirectory = $this->getPluginDir() . '/l10n/';
-		$this->pluginDir =  \plugin_dir_path(\dirname(__FILE__));
-		$this->pluginUrl = \plugins_url('/', \dirname(__FILE__));
+		$this->pluginDir =  \plugin_dir_path(__FILE__);
+		$this->pluginUri = \trailingslashit(\plugins_url('/', __FILE__));
 		$this->optionName = 'eve-online-fitting-manager-options';
 		$this->dbVersionFieldName = 'eve-online-fitting-manager-database-version';
 		$this->databaseVersion = '20160906';
@@ -58,6 +58,7 @@ class EveOnlineFittingManager {
 			 * @since 1.0
 			 */
 			new Libs\Backend\GithubPluginUpdater(__FILE__, 'ppfeufer', 'eve-online-fitting-manager');
+			new Libs\Backend\PluginSettings;
 		} // END if(\is_admin())
 	} // END public function init()
 
@@ -160,7 +161,7 @@ class EveOnlineFittingManager {
 	 */
 	public function loadTextDomain() {
 		if(\function_exists('\load_plugin_textdomain')) {
-			\load_plugin_textdomain($this->getTextdomain(), false, $this->getLocalizationDirectory());
+			\load_plugin_textdomain($this->getTextDomain(), false, $this->getLocalizationDirectory());
 		} // END if(function_exists('\load_plugin_textdomain'))
 	} // END public function addTextDomain()
 
@@ -168,6 +169,8 @@ class EveOnlineFittingManager {
 	 * Loading all libs
 	 */
 	public function loadLibs() {
+//		echo $this->getPluginDir() . 'libs/backend/*.php';
+//		wp_die();
 		/**
 		 * Load Backend Libs
 		 */
@@ -201,18 +204,18 @@ class EveOnlineFittingManager {
 	 *
 	 * @return string Plugin URL
 	 */
-	public function getPluginUrl() {
-		return $this->pluginUrl;
-	} // END public function getPluginUrl()
+	public function getPluginUri() {
+		return $this->pluginUri;
+	} // END public function getPluginUri()
 
 	/**
 	 * Getting the Plugin's Textdomain for translations
 	 *
 	 * @return string Plugin Textdomain
 	 */
-	public function getTextdomain() {
+	public function getTextDomain() {
 		return $this->textDomain;
-	} // END public function getTextdomain()
+	} // END public function getTextDomain()
 
 	/**
 	 * Getting the Plugin's Localization Directory for translations
