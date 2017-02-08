@@ -11,7 +11,7 @@
  * @version 0.1
  */
 
-namespace WordPress\Plugin\EveOnlineFittingManager\Libs\Backend;
+namespace WordPress\Plugin\EveOnlineFittingManager\Libs;
 
 use WordPress\Plugin\EveOnlineFittingManager;
 

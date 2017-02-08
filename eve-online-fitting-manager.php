@@ -48,17 +48,14 @@ class EveOnlineFittingManager {
 		$this->loadLibs();
 		$this->checkDatabaseUpdate();
 
+		new Libs\PostType;
+
 		/**
-		 * Load Github Updater
+		 * start backend libs
 		 */
 		if(\is_admin()) {
-			/**
-			 * Github Update Parser
-			 *
-			 * @since 1.0
-			 */
-			new Libs\Backend\GithubPluginUpdater(__FILE__, 'ppfeufer', 'eve-online-fitting-manager');
-			new Libs\Backend\PluginSettings;
+//			new Libs\Backend\GithubPluginUpdater(__FILE__, 'ppfeufer', 'eve-online-fitting-manager');
+			new Libs\PluginSettings;
 		} // END if(\is_admin())
 	} // END public function init()
 
@@ -169,25 +166,26 @@ class EveOnlineFittingManager {
 	 * Loading all libs
 	 */
 	public function loadLibs() {
-//		echo $this->getPluginDir() . 'libs/backend/*.php';
-//		wp_die();
 		/**
 		 * Load Backend Libs
 		 */
-		if(\is_admin()) {
-			foreach(\glob($this->getPluginDir() . 'libs/backend/*.php') as $backendLib) {
-				include_once($backendLib);
-			} // END foreach(\glob($this->getPluginDir() . 'libs/backend/*.php') as $lib)
-		} // END if(\is_admin())
+//		if(\is_admin()) {
+//			foreach(\glob($this->getPluginDir() . 'libs/backend/*.php') as $backendLib) {
+//				include_once($backendLib);
+//			} // END foreach(\glob($this->getPluginDir() . 'libs/backend/*.php') as $lib)
+//		} // END if(\is_admin())
 
 		/**
 		 * Load Frontend Libs
 		 */
-		if(!\is_admin()) {
-			foreach(\glob($this->getPluginDir() . 'libs/frontend/*.php') as $frontendLib) {
-				include_once($frontendLib);
-			} // END foreach(\glob($this->getPluginDir() . 'libs/frontend/*.php') as $lib)
-		} // END if(!\is_admin())
+//		if(!\is_admin()) {
+//			foreach(\glob($this->getPluginDir() . 'libs/frontend/*.php') as $frontendLib) {
+//				include_once($frontendLib);
+//			} // END foreach(\glob($this->getPluginDir() . 'libs/frontend/*.php') as $lib)
+//		} // END if(!\is_admin())
+		foreach(\glob($this->getPluginDir() . 'libs/*.php') as $lib) {
+			include_once($lib);
+		} // END foreach(\glob($this->getPluginDir() . 'libs/*.php') as $lib)
 	} // END public function loadLibs()
 
 	/**
@@ -228,7 +226,6 @@ class EveOnlineFittingManager {
 } // END class EveOnlineFittingManager
 
 /**
- * Load and initialize the plugin
+ * Start the show ....
  */
-$eveOnlineFittingManager = new EveOnlineFittingManager;
-$eveOnlineFittingManager->init();
+$eveOnlineFittingManager = new EveOnlineFittingManager(true);
