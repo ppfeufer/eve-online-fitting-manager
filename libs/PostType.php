@@ -7,7 +7,6 @@ use WordPress\Plugin\EveOnlineFittingManager;
 \defined('ABSPATH') or die();
 
 class PostType {
-
 	public function __construct() {
 		\add_action('init', array($this, 'customPostType'));
 		\add_filter('template_include', array($this,'templateSwitch'));
