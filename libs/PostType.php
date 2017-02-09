@@ -159,8 +159,8 @@ class PostType {
 //		echo EveOnlineFittingManager\Helper\TemplateHelper::locateTemplate($file);
 
 		if($templateFile !== null) {
-			if(\file_exists(EveOnlineFittingManager\Helper\TemplateHelper::locateTemplate($file))) {
-				$template = EveOnlineFittingManager\Helper\TemplateHelper::locateTemplate($file);
+			if(\file_exists(EveOnlineFittingManager\Helper\TemplateHelper::locateTemplate($templateFile))) {
+				$template = EveOnlineFittingManager\Helper\TemplateHelper::locateTemplate($templateFile);
 			} // END if(\file_exists(EveOnlineFittingManager\Helper\TemplateHelper::locateTemplate($file)))
 		} // END if($templateFile !== null)
 
