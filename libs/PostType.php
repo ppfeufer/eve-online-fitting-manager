@@ -9,7 +9,10 @@ use WordPress\Plugin\EveOnlineFittingManager;
 class PostType {
 	public function __construct() {
 		\add_action('init', array($this, 'customPostType'));
-		\add_filter('template_include', array($this,'templateSwitch'));
+//		\add_filter('template_include', array($this, 'templateSwitch'));
+		\add_filter('single_template', array($this, 'addSingleTemplate'));
+		\add_filter('archive_template', array($this, 'addArchiveTemplate'));
+//		\add_filter('template_include', array($this, 'my_custom_template'));
 	}
 
 	public function customPostType() {
@@ -41,7 +44,7 @@ class PostType {
 				'orderby' => 'term_order'
 			),
 			'rewrite' => array(
-				'slug' => $var_sSlug . '/category',
+				'slug' => $var_sSlug . '/doctrine',
 				'with_front' => true
 			),
 			'query_var' => true
@@ -113,33 +116,27 @@ class PostType {
 		} // END if(!empty($var_sSlugData))
 	} // END private function _get_posttype_slug($var_sPosttype)
 
-	public function templateSwitch($template) {
-		// Post ID
-		$post_id = \get_the_ID();
 
-		// For all other CPT
-		if(\get_post_type($post_id) !== 'fitting') {
-			return $template;
+	public function addSingleTemplate($template) {
+		global $post;
+
+		/* Checks for single template by post type */
+		if(!empty($post)) {
+			if(file_exists(EveOnlineFittingManager\Helper\PluginHelper::getPluginPath() . 'templates/' . $template . '-' . $post->post_type . '.php')) {
+				return EveOnlineFittingManager\Helper\PluginHelper::getPluginPath() . 'templates/' . $template . '-' . $post->post_type . '.php';
+			}
 		}
 
-		// Else use custom template
-		if(\is_single()) {
-			return $this->templateHierarchy('single-' . \get_post_type());
-		}
+		return $template;
 	}
 
-	function templateHierarchy($template) {
-		// Get the template slug
-		$template_slug = \rtrim($template, '.php');
-		$template = $template_slug . '.php';
+	public function addArchiveTemplate($template) {
+		$object = get_queried_object();
 
-		// Check if a custom template exists in the theme folder, if not, load the plugin template file
-		if($theme_file = \locate_template(array('templates/' . $template))) {
-			$file = $theme_file;
+		if(file_exists(EveOnlineFittingManager\Helper\PluginHelper::getPluginPath() . 'templates/archive-' . $object->taxonomy . '.php')) {
+			return EveOnlineFittingManager\Helper\PluginHelper::getPluginPath() . 'templates/archive-' . $object->taxonomy . '.php';
 		} else {
-			$file = '/templates/' . $template;
+			return $template;
 		}
-
-		return \apply_filters('eve-online-fitting-manager-template_' . $template, $file);
 	}
 }

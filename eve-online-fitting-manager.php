@@ -183,6 +183,9 @@ class EveOnlineFittingManager {
 //				include_once($frontendLib);
 //			} // END foreach(\glob($this->getPluginDir() . 'libs/frontend/*.php') as $lib)
 //		} // END if(!\is_admin())
+		foreach(\glob($this->getPluginDir() . 'helper/*.php') as $lib) {
+			include_once($lib);
+		} // END foreach(\glob($this->getPluginDir() . 'libs/*.php') as $lib)
 		foreach(\glob($this->getPluginDir() . 'libs/*.php') as $lib) {
 			include_once($lib);
 		} // END foreach(\glob($this->getPluginDir() . 'libs/*.php') as $lib)

@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: EVE Online Fitting Manager for WordPress\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-06 14:09+0000\n"
-"PO-Revision-Date: 2016-09-06 14:10+0000\n"
-"Last-Translator: ppfeufer <dev@ppfeufer.de>\n"
+"POT-Creation-Date: 2017-02-09 09:18+0000\n"
+"PO-Revision-Date: 2017-02-09 09:18+0000\n"
+"Last-Translator: ppfeufer <p.pfeufer@thamm-it.de>\n"
 "Language-Team: German\n"
 "Language: de-DE\n"
 "Plural-Forms: nplurals=2; plural=n != 1\n"
@@ -13,7 +13,75 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco - https://localise.biz/"
 
-#: libs/backend/PluginSettings.php:48
+#: libs/PostType.php:18 libs/PostType.php:34
+msgid "Fitting Categories"
+msgstr ""
+
+#: libs/PostType.php:19
+msgid "Fitting Category"
+msgstr ""
+
+#: libs/PostType.php:20
+msgid "Search Fitting Categories"
+msgstr ""
+
+#: libs/PostType.php:21
+msgid "Popular Fitting Categories"
+msgstr ""
+
+#: libs/PostType.php:22
+msgid "All Fitting Categories"
+msgstr ""
+
+#: libs/PostType.php:23
+msgid "Parent Fitting Categories"
+msgstr ""
+
+#: libs/PostType.php:24
+msgid "Edit Fitting Categories"
+msgstr ""
+
+#: libs/PostType.php:25
+msgid "Update Fitting Categories"
+msgstr ""
+
+#: libs/PostType.php:26
+msgid "Add New Fitting Categories"
+msgstr ""
+
+#: libs/PostType.php:27
+msgid "New Fitting Categories"
+msgstr ""
+
+#: libs/PostType.php:28
+msgid "Separate Fitting Categories with commas"
+msgstr ""
+
+#: libs/PostType.php:29
+msgid "Add or remove Fitting Categories"
+msgstr ""
+
+#: libs/PostType.php:30
+msgid "Choose from most used Fitting Categories"
+msgstr ""
+
+#: libs/PostType.php:56
+msgid "Fittings"
+msgstr ""
+
+#: libs/PostType.php:57
+msgid "Fitting"
+msgstr ""
+
+#: libs/PluginSettings.php:31 libs/PluginSettings.php:32
+msgid "EVE Online Fittings Manager"
+msgstr "EVE Online Fittings Manager"
+
+#: libs/PluginSettings.php:47
+msgid "Killboard Settings"
+msgstr "Killboard Einstellungen"
+
+#: libs/PluginSettings.php:48
 msgid ""
 "You need to have a connection to a EDK killboard database in order to use "
 "this plugin. The database is needed to gather all the ship and item "
@@ -23,27 +91,19 @@ msgstr ""
 "dieses Plugin funktioniert. Aus dieser Datenbank werden die notwendigen "
 "Informationen zu Schiffen und Modulen gelesen."
 
-#: libs/backend/PluginSettings.php:31 libs/backend/PluginSettings.php:32
-msgid "EVE Online Fittings Manager"
-msgstr "EVE Online Fittings Manager"
-
-#: libs/backend/PluginSettings.php:47
-msgid "Killboard Settings"
-msgstr "Killboard Einstellungen"
-
-#: libs/backend/PluginSettings.php:57
+#: libs/PluginSettings.php:57
 msgid "DB Host"
 msgstr "DB Host"
 
-#: libs/backend/PluginSettings.php:62
+#: libs/PluginSettings.php:62
 msgid "DB Name"
 msgstr "DB Name"
 
-#: libs/backend/PluginSettings.php:66
+#: libs/PluginSettings.php:66
 msgid "DB User"
 msgstr "DB Nutzer"
 
-#: libs/backend/PluginSettings.php:70
+#: libs/PluginSettings.php:70
 msgid "DB Password"
 msgstr "DB Passwort"
 
