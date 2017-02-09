@@ -7,12 +7,12 @@ use WordPress\Plugin\EveOnlineFittingManager;
 \defined('ABSPATH') or die();
 
 class PostType {
+
 	public function __construct() {
 		\add_action('init', array($this, 'customPostType'));
-//		\add_filter('template_include', array($this, 'templateSwitch'));
-		\add_filter('single_template', array($this, 'addSingleTemplate'));
-		\add_filter('archive_template', array($this, 'addArchiveTemplate'));
-//		\add_filter('template_include', array($this, 'my_custom_template'));
+		\add_filter('template_include', array($this, 'templateLoader'));
+//		\add_filter('single_template', array($this, 'addSingleTemplate'));
+//		\add_filter('archive_template', array($this, 'addArchiveTemplate'));
 	}
 
 	public function customPostType() {
@@ -52,7 +52,7 @@ class PostType {
 
 		register_taxonomy('fitting-categories', array(
 			'fitting'
-		), $array_Args);
+			), $array_Args);
 
 		register_post_type('fitting', array(
 			'labels' => array(
@@ -114,29 +114,56 @@ class PostType {
 		} else {
 			return $var_sPosttype;
 		} // END if(!empty($var_sSlugData))
-	} // END private function _get_posttype_slug($var_sPosttype)
-
-
-	public function addSingleTemplate($template) {
-		global $post;
-
-		/* Checks for single template by post type */
-		if(!empty($post)) {
-			if(file_exists(EveOnlineFittingManager\Helper\PluginHelper::getPluginPath() . 'templates/' . $template . '-' . $post->post_type . '.php')) {
-				return EveOnlineFittingManager\Helper\PluginHelper::getPluginPath() . 'templates/' . $template . '-' . $post->post_type . '.php';
-			}
-		}
-
-		return $template;
 	}
 
-	public function addArchiveTemplate($template) {
-		$object = get_queried_object();
+//	public function addSingleTemplate($template) {
+//		if(file_exists(EveOnlineFittingManager\Helper\PluginHelper::getPluginPath() . 'templates/single-' . get_post_type() . '.php')) {
+//			$template = EveOnlineFittingManager\Helper\PluginHelper::getPluginPath() . 'templates/single-' . get_post_type() . '.php';
+//		}
+//
+//		return $template;
+//	}
 
-		if(file_exists(EveOnlineFittingManager\Helper\PluginHelper::getPluginPath() . 'templates/archive-' . $object->taxonomy . '.php')) {
-			return EveOnlineFittingManager\Helper\PluginHelper::getPluginPath() . 'templates/archive-' . $object->taxonomy . '.php';
-		} else {
-			return $template;
+//	public function addArchiveTemplate($template) {
+//		$object = get_queried_object();
+//
+//		if(file_exists(EveOnlineFittingManager\Helper\PluginHelper::getPluginPath() . 'templates/archive-' . $object->taxonomy . '.php')) {
+//			$template = EveOnlineFittingManager\Helper\PluginHelper::getPluginPath() . 'templates/archive-' . $object->taxonomy . '.php';
+//		}
+//
+//		return $template;
+//	}
+
+	/**
+	 * Template loader.
+	 *
+	 * The template loader will check if WP is loading a template
+	 * for a specific Post Type and will try to load the template
+	 * from out 'templates' directory.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param	string	$template	Template file that is being loaded.
+	 * @return	string				Template file that should be loaded.
+	 */
+	function templateLoader($template) {
+		$find = array();
+		$file = '';
+
+		if(\is_singular('fitting')) {
+			$file = 'single-fitting.php';
+		} elseif(\is_archive('fitting')) {
+			$file = 'archive-fitting.php';
 		}
+
+//		echo $file . '<br>';
+//		echo $template . '<br>';
+//		echo EveOnlineFittingManager\Helper\TemplateHelper::locateTemplate($file);
+
+		if(\file_exists(EveOnlineFittingManager\Helper\TemplateHelper::locateTemplate($file))) {
+			$template = EveOnlineFittingManager\Helper\TemplateHelper::locateTemplate($file);
+		} // END if(\file_exists(EveOnlineFittingManager\Helper\TemplateHelper::locateTemplate($file)))
+
+		return $template;
 	}
 }

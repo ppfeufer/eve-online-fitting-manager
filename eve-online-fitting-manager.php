@@ -3,7 +3,7 @@
  * Plugin Name: EVE Online Fitting Manager for WordPress
  * Plugin URI: https://github.com/ppfeufer/eve-online-fitting-manager
  * Git URI: https://github.com/ppfeufer/eve-online-fitting-manager
- * Description: A little management tool for your doctrine fittings for your WordPress website. (Best with a theme running with <a href="http://getbootstrap.com/">Bootstrap</a>)
+ * Description: A little management tool for your doctrine fittings in your WordPress website. (Best with a theme running with <a href="http://getbootstrap.com/">Bootstrap</a>)
  * Version: 1.0
  * Author: Rounon Dax
  * Author URI: http://yulaifederation.net
@@ -54,7 +54,6 @@ class EveOnlineFittingManager {
 		 * start backend libs
 		 */
 		if(\is_admin()) {
-//			new Libs\Backend\GithubPluginUpdater(__FILE__, 'ppfeufer', 'eve-online-fitting-manager');
 			new Libs\PluginSettings;
 		} // END if(\is_admin())
 	} // END public function init()
@@ -166,26 +165,10 @@ class EveOnlineFittingManager {
 	 * Loading all libs
 	 */
 	public function loadLibs() {
-		/**
-		 * Load Backend Libs
-		 */
-//		if(\is_admin()) {
-//			foreach(\glob($this->getPluginDir() . 'libs/backend/*.php') as $backendLib) {
-//				include_once($backendLib);
-//			} // END foreach(\glob($this->getPluginDir() . 'libs/backend/*.php') as $lib)
-//		} // END if(\is_admin())
-
-		/**
-		 * Load Frontend Libs
-		 */
-//		if(!\is_admin()) {
-//			foreach(\glob($this->getPluginDir() . 'libs/frontend/*.php') as $frontendLib) {
-//				include_once($frontendLib);
-//			} // END foreach(\glob($this->getPluginDir() . 'libs/frontend/*.php') as $lib)
-//		} // END if(!\is_admin())
 		foreach(\glob($this->getPluginDir() . 'helper/*.php') as $lib) {
 			include_once($lib);
 		} // END foreach(\glob($this->getPluginDir() . 'libs/*.php') as $lib)
+
 		foreach(\glob($this->getPluginDir() . 'libs/*.php') as $lib) {
 			include_once($lib);
 		} // END foreach(\glob($this->getPluginDir() . 'libs/*.php') as $lib)
