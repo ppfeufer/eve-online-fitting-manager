@@ -7,7 +7,6 @@ use WordPress\Plugin\EveOnlineFittingManager;
 \defined('ABSPATH') or die();
 
 class PostType {
-
 	public function __construct() {
 		\add_action('init', array($this, 'customPostType'));
 		\add_filter('template_include', array($this, 'templateLoader'));
@@ -77,7 +76,7 @@ class PostType {
 				'with_front' => true
 			)
 		));
-	}
+	} // END public function customPostType()
 
 	/**
 	 * Getting the slug for the custom post type
@@ -114,7 +113,7 @@ class PostType {
 		} else {
 			return $var_sPosttype;
 		} // END if(!empty($var_sSlugData))
-	}
+	} // END private function _getPosttypeSlug($var_sPosttype)
 
 //	public function addSingleTemplate($template) {
 //		if(file_exists(EveOnlineFittingManager\Helper\PluginHelper::getPluginPath() . 'templates/single-' . get_post_type() . '.php')) {
@@ -147,23 +146,24 @@ class PostType {
 	 * @return	string				Template file that should be loaded.
 	 */
 	function templateLoader($template) {
-		$find = array();
-		$file = '';
+		$templateFile = null;
 
 		if(\is_singular('fitting')) {
-			$file = 'single-fitting.php';
+			$templateFile = 'single-fitting.php';
 		} elseif(\is_archive('fitting')) {
-			$file = 'archive-fitting.php';
+			$templateFile = 'archive-fitting.php';
 		}
 
 //		echo $file . '<br>';
 //		echo $template . '<br>';
 //		echo EveOnlineFittingManager\Helper\TemplateHelper::locateTemplate($file);
 
-		if(\file_exists(EveOnlineFittingManager\Helper\TemplateHelper::locateTemplate($file))) {
-			$template = EveOnlineFittingManager\Helper\TemplateHelper::locateTemplate($file);
-		} // END if(\file_exists(EveOnlineFittingManager\Helper\TemplateHelper::locateTemplate($file)))
+		if($templateFile !== null) {
+			if(\file_exists(EveOnlineFittingManager\Helper\TemplateHelper::locateTemplate($file))) {
+				$template = EveOnlineFittingManager\Helper\TemplateHelper::locateTemplate($file);
+			} // END if(\file_exists(EveOnlineFittingManager\Helper\TemplateHelper::locateTemplate($file)))
+		} // END if($templateFile !== null)
 
 		return $template;
-	}
-}
+	} // END function templateLoader($template)
+} // END class PostType
