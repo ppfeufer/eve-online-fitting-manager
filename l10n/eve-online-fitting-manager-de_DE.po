@@ -1,0 +1,74 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: EVE Online Fitting Manager for WordPress\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-09-06 14:09+0000\n"
+"PO-Revision-Date: 2016-09-06 14:10+0000\n"
+"Last-Translator: ppfeufer <dev@ppfeufer.de>\n"
+"Language-Team: German\n"
+"Language: de-DE\n"
+"Plural-Forms: nplurals=2; plural=n != 1\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco - https://localise.biz/"
+
+#: libs/backend/PluginSettings.php:48
+msgid ""
+"You need to have a connection to a EDK killboard database in order to use "
+"this plugin. The database is needed to gather all the ship and item "
+"information."
+msgstr ""
+"Es wird eine Verbindung zur Datenbank eines EDK Killboards benötigt, damit "
+"dieses Plugin funktioniert. Aus dieser Datenbank werden die notwendigen "
+"Informationen zu Schiffen und Modulen gelesen."
+
+#: libs/backend/PluginSettings.php:31 libs/backend/PluginSettings.php:32
+msgid "EVE Online Fittings Manager"
+msgstr "EVE Online Fittings Manager"
+
+#: libs/backend/PluginSettings.php:47
+msgid "Killboard Settings"
+msgstr "Killboard Einstellungen"
+
+#: libs/backend/PluginSettings.php:57
+msgid "DB Host"
+msgstr "DB Host"
+
+#: libs/backend/PluginSettings.php:62
+msgid "DB Name"
+msgstr "DB Name"
+
+#: libs/backend/PluginSettings.php:66
+msgid "DB User"
+msgstr "DB Nutzer"
+
+#: libs/backend/PluginSettings.php:70
+msgid "DB Password"
+msgstr "DB Passwort"
+
+#. Name of the plugin
+msgid "EVE Online Fitting Manager for WordPress"
+msgstr "EVE Online Fitting Manager für WordPress"
+
+#. Description of the plugin
+msgid ""
+"A little management tool for your doctrine fittings for your WordPress "
+"website. (Best with a theme running with <a href=\"http://getbootstrap."
+"com/\">Bootstrap</a>)"
+msgstr ""
+"Ein kleines Tool um eure Doctrine Fittings in eurer WordPress Website zu "
+"verwalten. (Am besten läufts mit einem Theme welches <a href=\"http:"
+"//getbootstrap.com/\">Bootstrap</a> nutzt.)"
+
+#. URI of the plugin
+msgid "https://github.com/ppfeufer/eve-online-fitting-manager"
+msgstr "https://github.com/ppfeufer/eve-online-fitting-manager"
+
+#. Author of the plugin
+msgid "Rounon Dax"
+msgstr "Rounon Dax"
+
+#. Author URI of the plugin
+msgid "http://yulaifederation.net"
+msgstr "http://yulaifederation.net"
