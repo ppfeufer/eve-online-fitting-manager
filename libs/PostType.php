@@ -17,23 +17,23 @@ class PostType {
 	public function customPostType() {
 		$var_sSlug = $this->_getPosttypeSlug('fitting');
 		$array_Labels = array(
-			'name' => __('Fitting Categories', 'eve-online-fitting-manager'),
-			'singular_name' => __('Fitting Category', 'eve-online-fitting-manager'),
-			'search_items' => __('Search Fitting Categories', 'eve-online-fitting-manager'),
-			'popular_items' => __('Popular Fitting Categories', 'eve-online-fitting-manager'),
-			'all_items' => __('All Fitting Categories', 'eve-online-fitting-manager'),
-			'parent_item' => __('Parent Fitting Categories', 'eve-online-fitting-manager'),
-			'edit_item' => __('Edit Fitting Categories', 'eve-online-fitting-manager'),
-			'update_item' => __('Update Fitting Categories', 'eve-online-fitting-manager'),
-			'add_new_item' => __('Add New Fitting Categories', 'eve-online-fitting-manager'),
-			'new_item_name' => __('New Fitting Categories', 'eve-online-fitting-manager'),
-			'separate_items_with_commas' => __('Separate Fitting Categories with commas', 'eve-online-fitting-manager'),
-			'add_or_remove_items' => __('Add or remove Fitting Categories', 'eve-online-fitting-manager'),
-			'choose_from_most_used' => __('Choose from most used Fitting Categories', 'eve-online-fitting-manager')
+			'name' => \__('Fitting Categories', 'eve-online-fitting-manager'),
+			'singular_name' => \__('Fitting Category', 'eve-online-fitting-manager'),
+			'search_items' => \__('Search Fitting Categories', 'eve-online-fitting-manager'),
+			'popular_items' => \__('Popular Fitting Categories', 'eve-online-fitting-manager'),
+			'all_items' => \__('All Fitting Categories', 'eve-online-fitting-manager'),
+			'parent_item' => \__('Parent Fitting Categories', 'eve-online-fitting-manager'),
+			'edit_item' => \__('Edit Fitting Categories', 'eve-online-fitting-manager'),
+			'update_item' => \__('Update Fitting Categories', 'eve-online-fitting-manager'),
+			'add_new_item' => \__('Add New Fitting Categories', 'eve-online-fitting-manager'),
+			'new_item_name' => \__('New Fitting Categories', 'eve-online-fitting-manager'),
+			'separate_items_with_commas' => \__('Separate Fitting Categories with commas', 'eve-online-fitting-manager'),
+			'add_or_remove_items' => \__('Add or remove Fitting Categories', 'eve-online-fitting-manager'),
+			'choose_from_most_used' => \__('Choose from most used Fitting Categories', 'eve-online-fitting-manager')
 		);
 
 		$array_Args = array(
-			'label' => __('Fitting Categories', 'eve-online-fitting-manager'),
+			'label' => \__('Fitting Categories', 'eve-online-fitting-manager'),
 			'labels' => $array_Labels,
 			'public' => true,
 			'hierarchical' => true,
@@ -55,8 +55,8 @@ class PostType {
 
 		register_post_type('fitting', array(
 			'labels' => array(
-				'name' => __('Fittings', 'eve-online-fitting-manager'),
-				'singular_name' => __('Fitting', 'eve-online-fitting-manager')
+				'name' => \__('Fittings', 'eve-online-fitting-manager'),
+				'singular_name' => \__('Fitting', 'eve-online-fitting-manager')
 			),
 			'public' => true,
 			'show_ui' => true,
