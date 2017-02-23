@@ -27,6 +27,11 @@ class TemplateHelper {
 			$template_path = 'templates/';
 		} // END if(!$template_path)
 
+		// fail safe
+		if(\substr($template_name, -4) !== '.php') {
+			$template_name .= '.php';
+		} // END if(\substr($template_name, -4) !== '.php')
+
 		// Set default plugin templates path.
 		if(!$default_path) {
 			$default_path = EveOnlineFittingManager\Helper\PluginHelper::getPluginPath() . 'templates/'; // Path to the template folder
@@ -64,6 +69,11 @@ class TemplateHelper {
 		if(\is_array($args) && isset($args)) {
 			\extract($args);
 		} // END if(\is_array($args) && isset($args))
+
+		// fail safe
+		if(\substr($template_name, -4) !== '.php') {
+			$template_name .= '.php';
+		} // END if(\substr($template_name, -4) !== '.php')
 
 		$template_file = self::locateTemplate($template_name, $tempate_path, $default_path);
 
