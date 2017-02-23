@@ -235,4 +235,4 @@ class EveOnlineFittingManager {
 /**
  * Start the show ....
  */
-$eveOnlineFittingManager = new EveOnlineFittingManager(true);
+new EveOnlineFittingManager(true);
