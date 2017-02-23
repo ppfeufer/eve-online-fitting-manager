@@ -21,6 +21,7 @@ class EveOnlineFittingManager {
 	private $optionName = null;
 	private $dbVersionFieldName = null;
 	private $databaseVersion = null;
+	public $pluginEveShipInfo = false;
 
 	public function __construct($init = false) {
 		/**
@@ -34,6 +35,8 @@ class EveOnlineFittingManager {
 		$this->dbVersionFieldName = 'eve-online-fitting-manager-database-version';
 		$this->databaseVersion = '20160906';
 
+		\add_action('plugins_loaded', array($this, 'checkPluginDependencies'));
+
 		$this->loadTextDomain();
 
 		/**
@@ -43,6 +46,24 @@ class EveOnlineFittingManager {
 			$this->init();
 		} // END if($init === true)
 	} // END public function __construct()
+
+	/**
+	 * checking for other plugins we might be able to use
+	 */
+	public function checkPluginDependencies() {
+		/**
+		 * Plugin: EVE ShipInfo
+		 * Description: Puts an EVE Online ships database and EFT fittings
+		 *				manager in your WordPress website, along with high
+		 *				quality screenshots and specialized shortcodes.
+		 *
+		 * We can use that as our database for ships and modules instead of a
+		 * EDK based killboard database. Makes things easier.
+		 */
+		if(\class_exists('EVEShipInfo')) {
+			$this->pluginEveShipInfo = true;
+		} // END if(\class_exists('EVEShipInfo'))
+	} // END public function checkPluginDependencies()
 
 	public function init() {
 		$this->loadLibs();

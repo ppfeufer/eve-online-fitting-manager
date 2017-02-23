@@ -631,6 +631,12 @@ class SettingsApi {
 
 		if(!empty($args['type'])) {
 			switch($args['type']) {
+				case 'info':
+					if(!empty($args['infotext'])) {
+						$out .= '<div class="notice notice-warning"><p>' . $args['infotext'] . '</p></div>';
+					} // END if(!empty($args['infotext']))
+					break;
+
 				case 'select':
 				case 'multiselect':
 					$multiple = ($args['type'] == 'multiselect') ? ' multiple' : '';

@@ -43,15 +43,30 @@ class PluginSettings {
 	} // END function renderSettingsPage()
 
 	private function getKillboardSettings() {
-		return array(
+		$settings = array(
 			'tab_title' => \__('Killboard Settings', 'eve-online-fitting-manager'),
 			'tab_description' => \__('You need to have a connection to a EDK killboard database in order to use this plugin. The database is needed to gather all the ship and item information.', 'eve-online-fitting-manager'),
 			'fields' => $this->getKillboardSettingsFields()
 		);
+
+		return $settings;
 	} // END private function getKillboardSettings()
 
 	private function getKillboardSettingsFields() {
-		return array(
+		$infotext = sprintf(
+			\__('If you don\'t have a local EDK killboard installation you can use, it is suggested to install the %1$s plugin, so we can use this plugins database.', 'eve-online-fitting-manager'),
+			'<a href="http://www.aeonoftime.com/EVE_Online_Tools/EVE-ShipInfo-WordPress-Plugin/download.php" target="_blank">' . \__('EVE ShipInfo', 'eve-online-fitting-manager') . '</a>'
+		);
+
+		if($this->plugin->pluginEveShipInfo === true) {
+			$infotext = \__('Since you already have the EVE ShipInfo Plugin installed and activated, there is no need for any other settings, we can use that plugins database straight away.', 'eve-online-fitting-manager');
+		} // END if($this->plugin->pluginEveShipInfo === true)
+
+		$settingsFields = array(
+			'' => array(
+				'type' => 'info',
+				'infotext' => $infotext
+			),
 			'edk-killboard-host' => array(
 				'type' => 'text',
 				'title' => \__('DB Host', 'eve-online-fitting-manager'),
@@ -70,5 +85,7 @@ class PluginSettings {
 				'title' => \__('DB Password', 'eve-online-fitting-manager'),
 			)
 		);
+
+		return $settingsFields;
 	} // END private function getKillboardSettingsFields()
 } // END class PluginSettings
