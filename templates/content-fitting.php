@@ -1,6 +1,6 @@
 <?php defined('ABSPATH') or die(); ?>
 
-<article id="post-<?php \the_ID(); ?>" <?php \post_class('clearfix content-single'); ?>>
+<article id="post-<?php \the_ID(); ?>" <?php \post_class('clearfix content-single content-fitting'); ?>>
 	<header class="entry-header">
 		<h1 class="entry-title">
 			<?php \the_title(); ?>
@@ -14,7 +14,10 @@
 
 	<section class="post-content">
 		<div class="entry-content">
-			<?php echo \the_content(); ?>
+			<?php
+//			echo \the_content();
+			echo \nl2br(\get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_eft-import', true));
+			?>
 		</div>
 	</section>
 </article><!-- /.post-->

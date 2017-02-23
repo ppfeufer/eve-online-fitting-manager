@@ -7,12 +7,12 @@ defined('ABSPATH') or die();
 <div class="container main">
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-12">
-			<div class="content single">
+			<div class="content single fitting">
 				<?php
 				if(\have_posts()) {
 					while(\have_posts()) {
 						\the_post();
-						\WordPress\Plugin\EveOnlineFittingManager\Helper\TemplateHelper::getTemplate('content-fitting.php');
+						\WordPress\Plugin\EveOnlineFittingManager\Helper\TemplateHelper::getTemplate('content-fitting');
 					} // END while(have_posts())
 				} // END if(have_posts())
 				?>

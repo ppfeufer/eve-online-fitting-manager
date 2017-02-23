@@ -24,40 +24,41 @@ defined('ABSPATH') or die();
 				</header>
 				<?php
 				if(\have_posts()) {
-					if(\get_post_type() === 'post') {
+					if(\get_post_type() === 'fitting') {
 						$uniqueID = \uniqid();
 
 						echo '<div class="gallery-row">';
-						echo '<ul class="bootstrap-gallery bootstrap-post-loop-gallery bootstrap-post-loop-gallery-' . $uniqueID . ' clearfix">';
-					} // END if(\get_post_type() === 'post')
+						echo '<ul class="bootstrap-post-loop-fittings bootstrap-post-loop-fittings-' . $uniqueID . ' clearfix">';
+					} // END if(\get_post_type() === 'fitting')
 
 					while(\have_posts()) {
 						\the_post();
 
-						if(\get_post_type() === 'post') {
+						if(\get_post_type() === 'fitting') {
 							echo '<li>';
-						}
+						} // END if(\get_post_type() === 'fitting')
 
-						\get_template_part('content', \get_post_format());
+//						\get_template_part('content', \get_post_format());
+						\WordPress\Plugin\EveOnlineFittingManager\Helper\TemplateHelper::getTemplate('content-fitting');
 
-						if(\get_post_type() === 'post') {
+						if(\get_post_type() === 'fitting') {
 							echo '</li>';
-						}
+						} // END if(\get_post_type() === 'fitting')
 					} // END while (have_posts())
 
-					if(\get_post_type() === 'post') {
+					if(\get_post_type() === 'fitting') {
 						echo '</ul>';
 						echo '</div>';
 
 						echo '<script type="text/javascript">
 								jQuery(document).ready(function() {
-									jQuery("ul.bootstrap-post-loop-gallery-' . $uniqueID . '").bootstrapGallery({
+									jQuery("ul.bootstrap-post-loop-fittings-' . $uniqueID . '").bootstrapGallery({
 										"classes" : "col-lg-3 col-md-4 col-sm-6 col-xs-12",
 										"hasModal" : false
 									});
 								});
 								</script>';
-					} // END if(\get_post_type() === 'post')
+					} // END if(\get_post_type() === 'fitting')
 				} // END if(have_posts())
 
 //				if(\function_exists('wp_pagenavi')) {

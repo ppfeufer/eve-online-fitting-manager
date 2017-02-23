@@ -66,8 +66,11 @@ class EveOnlineFittingManager {
 	} // END public function checkPluginDependencies()
 
 	public function init() {
-		$this->loadLibs();
 		$this->checkDatabaseUpdate();
+		$this->loadLibs();
+
+		\add_action('wp_enqueue_scripts', array($this, 'enqueueJavaScript'));
+		\add_action('wp_enqueue_scripts', array($this, 'enqueueStylesheet'));
 
 		new Libs\PostType;
 
@@ -76,8 +79,17 @@ class EveOnlineFittingManager {
 		 */
 		if(\is_admin()) {
 			new Libs\PluginSettings;
+			new Libs\MetaBoxes;
 		} // END if(\is_admin())
 	} // END public function init()
+
+	public function enqueueJavaScript() {
+		\wp_enqueue_script('bootstrap-gallery-js', $this->getPluginUri() . 'js/jquery.bootstrap-gallery.min.js', array('jquery'), '', true);
+	} // END public function enqueueJavaScript()
+
+	public function enqueueStylesheet() {
+		\wp_enqueue_style('eve-online-fittings-manager', $this->getPluginUri() . 'css/eve-online-fittings-manager.min.css');
+	} // END public function enqueueStylesheet()
 
 	private function checkDatabaseUpdate() {
 		$currentPluginDatabaseVersion = $this->getCurrentPluginDatabaseVersion();

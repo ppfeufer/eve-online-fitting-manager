@@ -9,10 +9,11 @@ use WordPress\Plugin\EveOnlineFittingManager;
 class PostType {
 	public function __construct() {
 		\add_action('init', array($this, 'customPostType'));
+//		\add_action('add_meta_boxes', array($this, 'registerMetaBoxes'));
+//		\add_action('save_post', array($this, 'saveMetaBoxes'));
+
 		\add_filter('template_include', array($this, 'templateLoader'));
-//		\add_filter('single_template', array($this, 'addSingleTemplate'));
-//		\add_filter('archive_template', array($this, 'addArchiveTemplate'));
-	}
+	} // END public function __construct()
 
 	public function customPostType() {
 		$var_sSlug = $this->_getPosttypeSlug('fitting');
@@ -51,7 +52,9 @@ class PostType {
 
 		register_taxonomy('fitting-categories', array(
 			'fitting'
-			), $array_Args);
+			),
+			$array_Args
+		);
 
 		register_post_type('fitting', array(
 			'labels' => array(
@@ -115,24 +118,6 @@ class PostType {
 		} // END if(!empty($var_sSlugData))
 	} // END private function _getPosttypeSlug($var_sPosttype)
 
-//	public function addSingleTemplate($template) {
-//		if(file_exists(EveOnlineFittingManager\Helper\PluginHelper::getPluginPath() . 'templates/single-' . get_post_type() . '.php')) {
-//			$template = EveOnlineFittingManager\Helper\PluginHelper::getPluginPath() . 'templates/single-' . get_post_type() . '.php';
-//		}
-//
-//		return $template;
-//	}
-
-//	public function addArchiveTemplate($template) {
-//		$object = get_queried_object();
-//
-//		if(file_exists(EveOnlineFittingManager\Helper\PluginHelper::getPluginPath() . 'templates/archive-' . $object->taxonomy . '.php')) {
-//			$template = EveOnlineFittingManager\Helper\PluginHelper::getPluginPath() . 'templates/archive-' . $object->taxonomy . '.php';
-//		}
-//
-//		return $template;
-//	}
-
 	/**
 	 * Template loader.
 	 *
@@ -152,11 +137,7 @@ class PostType {
 			$templateFile = 'single-fitting.php';
 		} elseif(\is_archive('fitting')) {
 			$templateFile = 'archive-fitting.php';
-		}
-
-//		echo $file . '<br>';
-//		echo $template . '<br>';
-//		echo EveOnlineFittingManager\Helper\TemplateHelper::locateTemplate($file);
+		} // END if(\is_singular('fitting'))
 
 		if($templateFile !== null) {
 			if(\file_exists(EveOnlineFittingManager\Helper\TemplateHelper::locateTemplate($templateFile))) {
