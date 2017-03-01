@@ -14,6 +14,8 @@
 namespace WordPress\Plugin\EveOnlineFittingManager;
 
 class EveOnlineFittingManager {
+	public $pluginEveShipInfo = false;
+
 	private $textDomain = null;
 	private $localizationDirectory = null;
 	private $pluginDir = null;
@@ -21,7 +23,6 @@ class EveOnlineFittingManager {
 	private $optionName = null;
 	private $dbVersionFieldName = null;
 	private $databaseVersion = null;
-	public $pluginEveShipInfo = false;
 
 	public function __construct($init = false) {
 		/**
