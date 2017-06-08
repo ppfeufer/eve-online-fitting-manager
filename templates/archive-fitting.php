@@ -7,13 +7,13 @@ defined('ABSPATH') or die();
 <div class="container main">
 	<div class="row main-content">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-12">
-			<div class="content content-archive">
+			<div class="content content-archive doctrine-list">
 				<header class="page-title">
-					<h1>
+					<h2>
 						<?php
-							\_e('Doctrine Archives', 'eve-online');
+						echo \__('Doctrine:', 'eve-online') . \single_cat_title(' ', false);
 						?>
-					</h1>
+					</h2>
 					<?php
 					// Show an optional category description
 					$category_description = \category_description();

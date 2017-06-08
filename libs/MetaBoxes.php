@@ -42,6 +42,26 @@ class MetaBoxes {
 			return false;
 		} // END if(defined('DOING_AJAX'))
 
-		\update_post_meta($postID, 'eve-online-fitting-manager_eft-import', \filter_input(\INPUT_POST, 'eve-online-fitting-manager_eft-import'));
+		$eftFitting = \filter_input(\INPUT_POST, 'eve-online-fitting-manager_eft-import');
+
+		$shipType = EveOnlineFittingManager\Helper\EftHelper::getShipType($eftFitting);
+		$shipName = EveOnlineFittingManager\Helper\EftHelper::getFittingName($eftFitting);
+		$shipID = EveOnlineFittingManager\Helper\FittingHelper::getItemIdByName($shipName);
+
+		$fittingSlotData = EveOnlineFittingManager\Helper\EftHelper::getSlotDataFromEftData($eftFitting);
+		$fittingDna = EveOnlineFittingManager\Helper\EftHelper::getShipDnaFromEftData($eftFitting);
+
+		\update_post_meta($postID, 'eve-online-fitting-manager_eft-import', $eftFitting);
+		\update_post_meta($postID, 'eve-online-fitting-manager_ship_type', $shipType);
+		\update_post_meta($postID, 'eve-online-fitting-manager_fitting_name', $shipName);
+		\update_post_meta($postID, 'eve-online-fitting-manager_fitting_ship_ID', $shipID);
+		\update_post_meta($postID, 'eve-online-fitting-manager_fitting_high_slots', (!empty($fittingSlotData['highSlots'])) ? \serialize($fittingSlotData['highSlots']) : null);
+		\update_post_meta($postID, 'eve-online-fitting-manager_fitting_mid_slots', (!empty($fittingSlotData['midSlots'])) ? \serialize($fittingSlotData['midSlots']) : null);
+		\update_post_meta($postID, 'eve-online-fitting-manager_fitting_low_slots', (!empty($fittingSlotData['lowSlots'])) ? \serialize($fittingSlotData['lowSlots']) : null);
+		\update_post_meta($postID, 'eve-online-fitting-manager_fitting_rig_slots', (!empty($fittingSlotData['rigSlots'])) ? \serialize($fittingSlotData['rigSlots']) : null);
+		\update_post_meta($postID, 'eve-online-fitting-manager_fitting_subsystems', (!empty($fittingSlotData['subSystems'])) ? \serialize($fittingSlotData['subSystems']) : null);
+		\update_post_meta($postID, 'eve-online-fitting-manager_fitting_drones', (!empty($fittingSlotData['drones'])) ? \serialize($fittingSlotData['drones']) : null);
+		\update_post_meta($postID, 'eve-online-fitting-manager_fitting_charges', (!empty($fittingSlotData['charges'])) ? \serialize($fittingSlotData['charges']) : null);
+		\update_post_meta($postID, 'eve-online-fitting-manager_fitting_dna', $fittingDna);
 	} // END public function saveMetaBoxes($postID)
 } // END class MetaBoxes

@@ -16,7 +16,7 @@ class PostType {
 	} // END public function __construct()
 
 	public function customPostType() {
-		$var_sSlug = $this->_getPosttypeSlug('fitting');
+		$var_sSlug = $this->getPosttypeSlug('fitting');
 		$array_Labels = array(
 			'name' => \__('Fitting Categories', 'eve-online-fitting-manager'),
 			'singular_name' => \__('Fitting Category', 'eve-online-fitting-manager'),
@@ -66,7 +66,7 @@ class PostType {
 			'show_in_menu' => true,
 			'supports' => array(
 				'title',
-//				'editor',
+				'editor',
 				'author',
 				'thumbnail',
 //				'excerpt',
@@ -92,7 +92,7 @@ class PostType {
 	 *
 	 * @param string $var_sPosttype
 	 */
-	private function _getPosttypeSlug($var_sPosttype) {
+	private function getPosttypeSlug($var_sPosttype) {
 		global $wpdb;
 
 		$var_qry = '
