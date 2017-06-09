@@ -253,9 +253,8 @@ class EftHelper {
 		/**
 		 * Low Slots
 		 */
+		$hasLowSlots = false;
 		if(\is_array($arrayLowSlots)) {
-			$hasLowSlots = false;
-
 			foreach($arrayLowSlots as $lowSlot) {
 				if($lowSlot !== false) {
 					$hasLowSlots = true;
@@ -271,9 +270,8 @@ class EftHelper {
 		/**
 		 * Mid Slots
 		 */
+		$hasMidSlots = false;
 		if(\is_array($arrayMidSlots)) {
-			$hasMidSlots = false;
-
 			foreach($arrayMidSlots as $midSlot) {
 				if($midSlot !== false) {
 					$hasMidSlots = true;
@@ -289,9 +287,8 @@ class EftHelper {
 		/**
 		 * High Slots
 		 */
+		$hasHighSlots = false;
 		if(\is_array($arrayHighSlots)) {
-			$hasHighSlots = false;
-
 			foreach($arrayHighSlots as $highSlot) {
 				if($highSlot !== false) {
 					$hasHighSlots = true;
@@ -307,9 +304,8 @@ class EftHelper {
 		/**
 		 * Rig Slots
 		 */
+		$hasRigSlots = false;
 		if(\is_array($arrayRigSlots)) {
-			$hasRigSlots = false;
-
 			foreach($arrayRigSlots as $rigSlot) {
 				if($rigSlot !== false) {
 					$hasRigSlots = true;
@@ -324,9 +320,8 @@ class EftHelper {
 		/**
 		 * Sub Systems
 		 */
+		$hasSubSystems = false;
 		if(\is_array($arraySubSystems)) {
-			$hasSubSystems = false;
-
 			foreach($arraySubSystems as $subSystem) {
 				if($subSystem !== false) {
 					$hasSubSystems = true;
@@ -342,9 +337,8 @@ class EftHelper {
 		/**
 		 * Drones
 		 */
+		$hasDrones = false;
 		if(\is_array($arrayDrones)) {
-			$hasDrones = false;
-
 			foreach($arrayDrones as $drone) {
 				if($drone !== false) {
 					$hasDrones = true;
@@ -360,9 +354,11 @@ class EftHelper {
 		/**
 		 * Charges
 		 */
+		$hasCharges = false;
 		if(\is_array($arrayCharges)) {
 			foreach($arrayCharges as $charge) {
 				if($charge !== false) {
+					$hasCharges = true;
 					$eftImport .= FittingHelper::getItemNameById($charge['itemID']) . ' x' . $charge['itemCount'] . "\n";
 				} // END if($drones != false)
 			} // END foreach($arrayDrones as $drones)

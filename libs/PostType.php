@@ -130,7 +130,7 @@ class PostType {
 	 * @param	string	$template	Template file that is being loaded.
 	 * @return	string				Template file that should be loaded.
 	 */
-	function templateLoader($template) {
+	public function templateLoader($template) {
 		$templateFile = null;
 
 		if(\is_singular('fitting')) {
@@ -147,4 +147,27 @@ class PostType {
 
 		return $template;
 	} // END function templateLoader($template)
+
+	public static function isEditPage($newEdit = null){
+		global $pagenow;
+
+		//make sure we are on the backend
+		if(!\is_admin()) {
+			return false;
+		}
+
+		switch($newEdit) {
+			case 'edit':
+				return \in_array($pagenow, array('post.php'));
+				break;
+
+			case 'new':
+				return \in_array($pagenow, array('post-new.php'));
+				break;
+
+			default:
+				return \in_array($pagenow, array('post.php', 'post-new.php'));
+				break;
+		}
+	}
 } // END class PostType

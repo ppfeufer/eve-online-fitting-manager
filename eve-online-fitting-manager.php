@@ -42,6 +42,8 @@ class EveOnlineFittingManager {
 
 		/**
 		 * Initialize the plugin
+		 *
+		 * @todo https://premium.wpmudev.org/blog/activate-deactivate-uninstall-hooks/
 		 */
 		if($init === true) {
 			$this->init();
