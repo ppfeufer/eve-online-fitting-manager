@@ -106,49 +106,50 @@ class EftHelper {
 					} // END if(preg_match('/ x[0-9]*/', $line, $matches))
 
 					$itemDetail = FittingHelper::getItemDetailsByItemName($line, $itemCount);
-					switch($itemDetail['slotName']) {
+
+					switch($itemDetail->slotName) {
 						case 'HiSlot':
 						case 'High power':
-							$arrayHighSlot['highSlot_' . $count_highSlot] = $itemDetail['itemID'];
+							$arrayHighSlot['highSlot_' . $count_highSlot] = $itemDetail->itemID;
 							$count_highSlot++;
 							break;
 
 						case 'MedSlot':
 						case 'Medium power':
-							$arrayMidSlot['midSlot_' . $count_midSlot] = $itemDetail['itemID'];
+							$arrayMidSlot['midSlot_' . $count_midSlot] = $itemDetail->itemID;
 							$count_midSlot++;
 							break;
 
 						case 'LoSlot':
 						case 'Low power':
-							$arrayLowSlot['lowSlot_' . $count_lowSlot] = $itemDetail['itemID'];
+							$arrayLowSlot['lowSlot_' . $count_lowSlot] = $itemDetail->itemID;
 							$count_lowSlot++;
 							break;
 
 						case 'RigSlot':
 						case 'Rig Slot':
-							$arrayRigSlot['rigSlot_' . $count_rigSlot] = $itemDetail['itemID'];
+							$arrayRigSlot['rigSlot_' . $count_rigSlot] = $itemDetail->itemID;
 							$count_rigSlot++;
 							break;
 
 						case 'SubSystem':
 						case 'Sub System':
-							$arraySubSystem['subSystem_' . $count_subSystem] = $itemDetail['itemID'];
+							$arraySubSystem['subSystem_' . $count_subSystem] = $itemDetail->itemID;
 							$count_subSystem++;
 							break;
 
 						case 'charge':
 							$arrayCharges['charge_' . $count_charges] = array(
-								'itemID' => $itemDetail['itemID'],
-								'itemCount' => $itemDetail['itemCount']
+								'itemID' => $itemDetail->itemID,
+								'itemCount' => $itemDetail->itemCount
 							);
 							$count_charges++;
 							break;
 
 						case 'drone':
 							$arrayDrones['drone_' . $count_drones] = array(
-								'itemID' => $itemDetail['itemID'],
-								'itemCount' => $itemDetail['itemCount']
+								'itemID' => $itemDetail->itemID,
+								'itemCount' => $itemDetail->itemCount
 							);
 							$count_drones++;
 							break;

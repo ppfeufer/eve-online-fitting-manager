@@ -17,7 +17,17 @@ class MetaBoxes {
 	} // END public function registerMetaBoxes()
 
 	public function renderEftFittingMetaBox($post) {
-		$eftFitting = \get_post_meta($post->ID, 'eve-online-fitting-manager_eft-import', true);
+		$eftFitting = EveOnlineFittingManager\Helper\EftHelper::getEftImportFromFitting(array(
+			'shipID' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_ship_ID', true),
+			'fittingType' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_name', true),
+			'highSlots' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_high_slots', true),
+			'midSlots' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_mid_slots', true),
+			'lowSlots' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_low_slots', true),
+			'rigSlots' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_rig_slots', true),
+			'subSystems' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_subsystems', true),
+			'drones' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_drones', true),
+			'charges' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_charges', true),
+		));
 		?>
 		<p class="checkbox-wrapper">
 			<textarea id="eve-online-fitting-manager_eft-import" name="eve-online-fitting-manager_eft-import" style="width: 100%; height: 250px;"><?php echo $eftFitting; ?></textarea>
@@ -46,12 +56,11 @@ class MetaBoxes {
 
 		$shipType = EveOnlineFittingManager\Helper\EftHelper::getShipType($eftFitting);
 		$shipName = EveOnlineFittingManager\Helper\EftHelper::getFittingName($eftFitting);
-		$shipID = EveOnlineFittingManager\Helper\FittingHelper::getItemIdByName($shipName);
+		$shipID = EveOnlineFittingManager\Helper\FittingHelper::getItemIdByName($shipType);
 
 		$fittingSlotData = EveOnlineFittingManager\Helper\EftHelper::getSlotDataFromEftData($eftFitting);
 		$fittingDna = EveOnlineFittingManager\Helper\EftHelper::getShipDnaFromEftData($eftFitting);
 
-		\update_post_meta($postID, 'eve-online-fitting-manager_eft-import', $eftFitting);
 		\update_post_meta($postID, 'eve-online-fitting-manager_ship_type', $shipType);
 		\update_post_meta($postID, 'eve-online-fitting-manager_fitting_name', $shipName);
 		\update_post_meta($postID, 'eve-online-fitting-manager_fitting_ship_ID', $shipID);
