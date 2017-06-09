@@ -2,3 +2,8 @@
 	list-style-type: none;
 	padding-left: 0;
 }
+
+.single-fitting .content-wrapper {
+	padding-top: 8px;
+	padding-top: 0.5rem;
+}

@@ -15,7 +15,6 @@ namespace WordPress\Plugin\EveOnlineFittingManager\Libs;
 
 use WordPress\Plugin\EveOnlineFittingManager;
 
-// Do not load this file directly
 \defined('ABSPATH') or die();
 
 class SettingsApi {

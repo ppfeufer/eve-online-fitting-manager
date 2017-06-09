@@ -13,6 +13,8 @@
 
 namespace WordPress\Plugin\EveOnlineFittingManager;
 
+\defined('ABSPATH') or die();
+
 class EveOnlineFittingManager {
 	public $pluginEveShipInfo = false;
 

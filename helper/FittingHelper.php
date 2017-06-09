@@ -4,6 +4,8 @@ namespace WordPress\Plugin\EveOnlineFittingManager\Helper;
 
 use WordPress\Plugin\EveOnlineFittingManager;
 
+\defined('ABSPATH') or die();
+
 class FittingHelper {
 	/**
 	 * Getting High Slot Item Names
@@ -240,10 +242,14 @@ class FittingHelper {
 	 * @return type
 	 */
 	public static function getItemIdByName($itemName) {
-		$sql = EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `kb3_invtypes`.`typeID` AS `itemID` from `kb3_invtypes` WHERE `kb3_invtypes`.`typeName` = %s', array($itemName));
-		$itemID = EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
+		$returnValue = null;
 
-		return $itemID;
+		if(!empty($itemName)) {
+			$sql = EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `kb3_invtypes`.`typeID` AS `itemID` from `kb3_invtypes` WHERE `kb3_invtypes`.`typeName` = %s', array($itemName));
+			$returnValue = EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
+		}
+
+		return $returnValue;
 	} // END public function getItemIdByName($itemName)
 
 	/**
@@ -569,4 +575,10 @@ class FittingHelper {
 
 		return EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
 	} // END public function getRigSlotCountForShipID($shipID)
+
+	public static function getShipImageById($itemID = null, $size = 512) {
+		$image = ImageHelper::getLocalCacheImageUriForRemoteImage('ship', EveApiHelper::getInstance()->getImageServerUrl('inventory') . $itemID . '_'.$size . '.png');
+
+		return $image;
+	}
 }

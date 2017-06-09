@@ -1,17 +1,19 @@
 <?php defined('ABSPATH') or die(); ?>
 
-<article id="post-<?php \the_ID(); ?>" <?php \post_class('clearfix content-single content-fitting'); ?>>
-	<header class="entry-header">
-		<h1 class="entry-title">
-			<?php \the_title(); ?>
-		</h1>
-		<aside class="entry-details">
-			<p class="meta">
-				<?php \edit_post_link(\__('Edit', 'eve-online-fitting-manager')); ?>
-			</p>
-		</aside><!--end .entry-details -->
-	</header><!--end .entry-header -->
+<header class="entry-header">
+	<h1 class="entry-title">
+		<img src="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Helper\FittingHelper::getShipImageById(\get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_ship_ID', true), 64); ?>">
+		<?php \the_title(); ?>
+	</h1>
 
+	<aside class="entry-details">
+		<p class="meta">
+			<?php \edit_post_link(\__('Edit', 'eve-online-fitting-manager')); ?>
+		</p>
+	</aside><!--end .entry-details -->
+</header><!--end .entry-header -->
+
+<article id="post-<?php \the_ID(); ?>" <?php \post_class('clearfix content-single content-fitting'); ?>>
 	<section class="post-content">
 		<div class="entry-content">
 			<?php

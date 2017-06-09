@@ -4,6 +4,8 @@ namespace WordPress\Plugin\EveOnlineFittingManager\Helper;
 
 use WordPress\Plugin\EveOnlineFittingManager;
 
+\defined('ABSPATH') or die();
+
 class EftHelper {
 	/**
 	 * Fixing the line breaks of the EFT dump
@@ -25,16 +27,22 @@ class EftHelper {
 	 * @return string The ship class name
 	 */
 	public static function getShipType($eftFitting) {
-		/**
-		 * Zeilenumbrüche korrigieren
-		 */
-		$fittingArray = \explode("\n", \trim(self::fixLineBreaks($eftFitting)));
+		$returnValue = null;
 
-		$fittingArray['0'] = \str_replace('[', '', $fittingArray['0']);
-		$fittingArray['0'] = \str_replace(']', '', $fittingArray['0']);
-		$fittingArray['0'] = \preg_replace('/,(.*)/', '', $fittingArray['0']);
+		if(!empty($eftFitting)) {
+			/**
+			 * Zeilenumbrüche korrigieren
+			 */
+			$fittingArray = \explode("\n", \trim(self::fixLineBreaks($eftFitting)));
 
-		return \trim($fittingArray['0']);
+			$fittingArray['0'] = \str_replace('[', '', $fittingArray['0']);
+			$fittingArray['0'] = \str_replace(']', '', $fittingArray['0']);
+			$fittingArray['0'] = \preg_replace('/,(.*)/', '', $fittingArray['0']);
+
+			$returnValue = \trim($fittingArray['0']);
+		}
+
+		return $returnValue;
 	}
 
 	/**
@@ -43,17 +51,23 @@ class EftHelper {
 	 * @param string $eftFitting EFT fitting dump
 	 * @return string The fitting name
 	 */
-	public static function getFittingName($eftFitting) {
-		/**
-		 * Zeilenumbrüche korrigieren
-		 */
-		$fittingArray = \explode("\n", \trim(self::fixLineBreaks($eftFitting)));
+	public static function getFittingName($eftFitting)  {
+		$returnValue = null;
 
-		$fittingArray['0'] = \str_replace('[', '', $fittingArray['0']);
-		$fittingArray['0'] = \str_replace(']', '', $fittingArray['0']);
-		$fittingArray['0'] = \preg_replace('/(.*),/', '', $fittingArray['0']);
+		if(!empty($eftFitting)) {
+			/**
+			 * Zeilenumbrüche korrigieren
+			 */
+			$fittingArray = \explode("\n", \trim(self::fixLineBreaks($eftFitting)));
 
-		return \trim($fittingArray['0']);
+			$fittingArray['0'] = \str_replace('[', '', $fittingArray['0']);
+			$fittingArray['0'] = \str_replace(']', '', $fittingArray['0']);
+			$fittingArray['0'] = \preg_replace('/(.*),/', '', $fittingArray['0']);
+
+			$returnValue = \trim($fittingArray['0']);
+		}
+
+		return $returnValue;
 	}
 
 	/**
@@ -63,117 +77,121 @@ class EftHelper {
 	 * @return multitype:multitype:NULL unknown  multitype:multitype:unknown   multitype:NULL Ambigous <>
 	 */
 	public static function getSlotDataFromEftData($eftFitting) {
-		/**
-		 * Zeilenumbrüche korrigieren
-		 */
-		$fittingArray = \explode("\n", \trim(self::fixLineBreaks($eftFitting)));
+		$returnValue = null;
 
-		$fittingData = array();
-		$fittingArray['0'] = \str_replace('[', '', $fittingArray['0']);
-		$fittingArray['0'] = \str_replace(']', '', $fittingArray['0']);
-		$fittingArray['0'] = \preg_replace('/,(.*)/', '', $fittingArray['0']);
+		if(!empty($eftFitting)) {
+			/**
+			 * Zeilenumbrüche korrigieren
+			 */
+			$fittingArray = \explode("\n", \trim(self::fixLineBreaks($eftFitting)));
 
-		$count_highSlot = 1;
-		$count_midSlot = 1;
-		$count_lowSlot = 1;
-		$count_rigSlot = 1;
-		$count_subSystem = 1;
-		$count_charges = 1;
-		$count_drones = 1;
+			$fittingData = array();
+			$fittingArray['0'] = \str_replace('[', '', $fittingArray['0']);
+			$fittingArray['0'] = \str_replace(']', '', $fittingArray['0']);
+			$fittingArray['0'] = \preg_replace('/,(.*)/', '', $fittingArray['0']);
 
-		$arrayHighSlot = array();
-		$arrayMidSlot = array();
-		$arrayLowSlot = array();
-		$arrayRigSlot = array();
-		$arraySubSystem = array();
-		$arrayCharges = array();
-		$arrayDrones = array();
+			$count_highSlot = 1;
+			$count_midSlot = 1;
+			$count_lowSlot = 1;
+			$count_rigSlot = 1;
+			$count_subSystem = 1;
+			$count_charges = 1;
+			$count_drones = 1;
 
-		foreach($fittingArray as &$line) {
-			$line = trim($line);
+			$arrayHighSlot = array();
+			$arrayMidSlot = array();
+			$arrayLowSlot = array();
+			$arrayRigSlot = array();
+			$arraySubSystem = array();
+			$arrayCharges = array();
+			$arrayDrones = array();
 
-			if(!empty($line)) {
-				$itemCount = 1;
-				$line = \trim(\preg_replace('/,(.*)/', '', $line));
+			foreach($fittingArray as &$line) {
+				$line = trim($line);
 
 				if(!empty($line)) {
-					/**
-					 * If we have an item count, get it ...
-					 */
-					if(\preg_match('/ x[0-9]*/', $line, $matches)) {
-						$itemCount = \str_replace('x', '', \trim($matches['0']));
-						$line = \trim(\str_replace(\trim($matches['0']), '', $line));
-					} // END if(preg_match('/ x[0-9]*/', $line, $matches))
+					$itemCount = 1;
+					$line = \trim(\preg_replace('/,(.*)/', '', $line));
 
-					$itemDetail = FittingHelper::getItemDetailsByItemName($line, $itemCount);
+					if(!empty($line)) {
+						/**
+						 * If we have an item count, get it ...
+						 */
+						if(\preg_match('/ x[0-9]*/', $line, $matches)) {
+							$itemCount = \str_replace('x', '', \trim($matches['0']));
+							$line = \trim(\str_replace(\trim($matches['0']), '', $line));
+						} // END if(preg_match('/ x[0-9]*/', $line, $matches))
 
-					switch($itemDetail->slotName) {
-						case 'HiSlot':
-						case 'High power':
-							$arrayHighSlot['highSlot_' . $count_highSlot] = $itemDetail->itemID;
-							$count_highSlot++;
-							break;
+						$itemDetail = FittingHelper::getItemDetailsByItemName($line, $itemCount);
 
-						case 'MedSlot':
-						case 'Medium power':
-							$arrayMidSlot['midSlot_' . $count_midSlot] = $itemDetail->itemID;
-							$count_midSlot++;
-							break;
+						switch($itemDetail->slotName) {
+							case 'HiSlot':
+							case 'High power':
+								$arrayHighSlot['highSlot_' . $count_highSlot] = $itemDetail->itemID;
+								$count_highSlot++;
+								break;
 
-						case 'LoSlot':
-						case 'Low power':
-							$arrayLowSlot['lowSlot_' . $count_lowSlot] = $itemDetail->itemID;
-							$count_lowSlot++;
-							break;
+							case 'MedSlot':
+							case 'Medium power':
+								$arrayMidSlot['midSlot_' . $count_midSlot] = $itemDetail->itemID;
+								$count_midSlot++;
+								break;
 
-						case 'RigSlot':
-						case 'Rig Slot':
-							$arrayRigSlot['rigSlot_' . $count_rigSlot] = $itemDetail->itemID;
-							$count_rigSlot++;
-							break;
+							case 'LoSlot':
+							case 'Low power':
+								$arrayLowSlot['lowSlot_' . $count_lowSlot] = $itemDetail->itemID;
+								$count_lowSlot++;
+								break;
 
-						case 'SubSystem':
-						case 'Sub System':
-							$arraySubSystem['subSystem_' . $count_subSystem] = $itemDetail->itemID;
-							$count_subSystem++;
-							break;
+							case 'RigSlot':
+							case 'Rig Slot':
+								$arrayRigSlot['rigSlot_' . $count_rigSlot] = $itemDetail->itemID;
+								$count_rigSlot++;
+								break;
 
-						case 'charge':
-							$arrayCharges['charge_' . $count_charges] = array(
-								'itemID' => $itemDetail->itemID,
-								'itemCount' => $itemDetail->itemCount
-							);
-							$count_charges++;
-							break;
+							case 'SubSystem':
+							case 'Sub System':
+								$arraySubSystem['subSystem_' . $count_subSystem] = $itemDetail->itemID;
+								$count_subSystem++;
+								break;
 
-						case 'drone':
-							$arrayDrones['drone_' . $count_drones] = array(
-								'itemID' => $itemDetail->itemID,
-								'itemCount' => $itemDetail->itemCount
-							);
-							$count_drones++;
-							break;
+							case 'charge':
+								$arrayCharges['charge_' . $count_charges] = array(
+									'itemID' => $itemDetail->itemID,
+									'itemCount' => $itemDetail->itemCount
+								);
+								$count_charges++;
+								break;
 
-						default:
-							break;
-					} // END switch($itemDetail['slotName'])
+							case 'drone':
+								$arrayDrones['drone_' . $count_drones] = array(
+									'itemID' => $itemDetail->itemID,
+									'itemCount' => $itemDetail->itemCount
+								);
+								$count_drones++;
+								break;
 
-					$fittingData[] = $itemDetail;
-				} // END if(!empty($itemDetails))
-			} // END if(!empty(trim($line)))
-		} // END foreach($fittingArray as &$line)
+							default:
+								break;
+						} // END switch($itemDetail['slotName'])
 
-		$slotData = array(
-			'highSlots' => $arrayHighSlot,
-			'midSlots' => $arrayMidSlot,
-			'lowSlots' => $arrayLowSlot,
-			'rigSlots' => $arrayRigSlot,
-			'subSystems' => $arraySubSystem,
-			'charges' => $arrayCharges,
-			'drones' => $arrayDrones
-		);
+						$fittingData[] = $itemDetail;
+					} // END if(!empty($itemDetails))
+				} // END if(!empty(trim($line)))
+			} // END foreach($fittingArray as &$line)
 
-		return $slotData;
+			$returnValue = array(
+				'highSlots' => $arrayHighSlot,
+				'midSlots' => $arrayMidSlot,
+				'lowSlots' => $arrayLowSlot,
+				'rigSlots' => $arrayRigSlot,
+				'subSystems' => $arraySubSystem,
+				'charges' => $arrayCharges,
+				'drones' => $arrayDrones
+			);
+		}
+
+		return $returnValue;
 	} // END public function getSlotDataFromEftData($eftFitting)
 
 	/**
@@ -225,10 +243,14 @@ class EftHelper {
 	 * @return type
 	 */
 	public static function getShipDnaFromEftData($eftFitting) {
-		$fittingData = self::getFittingArrayFromEftData(\trim(self::fixLineBreaks($eftFitting)));
-		$shipDna = FittingHelper::getShipDnaFromFittingData($fittingData);
+		$returnValue = null;
 
-		return $shipDna;
+		if(!empty($eftFitting)) {
+			$fittingData = self::getFittingArrayFromEftData(\trim(self::fixLineBreaks($eftFitting)));
+			$returnValue = FittingHelper::getShipDnaFromFittingData($fittingData);
+		}
+
+		return $returnValue;
 	} // END public function getShipDnaFromEftData($eftFitting)
 
 	/**

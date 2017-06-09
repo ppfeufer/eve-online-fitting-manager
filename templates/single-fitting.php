@@ -5,9 +5,9 @@ defined('ABSPATH') or die();
 ?>
 
 <div class="container main">
-	<div class="row">
-		<div class="col-lg-12 col-md-12 col-sm-12 col-12">
-			<div class="content single fitting">
+	<div class="main-content clearfix">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-12 content-wrapper">
+			<div class="content content-inner content-single content-fitting">
 				<?php
 				if(\have_posts()) {
 					while(\have_posts()) {

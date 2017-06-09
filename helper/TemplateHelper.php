@@ -4,6 +4,8 @@ namespace WordPress\Plugin\EveOnlineFittingManager\Helper;
 
 use WordPress\Plugin\EveOnlineFittingManager;
 
+\defined('ABSPATH') or die();
+
 class TemplateHelper {
 	/**
 	 * Locate template.
