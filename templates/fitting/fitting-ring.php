@@ -179,5 +179,9 @@ if($subSystems !== null) {
 </div>
 
 <script type="text/javascript">
-var showTooltip = true;
+jQuery(document).ready(function($) {
+	$(function () {
+		$('[data-toggle="tooltip"]').tooltip();
+	})
+});
 </script>

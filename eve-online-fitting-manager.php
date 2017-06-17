@@ -90,7 +90,7 @@ class EveOnlineFittingManager {
 	} // END public function init()
 
 	public function enqueueJavaScript() {
-		\wp_enqueue_script('eve-online-fitting-manager-js', $this->getPluginUri() . 'js/eve-online-fitting-manager.min.js', array('jquery'), '', true);
+//		\wp_enqueue_script('eve-online-fitting-manager-js', $this->getPluginUri() . 'js/eve-online-fitting-manager.min.js', array('jquery'), '', true);
 		\wp_enqueue_script('bootstrap-gallery-js', $this->getPluginUri() . 'js/jquery.bootstrap-gallery.min.js', array('jquery'), '', true);
 	} // END public function enqueueJavaScript()
 
