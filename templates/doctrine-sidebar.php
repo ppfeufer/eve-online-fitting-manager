@@ -6,7 +6,7 @@
 		echo \wp_list_categories(array(
 			'taxonomy' => 'fitting-categories',
 			'depth' => 999,
-			'hide_empty' => 0,
+//			'hide_empty' => 0,
 			'title_li' => '',
 			'echo' => false,
 			'show_count' => true
