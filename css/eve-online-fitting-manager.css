@@ -54,6 +54,11 @@
 		margin-bottom: 0;
 	}
 
+	.doctrine-shipfitting-header {
+		font-size: 18px;
+		font-size: 1.125rem;
+	}
+
 	/*
 	 Fitting Ring
 	--------------------------------------------------------------------------*/
