@@ -76,6 +76,7 @@ class EveOnlineFittingManager {
 
 		\add_action('wp_enqueue_scripts', array($this, 'enqueueJavaScript'));
 		\add_action('wp_enqueue_scripts', array($this, 'enqueueStylesheet'));
+		\add_action('pre_get_posts', array($this, 'customQueryVars'));
 
 		new Libs\PostType;
 
@@ -89,11 +90,12 @@ class EveOnlineFittingManager {
 	} // END public function init()
 
 	public function enqueueJavaScript() {
+		\wp_enqueue_script('eve-online-fitting-manager-js', $this->getPluginUri() . 'js/eve-online-fitting-manager.min.js', array('jquery'), '', true);
 		\wp_enqueue_script('bootstrap-gallery-js', $this->getPluginUri() . 'js/jquery.bootstrap-gallery.min.js', array('jquery'), '', true);
 	} // END public function enqueueJavaScript()
 
 	public function enqueueStylesheet() {
-		\wp_enqueue_style('eve-online-fittings-manager', $this->getPluginUri() . 'css/eve-online-fittings-manager.min.css');
+		\wp_enqueue_style('eve-online-fitting-manager', $this->getPluginUri() . 'css/eve-online-fitting-manager.min.css');
 	} // END public function enqueueStylesheet()
 
 	private function checkDatabaseUpdate() {
@@ -121,6 +123,18 @@ class EveOnlineFittingManager {
 		// Update the DB Version
 		\update_option($this->getDatabaseVersionFieldName(), $this->getCurrentPluginDatabaseVersion());
 	} // END private function updateDatabase()
+
+	public function customQueryVars($query) {
+		if(!\is_admin() && $query->is_main_query()) {
+			if(isset($query->tax_query->queries['0']['taxonomy']) && $query->tax_query->queries['0']['taxonomy'] === 'fitting-categories') {
+				$query->set('posts_per_page', 9999);
+				$query->set('orderby', 'title');
+				$query->set('order', 'ASC');
+			} // END if($query->tax_query->queries['0']['taxonomy'] === 'fitting-categories')
+		} // END if(!\is_admin() && $query->is_main_query())
+
+		return $query;
+	} // END public function customQueryVars($query)
 
 	/**
 	 * Getting the Plugin's settings

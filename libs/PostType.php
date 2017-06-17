@@ -13,6 +13,7 @@ class PostType {
 //		\add_action('save_post', array($this, 'saveMetaBoxes'));
 
 		\add_filter('template_include', array($this, 'templateLoader'));
+//		\add_filter('page_template', array($this, 'registerPageTemplate'));
 	} // END public function __construct()
 
 	public function customPostType() {
@@ -90,9 +91,9 @@ class PostType {
 	 * @since Talos 1.0
 	 * @author ppfeufer
 	 *
-	 * @param string $var_sPosttype
+	 * @param string $postType
 	 */
-	private function getPosttypeSlug($var_sPosttype) {
+	private function getPosttypeSlug($postType) {
 		global $wpdb;
 
 		$var_qry = '
@@ -103,18 +104,18 @@ class PostType {
 				' . $wpdb->postmeta . '
 			WHERE
 				' . $wpdb->postmeta . '.meta_key = "_wp_page_template"
-				AND ' . $wpdb->postmeta . '.meta_value = "page-' . $var_sPosttype . '.php"
+				AND ' . $wpdb->postmeta . '.meta_value = "page-' . $postType . '.php"
 				AND ' . $wpdb->posts . '.ID = ' . $wpdb->postmeta . '.post_id;';
 
-		$var_sSlugData = $wpdb->get_var($var_qry);
+		$slugData = $wpdb->get_var($var_qry);
 
 		/**
 		 * Returning the slug or, if not found the name of custom post type
 		 */
-		if(!empty($var_sSlugData)) {
-			return $var_sSlugData;
+		if(!empty($slugData)) {
+			return $slugData;
 		} else {
-			return $var_sPosttype;
+			return $postType;
 		} // END if(!empty($var_sSlugData))
 	} // END private function _getPosttypeSlug($var_sPosttype)
 
@@ -147,6 +148,14 @@ class PostType {
 
 		return $template;
 	} // END function templateLoader($template)
+
+	public function registerPageTemplate($pageTemplate) {
+		if(\is_page($this->getPosttypeSlug('fitting'))) {
+			$pageTemplate = dirname( __FILE__ ) . '/custom-page-template.php';
+		}
+
+		return $pageTemplate;
+	}
 
 	public static function isEditPage($newEdit = null){
 		global $pagenow;

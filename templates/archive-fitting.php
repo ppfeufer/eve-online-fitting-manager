@@ -5,8 +5,8 @@ defined('ABSPATH') or die();
 ?>
 
 <div class="container main">
-	<div class="row main-content">
-		<div class="col-lg-12 col-md-12 col-sm-12 col-12">
+	<div class="main-content clearfix">
+		<div class="col-lg-9 col-md-9 col-sm-9 col-9">
 			<div class="content content-archive doctrine-list">
 				<header class="page-title">
 					<h2>
@@ -27,7 +27,7 @@ defined('ABSPATH') or die();
 					if(\get_post_type() === 'fitting') {
 						$uniqueID = \uniqid();
 
-						echo '<div class="gallery-row">';
+						echo '<div class="gallery-row row">';
 						echo '<ul class="bootstrap-post-loop-fittings bootstrap-post-loop-fittings-' . $uniqueID . ' clearfix">';
 					} // END if(\get_post_type() === 'fitting')
 
@@ -53,7 +53,7 @@ defined('ABSPATH') or die();
 						echo '<script type="text/javascript">
 								jQuery(document).ready(function() {
 									jQuery("ul.bootstrap-post-loop-fittings-' . $uniqueID . '").bootstrapGallery({
-										"classes" : "col-lg-3 col-md-4 col-sm-6 col-xs-12",
+										"classes" : "col-lg-4 col-md-6 col-sm-6 col-xs-12",
 										"hasModal" : false
 									});
 								});
@@ -69,6 +69,11 @@ defined('ABSPATH') or die();
 				?>
 			</div> <!-- /.content -->
 		</div> <!-- /.col -->
+
+		<?php
+		\WordPress\Plugin\EveOnlineFittingManager\Helper\TemplateHelper::getTemplate('doctrine-sidebar');
+		?>
+
 	</div> <!--/.row -->
 </div><!-- container -->
 
