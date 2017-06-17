@@ -19,25 +19,6 @@
 
 <div class="container main">
 	<?php
-	$breadcrumbNavigation = \WordPress\Themes\EveOnline\Helper\NavigationHelper::getBreadcrumbNavigation();
-	if(!empty($breadcrumbNavigation)) {
-		?>
-		<!--
-		// Breadcrumb Navigation
-		-->
-		<!--<div class="row">-->
-		<div class="clearfix">
-			<div class="col-md-12 breadcrumb-wrapper">
-				<?php echo $breadcrumbNavigation; ?>
-			</div><!--/.col -->
-		</div><!--/.row -->
-		<?php
-	} // END if(!empty($breadcrumbNavigation))
-	?>
-
-	<?php
-//echo '<pre>' . print_r(wp_list_categories(array('taxonomy' => 'fitting-categories', 'depth' => 999, 'hide_empty' => 0, 'title_li' => '', 'echo' => false, 'show_count' => true)), true) . '</pre>';
-
 	if(\have_posts()) {
 		while(\have_posts()) {
 			\the_post();
