@@ -581,4 +581,54 @@ class FittingHelper {
 
 		return $image;
 	}
+
+	/**
+	 * Gettng the doctrine menu for the sidebar
+	 *
+	 * @return string
+	 */
+	public static function getSidebarDoctrineMenu() {
+		$doctrineListSidebarHtml = '<ul class="sidebar-doctrine-list doctrine-list">';
+
+		// get all taxonomy terms
+		$terms = \get_terms(array(
+			'taxonomy' => 'fitting-categories',
+		));
+
+		// get terms that have children
+		$hierarchy = \_get_term_hierarchy('fitting-categories');
+
+		// Loop through every term
+		foreach($terms as $term) {
+			// skip term if it has children or is empty
+			if($term->parent) {
+				continue;
+			}
+
+			$doctrineListChildSidebarHtml = '<li class="doctrine"><a class="doctrine-link-item" href="' . \get_term_link($term->term_id) . '">' . $term->name . '</a>';
+
+			// If the term has children...
+			if(isset($hierarchy[$term->term_id])) {
+				$doctrineListChildSidebarHtml = '<li class="doctrine has-children"><a class="doctrine-link-item" href="' . \get_term_link($term->term_id) . '">' . $term->name . '</a><span class="caret dropdown-toggle" data-toggle="dropdown"><i></i></span>';
+				$doctrineListChildSidebarHtml .=  '<ul class="dropdown-menu child-doctrine-list">';
+
+				// display them
+				foreach($hierarchy[$term->term_id] as $child) {
+					/** Get the term object by its ID */
+					$child = \get_term($child, "fitting-categories");
+					$doctrineListChildSidebarHtml .=  '<li class="doctrine"><a class="doctrine-link-item" href="' . \get_term_link($child->term_id) . '">' . $child->name . '</a></li>';
+
+				}
+
+				$doctrineListChildSidebarHtml .=  '</ul>';
+			}
+
+			$doctrineListSidebarHtml .=  $doctrineListChildSidebarHtml;
+			$doctrineListSidebarHtml .=  '</li>';
+		}
+
+		$doctrineListSidebarHtml .= '</ul>';
+
+		return $doctrineListSidebarHtml;
+	}
 }

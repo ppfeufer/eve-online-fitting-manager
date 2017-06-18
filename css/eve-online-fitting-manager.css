@@ -37,7 +37,7 @@
 		color: inherit;
 	}
 
-	.sidebar-doctrine-list, .sidebar-doctrine-list .children, .fitting-used-in-doctrines {
+	.fitting-used-in-doctrines {
 		list-style: none;
 	}
 
@@ -59,8 +59,86 @@
 		font-size: 1.125rem;
 	}
 
-	/*
-	 Fitting Ring
+	/* Dosctrine List Sidebar
+	--------------------------------------------------------------------------*/
+	.sidebar-doctrine-list, .child-doctrine-list {
+		list-style: none;
+	}
+
+	.sidebar-doctrine-list > li > .child-doctrine-list {
+		font-size: 16px;
+		font-size: 1rem;
+	}
+
+	li.doctrine {
+		position: relative;
+		display: block;
+		padding: 10px 15px;
+	}
+
+	.doctrine.has-children .caret {
+		position: absolute;
+		right: 0;
+		top: 0;
+		z-index: 1;
+		cursor: pointer;
+		background-color: rgba(0,0,0,0.05);
+		border-bottom: 1px solid #999;
+		display: block;
+		height: 40px;
+		width: 40px;
+		border: 0;
+	}
+
+	.doctrine.has-children .caret i {
+		display: block;
+		width: .625rem;
+		height: .625rem;
+		-webkit-transform: translate(-50%,-50%) rotate(45deg);
+		-moz-transform: translate(-50%,-50%) rotate(45deg);
+		-ms-transform: translate(-50%,-50%) rotate(45deg);
+		transform: translate(-50%,-50%) rotate(45deg);
+		border: 2px solid currentColor;
+		border-width: 0 2px 2px 0;
+		transition: all .2s;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+	}
+
+	.sidebar-doctrine-list .dropdown-menu {
+		position: initial;
+		float: none;
+		box-shadow: none;
+		background-color: transparent;
+		border: none;
+		padding-left: 0;
+	}
+
+	.sidebar-doctrine-list .dropdown-menu > li > a:hover, .sidebar-doctrine-list .dropdown-menu > li > a:focus {
+		background-color: transparent;
+	}
+
+	.doctrine-link-item, .dropdown-menu .doctrine-link-item {
+		position: relative;
+		display: block;
+		color: inherit;
+	}
+
+	.dropdown-menu .doctrine-link-item:hover {
+		color: #23527c;
+		text-decoration: underline;
+	}
+
+	.child-doctrine-list .doctrine {
+		padding: 0;
+	}
+
+	.sidebar-doctrine-list > li {
+		padding-left: 0;
+	}
+
+	/* Fitting Ring
 	--------------------------------------------------------------------------*/
 	.fittingPanel {
 		position: relative;
