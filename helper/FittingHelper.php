@@ -7,6 +7,7 @@ use WordPress\Plugin\EveOnlineFittingManager;
 \defined('ABSPATH') or die();
 
 class FittingHelper {
+
 	/**
 	 * Getting High Slot Item Names
 	 *
@@ -212,7 +213,9 @@ class FittingHelper {
 		}
 
 		return false;
-	} // END public function getItemDetailsByItemName($itemName)
+	}
+
+// END public function getItemDetailsByItemName($itemName)
 
 	/**
 	 * Getting Items Data
@@ -233,7 +236,9 @@ class FittingHelper {
 		}
 
 		return false;
-	} // END public function getItemDetailsByItemName($itemName)
+	}
+
+// END public function getItemDetailsByItemName($itemName)
 
 	/**
 	 * Getting an item ID ny its item name
@@ -250,7 +255,9 @@ class FittingHelper {
 		}
 
 		return $returnValue;
-	} // END public function getItemIdByName($itemName)
+	}
+
+// END public function getItemIdByName($itemName)
 
 	/**
 	 * Getting an item name by its iten ID
@@ -274,13 +281,17 @@ class FittingHelper {
 		$itemName = EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
 
 		return $itemName;
-	} // END public function getItemNameById($itemID)
+	}
+
+// END public function getItemNameById($itemID)
 
 	public static function getDescriptionItemDetailsByItemName($itemName) {
 		$itemDetails = self::getItemDetailsByItemName($itemName);
 
 		return $itemDetails;
-	} // END public function getDescriptionItemDetailsByItemName($itemName)
+	}
+
+// END public function getDescriptionItemDetailsByItemName($itemName)
 
 	/**
 	 * Getting a fitting DNA from its fitting data
@@ -406,7 +417,9 @@ class FittingHelper {
 		$shipDnaString .= ':';
 
 		return $shipDnaString;
-	} // END public function getShipDnaFromFittingData($fittingData)
+	}
+
+// END public function getShipDnaFromFittingData($fittingData)
 
 	/**
 	 * Getting the slot layout from fitting data
@@ -462,7 +475,9 @@ class FittingHelper {
 			'rigSlots' => $currentRigSlots,
 			'subSystems' => $currentSubSystems
 		);
-	} // END public function getSlotLayoutFromFittingArray($fitting)
+	}
+
+// END public function getSlotLayoutFromFittingArray($fitting)
 
 	/**
 	 * Getting the count of high slots of a given ship by its ID
@@ -470,7 +485,7 @@ class FittingHelper {
 	 * @param int $shipID
 	 * @return int
 	 */
-	 public static function getHighSlotCountForShipID($shipID) {
+	public static function getHighSlotCountForShipID($shipID) {
 		$sql = EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `value`
 				FROM `kb3_dgmtypeattributes`
 				JOIN `kb3_dgmattributetypes` ON `attributeName` = "hiSlots"
@@ -478,7 +493,9 @@ class FittingHelper {
 				AND `kb3_dgmtypeattributes`.`typeID` = %d', array($shipID));
 
 		return EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
-	} // END public function getHighSlotCountForShipID($shipID)
+	}
+
+// END public function getHighSlotCountForShipID($shipID)
 
 	/**
 	 * Getting the count of mid slots of a given ship by its ID
@@ -494,7 +511,9 @@ class FittingHelper {
 				AND `kb3_dgmtypeattributes`.`typeID` = %d', array($shipID));
 
 		return EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
-	} // END public function getMidSlotCountForShipID($shipID)
+	}
+
+// END public function getMidSlotCountForShipID($shipID)
 
 	/**
 	 * Getting the count of low slots of a given ship by its ID
@@ -510,7 +529,9 @@ class FittingHelper {
 				AND `kb3_dgmtypeattributes`.`typeID` = %d', array($shipID));
 
 		return EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
-	} // END public function getLowSlotCountForShipID($shipID)
+	}
+
+// END public function getLowSlotCountForShipID($shipID)
 
 	/**
 	 * Getting the amount of high slots modified by a subsystem
@@ -526,7 +547,9 @@ class FittingHelper {
 				AND `kb3_dgmtypeattributes`.`typeID` = %d', array($subsystemID));
 
 		return EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
-	} // END public function getHighSlotModifierCountForShipID($subsystemID)
+	}
+
+// END public function getHighSlotModifierCountForShipID($subsystemID)
 
 	/**
 	 * Getting the amount of mid slots modified by a subsystem
@@ -542,7 +565,9 @@ class FittingHelper {
 				AND `kb3_dgmtypeattributes`.`typeID` = %d', array($subsystemID));
 
 		return EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
-	} // END public function getMidSlotModifierCountForShipID($subsystemID)
+	}
+
+// END public function getMidSlotModifierCountForShipID($subsystemID)
 
 	/**
 	 * Getting the amount of low slots modified by a subsystem
@@ -558,7 +583,9 @@ class FittingHelper {
 				AND `kb3_dgmtypeattributes`.`typeID` = %d', array($subsystemID));
 
 		return EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
-	} // END public function getLowSlotModifierCountForShipID($subsystemID)
+	}
+
+// END public function getLowSlotModifierCountForShipID($subsystemID)
 
 	/**
 	 * Getting the count of rig slots of a given ship by its ID
@@ -574,10 +601,12 @@ class FittingHelper {
 				AND `kb3_dgmtypeattributes`.`typeID` = %d', array($shipID));
 
 		return EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
-	} // END public function getRigSlotCountForShipID($shipID)
+	}
+
+// END public function getRigSlotCountForShipID($shipID)
 
 	public static function getShipImageById($itemID = null, $size = 512) {
-		$image = ImageHelper::getLocalCacheImageUriForRemoteImage('ship', EveApiHelper::getInstance()->getImageServerUrl('inventory') . $itemID . '_'.$size . '.png');
+		$image = ImageHelper::getLocalCacheImageUriForRemoteImage('ship', EveApiHelper::getInstance()->getImageServerUrl('inventory') . $itemID . '_' . $size . '.png');
 
 		return $image;
 	}
@@ -593,11 +622,12 @@ class FittingHelper {
 		// get all taxonomy terms
 		$terms = \get_terms(array(
 			'taxonomy' => 'fitting-categories',
+			'depth' => 9999,
+			'hierarchical' => true
 		));
 
 		// get terms that have children
 		$hierarchy = \_get_term_hierarchy('fitting-categories');
-
 		// Loop through every term
 		foreach($terms as $term) {
 			// skip term if it has children or is empty
@@ -616,8 +646,22 @@ class FittingHelper {
 				foreach($hierarchy[$term->term_id] as $child) {
 					/** Get the term object by its ID */
 					$child = \get_term($child, "fitting-categories");
-					$doctrineListChildSidebarHtml .=  '<li class="doctrine"><a class="doctrine-link-item" href="' . \get_term_link($child->term_id) . '">' . $child->name . '</a></li>';
+					$doctrineListChildSecondLevelSidebarHtml =  '<li class="doctrine"><a class="doctrine-link-item" href="' . \get_term_link($term->term_id) . '">' . $term->name . '</a></li>';
 
+					// 2nd level
+					if(isset($hierarchy[$child->term_id])) {
+						$doctrineListChildSecondLevelSidebarHtml = '<li class="doctrine has-children"><a class="doctrine-link-item" href="' . \get_term_link($child->term_id) . '">' . $child->name . '</a>';
+						$doctrineListChildSecondLevelSidebarHtml .=  '<ul class="dropdown-menu child-doctrine-second-level child-doctrine-list">';
+
+						foreach($hierarchy[$child->term_id] as $childSecondLevel) {
+							$childSecondLevel = \get_term($childSecondLevel, "fitting-categories");
+							$doctrineListChildSecondLevelSidebarHtml .=  '<li class="doctrine"><a class="doctrine-link-item" href="' . \get_term_link($childSecondLevel->term_id) . '">' . $childSecondLevel->name . '</a></li>';
+						}
+
+						$doctrineListChildSecondLevelSidebarHtml .=  '</ul>';
+					}
+
+					$doctrineListChildSidebarHtml .= $doctrineListChildSecondLevelSidebarHtml;
 				}
 
 				$doctrineListChildSidebarHtml .=  '</ul>';
@@ -631,4 +675,13 @@ class FittingHelper {
 
 		return $doctrineListSidebarHtml;
 	}
+
+	public static function getDoctrineSubDoctrines($doctrineID) {
+		return get_terms(array(
+			'taxonomy' => 'fitting-categories',
+			'parent' => $doctrineID,
+			'hide_empty' => false
+		));
+	}
+
 }

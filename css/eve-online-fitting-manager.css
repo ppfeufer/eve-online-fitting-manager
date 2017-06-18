@@ -65,6 +65,12 @@
 		list-style: none;
 	}
 
+	.sidebar-doctrine-list, .child-doctrine-list.child-doctrine-second-level {
+/*		display: block;
+		padding-left: 25px;
+		padding-left: 1.5625rem;*/
+	}
+
 	.sidebar-doctrine-list > li > .child-doctrine-list {
 		font-size: 16px;
 		font-size: 1rem;
@@ -113,6 +119,12 @@
 		background-color: transparent;
 		border: none;
 		padding-left: 0;
+	}
+
+	.sidebar-doctrine-list .dropdown-menu.child-doctrine-second-level {
+		display: block;
+		padding-left: 25px;
+		padding-left: 1.5625rem;
 	}
 
 	.sidebar-doctrine-list .dropdown-menu > li > a:hover, .sidebar-doctrine-list .dropdown-menu > li > a:focus {
