@@ -622,8 +622,8 @@ class FittingHelper {
 		// get all taxonomy terms
 		$terms = \get_terms(array(
 			'taxonomy' => 'fitting-categories',
-			'depth' => 9999,
-			'hierarchical' => true
+//			'depth' => 9999,
+//			'hierarchical' => true
 		));
 
 		// get terms that have children
@@ -646,7 +646,7 @@ class FittingHelper {
 				foreach($hierarchy[$term->term_id] as $child) {
 					/** Get the term object by its ID */
 					$child = \get_term($child, "fitting-categories");
-					$doctrineListChildSecondLevelSidebarHtml =  '<li class="doctrine"><a class="doctrine-link-item" href="' . \get_term_link($term->term_id) . '">' . $term->name . '</a></li>';
+					$doctrineListChildSecondLevelSidebarHtml =  '<li class="doctrine"><a class="doctrine-link-item" href="' . \get_term_link($child->term_id) . '">' . $child->name . '</a></li>';
 
 					// 2nd level
 					if(isset($hierarchy[$child->term_id])) {
