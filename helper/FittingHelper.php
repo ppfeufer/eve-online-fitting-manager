@@ -598,7 +598,7 @@ class FittingHelper {
 
 		// get terms that have children
 		$hierarchy = \_get_term_hierarchy('fitting-categories');
-		
+
 		// Loop through every term
 		foreach($terms as $term) {
 			// skip term if it has children or is empty
@@ -645,5 +645,47 @@ class FittingHelper {
 		$doctrineListSidebarHtml .= '</ul>';
 
 		return $doctrineListSidebarHtml;
+	}
+
+	/**
+	 * Get the search query for fittings search
+	 *
+	 * @param boolean $escaped wether the query should be escaped or not
+	 *
+	 * @return string
+	 */
+	public static function getFittingSearchQuery($escaped = true) {
+		/**
+		 * Filters the contents of the search query variable.
+		 *
+		 * @since 2.3.0
+		 *
+		 * @param mixed $search Contents of the search query variable.
+		 */
+		$query = \apply_filters('get_fitting_search_query', \get_query_var('fitting_search'));
+
+		if($escaped === true) {
+			$query = \esc_attr($query);
+		}
+
+		return $query;
+	}
+
+	public static function searchFittings() {
+		$args = array(
+			'post_type' => 'fitting',
+			'_meta_or_title' => self::getFittingSearchQuery(),
+			'compare' => 'LIKE',
+			'relation' => 'OR',
+			'meta_query' => array(
+				array(
+					'key' => 'eve-online-fitting-manager_ship_type',
+					'value' => self::getFittingSearchQuery(),
+					'compare' => 'LIKE'
+				)
+			)
+		);
+
+		return new \WP_Query($args);
 	}
 }

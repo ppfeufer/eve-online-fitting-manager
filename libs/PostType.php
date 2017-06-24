@@ -13,7 +13,7 @@ class PostType {
 //		\add_action('save_post', array($this, 'saveMetaBoxes'));
 
 		\add_filter('template_include', array($this, 'templateLoader'));
-//		\add_filter('page_template', array($this, 'registerPageTemplate'));
+		\add_filter('page_template', array($this, 'registerPageTemplate'));
 	} // END public function __construct()
 
 	public function customPostType() {
@@ -150,8 +150,8 @@ class PostType {
 	} // END function templateLoader($template)
 
 	public function registerPageTemplate($pageTemplate) {
-		if(\is_page($this->getPosttypeSlug('fitting'))) {
-			$pageTemplate = dirname( __FILE__ ) . '/custom-page-template.php';
+		if(\is_page($this->getPosttypeSlug('fittings'))) {
+			$pageTemplate = EveOnlineFittingManager\Helper\PluginHelper::getPluginPath('templates/page-fittings.php');
 		}
 
 		return $pageTemplate;

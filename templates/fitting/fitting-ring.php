@@ -180,7 +180,7 @@ if($subSystems !== null) {
 
 <script type="text/javascript">
 jQuery(document).ready(function($) {
-	$(function () {
+	$(function() {
 		$('[data-toggle="tooltip"]').tooltip();
 	})
 });

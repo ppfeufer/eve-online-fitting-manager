@@ -61,6 +61,10 @@
 
 	/* Dosctrine List Sidebar
 	--------------------------------------------------------------------------*/
+	.fitting-sidebar-search {
+		padding: 10px 0;
+	}
+
 	.sidebar-doctrine-list, .child-doctrine-list {
 		list-style: none;
 	}

@@ -41,7 +41,40 @@
 							?>
 						</header>
 						<article class="post clearfix" id="post-<?php \the_ID(); ?>">
-							<?php echo \the_content(); ?>
+							<?php
+							if(!empty(\get_query_var('fitting_search'))) {
+								$query = WordPress\Plugin\EveOnlineFittingManager\Helper\FittingHelper::searchFittings();
+
+								if($query->have_posts()) {
+									$uniqueID = \uniqid();
+
+									echo '<div class="gallery-row row">';
+									echo '<ul class="bootstrap-post-loop-fittings bootstrap-post-loop-fittings-' . $uniqueID . ' clearfix">';
+
+									while($query->have_posts()) {
+										$query->the_post();
+
+										echo '<li>';
+										\WordPress\Plugin\EveOnlineFittingManager\Helper\TemplateHelper::getTemplate('content-fitting');
+										echo '</li>';
+									}
+
+									echo '</ul>';
+									echo '</div>';
+
+									echo '<script type="text/javascript">
+											jQuery(document).ready(function() {
+												jQuery("ul.bootstrap-post-loop-fittings-' . $uniqueID . '").bootstrapGallery({
+													"classes" : "col-lg-4 col-md-6 col-sm-6 col-xs-12",
+													"hasModal" : false
+												});
+											});
+											</script>';
+								}
+							} else {
+								echo \the_content();
+							}
+							?>
 						</article>
 					</div> <!-- /.content -->
 				</div> <!-- /.col -->

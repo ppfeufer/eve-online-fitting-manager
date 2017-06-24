@@ -76,7 +76,9 @@ class EveOnlineFittingManager {
 
 		\add_action('wp_enqueue_scripts', array($this, 'enqueueJavaScript'));
 		\add_action('wp_enqueue_scripts', array($this, 'enqueueStylesheet'));
-		\add_action('pre_get_posts', array($this, 'customQueryVars'));
+		\add_action('pre_get_posts', array($this, 'customPageQueryVars'));
+
+		\add_filter('query_vars', array($this, 'addQueryVarsFilter'));
 
 		new Libs\PostType;
 
@@ -92,6 +94,7 @@ class EveOnlineFittingManager {
 	public function enqueueJavaScript() {
 //		\wp_enqueue_script('eve-online-fitting-manager-js', $this->getPluginUri() . 'js/eve-online-fitting-manager.min.js', array('jquery'), '', true);
 		\wp_enqueue_script('bootstrap-gallery-js', $this->getPluginUri() . 'js/jquery.bootstrap-gallery.min.js', array('jquery'), '', true);
+//		\wp_enqueue_script('svg4everybody', $this->getPluginUri() . 'js/svg4everybody.min.js', array('jquery'), '', true);
 	} // END public function enqueueJavaScript()
 
 	public function enqueueStylesheet() {
@@ -124,7 +127,7 @@ class EveOnlineFittingManager {
 		\update_option($this->getDatabaseVersionFieldName(), $this->getCurrentPluginDatabaseVersion());
 	} // END private function updateDatabase()
 
-	public function customQueryVars($query) {
+	public function customPageQueryVars($query) {
 		if(!\is_admin() && $query->is_main_query()) {
 			if(isset($query->tax_query->queries['0']['taxonomy']) && $query->tax_query->queries['0']['taxonomy'] === 'fitting-categories') {
 				$query->set('posts_per_page', 9999);
@@ -134,7 +137,13 @@ class EveOnlineFittingManager {
 		} // END if(!\is_admin() && $query->is_main_query())
 
 		return $query;
-	} // END public function customQueryVars($query)
+	} // END public function customPageQueryVars($query)
+
+	public function addQueryVarsFilter($queryVars) {
+		$queryVars[] = 'fitting_search';
+
+		return $queryVars;
+	} // END public function addQueryVarsFilter($queryVars)
 
 	/**
 	 * Getting the Plugin's settings
