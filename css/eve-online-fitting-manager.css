@@ -135,6 +135,11 @@
 		background-color: transparent;
 	}
 
+	.sidebar-doctrine-list .doctrine-current > .doctrine-link-item,
+	.sidebar-doctrine-list .doctrine-active > .doctrine-link-item {
+		color: #23527c;
+	}
+
 	.doctrine-link-item, .dropdown-menu .doctrine-link-item {
 		position: relative;
 		display: block;

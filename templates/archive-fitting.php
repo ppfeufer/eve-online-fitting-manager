@@ -2,24 +2,27 @@
 defined('ABSPATH') or die();
 
 \get_header();
+
+
+$doctrineData = \get_queried_object();
+//echo '<pre>' . print_r($doctrine, true) . '</pre>';
 ?>
 
-<div class="container main">
+<div class="container main" data-doctrine="<?php echo $doctrineData->slug; ?>">
 	<div class="main-content clearfix">
 		<div class="col-lg-9 col-md-9 col-sm-9 col-9">
 			<div class="content content-archive doctrine-list">
 				<header class="page-title">
 					<h2>
 						<?php
-						echo \__('Doctrine:', 'eve-online') . \single_cat_title(' ', false);
+						echo \__('Doctrine:', 'eve-online') . ' ' . $doctrineData->name;
 						?>
 					</h2>
 					<?php
 					// Show an optional category description
-					$category_description = \category_description();
-					if($category_description) {
-						echo \apply_filters('category_archive_meta', '<div class="category-archive-meta">' . $category_description . '</div>');
-					} // END if($category_description)
+					if(!empty($doctrineData->description)) {
+						echo \apply_filters('category_archive_meta', '<div class="category-archive-meta">' . $doctrineData->description . '</div>');
+					} // END if(!empty($doctrine->description))
 					?>
 				</header>
 				<?php
@@ -76,5 +79,17 @@ defined('ABSPATH') or die();
 
 	</div> <!--/.row -->
 </div><!-- container -->
+
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+	$(function() {
+		var doctrineSlug = $('.container.main').data('doctrine');
+
+		$('.sidebar-doctrine-list').find('li.doctrine-' + doctrineSlug).addClass('doctrine-current');
+		$('.sidebar-doctrine-list').find('li.doctrine-' + doctrineSlug).parent().parent().addClass('doctrine-active');
+		$('.sidebar-doctrine-list').find('li.doctrine-' + doctrineSlug).parent().parent().parent().parent().addClass('doctrine-active');
+	});
+});
+</script>
 
 <?php \get_footer(); ?>

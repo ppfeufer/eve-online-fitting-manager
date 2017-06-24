@@ -606,27 +606,27 @@ class FittingHelper {
 				continue;
 			}
 
-			$doctrineListChildSidebarHtml = '<li class="doctrine"><a class="doctrine-link-item" href="' . \get_term_link($term->term_id) . '">' . $term->name . '</a>';
+			$doctrineListChildSidebarHtml = '<li class="doctrine doctrine-' . $term->slug . '"><a class="doctrine-link-item" href="' . \get_term_link($term->term_id) . '">' . $term->name . '</a>';
 
 			// If the term has children...
 			if(isset($hierarchy[$term->term_id])) {
-				$doctrineListChildSidebarHtml = '<li class="doctrine has-children"><a class="doctrine-link-item" href="' . \get_term_link($term->term_id) . '">' . $term->name . '</a><span class="caret dropdown-toggle" data-toggle="dropdown"><i></i></span>';
+				$doctrineListChildSidebarHtml = '<li class="doctrine doctrine-' . $term->slug . ' has-children"><a class="doctrine-link-item" href="' . \get_term_link($term->term_id) . '">' . $term->name . '</a><span class="caret dropdown-toggle" data-toggle="dropdown"><i></i></span>';
 				$doctrineListChildSidebarHtml .=  '<ul class="dropdown-menu child-doctrine-list">';
 
 				// display them
 				foreach($hierarchy[$term->term_id] as $child) {
 					// Get the term object by its ID
 					$child = \get_term($child, "fitting-categories");
-					$doctrineListChildSecondLevelSidebarHtml =  '<li class="doctrine"><a class="doctrine-link-item" href="' . \get_term_link($child->term_id) . '">' . $child->name . '</a></li>';
+					$doctrineListChildSecondLevelSidebarHtml =  '<li class="doctrine doctrine-' . $child->slug . '"><a class="doctrine-link-item" href="' . \get_term_link($child->term_id) . '">' . $child->name . '</a></li>';
 
 					// 2nd level
 					if(isset($hierarchy[$child->term_id])) {
-						$doctrineListChildSecondLevelSidebarHtml = '<li class="doctrine has-children"><a class="doctrine-link-item" href="' . \get_term_link($child->term_id) . '">' . $child->name . '</a>';
+						$doctrineListChildSecondLevelSidebarHtml = '<li class="doctrine doctrine-' . $child->slug . ' has-children"><a class="doctrine-link-item" href="' . \get_term_link($child->term_id) . '">' . $child->name . '</a>';
 						$doctrineListChildSecondLevelSidebarHtml .=  '<ul class="dropdown-menu child-doctrine-second-level child-doctrine-list">';
 
 						foreach($hierarchy[$child->term_id] as $childSecondLevel) {
 							$childSecondLevel = \get_term($childSecondLevel, "fitting-categories");
-							$doctrineListChildSecondLevelSidebarHtml .=  '<li class="doctrine"><a class="doctrine-link-item" href="' . \get_term_link($childSecondLevel->term_id) . '">' . $childSecondLevel->name . '</a></li>';
+							$doctrineListChildSecondLevelSidebarHtml .=  '<li class="doctrine doctrine-' . $childSecondLevel->slug . '"><a class="doctrine-link-item" href="' . \get_term_link($childSecondLevel->term_id) . '">' . $childSecondLevel->name . '</a></li>';
 						}
 
 						$doctrineListChildSecondLevelSidebarHtml .=  '</ul>';
