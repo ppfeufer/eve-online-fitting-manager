@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: EVE Online Fitting Manager for WordPress\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-09 09:18+0000\n"
-"PO-Revision-Date: 2017-02-09 09:18+0000\n"
+"POT-Creation-Date: 2017-06-26 12:52+0000\n"
+"PO-Revision-Date: 2017-06-26 12:53+0000\n"
 "Last-Translator: ppfeufer <p.pfeufer@thamm-it.de>\n"
 "Language-Team: German\n"
 "Language: de-DE\n"
@@ -13,65 +13,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco - https://localise.biz/"
 
-#: libs/PostType.php:18 libs/PostType.php:34
-msgid "Fitting Categories"
-msgstr ""
-
-#: libs/PostType.php:19
-msgid "Fitting Category"
-msgstr ""
-
-#: libs/PostType.php:20
-msgid "Search Fitting Categories"
-msgstr ""
-
-#: libs/PostType.php:21
-msgid "Popular Fitting Categories"
-msgstr ""
-
-#: libs/PostType.php:22
-msgid "All Fitting Categories"
-msgstr ""
-
-#: libs/PostType.php:23
-msgid "Parent Fitting Categories"
-msgstr ""
-
-#: libs/PostType.php:24
-msgid "Edit Fitting Categories"
-msgstr ""
-
-#: libs/PostType.php:25
-msgid "Update Fitting Categories"
-msgstr ""
-
-#: libs/PostType.php:26
-msgid "Add New Fitting Categories"
-msgstr ""
-
-#: libs/PostType.php:27
-msgid "New Fitting Categories"
-msgstr ""
-
-#: libs/PostType.php:28
-msgid "Separate Fitting Categories with commas"
-msgstr ""
-
-#: libs/PostType.php:29
-msgid "Add or remove Fitting Categories"
-msgstr ""
-
-#: libs/PostType.php:30
-msgid "Choose from most used Fitting Categories"
-msgstr ""
-
-#: libs/PostType.php:56
-msgid "Fittings"
-msgstr ""
-
-#: libs/PostType.php:57
-msgid "Fitting"
-msgstr ""
+#: libs/MetaBoxes.php:16
+msgid "EFT Fitting"
+msgstr "EFT Fitting"
 
 #: libs/PluginSettings.php:31 libs/PluginSettings.php:32
 msgid "EVE Online Fittings Manager"
@@ -91,21 +35,113 @@ msgstr ""
 "dieses Plugin funktioniert. Aus dieser Datenbank werden die notwendigen "
 "Informationen zu Schiffen und Modulen gelesen."
 
-#: libs/PluginSettings.php:57
+#: libs/PluginSettings.php:72
 msgid "DB Host"
 msgstr "DB Host"
 
-#: libs/PluginSettings.php:62
+#: libs/PluginSettings.php:77
 msgid "DB Name"
 msgstr "DB Name"
 
-#: libs/PluginSettings.php:66
+#: libs/PluginSettings.php:81
 msgid "DB User"
 msgstr "DB Nutzer"
 
-#: libs/PluginSettings.php:70
+#: libs/PluginSettings.php:85
 msgid "DB Password"
 msgstr "DB Passwort"
+
+#: libs/PostType.php:20 libs/PostType.php:36 templates/doctrine-sidebar.php:3
+msgid "Doctrines"
+msgstr "Doktrinen"
+
+#: libs/PostType.php:21
+msgid "Fitting Category"
+msgstr "Fitting Kategorie"
+
+#: libs/PostType.php:22
+msgid "Search Fitting Categories"
+msgstr "Suche Fitting Kategorien"
+
+#: libs/PostType.php:23
+msgid "Popular Fitting Categories"
+msgstr "Häufige Fitting Kategorien"
+
+#: libs/PostType.php:24
+msgid "All Fitting Categories"
+msgstr "Alle Fitting Kategorien"
+
+#: libs/PostType.php:25
+msgid "Parent Fitting Categories"
+msgstr "Übergeordnete Fitting Kategories"
+
+#: libs/PostType.php:26
+msgid "Edit Fitting Categories"
+msgstr "Fitting Kategorien bearbeiten"
+
+#: libs/PostType.php:27
+msgid "Update Fitting Categories"
+msgstr "Fitting Kategorien aktualisieren"
+
+#: libs/PostType.php:28
+msgid "Add New Fitting Categories"
+msgstr "Fitting Kategorie hinzufügen"
+
+#: libs/PostType.php:29
+msgid "New Fitting Categories"
+msgstr "Neue Fitting Kategorien"
+
+#: libs/PostType.php:30
+msgid "Separate Fitting Categories with commas"
+msgstr "Fitting Kategorien mit Komma trennen"
+
+#: libs/PostType.php:31
+msgid "Add or remove Fitting Categories"
+msgstr "Fitting Kategorien hinzufügen der entfernen"
+
+#: libs/PostType.php:32
+msgid "Choose from most used Fitting Categories"
+msgstr "Wähle von den meist genutzten Fitting Kategorien"
+
+#: libs/PostType.php:56
+msgid "Fittings"
+msgstr "Fittings"
+
+#: libs/PostType.php:57
+msgid "Fitting"
+msgstr "Fitting"
+
+#: templates/content-single-fitting.php:11
+msgid "Edit"
+msgstr "Bearbeiten"
+
+#: templates/content-single-fitting.php:24
+msgid "Fitting Description and Information"
+msgstr "Fitting Beschreibung und Informationen"
+
+#: templates/content-single-fitting.php:34
+msgid "Fitting Visualization"
+msgstr "Visuelle Darstellung"
+
+#: templates/content-single-fitting.php:41
+msgid "This fitting is used in the following doctrines:"
+msgstr "Dieses Fitting wird in folgenden Doktrinen genutzt:"
+
+#: templates/content-single-fitting.php:49
+msgid "EFT Import"
+msgstr "EFT Import"
+
+#: templates/doctrine-sidebar.php:8
+msgid "Search"
+msgstr "Suche"
+
+#: templates/doctrine-sidebar.php:9
+msgid "Search Ship Type"
+msgstr "Suche Shiffstyp"
+
+#: templates/fitting/fitting-ring.php:176
+msgid "View Loadout @Osmium.org"
+msgstr "Fitting anzeigen @Osmium.org"
 
 #. Name of the plugin
 msgid "EVE Online Fitting Manager for WordPress"
@@ -113,13 +149,13 @@ msgstr "EVE Online Fitting Manager für WordPress"
 
 #. Description of the plugin
 msgid ""
-"A little management tool for your doctrine fittings for your WordPress "
+"A little management tool for your doctrine fittings in your WordPress "
 "website. (Best with a theme running with <a href=\"http://getbootstrap."
 "com/\">Bootstrap</a>)"
 msgstr ""
-"Ein kleines Tool um eure Doctrine Fittings in eurer WordPress Website zu "
-"verwalten. (Am besten läufts mit einem Theme welches <a href=\"http:"
-"//getbootstrap.com/\">Bootstrap</a> nutzt.)"
+"Ein kleines Helferlein um die Doktrinen und Fittings in WordPress zu managen."
+" (Am besten mit einem Theme das <a href=\"http://getbootstrap.com/\">"
+"Bootstrap</a> verwendet.)"
 
 #. URI of the plugin
 msgid "https://github.com/ppfeufer/eve-online-fitting-manager"

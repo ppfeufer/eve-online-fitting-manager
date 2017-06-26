@@ -17,7 +17,7 @@ class PostType {
 	public function customPostType() {
 		$var_sSlug = self::getPosttypeSlug('fittings');
 		$array_Labels = array(
-			'name' => \__('Fitting Categories', 'eve-online-fitting-manager'),
+			'name' => \__('Doctrines', 'eve-online-fitting-manager'),
 			'singular_name' => \__('Fitting Category', 'eve-online-fitting-manager'),
 			'search_items' => \__('Search Fitting Categories', 'eve-online-fitting-manager'),
 			'popular_items' => \__('Popular Fitting Categories', 'eve-online-fitting-manager'),
@@ -33,7 +33,7 @@ class PostType {
 		);
 
 		$array_Args = array(
-			'label' => \__('Fitting Categories', 'eve-online-fitting-manager'),
+			'label' => \__('Doctrines', 'eve-online-fitting-manager'),
 			'labels' => $array_Labels,
 			'public' => true,
 			'hierarchical' => true,
