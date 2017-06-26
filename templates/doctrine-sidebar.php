@@ -1,23 +1,53 @@
 
 <div class="col-lg-3 col-md-3 col-sm-3 col-3 sidebar-wrapper">
-	<h4 class="widget-title"><?php echo \__('Doctrines', 'eve-online-fitting-manager'); ?></h4>
-
-	<div class="fitting-sidebar-search">
-		<form action="/<?php echo WordPress\Plugin\EveOnlineFittingManager\Libs\PostType::getPosttypeSlug('fittings'); ?>/" method="GET" id="fitting_search" role="search">
-			<div class="input-group">
-				<label class="sr-only" for="fitting_search"><?php echo \__('Search', 'eve-online-fitting-manager') ?></label>
-				<input type="text" class="form-control" id="fitting_search" name="fitting_search" placeholder="<?php echo \__('Search Ship Type', 'eve-online-fitting-manager') ?>" value="<?php echo WordPress\Plugin\EveOnlineFittingManager\Helper\FittingHelper::getFittingSearchQuery(true); ?>">
-				<!--<input type="hidden" name="post_type" value="fitting" />-->
-				<div class="input-group-btn">
-					<button type="submit" class="btn btn-default">
-						<span class="glyphicon glyphicon-search"></span>
-					</button>
+	<?php
+	/**
+	 * Filter the Navigation by doctrines
+	 */
+	$countDoctrineShips = \get_terms(array('taxonomy' => 'fitting-categories', 'fields' => 'count'));
+	if($countDoctrineShips > 0) {
+		?>
+		<aside>
+			<div class="widget">
+				<h4 class="widget-title"><?php echo \__('Search Doctrines', 'eve-online-fitting-manager'); ?></h4>
+				<div class="fitting-sidebar-search">
+					<form action="/<?php echo WordPress\Plugin\EveOnlineFittingManager\Libs\PostType::getPosttypeSlug('fittings'); ?>/" method="GET" id="fitting_search" role="search">
+						<div class="input-group">
+							<label class="sr-only" for="fitting_search"><?php echo \__('Search', 'eve-online-fitting-manager') ?></label>
+							<input type="text" class="form-control" id="fitting_search" name="fitting_search" placeholder="<?php echo \__('Search Ship Type', 'eve-online-fitting-manager') ?>" value="<?php echo WordPress\Plugin\EveOnlineFittingManager\Helper\FittingHelper::getFittingSearchQuery(true); ?>">
+							<div class="input-group-btn">
+								<button type="submit" class="btn btn-default">
+									<span class="glyphicon glyphicon-search"></span>
+								</button>
+							</div>
+						</div>
+					</form>
 				</div>
 			</div>
-		</form>
-	</div>
+		</aside>
 
-	<?php
-	echo \WordPress\Plugin\EveOnlineFittingManager\Helper\FittingHelper::getSidebarDoctrineMenu();
+		<aside>
+			<div class="widget">
+				<h4 class="widget-title"><?php echo \__('Doctrines', 'eve-online-fitting-manager'); ?></h4>
+				<?php echo \WordPress\Plugin\EveOnlineFittingManager\Helper\FittingHelper::getSidebarMenu('fitting-categories'); ?>
+			</div>
+		</aside>
+		<?php
+	} // END if($countDoctrineShips > 0)
+
+	/**
+	 * Filter the Navigation by ship types
+	 */
+	$countShipTypes = \get_terms(array('taxonomy' => 'fitting-ships', 'fields' => 'count'));
+	if($countShipTypes > 0) {
+		?>
+		<aside>
+			<div class="widget">
+				<h4 class="widget-title"><?php echo \__('Ship Types', 'eve-online-fitting-manager'); ?></h4>
+				<?php echo \WordPress\Plugin\EveOnlineFittingManager\Helper\FittingHelper::getSidebarMenu('fitting-ships'); ?>
+			</div>
+		</aside>
+		<?php
+	} // END if($countShipTypes > 0)
 	?>
 </div>
