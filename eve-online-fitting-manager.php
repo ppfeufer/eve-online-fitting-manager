@@ -93,7 +93,7 @@ class EveOnlineFittingManager {
 
 	public function enqueueJavaScript() {
 		\wp_enqueue_script('bootstrap-js', $this->getPluginUri() . 'bootstrap/js/bootstrap.min.js', array('jquery'), '', true);
-		\wp_enqueue_script('bootstrap-toolkit', $this->getPluginUri() . 'bootstrap/bootstrap-toolkit/bootstrap-toolkit.min.js', array('jquery', 'bootstrap-js'), '', true);
+		\wp_enqueue_script('bootstrap-toolkit-js', $this->getPluginUri() . 'bootstrap/bootstrap-toolkit/bootstrap-toolkit.min.js', array('jquery', 'bootstrap-js'), '', true);
 		\wp_enqueue_script('bootstrap-gallery-js', $this->getPluginUri() . 'js/jquery.bootstrap-gallery.min.js', array('jquery', 'bootstrap-js'), '', true);
 //		\wp_enqueue_script('svg4everybody', $this->getPluginUri() . 'js/svg4everybody.min.js', array('jquery'), '', true);
 //		\wp_enqueue_script('eve-online-fitting-manager-js', $this->getPluginUri() . 'js/eve-online-fitting-manager.min.js', array('jquery'), '', true);
