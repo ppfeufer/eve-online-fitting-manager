@@ -36,7 +36,7 @@ class EveOnlineFittingManager {
 		$this->pluginUri = \trailingslashit(\plugins_url('/', __FILE__));
 		$this->optionName = 'eve-online-fitting-manager-options';
 		$this->dbVersionFieldName = 'eve-online-fitting-manager-database-version';
-		$this->databaseVersion = '20160906';
+		$this->databaseVersion = '20170626';
 
 		\add_action('plugins_loaded', array($this, 'checkPluginDependencies'));
 
@@ -115,6 +115,9 @@ class EveOnlineFittingManager {
 	private function updateDatabase() {
 		$defaultSettings = $this->getDefaultSettings();
 		$pluginSettings = $this->getPluginSettings(false);
+
+		// flushing the WP database cache first ...
+		\wp_cache_flush();
 
 		if(\is_array($pluginSettings)) {
 			$newOptions = \array_merge($defaultSettings, $pluginSettings);

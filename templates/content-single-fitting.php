@@ -41,7 +41,16 @@
 							<?php echo \__('This fitting is used in the following doctrines:', 'eve-online-fitting-manager'); ?>
 						</p>
 
-						<?php echo \get_the_term_list(\get_the_ID(), 'fitting-doctrines', '<ul class="fitting-used-in-doctrines"><li>» ', '</li><li>» ', '</li></ul>');?>
+						<?php
+						$usedInDoctrines = \WordPress\Plugin\EveOnlineFittingManager\Helper\FittingHelper::getShipUsedInDoctrine();
+						if($usedInDoctrines !== null) {
+							echo '<ul class="fitting-used-in-doctrines">';
+							foreach($usedInDoctrines as $doctrine) {
+								echo '<li>» <a href="' . \get_term_link($doctrine) . '">' . $doctrine->name . '</a></li>';
+							}
+							echo '</ul>';
+						}
+						?>
 					</div>
 				</div>
 
