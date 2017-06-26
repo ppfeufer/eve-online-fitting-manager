@@ -131,11 +131,11 @@ class EveOnlineFittingManager {
 
 	public function customPageQueryVars($query) {
 		if(!\is_admin() && $query->is_main_query()) {
-			if(isset($query->tax_query->queries['0']['taxonomy']) && $query->tax_query->queries['0']['taxonomy'] === 'fitting-categories') {
+			if(isset($query->tax_query->queries['0']['taxonomy']) && $query->tax_query->queries['0']['taxonomy'] === 'fitting-doctrines') {
 				$query->set('posts_per_page', 9999);
 				$query->set('orderby', 'title');
 				$query->set('order', 'ASC');
-			} // END if($query->tax_query->queries['0']['taxonomy'] === 'fitting-categories')
+			} // END if($query->tax_query->queries['0']['taxonomy'] === 'fitting-doctrines')
 
 			if(isset($query->tax_query->queries['0']['taxonomy']) && $query->tax_query->queries['0']['taxonomy'] === 'fitting-ships') {
 				$query->set('posts_per_page', 9999);

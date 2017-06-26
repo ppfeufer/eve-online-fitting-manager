@@ -41,7 +41,7 @@
 							<?php echo \__('This fitting is used in the following doctrines:', 'eve-online-fitting-manager'); ?>
 						</p>
 
-						<?php echo \get_the_term_list(\get_the_ID(), 'fitting-categories', '<ul class="fitting-used-in-doctrines"><li>» ', '</li><li>» ', '</li></ul>');?>
+						<?php echo \get_the_term_list(\get_the_ID(), 'fitting-doctrines', '<ul class="fitting-used-in-doctrines"><li>» ', '</li><li>» ', '</li></ul>');?>
 					</div>
 				</div>
 

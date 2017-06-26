@@ -589,7 +589,7 @@ class FittingHelper {
 	 * @return string
 	 */
 	public static function getSidebarMenu($taxonomy) {
-		$doctrineListSidebarHtml = '<ul class="sidebar-doctrine-list doctrine-list ' . $taxonomy . '">';
+		$doctrineListSidebarHtml = '<ul class="sidebar-doctrine-list doctrine-list menu-' . $taxonomy . '">';
 
 		// get all taxonomy terms
 		$terms = \get_terms(array(

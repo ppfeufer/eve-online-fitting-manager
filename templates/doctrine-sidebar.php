@@ -4,7 +4,7 @@
 	/**
 	 * Filter the Navigation by doctrines
 	 */
-	$countDoctrineShips = \get_terms(array('taxonomy' => 'fitting-categories', 'fields' => 'count'));
+	$countDoctrineShips = \get_terms(array('taxonomy' => 'fitting-doctrines', 'fields' => 'count'));
 	if($countDoctrineShips > 0) {
 		?>
 		<aside>
@@ -29,7 +29,7 @@
 		<aside>
 			<div class="widget">
 				<h4 class="widget-title"><?php echo \__('Doctrines', 'eve-online-fitting-manager'); ?></h4>
-				<?php echo \WordPress\Plugin\EveOnlineFittingManager\Helper\FittingHelper::getSidebarMenu('fitting-categories'); ?>
+				<?php echo \WordPress\Plugin\EveOnlineFittingManager\Helper\FittingHelper::getSidebarMenu('fitting-doctrines'); ?>
 			</div>
 		</aside>
 		<?php

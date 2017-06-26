@@ -83,7 +83,7 @@ class PostType {
 			'query_var' => true
 		);
 
-		register_taxonomy('fitting-categories', array('fitting'), $argsTaxDoctrine);
+		register_taxonomy('fitting-doctrines', array('fitting'), $argsTaxDoctrine);
 		register_taxonomy('fitting-ships', array('fitting'), $argsTaxShip);
 
 		register_post_type('fitting', array(
@@ -163,7 +163,7 @@ class PostType {
 
 		if(\is_singular('fitting')) {
 			$templateFile = 'single-fitting.php';
-		} elseif(\is_archive() && \get_post_type() === 'fitting' && \is_tax('fitting-categories')) {
+		} elseif(\is_archive() && \get_post_type() === 'fitting' && \is_tax('fitting-doctrines')) {
 			$templateFile = 'archive-fitting.php';
 		} elseif(\is_archive() && \get_post_type() === 'fitting' && \is_tax('fitting-ships')) {
 			$templateFile = 'archive-ship.php';
