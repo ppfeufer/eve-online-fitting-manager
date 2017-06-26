@@ -3,7 +3,7 @@
 	<h4 class="widget-title"><?php echo \__('Doctrines', 'eve-online-fitting-manager'); ?></h4>
 
 	<div class="fitting-sidebar-search">
-		<form action="/fittings/" method="GET" id="s" role="search">
+		<form action="/<?php echo WordPress\Plugin\EveOnlineFittingManager\Libs\PostType::getPosttypeSlug('fittings'); ?>/" method="GET" id="fitting_search" role="search">
 			<div class="input-group">
 				<label class="sr-only" for="fitting_search"><?php echo \__('Search', 'eve-online-fitting-manager') ?></label>
 				<input type="text" class="form-control" id="fitting_search" name="fitting_search" placeholder="<?php echo \__('Search Ship Type', 'eve-online-fitting-manager') ?>" value="<?php echo WordPress\Plugin\EveOnlineFittingManager\Helper\FittingHelper::getFittingSearchQuery(true); ?>">

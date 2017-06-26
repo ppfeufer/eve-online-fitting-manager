@@ -9,15 +9,13 @@ use WordPress\Plugin\EveOnlineFittingManager;
 class PostType {
 	public function __construct() {
 		\add_action('init', array($this, 'customPostType'));
-//		\add_action('add_meta_boxes', array($this, 'registerMetaBoxes'));
-//		\add_action('save_post', array($this, 'saveMetaBoxes'));
 
 		\add_filter('template_include', array($this, 'templateLoader'));
 		\add_filter('page_template', array($this, 'registerPageTemplate'));
 	} // END public function __construct()
 
 	public function customPostType() {
-		$var_sSlug = $this->getPosttypeSlug('fitting');
+		$var_sSlug = self::getPosttypeSlug('fittings');
 		$array_Labels = array(
 			'name' => \__('Fitting Categories', 'eve-online-fitting-manager'),
 			'singular_name' => \__('Fitting Category', 'eve-online-fitting-manager'),
@@ -51,11 +49,7 @@ class PostType {
 			'query_var' => true
 		);
 
-		register_taxonomy('fitting-categories', array(
-			'fitting'
-			),
-			$array_Args
-		);
+		register_taxonomy('fitting-categories', array('fitting'), $array_Args);
 
 		register_post_type('fitting', array(
 			'labels' => array(
@@ -70,10 +64,7 @@ class PostType {
 				'editor',
 				'author',
 				'thumbnail',
-//				'excerpt',
 				'revisions',
-//				'trackbacks',
-//				'comments'
 			),
 			'rewrite' => array(
 				'slug' => $var_sSlug,
@@ -93,7 +84,7 @@ class PostType {
 	 *
 	 * @param string $postType
 	 */
-	private function getPosttypeSlug($postType) {
+	public static function getPosttypeSlug($postType) {
 		global $wpdb;
 
 		$var_qry = '
@@ -104,7 +95,7 @@ class PostType {
 				' . $wpdb->postmeta . '
 			WHERE
 				' . $wpdb->postmeta . '.meta_key = "_wp_page_template"
-				AND ' . $wpdb->postmeta . '.meta_value = "page-' . $postType . '.php"
+				AND ' . $wpdb->postmeta . '.meta_value = "../templates/page-' . $postType . '.php"
 				AND ' . $wpdb->posts . '.ID = ' . $wpdb->postmeta . '.post_id;';
 
 		$slugData = $wpdb->get_var($var_qry);
@@ -149,21 +140,34 @@ class PostType {
 		return $template;
 	} // END function templateLoader($template)
 
+	/**
+	 * Registering a page template
+	 *
+	 * @param string $pageTemplate
+	 * @return string
+	 */
 	public function registerPageTemplate($pageTemplate) {
-		if(\is_page($this->getPosttypeSlug('fittings'))) {
+		if(\is_page(self::getPosttypeSlug('fittings'))) {
 			$pageTemplate = EveOnlineFittingManager\Helper\PluginHelper::getPluginPath('templates/page-fittings.php');
-		}
+		} // END if(\is_page($this->getPosttypeSlug('fittings')))
 
 		return $pageTemplate;
-	}
+	} // END public function registerPageTemplate($pageTemplate)
 
-	public static function isEditPage($newEdit = null){
+	/**
+	 * Determine the type of teh edit page in backend
+	 *
+	 * @global array $pagenow
+	 * @param string $newEdit
+	 * @return boolean
+	 */
+	public static function isEditPage($newEdit = null) {
 		global $pagenow;
 
 		//make sure we are on the backend
 		if(!\is_admin()) {
 			return false;
-		}
+		} // END if(!\is_admin())
 
 		switch($newEdit) {
 			case 'edit':
@@ -177,6 +181,6 @@ class PostType {
 			default:
 				return \in_array($pagenow, array('post.php', 'post-new.php'));
 				break;
-		}
-	}
+		} // END switch($newEdit)
+	} // END public static function isEditPage($newEdit = null)
 } // END class PostType
