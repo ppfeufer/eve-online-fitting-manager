@@ -1,3 +1,5 @@
+/* global wp */
+
 jQuery(document).ready(function($) {
 	/**
 	 * Check all upload sections for uploaded files
@@ -18,12 +20,11 @@ jQuery(document).ready(function($) {
 	$('.upload, .image img, .url code').click(function(e) {
 		e.preventDefault();
 
-		var send_attachment_bkp = wp.media.editor.send.attachment;
-//		var data_id = $(this).attr('id');
-		var data_id = $(this).data('field-id');
+		var sendAttachmentBkp = wp.media.editor.send.attachment;
+		var dataID = $(this).data('field-id');
 
 		wp.media.editor.send.attachment = function(props, attachment) {
-			var current = '[data-id="' + data_id + '"]';
+			var current = '[data-id="' + dataID + '"]';
 
 			if(attachment.sizes && attachment.sizes.thumbnail && attachment.sizes.thumbnail.url) {
 				$(current + ' .image img').attr('src', attachment.sizes.thumbnail.url);
@@ -35,8 +36,8 @@ jQuery(document).ready(function($) {
 			$(current + ' .remove').show();
 			$(current + ' .upload').hide();
 
-			wp.media.editor.send.attachment = send_attachment_bkp;
-		}
+			wp.media.editor.send.attachment = sendAttachmentBkp;
+		};
 
 		wp.media.editor.open();
 
@@ -47,8 +48,8 @@ jQuery(document).ready(function($) {
 	$('.remove').click(function(e) {
 		e.preventDefault();
 
-		var data_id = $(this).parent().attr('data-id');
-		var current = '[data-id="' + data_id + '"]';
+		var dataID = $(this).parent().attr('data-id');
+		var current = '[data-id="' + dataID + '"]';
 
 		$(current + ' .url code').html('').hide();
 		$(current + ' .attachment_id').val('');
@@ -56,8 +57,6 @@ jQuery(document).ready(function($) {
 		$(current + ' .image img').css('display', 'none');
 		$(current + ' .remove').hide();
 		$(current + ' .upload').show();
-
-//		console.log(data_id);
 	});
 
 	// Add color picker to fields
@@ -75,7 +74,7 @@ jQuery(document).ready(function($) {
 			$('.tab-content').hide();
 			$('#' + id).show();
 
-			$('.nav-tab').removeClass('nav-tab-active')
+			$('.nav-tab').removeClass('nav-tab-active');
 			$(this).addClass('nav-tab-active');
 		});
 	} // END if($('.nav-tab').length)
