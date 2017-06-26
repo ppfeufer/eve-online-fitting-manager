@@ -136,7 +136,7 @@ class PostType {
 
 		if(\is_singular('fitting')) {
 			$templateFile = 'single-fitting.php';
-		} elseif(\is_archive('fitting')) {
+		} elseif(\is_archive() && \get_post_type() === 'fitting') {
 			$templateFile = 'archive-fitting.php';
 		} // END if(\is_singular('fitting'))
 
