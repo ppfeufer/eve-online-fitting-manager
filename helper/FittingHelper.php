@@ -690,17 +690,8 @@ class FittingHelper {
 	}
 
 	public static function getShipUsedInDoctrine() {
-		$terms = \get_the_terms(\get_the_ID(), 'fitting-doctrines');
+		$terms = \wp_get_post_terms(\get_the_ID(), 'fitting-doctrines');
 
-		$returnValue = null;
-
-		if($terms !== false) {
-			foreach($terms as $termObject) {
-				$returnValue[$termObject->term_id] = $termObject;
-//				$returnValue[$termObject->term_id]['link'] = \get_term_link($termObject);
-			}
-		}
-
-		return $returnValue;
+		return $terms;
 	}
 }
