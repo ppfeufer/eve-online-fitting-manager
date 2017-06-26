@@ -894,12 +894,11 @@ class SettingsApi {
 	 */
 	public function enqueueScripts() {
 		if($this->isSettingsPage() === true) {
-			\wp_enqueue_media();
-			\wp_enqueue_script('wp-color-picker');
-			\wp_enqueue_script('jquery-ui-datepicker');
+//			\wp_enqueue_media();
+//			\wp_enqueue_script('wp-color-picker');
+//			\wp_enqueue_script('jquery-ui-datepicker');
 			\wp_enqueue_script(
 				'settings-api',
-//				(\WP_DEBUG === true) ? $this->getUri('../../js/settings-api.js') : $this->getUri('../../js/settings-api.min.js')
 				(\WP_DEBUG === true) ? $this->plugin->getPluginUri() . 'js/settings-api.js' : $this->plugin->getPluginUri() . 'js/settings-api.min.js'
 			);
 		} // END if($this->isSettingsPage() === true)
@@ -910,16 +909,14 @@ class SettingsApi {
 	 */
 	public function enqueueStyles() {
 		if($this->isSettingsPage() === true) {
-			\wp_enqueue_style('wp-color-picker');
-			\wp_enqueue_style('jquery-ui', $this->getUri('css/jquery-ui.min.css'));
-			\wp_enqueue_style(
-				'font-awesome',
-//				(\WP_DEBUG === true) ? $this->getUri('../css/font-awesome.css') : $this->getUri('../css/font-awesome.min.css')
-				(\WP_DEBUG === true) ? $this->plugin->getPluginUri() . 'css/font-awesome.css' : $this->plugin->getPluginUri() . 'css/font-awesome.min.css'
-			);
+//			\wp_enqueue_style('wp-color-picker');
+//			\wp_enqueue_style('jquery-ui', $this->getUri('css/jquery-ui.min.css'));
+//			\wp_enqueue_style(
+//				'font-awesome',
+//				(\WP_DEBUG === true) ? $this->plugin->getPluginUri() . 'css/font-awesome.css' : $this->plugin->getPluginUri() . 'css/font-awesome.min.css'
+//			);
 			\wp_enqueue_style(
 				'settings-api',
-//				(\WP_DEBUG === true) ? $this->getUri('../css/settings-api.css') : $this->getUri('../css/settings-api.min.css')
 				(\WP_DEBUG === true) ? $this->plugin->getPluginUri() . 'css/settings-api.css' : $this->plugin->getPluginUri() . 'css/settings-api.min.css'
 			);
 		} // END if($this->isSettingsPage() === true)
