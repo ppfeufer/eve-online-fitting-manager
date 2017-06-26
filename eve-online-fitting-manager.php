@@ -74,8 +74,8 @@ class EveOnlineFittingManager {
 		$this->checkDatabaseUpdate();
 		$this->loadLibs();
 
-		\add_action('wp_enqueue_scripts', array($this, 'enqueueJavaScript'));
-		\add_action('wp_enqueue_scripts', array($this, 'enqueueStylesheet'));
+		\add_action('wp_enqueue_scripts', array($this, 'enqueueJavaScript'), 99);
+		\add_action('wp_enqueue_scripts', array($this, 'enqueueStylesheet'), 99);
 		\add_action('pre_get_posts', array($this, 'customPageQueryVars'));
 
 		\add_filter('query_vars', array($this, 'addQueryVarsFilter'));
@@ -92,12 +92,15 @@ class EveOnlineFittingManager {
 	} // END public function init()
 
 	public function enqueueJavaScript() {
-//		\wp_enqueue_script('eve-online-fitting-manager-js', $this->getPluginUri() . 'js/eve-online-fitting-manager.min.js', array('jquery'), '', true);
-		\wp_enqueue_script('bootstrap-gallery-js', $this->getPluginUri() . 'js/jquery.bootstrap-gallery.min.js', array('jquery'), '', true);
+		\wp_enqueue_script('bootstrap-js', $this->getPluginUri() . 'bootstrap/js/bootstrap.min.js', array('jquery'), '', true);
+		\wp_enqueue_script('bootstrap-toolkit', $this->getPluginUri() . 'bootstrap/bootstrap-toolkit/bootstrap-toolkit.min.js', array('jquery', 'bootstrap-js'), '', true);
+		\wp_enqueue_script('bootstrap-gallery-js', $this->getPluginUri() . 'js/jquery.bootstrap-gallery.min.js', array('jquery', 'bootstrap-js'), '', true);
 //		\wp_enqueue_script('svg4everybody', $this->getPluginUri() . 'js/svg4everybody.min.js', array('jquery'), '', true);
+//		\wp_enqueue_script('eve-online-fitting-manager-js', $this->getPluginUri() . 'js/eve-online-fitting-manager.min.js', array('jquery'), '', true);
 	} // END public function enqueueJavaScript()
 
 	public function enqueueStylesheet() {
+		\wp_enqueue_style('bootstrap', $this->getPluginUri() . 'bootstrap/css/bootstrap.min.css');
 		\wp_enqueue_style('eve-online-fitting-manager', $this->getPluginUri() . 'css/eve-online-fitting-manager.min.css');
 	} // END public function enqueueStylesheet()
 
