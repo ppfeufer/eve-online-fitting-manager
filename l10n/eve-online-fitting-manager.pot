@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-26 12:52+0000\n"
+"POT-Creation-Date: 2017-06-27 07:26+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -49,63 +49,115 @@ msgstr ""
 msgid "DB Password"
 msgstr ""
 
-#: libs/PostType.php:20 libs/PostType.php:36 templates/doctrine-sidebar.php:3
+#: libs/PostType.php:21 libs/PostType.php:53 templates/doctrine-sidebar.php:31
 msgid "Doctrines"
 msgstr ""
 
-#: libs/PostType.php:21
-msgid "Fitting Category"
-msgstr ""
-
 #: libs/PostType.php:22
-msgid "Search Fitting Categories"
+msgid "Doctrine"
 msgstr ""
 
-#: libs/PostType.php:23
-msgid "Popular Fitting Categories"
+#: libs/PostType.php:23 templates/doctrine-sidebar.php:12
+msgid "Search Doctrines"
 msgstr ""
 
 #: libs/PostType.php:24
-msgid "All Fitting Categories"
+msgid "Popular Doctrines"
 msgstr ""
 
 #: libs/PostType.php:25
-msgid "Parent Fitting Categories"
+msgid "All Doctrines"
 msgstr ""
 
 #: libs/PostType.php:26
-msgid "Edit Fitting Categories"
+msgid "Parent Doctrine"
 msgstr ""
 
 #: libs/PostType.php:27
-msgid "Update Fitting Categories"
+msgid "Edit Doctrine"
 msgstr ""
 
 #: libs/PostType.php:28
-msgid "Add New Fitting Categories"
+msgid "Update Doctrine"
 msgstr ""
 
 #: libs/PostType.php:29
-msgid "New Fitting Categories"
+msgid "Add New Doctrine"
 msgstr ""
 
 #: libs/PostType.php:30
-msgid "Separate Fitting Categories with commas"
+msgid "New Doctrine"
 msgstr ""
 
 #: libs/PostType.php:31
-msgid "Add or remove Fitting Categories"
+msgid "Separate Doctrines with commas"
 msgstr ""
 
 #: libs/PostType.php:32
-msgid "Choose from most used Fitting Categories"
+msgid "Add or remove Doctrine"
 msgstr ""
 
-#: libs/PostType.php:56
+#: libs/PostType.php:33
+msgid "Choose from most used Doctrines"
+msgstr ""
+
+#: libs/PostType.php:37 libs/PostType.php:70 templates/doctrine-sidebar.php:46
+msgid "Ship Types"
+msgstr ""
+
+#: libs/PostType.php:38
+msgid "Ship Type"
+msgstr ""
+
+#: libs/PostType.php:39
+msgid "Search Ship Types"
+msgstr ""
+
+#: libs/PostType.php:40
+msgid "Popular Ship Types"
+msgstr ""
+
+#: libs/PostType.php:41
+msgid "All Ship Types"
+msgstr ""
+
+#: libs/PostType.php:42
+msgid "Parent Ship Type"
+msgstr ""
+
+#: libs/PostType.php:43
+msgid "Edit Ship Type"
+msgstr ""
+
+#: libs/PostType.php:44
+msgid "Update Ship Type"
+msgstr ""
+
+#: libs/PostType.php:45
+msgid "Add New Ship Type"
+msgstr ""
+
+#: libs/PostType.php:46
+msgid "New Ship Type"
+msgstr ""
+
+#: libs/PostType.php:47
+msgid "Separate Ship Types with commas"
+msgstr ""
+
+#: libs/PostType.php:48
+msgid "Add or remove Ship Type"
+msgstr ""
+
+#: libs/PostType.php:49
+msgid "Choose from most used Ship Types"
+msgstr ""
+
+#: libs/PostType.php:91
 msgid "Fittings"
 msgstr ""
 
-#: libs/PostType.php:57
+#: libs/PostType.php:92
 msgid "Fitting"
 msgstr ""
 
@@ -121,19 +173,19 @@ msgstr ""
 msgid "Fitting Visualization"
 msgstr ""
 
-#: templates/content-single-fitting.php:41
+#: templates/content-single-fitting.php:43
 msgid "This fitting is used in the following doctrines:"
 msgstr ""
 
-#: templates/content-single-fitting.php:49
+#: templates/content-single-fitting.php:59
 msgid "EFT Import"
 msgstr ""
 
-#: templates/doctrine-sidebar.php:8
+#: templates/doctrine-sidebar.php:16
 msgid "Search"
 msgstr ""
 
-#: templates/doctrine-sidebar.php:9
+#: templates/doctrine-sidebar.php:17
 msgid "Search Ship Type"
 msgstr ""
 

@@ -42,7 +42,7 @@ class PostType {
 			'parent_item' => \__('Parent Ship Type', 'eve-online-fitting-manager'),
 			'edit_item' => \__('Edit Ship Type', 'eve-online-fitting-manager'),
 			'update_item' => \__('Update Ship Type', 'eve-online-fitting-manager'),
-			'add_new_item' => \__('Add New Shi Typep', 'eve-online-fitting-manager'),
+			'add_new_item' => \__('Add New Ship Type', 'eve-online-fitting-manager'),
 			'new_item_name' => \__('New Ship Type', 'eve-online-fitting-manager'),
 			'separate_items_with_commas' => \__('Separate Ship Types with commas', 'eve-online-fitting-manager'),
 			'add_or_remove_items' => \__('Add or remove Ship Type', 'eve-online-fitting-manager'),
