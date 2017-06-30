@@ -85,6 +85,11 @@
 		position: relative;
 	}
 
+	.child-doctrine-second-level {
+		font-size: 14px;
+		font-size: 0.875rem;
+	}
+
 	div.doctrine.has-children .child-doctrine-list {
 		display: none;
 	}
