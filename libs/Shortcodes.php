@@ -34,6 +34,6 @@ class Shortcodes {
 			$atts
 		);
 
-		echo \WordPress\Plugin\EveOnlineFittingManager\Helper\FittingHelper::getContentMenu('fitting-' . $args['list']);
+		return \WordPress\Plugin\EveOnlineFittingManager\Helper\FittingHelper::getContentMenu('fitting-' . $args['list']);
 	}
 }
