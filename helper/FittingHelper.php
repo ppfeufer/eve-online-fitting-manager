@@ -695,11 +695,11 @@ class FittingHelper {
 				foreach($hierarchy[$term->term_id] as $child) {
 					// Get the term object by its ID
 					$child = \get_term($child, $taxonomy);
-					$doctrineListChildSecondLevelHtml = '<div class="doctrine doctrine-' . $child->slug . '"><a class="doctrine-link-item" href="' . \get_term_link($child->term_id) . '">' . $child->name . '</a></div>';
+					$doctrineListChildSecondLevelHtml = '<div class="doctrine sub-first-level doctrine-' . $child->slug . '"><a class="doctrine-link-item" href="' . \get_term_link($child->term_id) . '">' . $child->name . '</a></div>';
 
 					// 2nd level
 					if(isset($hierarchy[$child->term_id])) {
-						$doctrineListChildSecondLevelHtml = '<div class="doctrine doctrine-' . $child->slug . ' has-children"><a class="doctrine-link-item" href="' . \get_term_link($child->term_id) . '">' . $child->name . '</a><span class="caret dropdown-toggle" data-toggle="dropdown"><i></i></span>';
+						$doctrineListChildSecondLevelHtml = '<div class="doctrine sub-first-level doctrine-' . $child->slug . ' has-children"><a class="doctrine-link-item" href="' . \get_term_link($child->term_id) . '">' . $child->name . '</a><span class="caret dropdown-toggle" data-toggle="dropdown"><i></i></span>';
 						$doctrineListChildSecondLevelHtml .= '<div class="child-doctrine-second-level child-doctrine-list">';
 
 						foreach($hierarchy[$child->term_id] as $childSecondLevel) {
@@ -708,8 +708,9 @@ class FittingHelper {
 						}
 
 						$doctrineListChildSecondLevelHtml .= '</div>';
+						$doctrineListChildSecondLevelHtml .= '</div>';
 					}
-
+//
 					$doctrineListChildHtml .= $doctrineListChildSecondLevelHtml;
 				}
 
