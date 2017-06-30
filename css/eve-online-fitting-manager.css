@@ -76,9 +76,12 @@
 		font-size: 1.125rem;
 	}
 
-	div.doctrine.has-children {
+	.content-doctrine-list .child-doctrine-list {
 		padding-left: 25px;
 		padding-left: 1.5625rem;
+	}
+
+	div.doctrine.has-children {
 		position: relative;
 	}
 
