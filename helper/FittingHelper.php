@@ -630,6 +630,7 @@ class FittingHelper {
 						}
 
 						$doctrineListChildSecondLeveHtml .= '</ul>';
+						$doctrineListChildSecondLeveHtml .= '</li>';
 					}
 
 					$doctrineListChildHtml .= $doctrineListChildSecondLeveHtml;
