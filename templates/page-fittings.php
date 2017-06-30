@@ -1,18 +1,6 @@
 <?php
 /**
- * The template for displaying all pages.
- *
- * This is the template that displays all pages by default.
- * Please note that this is the WordPress construct of pages
- * and that other 'pages' on your WordPress site will use a
- * different template.
- *
- * Template Name: WordPress Plugins
- *
- * @since Talos 1.0
- *
- * @package WordPress
- * @subpackage Talos Theme
+ * Template Name: Fittings
  */
 ?>
 <?php get_header(); ?>
@@ -25,6 +13,10 @@
 			?>
 			<!--<div class="row main-content">-->
 			<div class="main-content clearfix">
+				<?php
+				\WordPress\Plugin\EveOnlineFittingManager\Helper\TemplateHelper::getTemplate('doctrine-sidebar');
+				?>
+
 				<div class="col-lg-9 col-md-9 col-sm-9 col-9 content-wrapper">
 					<div class="content content-inner content-full-width content-page doctrine-fittings">
 						<header>
@@ -78,13 +70,9 @@
 						</article>
 					</div> <!-- /.content -->
 				</div> <!-- /.col -->
-
-				<?php
-				\WordPress\Plugin\EveOnlineFittingManager\Helper\TemplateHelper::getTemplate('doctrine-sidebar');
-				?>
 			</div> <!--/.row -->
 			<?php
-		}
+		} // END while(\have_posts())
 	} // END if(have_posts())
 	?>
 </div><!-- /.container -->

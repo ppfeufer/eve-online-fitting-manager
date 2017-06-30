@@ -73,6 +73,7 @@ class EveOnlineFittingManager {
 	public function init() {
 		$this->checkDatabaseUpdate();
 		$this->loadLibs();
+		$this->setThumbnailsSizes();
 
 		\add_action('wp_enqueue_scripts', array($this, 'enqueueJavaScript'), 99);
 		\add_action('wp_enqueue_scripts', array($this, 'enqueueStylesheet'), 99);
@@ -81,6 +82,7 @@ class EveOnlineFittingManager {
 		\add_filter('query_vars', array($this, 'addQueryVarsFilter'));
 
 		new Libs\PostType;
+		new Libs\Shortcodes;
 
 		/**
 		 * start backend libs
@@ -90,6 +92,20 @@ class EveOnlineFittingManager {
 			new Libs\MetaBoxes;
 		} // END if(\is_admin())
 	} // END public function init()
+
+	public function setThumbnailsSizes() {
+		/**
+		 * Thumbnails used for the plugin
+		 * Compatibilty with Fly Dynamic Image Resizer plugin
+		 */
+		if(\function_exists('\fly_add_image_size')) {
+			\fly_add_image_size('header-image', 1680, 500, true);
+			\fly_add_image_size('post-loop-thumbnail', 705, 395, true);
+		} else {
+			\add_image_size('header-image', 1680, 500, true);
+			\add_image_size('post-loop-thumbnail', 705, 395, true);
+		} // END if(\function_exists('\fly_add_image_size'))
+	} // END public function setThumbnailsSizes()
 
 	public function enqueueJavaScript() {
 		\wp_enqueue_script('bootstrap-js', $this->getPluginUri() . 'bootstrap/js/bootstrap.min.js', array('jquery'), '', true);

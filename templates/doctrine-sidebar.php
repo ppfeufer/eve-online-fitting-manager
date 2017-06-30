@@ -1,5 +1,5 @@
 
-<div class="col-lg-3 col-md-3 col-sm-3 col-3 sidebar-wrapper">
+<div class="col-lg-3 col-md-3 col-sm-3 col-3 sidebar-wrapper pull-right">
 	<?php
 	/**
 	 * Filter the Navigation by doctrines

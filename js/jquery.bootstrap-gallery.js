@@ -306,7 +306,7 @@
 
 		this.each(function(i) {
 			//ul
-			var items = $(this).find('li');
+			var items = $(this).find('> li');
 
 			$(this).attr('data-bsp-ul-id', id);
 			$(this).attr('data-bsp-ul-index', i);

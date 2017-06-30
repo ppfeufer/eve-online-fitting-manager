@@ -59,7 +59,44 @@
 		font-size: 1.125rem;
 	}
 
-	/* Dosctrine List Sidebar
+	/* Doctrine List Content Shortcode
+	--------------------------------------------------------------------------*/
+	.content-doctrine-list div.doctrine {
+		padding-top: 10px;
+		padding-bottom: 10px;
+	}
+
+	.content-doctrine-list header.entry-header,
+	.content-doctrine-list header.entry-header h2 {
+		margin-bottom: 0;
+	}
+
+	.content-doctrine-list h2.entry-title {
+		font-size: 18px;
+		font-size: 1.125rem;
+	}
+
+	div.doctrine.has-children {
+		padding-left: 25px;
+		padding-left: 1.5625rem;
+		position: relative;
+	}
+
+	div.doctrine.has-children .child-doctrine-list {
+		display: none;
+	}
+
+	div.doctrine.has-children.open .child-doctrine-list {
+		display: block;
+	}
+
+	div.child-doctrine-second-level {
+		display: block;
+		padding-left: 25px;
+		padding-left: 1.5625rem;
+	}
+
+	/* Doctrine List Sidebar
 	--------------------------------------------------------------------------*/
 	.fitting-sidebar-search {
 		padding: 10px 0;
