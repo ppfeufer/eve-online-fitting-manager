@@ -43,6 +43,8 @@
 
 	.sidebar-wrapper .sidebar-doctrine-list {
 		padding-left: 0;
+		position: relative;
+		z-index: 1;
 	}
 
 	.fitting-used-in-doctrines {
