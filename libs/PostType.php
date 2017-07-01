@@ -163,9 +163,11 @@ class PostType {
 
 		if(\is_singular('fitting')) {
 			$templateFile = 'single-fitting.php';
-		} elseif(\is_archive() && \get_post_type() === 'fitting' && \is_tax('fitting-doctrines')) {
+//		} elseif(\is_archive() && \get_post_type() === 'fitting' && \is_tax('fitting-doctrines')) {
+		} elseif(\is_archive() && \is_tax('fitting-doctrines')) {
 			$templateFile = 'archive-fitting.php';
-		} elseif(\is_archive() && \get_post_type() === 'fitting' && \is_tax('fitting-ships')) {
+//		} elseif(\is_archive() && \get_post_type() === 'fitting' && \is_tax('fitting-ships')) {
+		} elseif(\is_archive() && \is_tax('fitting-ships')) {
 			$templateFile = 'archive-ship.php';
 		} // END if(\is_singular('fitting'))
 

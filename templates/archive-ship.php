@@ -3,9 +3,7 @@ defined('ABSPATH') or die();
 
 \get_header();
 
-
 $doctrineData = \get_queried_object();
-//echo '<pre>' . print_r($doctrine, true) . '</pre>';
 ?>
 
 <div class="container main" data-doctrine="<?php echo $doctrineData->slug; ?>">
@@ -14,9 +12,7 @@ $doctrineData = \get_queried_object();
 			<div class="content content-archive doctrine-list">
 				<header class="page-title">
 					<h2>
-						<?php
-						echo \__('Ship:', 'eve-online') . ' ' . $doctrineData->name;
-						?>
+						<?php echo \__('Ship:', 'eve-online-fitting-manager') . ' ' . $doctrineData->name; ?>
 					</h2>
 					<?php
 					// Show an optional category description
@@ -41,7 +37,6 @@ $doctrineData = \get_queried_object();
 							echo '<li>';
 						} // END if(\get_post_type() === 'fitting')
 
-//						\get_template_part('content', \get_post_format());
 						\WordPress\Plugin\EveOnlineFittingManager\Helper\TemplateHelper::getTemplate('content-fitting');
 
 						if(\get_post_type() === 'fitting') {
@@ -62,21 +57,14 @@ $doctrineData = \get_queried_object();
 								});
 								</script>';
 					} // END if(\get_post_type() === 'fitting')
+				} else {
+					echo \__('Sorry, but currently there are no fittings listed for this ship type. Maybe using the search function will help you out.', 'eve-online-fitting-manager');
 				} // END if(have_posts())
-
-//				if(\function_exists('wp_pagenavi')) {
-//					\wp_pagenavi();
-//				} else {
-//					\WordPress\Themes\EveOnline\Helper\NavigationHelper::getContentNav('nav-below');
-//				} // END if(\function_exists('wp_pagenavi'))
 				?>
 			</div> <!-- /.content -->
 		</div> <!-- /.col -->
 
-		<?php
-		\WordPress\Plugin\EveOnlineFittingManager\Helper\TemplateHelper::getTemplate('doctrine-sidebar');
-		?>
-
+		<?php \WordPress\Plugin\EveOnlineFittingManager\Helper\TemplateHelper::getTemplate('doctrine-sidebar'); ?>
 	</div> <!--/.row -->
 </div><!-- container -->
 
