@@ -589,63 +589,81 @@ class FittingHelper {
 	 * @return string
 	 */
 	public static function getSidebarMenu($taxonomy) {
-		$doctrineListHtml = '<ul class="sidebar-doctrine-list doctrine-list menu-' . $taxonomy . '">';
+		$entityListHtml = '<ul class="sidebar-doctrine-list doctrine-list menu-' . $taxonomy . '">';
 
 		// get all taxonomy terms
-		$terms = \get_terms(array(
+		$entities = \get_terms(array(
 			'taxonomy' => $taxonomy,
+			'orderby' => 'name',
+			'order' => 'ASC'
 		));
 
 		// get terms that have children
 		$hierarchy = \_get_term_hierarchy($taxonomy);
 
-		// Loop through every term
-		foreach($terms as $term) {
+		// Loop through every entity
+		foreach($entities as $entity) {
 			// skip term if it has children or is empty
-			if($term->parent) {
+			if($entity->parent) {
 				continue;
 			}
 
-			$doctrineListChildHtml = '<li class="doctrine doctrine-' . $term->slug . '"><a class="doctrine-link-item" href="' . \get_term_link($term->term_id) . '">' . $term->name . '</a>';
+			$doctrineListHtml = '<li class="doctrine entity-' . $entity->slug . ' doctrine-id-' . $entity->term_id . '"><a class="doctrine-link-item" href="' . \get_term_link($entity->term_id) . '">' . $entity->name . '</a></li>';
 
-			// If the term has children...
-			if(isset($hierarchy[$term->term_id])) {
-				$doctrineListChildHtml = '<li class="doctrine doctrine-' . $term->slug . ' has-children"><a class="doctrine-link-item" href="' . \get_term_link($term->term_id) . '">' . $term->name . '</a><span class="caret dropdown-toggle" data-toggle="dropdown"><i></i></span>';
-				$doctrineListChildHtml .= '<ul class="dropdown-menu child-doctrine-list">';
+			// If the entity has doctrines...
+			if(isset($hierarchy[$entity->term_id])) {
+				$doctrines = \get_terms(array(
+					'taxonomy' => $taxonomy,
+					'orderby' => 'name',
+					'order' => 'ASC',
+					'child_of' => $entity->term_id
+				));
 
-				// display them
-				foreach($hierarchy[$term->term_id] as $child) {
-					// Get the term object by its ID
-					$child = \get_term($child, $taxonomy);
-					$doctrineListChildSecondLeveHtml = '<li class="doctrine doctrine-' . $child->slug . '"><a class="doctrine-link-item" href="' . \get_term_link($child->term_id) . '">' . $child->name . '</a></li>';
+				$doctrineListHtml = '<li class="doctrine entity-' . $entity->slug . ' doctrine-id-' . $entity->term_id . ' has-children"><a class="doctrine-link-item" href="' . \get_term_link($entity->term_id) . '">' . $entity->name . '</a><span class="caret dropdown-toggle" data-toggle="dropdown"><i></i></span>';
+				$doctrineListHtml .= '<ul class="dropdown-menu child-doctrine-list">';
 
-					// 2nd level
-					if(isset($hierarchy[$child->term_id])) {
-						$doctrineListChildSecondLeveHtml = '<li class="doctrine doctrine-' . $child->slug . ' has-children"><a class="doctrine-link-item" href="' . \get_term_link($child->term_id) . '">' . $child->name . '</a>';
-						$doctrineListChildSecondLeveHtml .= '<ul class="dropdown-menu child-doctrine-second-level child-doctrine-list">';
-
-						foreach($hierarchy[$child->term_id] as $childSecondLevel) {
-							$childSecondLevel = \get_term($childSecondLevel, $taxonomy);
-							$doctrineListChildSecondLeveHtml .= '<li class="doctrine doctrine-' . $childSecondLevel->slug . '"><a class="doctrine-link-item" href="' . \get_term_link($childSecondLevel->term_id) . '">' . $childSecondLevel->name . '</a></li>';
-						}
-
-						$doctrineListChildSecondLeveHtml .= '</ul>';
-						$doctrineListChildSecondLeveHtml .= '</li>';
+				foreach($doctrines as $doctrine) {
+					if($doctrine->parent && $doctrine->parent !== $entity->term_id) {
+						continue;
 					}
 
-					$doctrineListChildHtml .= $doctrineListChildSecondLeveHtml;
+					$wingListHtml = '<li class="doctrine entity-' . $entity->slug . ' doctrine-' . $doctrine->slug . ' doctrine-id-' . $doctrine->term_id . '"><a class="doctrine-link-item" href="' . \get_term_link($doctrine->term_id) . '">' . $doctrine->name . '</a></li>';
+
+					if(isset($hierarchy[$doctrine->term_id])) {
+						$wings = \get_terms(array(
+							'taxonomy' => $taxonomy,
+							'orderby' => 'name',
+							'order' => 'ASC',
+							'child_of' => $doctrine->term_id
+						));
+
+						$wingListHtml = '<li class="doctrine entity-' . $entity->slug . ' doctrine-' . $doctrine->slug . ' doctrine-id-' . $doctrine->term_id . ' has-children"><a class="doctrine-link-item" href="' . \get_term_link($doctrine->term_id) . '">' . $doctrine->name . '</a>';
+						$wingListHtml .= '<ul class="dropdown-menu child-doctrine-second-level child-doctrine-list">';
+
+						if(isset($hierarchy[$doctrine->term_id])) {
+							foreach($wings as $wing) {
+								$wingListHtml .= '<li class="doctrine entity-' . $entity->slug . ' doctrine-' . $doctrine->slug . ' doctrine-wing-' . $wing->slug . ' doctrine-id-' . $wing->term_id . '"><a class="doctrine-link-item" href="' . \get_term_link($wing->term_id) . '">' . $wing->name . '</a></li>';
+							}
+						}
+
+						$wingListHtml .= '</li>';
+						$wingListHtml .= '</ul>';
+					}
+
+					$doctrineListHtml .= $wingListHtml;
 				}
 
-				$doctrineListChildHtml .= '</ul>';
+				$doctrineListHtml .= '</ul>';
+				$doctrineListHtml .= '</li>';
 			}
 
-			$doctrineListHtml .= $doctrineListChildHtml;
-			$doctrineListHtml .= '</li>';
+			$entityListHtml .= $doctrineListHtml;
+			$entityListHtml .= '</li>';
 		}
 
-		$doctrineListHtml .= '</ul>';
+		$entityListHtml .= '</ul>';
 
-		return $doctrineListHtml;
+		return $entityListHtml;
 	}
 
 	/**
@@ -656,75 +674,93 @@ class FittingHelper {
 	public static function getContentMenu($taxonomy) {
 		$uniqueID = \uniqid();
 
-		$doctrineListHtml = '<div class="gallery-row row">';
-		$doctrineListHtml .= '<ul class="content-doctrine-list doctrine-list menu-' . $taxonomy . ' bootstrap-gallery bootstrap-post-loop-fittings bootstrap-post-loop-fittings-' . $uniqueID . ' clearfix">';
+		$entityListHtml = '<div class="gallery-row row">';
+		$entityListHtml .= '<ul class="content-doctrine-list doctrine-list menu-' . $taxonomy . ' bootstrap-gallery bootstrap-post-loop-fittings bootstrap-post-loop-fittings-' . $uniqueID . ' clearfix">';
 
 		// get all taxonomy terms
-		$terms = \get_terms(array(
+		$entities = \get_terms(array(
 			'taxonomy' => $taxonomy,
+			'orderby' => 'name',
+			'order' => 'ASC'
 		));
 
 		// get terms that have children
 		$hierarchy = \_get_term_hierarchy($taxonomy);
 
-		// Loop through every term
-		foreach($terms as $term) {
+		// Loop through every entity
+		foreach($entities as $entity) {
 			// skip term if it has children or is empty
-			if($term->parent) {
+			if($entity->parent) {
 				continue;
 			}
 
 			$doctrineImage = null;
 			if(\function_exists('\z_taxonomy_image')) {
-				$doctrineImage .= '<a class="doctrine-link-item" href="' . \get_term_link($term->term_id) . '"><figure class="post-loop-thumbnail">';
+				$doctrineImage .= '<a class="doctrine-link-item" href="' . \get_term_link($entity->term_id) . '"><figure class="post-loop-thumbnail">';
 					if(\function_exists('\fly_get_attachment_image')) {
-						$doctrineImage .= \fly_get_attachment_image(\z_get_attachment_id_by_url(\z_taxonomy_image_url($term->term_id)), 'post-loop-thumbnail');
+						$doctrineImage .= \fly_get_attachment_image(\z_get_attachment_id_by_url(\z_taxonomy_image_url($entity->term_id)), 'post-loop-thumbnail');
 					} else {
-						$doctrineImage .= \z_taxonomy_image($term->term_id, 'post-loop-thumbnail', null, false);
+						$doctrineImage .= \z_taxonomy_image($entity->term_id, 'post-loop-thumbnail', null, false);
 					} // END if(\function_exists('\fly_get_attachment_image'))
 				$doctrineImage .= '</figure></a>';
 			} // END if(\function_exists('\z_taxonomy_image'))
 
-			$doctrineListChildHtml = '<li class="doctrine doctrine-' . $term->slug . '">' . $doctrineImage . '<header class="entry-header"><h2 class="entry-title"><a class="doctrine-link-item" href="' . \get_term_link($term->term_id) . '">' . $term->name . '</a></h2></header>';
+			$doctrineListHtml = '<li class="doctrine entity-' . $entity->slug . ' doctrine-id-' . $entity->term_id . '">' . $doctrineImage . '<header class="entry-header"><h2 class="entry-title"><a class="doctrine-link-item" href="' . \get_term_link($entity->term_id) . '">' . $entity->name . '</a></h2></header></li>';
 
-			// If the term has children...
-			if(isset($hierarchy[$term->term_id])) {
-				$doctrineListChildHtml = '<li class="doctrine doctrine-' . $term->slug . ' has-children">' . $doctrineImage . '<header class="entry-header"><h2 class="entry-title"><a class="doctrine-link-item" href="' . \get_term_link($term->term_id) . '">' . $term->name . '</a></h2></header>';
-				$doctrineListChildHtml .= '<div class="child-doctrine-list">';
+			// If the entity has doctrines...
+			if(isset($hierarchy[$entity->term_id])) {
+				$doctrines = \get_terms(array(
+					'taxonomy' => $taxonomy,
+					'orderby' => 'name',
+					'order' => 'ASC',
+					'child_of' => $entity->term_id
+				));
 
-				// display them
-				foreach($hierarchy[$term->term_id] as $child) {
-					// Get the term object by its ID
-					$child = \get_term($child, $taxonomy);
-					$doctrineListChildSecondLevelHtml = '<div class="doctrine sub-first-level doctrine-' . $child->slug . '"><a class="doctrine-link-item" href="' . \get_term_link($child->term_id) . '">' . $child->name . '</a></div>';
+				$doctrineListHtml = '<li class="doctrine entity-' . $entity->slug . ' doctrine-id-' . $entity->term_id . ' has-children">' . $doctrineImage . '<header class="entry-header"><h2 class="entry-title"><a class="doctrine-link-item" href="' . \get_term_link($entity->term_id) . '">' . $entity->name . '</a></h2></header>';
+				$doctrineListHtml .= '<div class="child-doctrine-list">';
 
-					// 2nd level
-					if(isset($hierarchy[$child->term_id])) {
-						$doctrineListChildSecondLevelHtml = '<div class="doctrine sub-first-level doctrine-' . $child->slug . ' has-children"><a class="doctrine-link-item" href="' . \get_term_link($child->term_id) . '">' . $child->name . '</a><span class="caret dropdown-toggle" data-toggle="dropdown"><i></i></span>';
-						$doctrineListChildSecondLevelHtml .= '<div class="child-doctrine-second-level child-doctrine-list">';
+				foreach($doctrines as $doctrine) {
+					if($doctrine->parent && $doctrine->parent !== $entity->term_id) {
+						continue;
+					}
 
-						foreach($hierarchy[$child->term_id] as $childSecondLevel) {
-							$childSecondLevel = \get_term($childSecondLevel, $taxonomy);
-							$doctrineListChildSecondLevelHtml .= '<div class="doctrine doctrine-' . $childSecondLevel->slug . '"><a class="doctrine-link-item" href="' . \get_term_link($childSecondLevel->term_id) . '">' . $childSecondLevel->name . '</a></div>';
+					$wingListHtml = '<div class="doctrine sub-first-level doctrine entity-' . $entity->slug . ' doctrine-' . $doctrine->slug . ' doctrine-id-' . $doctrine->term_id . '"><a class="doctrine-link-item" href="' . \get_term_link($doctrine->term_id) . '">' . $doctrine->name . '</a></div>';
+
+					if(isset($hierarchy[$doctrine->term_id])) {
+						$wings = \get_terms(array(
+							'taxonomy' => $taxonomy,
+							'orderby' => 'name',
+							'order' => 'ASC',
+							'child_of' => $doctrine->term_id
+						));
+
+						$wingListHtml = '<div class="doctrine sub-first-level doctrine entity-' . $entity->slug . ' doctrine-' . $doctrine->slug . ' doctrine-id-' . $doctrine->term_id . ' has-children"><a class="doctrine-link-item" href="' . \get_term_link($doctrine->term_id) . '">' . $doctrine->name . '</a><span class="caret dropdown-toggle" data-toggle="dropdown"><i></i></span>';
+						$wingListHtml .= '<div class="child-doctrine-second-level child-doctrine-list">';
+
+						if(isset($hierarchy[$doctrine->term_id])) {
+							foreach($wings as $wing) {
+								$wingListHtml .= '<div class="doctrine entity-' . $entity->slug . ' doctrine-' . $doctrine->slug . ' doctrine-wing-' . $wing->slug . ' doctrine-id-' . $wing->term_id . '"><a class="doctrine-link-item" href="' . \get_term_link($wing->term_id) . '">' . $wing->name . '</a></div>';
+							}
 						}
 
-						$doctrineListChildSecondLevelHtml .= '</div>';
-						$doctrineListChildSecondLevelHtml .= '</div>';
+						$wingListHtml .= '</div>';
+						$wingListHtml .= '</div>';
 					}
-//
-					$doctrineListChildHtml .= $doctrineListChildSecondLevelHtml;
+
+					$doctrineListHtml .= $wingListHtml;
 				}
 
-				$doctrineListChildHtml .= '</div>';
+				$doctrineListHtml .= '</div>';
 			}
 
-			$doctrineListHtml .= $doctrineListChildHtml;
-			$doctrineListHtml .= '</li>';
+			$entityListHtml .= $doctrineListHtml;
+			$entityListHtml .= '</li>';
 		}
 
-		$doctrineListHtml .= '</ul>';
-		$doctrineListHtml .= '</div>';
-		$doctrineListHtml .= '<script type="text/javascript">
+		$entityListHtml .= '</ul>';
+		$entityListHtml .= '</div>';
+
+		$entityListHtml .= '<script type="text/javascript">
 								jQuery(document).ready(function() {
 									jQuery("ul.bootstrap-post-loop-fittings-' . $uniqueID . '").bootstrapGallery({
 										"classes" : "col-lg-4 col-md-6 col-sm-6 col-xs-12",
@@ -733,7 +769,7 @@ class FittingHelper {
 								});
 								</script>';
 
-		return $doctrineListHtml;
+		return $entityListHtml;
 	}
 
 	/**
