@@ -801,10 +801,15 @@ class FittingHelper {
 			'post_type' => 'fitting',
 			'_meta_or_title' => self::getFittingSearchQuery(),
 			'compare' => 'LIKE',
-			'relation' => 'OR',
 			'meta_query' => array(
+				'relation' => 'OR',
 				array(
 					'key' => 'eve-online-fitting-manager_ship_type',
+					'value' => self::getFittingSearchQuery(),
+					'compare' => 'LIKE'
+				),
+				array(
+					'key' => 'eve-online-fitting-manager_fitting_name',
 					'value' => self::getFittingSearchQuery(),
 					'compare' => 'LIKE'
 				)
