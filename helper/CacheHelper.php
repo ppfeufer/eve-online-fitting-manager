@@ -156,7 +156,8 @@ class CacheHelper {
 			$imageToFetch = \wp_remote_retrieve_body($get);
 
 			$wpFileSystem = new \WP_Filesystem_Direct(null);
-			$wpFileSystem->put_contents($cacheDir . $imageFilename, $imageToFetch, 0755);
+
+			return $wpFileSystem->put_contents($cacheDir . $imageFilename, $imageToFetch, 0755);
 		} // END if($extension === 'gif' || $extension === 'jpg' || $extension === 'jpeg' || $extension === 'png')
 	} // END public function cacheRemoteImageFile($cacheType = null, $remoteImageUrl = null)
 

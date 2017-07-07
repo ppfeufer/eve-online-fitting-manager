@@ -20,7 +20,6 @@ class ImageHelper {
 		// Check if we should use image cache
 		$explodedImageUrl = \explode('/', $remoteImageUrl);
 		$imageFilename = \end($explodedImageUrl);
-		$returnValue = CacheHelper::getInstance()->getImageCacheUri() . $cacheType . '/' . $imageFilename;
 
 		// if we don't have the image cached already
 		if(CacheHelper::getInstance()->checkCachedImage($cacheType, $imageFilename) === false) {
@@ -29,9 +28,10 @@ class ImageHelper {
 			 * Otherwise set the remote image as return value.
 			 */
 			if(\is_dir(CacheHelper::getInstance()->getImageCacheDir() . $cacheType) && \is_writable(CacheHelper::getInstance()->getImageCacheDir() . $cacheType)) {
-				CacheHelper::getInstance()->cacheRemoteImageFile($cacheType, $remoteImageUrl);
-			} else {
-				$returnValue = $remoteImageUrl;
+//				CacheHelper::getInstance()->cacheRemoteImageFile($cacheType, $remoteImageUrl);
+				if(CacheHelper::getInstance()->cacheRemoteImageFile($cacheType, $remoteImageUrl) === true) {
+					$returnValue = CacheHelper::getInstance()->getImageCacheUri() . $cacheType . '/' . $imageFilename;
+				}
 			} // END if(\is_dir(CacheHelper::getImageCacheDir() . $cacheType) && \is_writable(CacheHelper::getImageCacheDir() . $cacheType))
 		} // END if(CacheHelper::checkCachedImage($cacheType, $imageName) === false)
 
