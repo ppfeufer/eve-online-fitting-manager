@@ -31,17 +31,52 @@
 
 			<div class="row">
 				<div class="col-lg-6 col-xl-6 ship-fitting-visualization">
-					<!--<h3><?php echo \__('Fitting Visualization', 'eve-online-fitting-manager'); ?></h3>-->
 					<?php
 					\WordPress\Plugin\EveOnlineFittingManager\Helper\TemplateHelper::getTemplate('fitting/fitting-ring');
+
+					$eftFitting = \WordPress\Plugin\EveOnlineFittingManager\Helper\EftHelper::getEftImportFromFitting(array(
+						'shipID' => \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_ship_ID', true),
+						'fittingType' => \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_name', true),
+						'highSlots' => \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_high_slots', true),
+						'midSlots' => \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_mid_slots', true),
+						'lowSlots' => \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_low_slots', true),
+						'rigSlots' => \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_rig_slots', true),
+						'subSystems' => \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_subsystems', true),
+						'drones' => \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_drones', true),
+						'charges' => \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_charges', true),
+					));
+					$fittingArray = WordPress\Plugin\EveOnlineFittingManager\Helper\EftHelper::getFittingArrayFromEftData($eftFitting);
+					$marketPrices = \WordPress\Plugin\EveOnlineFittingManager\Helper\MarketdataHelper::getInstance()->getMarketPrices($fittingArray);
+
+					if($marketPrices !== false) {
+						?>
+						<div class="fitting-market-price price-jita">
+							<h4>
+								<?php echo \__('Estimated Prices', 'eve-online-fitting-manager'); ?>
+							</h4>
+							<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+								<p>
+									Jita Buy Order Price<br>
+									<?php echo $marketPrices['jitaBuyPrice']; ?>
+								</p>
+							</div>
+							<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+								<p>
+									Jita Sell Order Price<br>
+									<?php echo $marketPrices['jitaSellPrice']; ?>
+								</p>
+							</div>
+						</div>
+						<?php
+					}
 
 					$usedInDoctrines = \WordPress\Plugin\EveOnlineFittingManager\Helper\FittingHelper::getShipUsedInDoctrine();
 					if(!empty($usedInDoctrines) && !\is_wp_error($usedInDoctrines)) {
 						?>
 						<div class="fitting-used-in">
-							<p>
+							<h4>
 								<?php echo \__('This fitting is used in the following doctrines:', 'eve-online-fitting-manager'); ?>
-							</p>
+							</h4>
 							<?php
 							echo '<ul class="fitting-used-in-doctrines">';
 							foreach($usedInDoctrines as $doctrine) {
@@ -58,17 +93,7 @@
 				<div class="col-lg-6 col-xl-6 ship-fitting-eft-import">
 					<h3><?php echo \__('EFT Import', 'eve-online-fitting-manager'); ?></h3>
 					<?php
-					echo \nl2br(\WordPress\Plugin\EveOnlineFittingManager\Helper\EftHelper::getEftImportFromFitting(array(
-						'shipID' => \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_ship_ID', true),
-						'fittingType' => \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_name', true),
-						'highSlots' => \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_high_slots', true),
-						'midSlots' => \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_mid_slots', true),
-						'lowSlots' => \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_low_slots', true),
-						'rigSlots' => \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_rig_slots', true),
-						'subSystems' => \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_subsystems', true),
-						'drones' => \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_drones', true),
-						'charges' => \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_charges', true),
-					)));
+					echo \nl2br($eftFitting);
 					?>
 				</div>
 			</div>
