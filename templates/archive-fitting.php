@@ -68,16 +68,4 @@ $doctrineData = \get_queried_object();
 	</div> <!--/.row -->
 </div><!-- container -->
 
-<script type="text/javascript">
-jQuery(document).ready(function($) {
-	$(function() {
-		var doctrineSlug = $('.container.main').data('doctrine');
-
-		$('.sidebar-doctrine-list').find('li.doctrine-' + doctrineSlug).addClass('doctrine-current');
-		$('.sidebar-doctrine-list').find('li.doctrine-' + doctrineSlug).parent().parent().addClass('doctrine-active');
-		$('.sidebar-doctrine-list').find('li.doctrine-' + doctrineSlug).parent().parent().parent().parent().addClass('doctrine-active');
-	});
-});
-</script>
-
 <?php \get_footer(); ?>
