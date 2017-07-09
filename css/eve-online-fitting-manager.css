@@ -117,9 +117,9 @@
 	}
 
 	.sidebar-doctrine-list, .child-doctrine-list.child-doctrine-second-level {
-/*		display: block;
-		padding-left: 25px;
-		padding-left: 1.5625rem;*/
+		/*		display: block;
+				padding-left: 25px;
+				padding-left: 1.5625rem;*/
 	}
 
 	.sidebar-doctrine-list > li > .child-doctrine-list {
@@ -221,7 +221,7 @@
 	.fittingRing {
 		position: absolute;
 		left: 0px;
-		top: 0 px;
+		top: 0px;
 		width: 398px;
 		height: 398px;
 		z-index: -1;
@@ -545,6 +545,65 @@
 		height: 256px;
 		z-index: -2;
 	}
+
+	/* Market Data Table
+	------------------------------------------------------------------------- */
+	/*	.table-fitting-marketdata th, .table-fitting-marketdata td {
+			text-align: right;
+			border: none;
+			border-top: none;
+		}*/
+
+	/*
+	 * Callouts
+	 *
+	 * Not quite alerts, but custom and helpful notes for folks reading the docs.
+	 * Requires a base and modifier class.
+	 */
+
+	/* Common styles for all types */
+	.bs-callout {
+		padding: 20px;
+		margin: 20px 0;
+		border: 1px solid #eee;
+		border-left-width: 5px;
+		border-radius: 3px;
+	}
+	.bs-callout h4 {
+		margin-top: 0;
+		margin-bottom: 5px;
+	}
+	.bs-callout p:last-child {
+		margin-bottom: 0;
+	}
+	.bs-callout code {
+		border-radius: 3px;
+	}
+
+	/* Tighten up space between multiple callouts */
+	.bs-callout + .bs-callout {
+		margin-top: -5px;
+	}
+
+	/* Variations */
+	.bs-callout-danger {
+		border-left-color: #ce4844;
+	}
+	.bs-callout-danger h4 {
+		color: #ce4844;
+	}
+	.bs-callout-warning {
+		border-left-color: #aa6708;
+	}
+	.bs-callout-warning h4 {
+		color: #aa6708;
+	}
+	.bs-callout-info {
+		border-left-color: #1b809e;
+	}
+	.bs-callout-info h4 {
+		color: #1b809e;
+	}
 }
 
 @media screen and (min-width: 1200px) {
@@ -555,5 +614,13 @@
 
 	.ship-fitting-visualization {
 		margin-top: 55px;
+	}
+}
+
+/* Hack for Bootstrap tables for Firefox
+----------------------------------------------------------------------------- */
+@-moz-document url-prefix() {
+	fieldset {
+		display: table-cell;
 	}
 }

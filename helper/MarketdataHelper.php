@@ -83,9 +83,8 @@ class MarketdataHelper {
 	 * @return string json string of all item marketdata
 	 */
 	public function getMarketDataJson(Array $items) {
-		$postData = \get_post();
-		$transientName = 'eve_fitting_tool_market_data_' . $postData->post_name;
 		$typeIdString = implode(',', $items);
+		$transientName = 'eve_fitting_tool_market_data_fitting_' . md5($typeIdString);
 		$returnValue = CacheHelper::getInstance()->checkTransientCache($transientName);
 
 		if($returnValue === false) {
@@ -106,9 +105,32 @@ class MarketdataHelper {
 	 * @param array $fittingArray EFT fitting array from WordPress\Plugin\EveOnlineFittingManager\Helper\EftHelper::getFittingArrayFromEftData($eftFitting);
 	 * @return array Sell and Buy order prices from Jita
 	 */
-	public function getMarketPrices(Array $fittingArray) {
+	public function getMarketPricesFromFittingArray(Array $fittingArray) {
 		$returnValue = false;
+		$jitaBuyPrice = null;
+		$jitaSellPrice = null;
 
+		// Ship price
+		$ship = array(
+			$fittingArray['0']->itemID
+		);
+		unset($fittingArray['0']);
+
+		$marketJsonShip = $this->getMarketDataJson($ship);
+		if($marketJsonShip !== false) {
+			$marketArrayShip = json_decode($marketJsonShip);
+
+			$jitaBuyPrice = array(
+				'ship' => $marketArrayShip['0']->buy->median,
+				'total' => $marketArrayShip['0']->buy->median
+			);
+			$jitaSellPrice = array(
+				'ship' => $marketArrayShip['0']->sell->median,
+				'total' => $marketArrayShip['0']->sell->median
+			);
+		}
+
+		// Fitting Price
 		$items = null;
 		foreach($fittingArray as $item) {
 			$items[] = $item->itemID;
@@ -116,23 +138,34 @@ class MarketdataHelper {
 
 		// if we have items
 		if($items !== null) {
-			$marketJson = $this->getMarketDataJson($items);
+			$marketJsonFitting = $this->getMarketDataJson($items);
 
 			// If we have the json data
-			if($marketJson !== false) {
-				$marketArray = json_decode($marketJson);
-
-				$jitaBuyPrice = null;
-				$jitaSellPrice = null;
+			if($marketJsonFitting !== false) {
+				$marketArray = json_decode($marketJsonFitting);
+				$jitaBuyPrice['fitting'] = null;
+				$jitaSellPrice['fitting'] = null;
 
 				foreach($marketArray as $item) {
-					$jitaBuyPrice += $item->buy->median;
-					$jitaSellPrice += $item->sell->median;
+					$jitaBuyPrice['fitting'] += $item->buy->median;
+					$jitaSellPrice['fitting'] += $item->sell->median;
+					$jitaBuyPrice['total'] += $item->buy->median;
+					$jitaSellPrice['total'] += $item->sell->median;
 				} // END foreach($marketArray as $item) s
 
 				$returnValue = array(
-					'jitaBuyPrice' => number_format($jitaBuyPrice, 2, ',', '.') . ' ISK',
-					'jitaSellPrice' => number_format($jitaSellPrice, 2, ',', '.') . ' ISK'
+					'ship' => array(
+						'jitaBuyPrice' => number_format($jitaBuyPrice['ship'], 2, ',', '.') . ' ISK',
+						'jitaSellPrice' => number_format($jitaSellPrice['ship'], 2, ',', '.') . ' ISK'
+					),
+					'fitting' => array(
+						'jitaBuyPrice' => number_format($jitaBuyPrice['fitting'], 2, ',', '.') . ' ISK',
+						'jitaSellPrice' => number_format($jitaSellPrice['fitting'], 2, ',', '.') . ' ISK'
+					),
+					'total' => array(
+						'jitaBuyPrice' => number_format($jitaBuyPrice['total'], 2, ',', '.') . ' ISK',
+						'jitaSellPrice' => number_format($jitaSellPrice['total'], 2, ',', '.') . ' ISK'
+					)
 				);
 			} // END if($marketJson !== false)
 		} // END if($items !== null)
