@@ -4,8 +4,8 @@
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.1-r20170711...HEAD)
 - In Development
 
-## [v0.1-r20170711](https://github.com/ppfeufer/eve-online-wordpress-theme/releases/tag/v0.1-r20170630) - 2017-07-11
-[Full Changelog](https://github.com/ppfeufer/eve-online-wordpress-theme/compare/v0.1-r20170708...v0.1-r20170711)
+## [v0.1-r20170711](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.1-r20170630) - 2017-07-11
+[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.1-r20170708...v0.1-r20170711)
 ### Changed
 - reworked market data stuff to display prices for ships, fittings and total price
 
