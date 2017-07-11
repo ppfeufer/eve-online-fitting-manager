@@ -83,27 +83,29 @@
 		padding-left: 1.5625rem;
 	}
 
-	div.doctrine.has-children {
+	.content-doctrine-list div.doctrine.has-children {
 		position: relative;
 	}
 
-	.child-doctrine-second-level {
+	.content-doctrine-list .child-doctrine-second-level {
 		font-size: 14px;
 		font-size: 0.875rem;
 	}
 
-	div.doctrine.has-children .child-doctrine-list {
+	.content-doctrine-list div.doctrine.has-children .child-doctrine-list {
 		display: none;
 	}
 
-	div.doctrine.has-children.open .child-doctrine-list {
+	.content-doctrine-list div.doctrine.has-children.open .child-doctrine-list {
 		display: block;
 	}
 
-	div.child-doctrine-second-level {
+	.content-doctrine-list div.child-doctrine-second-level {
 		display: block;
 		padding-left: 25px;
 		padding-left: 1.5625rem;
+		position: relative;
+		z-index: 999;
 	}
 
 	/* Doctrine List Sidebar
@@ -117,9 +119,9 @@
 	}
 
 	.sidebar-doctrine-list, .child-doctrine-list.child-doctrine-second-level {
-		/*		display: block;
-				padding-left: 25px;
-				padding-left: 1.5625rem;*/
+/*		display: block;
+		padding-left: 25px;
+		padding-left: 1.5625rem;*/
 	}
 
 	.sidebar-doctrine-list > li > .child-doctrine-list {
@@ -164,7 +166,7 @@
 	}
 
 	.sidebar-doctrine-list .dropdown-menu {
-		position: initial;
+		position: relative;
 		float: none;
 		box-shadow: none;
 		background-color: transparent;
