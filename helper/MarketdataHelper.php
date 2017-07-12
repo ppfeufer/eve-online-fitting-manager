@@ -60,7 +60,7 @@ class MarketdataHelper {
 	 */
 	private function __construct() {
 //		$this->apiUrl = $this->apiUrlEveMarketer . '?regionlimit=' . $this->marketRegion . '&usesystem=' . $this->marketSystem . '&typeid=';
-		$this->apiUrl = $this->apiUrlEveMarketer . '?typeid='; // For now we use the API without system or region limit to get an overall median
+		$this->apiUrl = $this->apiUrlEveCentral . '?typeid=';
 	}
 
 	/**

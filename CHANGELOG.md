@@ -2,7 +2,8 @@
 
 ## [In Development](https://github.com/ppfeufer/eve-online-fitting-manager)
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.1-r20170711...HEAD)
-- In Development
+#### Changed
+- Switched Market API to EVE Central
 
 ## [v0.1-r20170711](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.1-r20170630) - 2017-07-11
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.1-r20170708...v0.1-r20170711)
