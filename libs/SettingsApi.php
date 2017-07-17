@@ -47,13 +47,6 @@ class SettingsApi {
 	private $optionsDefault = null;
 
 	/**
-	 * Main Plugin Object
-	 *
-	 * @var object
-	 */
-	private $plugin = null;
-
-	/**
 	 * Constructor
 	 *
 	 * @param string $settingsFilter The name of your settings filter
@@ -62,8 +55,6 @@ class SettingsApi {
 	public function __construct($settingsFilter, $defaultOptions) {
 		$this->settingsFilter = $settingsFilter;
 		$this->optionsDefault = $defaultOptions;
-
-		$this->plugin = new EveOnlineFittingManager\EveOnlineFittingManager;
 	} // END public function __construct($settingsFilter, $defaultOptions)
 
 	/**
@@ -92,24 +83,6 @@ class SettingsApi {
 			} // END if($this->isSettingsPage() === true)
 		} // END if(is_admin())
 	} // END public function initSettings()
-
-	/**
-	 * Getting the URI to a specific file within the current directory.
-	 * Unfortunately this is needed, becaue I do not know if this API
-	 * is used for a theme or a plugin.
-	 *
-	 * @param string $file
-	 * @return boolean
-	 */
-	private function getUri($file = null) {
-		$file_path = \trailingslashit(\str_replace('\\', '/', \str_replace(\str_replace('/', '\\', \WP_CONTENT_DIR ), '', \dirname(__FILE__))));
-
-		if($file_path) {
-			return \content_url($file_path . $file);
-		} // END if($file_path)
-
-		return false;
-	} // END private function getUri($file = null)
 
 	/**
 	 * Creating pages and menus from the settingsArray
@@ -194,7 +167,7 @@ class SettingsApi {
 						$section_args['id'], $section_args['title'], array($this, $section_args['callback']), $section_args['menu_page']
 					);
 
-					if(!empty($item['fields']) && is_array($item['fields'])) {
+					if(!empty($item['fields']) && \is_array($item['fields'])) {
 						foreach($item['fields'] as $field_id => $field) {
 							if(\is_array($field)) {
 								$sanitized_field_id = \sanitize_title($field_id);
@@ -235,7 +208,7 @@ class SettingsApi {
 						$message = \call_user_func($_GET['callback']);
 						\update_option('rsa-message', $message);
 
-						$url = admin_url('options-general.php?page=' . $_GET['page']);
+						$url = \admin_url('options-general.php?page=' . $_GET['page']);
 						\wp_redirect($url);
 
 						die;
@@ -285,7 +258,8 @@ class SettingsApi {
 	 */
 	public function get() {
 		if(!empty($this->args['get'])) {
-			$item_array = \call_user_func_array(array($this, 'get_' . $this->args['get']), array($this->args));
+//			$item_array = \call_user_func_array(array($this, 'get_' . $this->args['get']), array($this->args));
+			$item_array = \call_user_func_array(array($this, 'get' . ucfirst(EveOnlineFittingManager\Helper\StringHelper::camelCase($this->args['get']))), array($this->args));
 		} elseif(!empty($this->args['choices'])) {
 			$item_array = $this->selectChoices($this->args);
 		} else {
@@ -298,7 +272,7 @@ class SettingsApi {
 	/**
 	 * Get users from WordPress, used by the select field type
 	 */
-	public function get_users() {
+	public function getUsers() {
 		$items = array();
 		$args = (!empty($this->args['args'])) ? $this->args['args'] : null;
 		$users = \get_users($args);
@@ -313,7 +287,7 @@ class SettingsApi {
 	/**
 	 * Get menus from WordPress, used by the select field type
 	 */
-	public function get_menus() {
+	public function getMenus() {
 		$items = array();
 		$menus = \get_registered_nav_menus();
 
@@ -329,7 +303,7 @@ class SettingsApi {
 	/**
 	 * Get posts from WordPress, used by the select field type
 	 */
-	public function get_posts() {
+	public function getPosts() {
 		$items = null;
 
 		if($this->args['get'] === 'posts' && !empty($this->args['post_type'])) {
@@ -363,7 +337,7 @@ class SettingsApi {
 	/**
 	 * Get terms from WordPress, used by the select field type
 	 */
-	public function get_terms() {
+	public function getTerms() {
 		$items = array();
 		$taxonomies = (!empty($this->args['taxonomies']) ) ? $this->args['taxonomies'] : null;
 		$args = (!empty($this->args['args'])) ? $this->args['args'] : null;
@@ -381,7 +355,7 @@ class SettingsApi {
 	/**
 	 * Get taxonomies from WordPress, used by the select field type
 	 */
-	public function get_taxonomies() {
+	public function getTaxonomies() {
 		$items = array();
 		$args = (!empty($this->args['args'])) ? $this->args['args'] : null;
 		$taxonomies = \get_taxonomies($args, 'objects');
@@ -398,7 +372,7 @@ class SettingsApi {
 	/**
 	 * Get sidebars from WordPress, used by the select field type
 	 */
-	public function get_sidebars() {
+	public function getSidebars() {
 		$items = array();
 
 		global $wp_registered_sidebars;
@@ -415,7 +389,7 @@ class SettingsApi {
 	/**
 	 * Get themes from WordPress, used by the select field type
 	 */
-	public function get_themes() {
+	public function getThemes() {
 		$items = array();
 		$args = (!empty($this->args['args'])) ? $this->args['args'] : null;
 		$themes = \wp_get_themes($args);
@@ -432,7 +406,7 @@ class SettingsApi {
 	/**
 	 * Get plugins from WordPress, used by the select field type
 	 */
-	public function get_plugins() {
+	public function getPlugins() {
 		$items = array();
 		$args = (!empty($this->args['args'])) ? $this->args['args'] : null;
 		$plugins = \get_plugins($args);
@@ -449,7 +423,7 @@ class SettingsApi {
 	/**
 	 * Get post_types from WordPress, used by the select field type
 	 */
-	public function get_post_types() {
+	public function getPostTypes() {
 		$items = array();
 		$args = (!empty($this->args['args'])) ? $this->args['args'] : null;
 		$post_types = \get_post_types($args, 'objects');
@@ -507,7 +481,7 @@ class SettingsApi {
 	public function checked($slug) {
 		$value = $this->value();
 
-		if($this->valueType() == 'array') {
+		if($this->valueType() === 'array') {
 			$checked = (!empty($value) && \in_array($slug, $this->value())) ? ' checked="checked"' : '';
 		} else {
 			$checked = (!empty($value) && $slug == $this->value()) ? ' checked="checked"' : '';
@@ -525,7 +499,7 @@ class SettingsApi {
 	public function value($key = null) {
 		$value = '';
 
-		if($this->valueType() == 'array') {
+		if($this->valueType() === 'array') {
 			$default = (!empty($this->args['default']) && \is_array($this->args['default'])) ? $this->args['default'] : array();
 		} else {
 			$default = (!empty($this->args['default'])) ? $this->args['default'] : '';
@@ -563,7 +537,7 @@ class SettingsApi {
 
 		if(\in_array($this->args['type'], $default_single)) {
 			return 'string';
-		} elseif(in_array($this->args['type'], $default_multiple)) {
+		} elseif(\in_array($this->args['type'], $default_multiple)) {
 			return 'array';
 		} // END if(in_array($this->args['type'], $default_single))
 	} // END public function valueType()
@@ -803,7 +777,7 @@ class SettingsApi {
 	} // END public function renderFields($args)
 
 	/**
-	 * Callback for field registration. It's required by WordPress but not used by this plugin
+	 * Callback for field registration. It's required by WordPress but not used by this API
 	 */
 	public function callback() {
 	} // END public function callback()
@@ -899,7 +873,7 @@ class SettingsApi {
 //			\wp_enqueue_script('jquery-ui-datepicker');
 			\wp_enqueue_script(
 				'settings-api',
-				(\WP_DEBUG === true) ? $this->plugin->getPluginUri() . 'js/settings-api.js' : $this->plugin->getPluginUri() . 'js/settings-api.min.js'
+				(\WP_DEBUG === true) ? EveOnlineFittingManager\Helper\PluginHelper::getPluginUri('js/settings-api.js') : EveOnlineFittingManager\Helper\PluginHelper::getPluginUri('js/settings-api.min.js')
 			);
 		} // END if($this->isSettingsPage() === true)
 	} // END public function enqueueScripts()
@@ -910,14 +884,14 @@ class SettingsApi {
 	public function enqueueStyles() {
 		if($this->isSettingsPage() === true) {
 //			\wp_enqueue_style('wp-color-picker');
-//			\wp_enqueue_style('jquery-ui', $this->getUri('css/jquery-ui.min.css'));
+//			\wp_enqueue_style('jquery-ui', EveOnlineFittingManager\Helper\PluginHelper::getPluginUri('css/jquery-ui.min.css'));
 //			\wp_enqueue_style(
 //				'font-awesome',
-//				(\WP_DEBUG === true) ? $this->plugin->getPluginUri() . 'css/font-awesome.css' : $this->plugin->getPluginUri() . 'css/font-awesome.min.css'
+//				(\WP_DEBUG === true) ? EveOnlineFittingManager\Helper\PluginHelper::getPluginUri('css/font-awesome.css') : EveOnlineFittingManager\Helper\PluginHelper::getPluginUri('css/font-awesome.min.css')
 //			);
 			\wp_enqueue_style(
 				'settings-api',
-				(\WP_DEBUG === true) ? $this->plugin->getPluginUri() . 'css/settings-api.css' : $this->plugin->getPluginUri() . 'css/settings-api.min.css'
+				(\WP_DEBUG === true) ? EveOnlineFittingManager\Helper\PluginHelper::getPluginUri('css/settings-api.css') : EveOnlineFittingManager\Helper\PluginHelper::getPluginUri('css/settings-api.min.css')
 			);
 		} // END if($this->isSettingsPage() === true)
 	} // END public function enqueueStyles()

@@ -6,26 +6,24 @@ use WordPress\Plugin\EveOnlineFittingManager;
 \defined('ABSPATH') or die();
 
 class Database {
-	private $plugin = null;
 	private $pluginSettings = null;
 	private static $instance;
 
 	public $db = null;
 
 	private function __construct() {
-		$this->plugin = new EveOnlineFittingManager\EveOnlineFittingManager;
-		$this->pluginSettings = \get_option($this->plugin->getOptionFieldName(), $this->plugin->getDefaultSettings());
+		$this->pluginSettings = \get_option(EveOnlineFittingManager\Helper\PluginHelper::getOptionFieldName(), EveOnlineFittingManager\Helper\PluginHelper::getPluginDefaultSettings());
 
 		$this->db = $this->initiateKillboardDatabase();
-	}
+	} // END private function __construct()
 
 	public static function getInstance() {
 		if(\is_null(self::$instance)) {
 			self::$instance = new self();
-		}
+		} // END if(\is_null(self::$instance))
 
 		return self::$instance;
-	}
+	} // END public static function getInstance()
 
 	private function initiateKillboardDatabase() {
 		$returnValue = false;
@@ -35,5 +33,5 @@ class Database {
 		} // END if(!empty($this->pluginSettings['edk-killboard-user']) && !empty($this->pluginSettings['edk-killboard-password']) && !empty($this->pluginSettings['edk-killboard-name']) && !empty($this->pluginSettings['edk-killboard-host']))
 
 		return $returnValue;
-	}
-}
+	} // END private function initiateKillboardDatabase()
+} // END class Database

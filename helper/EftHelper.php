@@ -18,7 +18,7 @@ class EftHelper {
 		$eftFitting = \str_replace("\r", "\n", $eftFitting); // mac -> linux
 
 		return $eftFitting;
-	}
+	} // END public static function fixLineBreaks($eftFitting)
 
 	/**
 	 * Getting the ship class name from the EFT dump
@@ -43,7 +43,7 @@ class EftHelper {
 		}
 
 		return $returnValue;
-	}
+	} // END public static function getShipType($eftFitting)
 
 	/**
 	 * Getting the fitting name from teh EFT dump
@@ -68,7 +68,7 @@ class EftHelper {
 		}
 
 		return $returnValue;
-	}
+	} // END public static function getFittingName($eftFitting)
 
 	/**
 	 * Get the Item IDs for the fitting from EFT Import
@@ -107,7 +107,7 @@ class EftHelper {
 			$arrayDrones = array();
 
 			foreach($fittingArray as &$line) {
-				$line = trim($line);
+				$line = \trim($line);
 
 				if(!empty($line)) {
 					$itemCount = 1;
@@ -248,7 +248,7 @@ class EftHelper {
 		if(!empty($eftFitting)) {
 			$fittingData = self::getFittingArrayFromEftData(\trim(self::fixLineBreaks($eftFitting)));
 			$returnValue = FittingHelper::getShipDnaFromFittingData($fittingData);
-		}
+		} // END if(!empty($eftFitting))
 
 		return $returnValue;
 	} // END public function getShipDnaFromEftData($eftFitting)
@@ -396,4 +396,4 @@ class EftHelper {
 
 		return $returnValue;
 	} // END public function getEftImportFromFitting($fitting, $withShipDna = false)
-}
+} // END class EftHelper

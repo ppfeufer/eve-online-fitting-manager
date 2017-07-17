@@ -5,7 +5,7 @@
 ?>
 <?php get_header(); ?>
 
-<div class="container main">
+<div class="container main template-page-fittings">
 	<?php
 	if(\have_posts()) {
 		while(\have_posts()) {
@@ -31,7 +31,7 @@
 						<article class="post clearfix" id="post-<?php \the_ID(); ?>">
 							<?php
 							if(!empty(\get_query_var('fitting_search'))) {
-								$query = WordPress\Plugin\EveOnlineFittingManager\Helper\FittingHelper::searchFittings();
+								$query = \WordPress\Plugin\EveOnlineFittingManager\Helper\FittingHelper::searchFittings();
 
 								if($query->have_posts()) {
 									$uniqueID = \uniqid();

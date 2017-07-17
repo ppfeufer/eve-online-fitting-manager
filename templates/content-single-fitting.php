@@ -13,7 +13,7 @@
 	</aside><!--end .entry-details -->
 </header><!--end .entry-header -->
 
-<article id="post-<?php \the_ID(); ?>" <?php \post_class('clearfix content-single content-single-fitting'); ?>>
+<article id="post-<?php \the_ID(); ?>" <?php \post_class('clearfix content-single template-content-single-fitting'); ?>>
 	<section class="post-content">
 		<div class="entry-content">
 			<?php
@@ -45,7 +45,7 @@
 						'drones' => \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_drones', true),
 						'charges' => \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_charges', true),
 					));
-					$fittingArray = WordPress\Plugin\EveOnlineFittingManager\Helper\EftHelper::getFittingArrayFromEftData($eftFitting);
+					$fittingArray = \WordPress\Plugin\EveOnlineFittingManager\Helper\EftHelper::getFittingArrayFromEftData($eftFitting);
 					$marketPrices = \WordPress\Plugin\EveOnlineFittingManager\Helper\MarketdataHelper::getInstance()->getMarketPricesFromFittingArray($fittingArray);
 
 					if($marketPrices !== false) {

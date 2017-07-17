@@ -7,7 +7,7 @@ $rigSlots = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_ri
 $subSystems = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_subsystems', true);
 $fittingDna = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_dna', true);
 
-$fittingSlotLayout = WordPress\Plugin\EveOnlineFittingManager\Helper\FittingHelper::getSlotLayoutFromFittingArray(array(
+$fittingSlotLayout = \WordPress\Plugin\EveOnlineFittingManager\Helper\FittingHelper::getSlotLayoutFromFittingArray(array(
 	'shipID' => $shipID,
 	'highSlots' => $highSlots,
 	'midSlots' => $midSlots,
@@ -18,40 +18,40 @@ $fittingSlotLayout = WordPress\Plugin\EveOnlineFittingManager\Helper\FittingHelp
 
 $itemsHighSlots = null;
 if($highSlots !== null) {
-	$itemsHighSlots = unserialize($highSlots);
+	$itemsHighSlots = \unserialize($highSlots);
 }
 
 $itemsMidSlots = null;
 if($midSlots !== null) {
-	$itemsMidSlots = unserialize($midSlots);
+	$itemsMidSlots = \unserialize($midSlots);
 }
 
 $itemsLowSlots = null;
 if($lowSlots !== null) {
-	$itemsLowSlots = unserialize($lowSlots);
+	$itemsLowSlots = \unserialize($lowSlots);
 }
 
 $itemsRigSlots = null;
 if($rigSlots !== null) {
-	$itemsRigSlots = unserialize($rigSlots);
+	$itemsRigSlots = \unserialize($rigSlots);
 }
 
 $itemsSubSystems = null;
 if($subSystems !== null) {
-	$itemsSubSystems = unserialize($subSystems);
+	$itemsSubSystems = \unserialize($subSystems);
 }
 ?>
 
-<div class="fittingPanel">
+<div class="fittingPanel template-fitting-ring">
 	<div class="fittingRing">
-		<img alt="" src="<?php echo WordPress\Plugin\EveOnlineFittingManager\Helper\PluginHelper::getPluginUri('images/fitting-ring/eve-fitting-ring.png'); ?>" class="fittingRingImage">
+		<img alt="" src="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Helper\PluginHelper::getPluginUri('images/fitting-ring/eve-fitting-ring.png'); ?>" class="fittingRingImage">
 	</div>
 
 	<!--
 	// High Slots
 	-->
 	<div class="highSlots">
-		<img alt="" src="<?php echo WordPress\Plugin\EveOnlineFittingManager\Helper\PluginHelper::getPluginUri('images/fitting-ring/' . $fittingSlotLayout['highSlots'] . 'h.png'); ?>">
+		<img alt="" src="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Helper\PluginHelper::getPluginUri('images/fitting-ring/' . $fittingSlotLayout['highSlots'] . 'h.png'); ?>">
 	</div>
 	<?php
 	if($itemsHighSlots !== null) {
@@ -59,8 +59,8 @@ if($subSystems !== null) {
 		foreach($itemsHighSlots as $highSlotItemID) {
 			if(!empty($highSlotItemID)) {
 				?>
-				<div class="highSlot_<?php echo $hsCount; ?>" data-toggle="tooltip" data-title="<?php echo WordPress\Plugin\EveOnlineFittingManager\Helper\FittingHelper::getItemNameById($highSlotItemID); ?>" data-placement="top">
-					<img width="32" height="32" src="<?php echo WordPress\Plugin\EveOnlineFittingManager\Helper\ImageHelper::getLocalCacheImageUriForRemoteImage('item', 'https://imageserver.eveonline.com/Type/' . $highSlotItemID . '_32.png')?>" class="img-rounded">
+				<div class="highSlot_<?php echo $hsCount; ?>" data-toggle="tooltip" data-title="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Helper\FittingHelper::getItemNameById($highSlotItemID); ?>" data-placement="top">
+					<img width="32" height="32" src="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Helper\ImageHelper::getLocalCacheImageUriForRemoteImage('item', 'https://imageserver.eveonline.com/Type/' . $highSlotItemID . '_32.png')?>" class="img-rounded">
 				</div>
 				<?php
 			}
@@ -74,7 +74,7 @@ if($subSystems !== null) {
 	// Mid Slots
 	-->
 	<div class="midSlots">
-		<img alt="" src="<?php echo WordPress\Plugin\EveOnlineFittingManager\Helper\PluginHelper::getPluginUri('images/fitting-ring/' . $fittingSlotLayout['midSlots'] . 'm.png'); ?>">
+		<img alt="" src="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Helper\PluginHelper::getPluginUri('images/fitting-ring/' . $fittingSlotLayout['midSlots'] . 'm.png'); ?>">
 	</div>
 	<?php
 	if($itemsMidSlots !== null) {
@@ -82,8 +82,8 @@ if($subSystems !== null) {
 		foreach($itemsMidSlots as $midSlotItemID) {
 			if(!empty($midSlotItemID)) {
 				?>
-				<div class="midSlot_<?php echo $msCount; ?>" data-toggle="tooltip" data-title="<?php echo WordPress\Plugin\EveOnlineFittingManager\Helper\FittingHelper::getItemNameById($midSlotItemID); ?>" data-placement="top">
-					<img width="32" height="32" src="<?php echo WordPress\Plugin\EveOnlineFittingManager\Helper\ImageHelper::getLocalCacheImageUriForRemoteImage('item', 'https://imageserver.eveonline.com/Type/' . $midSlotItemID . '_32.png')?>" class="img-rounded">
+				<div class="midSlot_<?php echo $msCount; ?>" data-toggle="tooltip" data-title="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Helper\FittingHelper::getItemNameById($midSlotItemID); ?>" data-placement="top">
+					<img width="32" height="32" src="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Helper\ImageHelper::getLocalCacheImageUriForRemoteImage('item', 'https://imageserver.eveonline.com/Type/' . $midSlotItemID . '_32.png')?>" class="img-rounded">
 				</div>
 				<?php
 			}
@@ -97,7 +97,7 @@ if($subSystems !== null) {
 	// Low Slots
 	-->
 	<div class="lowSlots">
-		<img style="border: 0px;" alt="" src="<?php echo WordPress\Plugin\EveOnlineFittingManager\Helper\PluginHelper::getPluginUri('images/fitting-ring/' . $fittingSlotLayout['lowSlots'] . 'l.png'); ?>">
+		<img style="border: 0px;" alt="" src="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Helper\PluginHelper::getPluginUri('images/fitting-ring/' . $fittingSlotLayout['lowSlots'] . 'l.png'); ?>">
 	</div>
 	<?php
 	if($itemsLowSlots !== null) {
@@ -105,8 +105,8 @@ if($subSystems !== null) {
 		foreach($itemsLowSlots as $lowSlotItemID) {
 			if(!empty($lowSlotItemID)) {
 				?>
-				<div class="lowSlot_<?php echo $lsCount; ?>" data-toggle="tooltip" data-title="<?php echo WordPress\Plugin\EveOnlineFittingManager\Helper\FittingHelper::getItemNameById($lowSlotItemID); ?>" data-placement="top">
-					<img width="32" height="32" src="<?php echo WordPress\Plugin\EveOnlineFittingManager\Helper\ImageHelper::getLocalCacheImageUriForRemoteImage('item', 'https://imageserver.eveonline.com/Type/' . $lowSlotItemID . '_32.png')?>" class="img-rounded">
+				<div class="lowSlot_<?php echo $lsCount; ?>" data-toggle="tooltip" data-title="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Helper\FittingHelper::getItemNameById($lowSlotItemID); ?>" data-placement="top">
+					<img width="32" height="32" src="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Helper\ImageHelper::getLocalCacheImageUriForRemoteImage('item', 'https://imageserver.eveonline.com/Type/' . $lowSlotItemID . '_32.png')?>" class="img-rounded">
 				</div>
 				<?php
 			}
@@ -120,7 +120,7 @@ if($subSystems !== null) {
 	// Rig Slots
 	-->
 	<div class="rigSlots">
-		<img style="border: 0px;" alt="" src="<?php echo WordPress\Plugin\EveOnlineFittingManager\Helper\PluginHelper::getPluginUri('images/fitting-ring/' . $fittingSlotLayout['rigSlots'] . 'r.png'); ?>">
+		<img style="border: 0px;" alt="" src="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Helper\PluginHelper::getPluginUri('images/fitting-ring/' . $fittingSlotLayout['rigSlots'] . 'r.png'); ?>">
 	</div>
 	<?php
 	if($itemsRigSlots !== null) {
@@ -128,8 +128,8 @@ if($subSystems !== null) {
 		foreach($itemsRigSlots as $rigSlotItemID) {
 			if(!empty($rigSlotItemID)) {
 				?>
-				<div class="rigSlot_<?php echo $rsCount; ?>" data-toggle="tooltip" data-title="<?php echo WordPress\Plugin\EveOnlineFittingManager\Helper\FittingHelper::getItemNameById($rigSlotItemID); ?>" data-placement="top">
-					<img width="32" height="32" src="<?php echo WordPress\Plugin\EveOnlineFittingManager\Helper\ImageHelper::getLocalCacheImageUriForRemoteImage('item', 'https://imageserver.eveonline.com/Type/' . $rigSlotItemID . '_32.png')?>" class="img-rounded">
+				<div class="rigSlot_<?php echo $rsCount; ?>" data-toggle="tooltip" data-title="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Helper\FittingHelper::getItemNameById($rigSlotItemID); ?>" data-placement="top">
+					<img width="32" height="32" src="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Helper\ImageHelper::getLocalCacheImageUriForRemoteImage('item', 'https://imageserver.eveonline.com/Type/' . $rigSlotItemID . '_32.png')?>" class="img-rounded">
 				</div>
 				<?php
 			}
@@ -144,15 +144,15 @@ if($subSystems !== null) {
 		// Subsystems
 		-->
 		<div class="subSystems">
-			<img style="border: 0px;" alt="" src="<?php echo WordPress\Plugin\EveOnlineFittingManager\Helper\PluginHelper::getPluginUri('images/fitting-ring/5s.png'); ?>">
+			<img style="border: 0px;" alt="" src="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Helper\PluginHelper::getPluginUri('images/fitting-ring/5s.png'); ?>">
 		</div>
 		<?php
 		$ssCount = 1;
 		foreach($itemsSubSystems as $subSystemItemID) {
 			if(!empty($subSystemItemID)) {
 				?>
-				<div class="subSystem_<?php echo $ssCount; ?>" data-toggle="tooltip" data-title="<?php echo WordPress\Plugin\EveOnlineFittingManager\Helper\FittingHelper::getItemNameById($subSystemItemID); ?>" data-placement="top">
-					<img width="32" height="32" src="<?php echo WordPress\Plugin\EveOnlineFittingManager\Helper\ImageHelper::getLocalCacheImageUriForRemoteImage('item', 'https://imageserver.eveonline.com/Type/' . $subSystemItemID . '_32.png')?>" class="img-rounded">
+				<div class="subSystem_<?php echo $ssCount; ?>" data-toggle="tooltip" data-title="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Helper\FittingHelper::getItemNameById($subSystemItemID); ?>" data-placement="top">
+					<img width="32" height="32" src="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Helper\ImageHelper::getLocalCacheImageUriForRemoteImage('item', 'https://imageserver.eveonline.com/Type/' . $subSystemItemID . '_32.png')?>" class="img-rounded">
 				</div>
 				<?php
 			}
@@ -166,7 +166,7 @@ if($subSystems !== null) {
 	// Ship
 	-->
 	<div class="shipImage">
-		<img width="256" height="256" alt="Tengu" class="eveimage img-rounded" src="<?php echo WordPress\Plugin\EveOnlineFittingManager\Helper\ImageHelper::getLocalCacheImageUriForRemoteImage('ship', 'https://imageserver.eveonline.com/Render/' . $shipID . '_256.png')?>">
+		<img width="256" height="256" alt="Tengu" class="eveimage img-rounded" src="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Helper\ImageHelper::getLocalCacheImageUriForRemoteImage('ship', 'https://imageserver.eveonline.com/Render/' . $shipID . '_256.png')?>">
 	</div>
 </div>
 

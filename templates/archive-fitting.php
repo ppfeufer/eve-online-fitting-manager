@@ -6,7 +6,7 @@ defined('ABSPATH') or die();
 $doctrineData = \get_queried_object();
 ?>
 
-<div class="container main" data-doctrine="<?php echo $doctrineData->slug; ?>">
+<div class="container main template-archive-fitting" data-doctrine="<?php echo $doctrineData->slug; ?>">
 	<div class="main-content clearfix">
 		<div class="col-lg-9 col-md-9 col-sm-9 col-9">
 			<div class="content content-archive doctrine-list">

@@ -6,14 +6,12 @@ use WordPress\Plugin\EveOnlineFittingManager;
 \defined('ABSPATH') or die();
 
 class PluginSettings {
-	private $plugin = null;
 	private $settingsFilter = null;
 	private $defaultOptions = null;
 
 	public function __construct() {
-		$this->plugin = new EveOnlineFittingManager\EveOnlineFittingManager;
 		$this->settingsFilter = 'register_eve_online_fittings_manager_settings';
-		$this->defaultOptions = $this->plugin->getDefaultSettings();
+		$this->defaultOptions = EveOnlineFittingManager\Helper\PluginHelper::getPluginDefaultSettings();
 
 		$this->fireSettingsApi();
 	}
@@ -30,12 +28,13 @@ class PluginSettings {
 			'type' => 'plugin',
 			'menu_title' => \__('EVE Online Fittings Manager', 'eve-online-fitting-manager'),
 			'page_title' => \__('EVE Online Fittings Manager', 'eve-online-fitting-manager'),
-			'option_name' => $this->plugin->getOptionFieldName(), // Your settings name. With this name your settings are saved in the database.
+			'option_name' => EveOnlineFittingManager\Helper\PluginHelper::getOptionFieldName(), // Your settings name. With this name your settings are saved in the database.
 			'tabs' => array(
 				/**
 				 * killboard settings tab
 				 */
 				'general-settings' => $this->getKillboardSettings(),
+				'template-settings' => $this->getTemplateSettings()
 			)
 		);
 
@@ -52,15 +51,24 @@ class PluginSettings {
 		return $settings;
 	} // END private function getKillboardSettings()
 
+	private function getTemplateSettings() {
+		$settings = array(
+			'tab_title' => \__('Template Settings', 'eve-online-fitting-manager'),
+			'fields' => $this->getTemplateSettingsFields()
+		);
+
+		return $settings;
+	} // END private function getKillboardSettings()
+
 	private function getKillboardSettingsFields() {
 //		$infotext = sprintf(
 //			\__('If you don\'t have a local EDK killboard installation you can use, it is suggested to install and activate the %1$s plugin, so we can use this plugins database.', 'eve-online-fitting-manager'),
 //			'<a href="http://aeonoftime.com/EVE_Online_Tools/EVE-ShipInfo-WordPress-Plugin/" target="_blank">' . \__('EVE ShipInfo', 'eve-online-fitting-manager') . '</a>'
 //		);
 
-//		if($this->plugin->pluginEveShipInfo === true) {
+//		if(EveOnlineFittingManager\Helper\PluginHelper::checkPluginDependencies('EVEShipInfo') === true) {
 //			$infotext = \__('Since you already have the EVE ShipInfo Plugin installed and activated, there is no need for any other settings, we can use that plugins database straight away.', 'eve-online-fitting-manager');
-//		} // END if($this->plugin->pluginEveShipInfo === true)
+//		} // END if(EveOnlineFittingManager\Helper\PluginHelper::checkPluginDependencies('EVEShipInfo') === true)
 
 		$settingsFields = array(
 			'' => array(
@@ -84,6 +92,23 @@ class PluginSettings {
 				'type' => 'password',
 				'title' => \__('DB Password', 'eve-online-fitting-manager'),
 			)
+		);
+
+		return $settingsFields;
+	} // END private function getKillboardSettingsFields()
+
+	private function getTemplateSettingsFields() {
+		$settingsFields = array(
+			'template-settings' => array(
+				'type' => 'checkbox',
+				'title' => \__('Image Settings', 'eve-online-fitting-manager'),
+				'choices' => array(
+					'show-ship-images-in-loop' => \__('Show ship images in ship list.', 'eve-online-fitting-manager'),
+					'show-doctrine-images-in-loop' => \sprintf(\__('Show doctrine images in doctrine list. <small><em>(You need to have the %1$s plugin installed to make this happen.)</em></small>', 'eve-online-fitting-manager'),
+						'<a href="https://wordpress.org/plugins/categories-images/" target="_blank">' . \__('Categories Images', 'eve-online-fitting-manager') . '</a>'
+					)
+				),
+			),
 		);
 
 		return $settingsFields;

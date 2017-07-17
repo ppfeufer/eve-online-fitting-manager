@@ -83,10 +83,10 @@ class PostType {
 			'query_var' => true
 		);
 
-		register_taxonomy('fitting-doctrines', array('fitting'), $argsTaxDoctrine);
-		register_taxonomy('fitting-ships', array('fitting'), $argsTaxShip);
+		\register_taxonomy('fitting-doctrines', array('fitting'), $argsTaxDoctrine);
+		\register_taxonomy('fitting-ships', array('fitting'), $argsTaxShip);
 
-		register_post_type('fitting', array(
+		\register_post_type('fitting', array(
 			'labels' => array(
 				'name' => \__('Fittings', 'eve-online-fitting-manager'),
 				'singular_name' => \__('Fitting', 'eve-online-fitting-manager')
@@ -163,10 +163,8 @@ class PostType {
 
 		if(\is_singular('fitting')) {
 			$templateFile = 'single-fitting.php';
-//		} elseif(\is_archive() && \get_post_type() === 'fitting' && \is_tax('fitting-doctrines')) {
 		} elseif(\is_archive() && \is_tax('fitting-doctrines')) {
 			$templateFile = 'archive-fitting.php';
-//		} elseif(\is_archive() && \get_post_type() === 'fitting' && \is_tax('fitting-ships')) {
 		} elseif(\is_archive() && \is_tax('fitting-ships')) {
 			$templateFile = 'archive-ship.php';
 		} // END if(\is_singular('fitting'))

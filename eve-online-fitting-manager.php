@@ -4,7 +4,7 @@
  * Plugin URI: https://github.com/ppfeufer/eve-online-fitting-manager
  * Git URI: https://github.com/ppfeufer/eve-online-fitting-manager
  * Description: A little management tool for your doctrine fittings in your WordPress website. (Best with a theme running with <a href="http://getbootstrap.com/">Bootstrap</a>)
- * Version: 0.1-r20170711
+ * Version: 0.1-r20170717
  * Author: Rounon Dax
  * Author URI: http://yulaifederation.net
  * Text Domain: eve-online-fitting-manager
@@ -16,29 +16,24 @@ namespace WordPress\Plugin\EveOnlineFittingManager;
 \defined('ABSPATH') or die();
 
 class EveOnlineFittingManager {
-	public $pluginEveShipInfo = false;
-
 	private $textDomain = null;
 	private $localizationDirectory = null;
 	private $pluginDir = null;
 	private $pluginUri = null;
-	private $optionName = null;
-	private $dbVersionFieldName = null;
-	private $databaseVersion = null;
 
+	/**
+	 * Plugin constructor
+	 *
+	 * @param boolean $init
+	 */
 	public function __construct($init = false) {
 		/**
 		 * Initializing Variables
 		 */
 		$this->textDomain = 'eve-online-fitting-manager';
-		$this->localizationDirectory = $this->getPluginDir() . '/l10n/';
 		$this->pluginDir =  \plugin_dir_path(__FILE__);
 		$this->pluginUri = \trailingslashit(\plugins_url('/', __FILE__));
-		$this->optionName = 'eve-online-fitting-manager-options';
-		$this->dbVersionFieldName = 'eve-online-fitting-manager-database-version';
-		$this->databaseVersion = '20170626';
-
-		\add_action('plugins_loaded', array($this, 'checkPluginDependencies'));
+		$this->localizationDirectory = $this->pluginDir . '/l10n/';
 
 		$this->loadTextDomain();
 
@@ -53,28 +48,13 @@ class EveOnlineFittingManager {
 	} // END public function __construct()
 
 	/**
-	 * checking for other plugins we might be able to use
+	 * Initialize the plugin
 	 */
-	public function checkPluginDependencies() {
-		/**
-		 * Plugin: EVE ShipInfo
-		 * Description: Puts an EVE Online ships database and EFT fittings
-		 *				manager in your WordPress website, along with high
-		 *				quality screenshots and specialized shortcodes.
-		 *
-		 * We can use that as our database for ships and modules instead of a
-		 * EDK based killboard database. Makes things easier.
-		 */
-		if(\class_exists('EVEShipInfo')) {
-			$this->pluginEveShipInfo = true;
-		} // END if(\class_exists('EVEShipInfo'))
-	} // END public function checkPluginDependencies()
-
 	public function init() {
-		$this->checkDatabaseUpdate();
 		$this->loadLibs();
-		$this->setThumbnailsSizes();
+		$this->checkDatabaseUpdate();
 
+		\add_action('init', array($this, 'setThumbnailsSizes'));
 		\add_action('wp_enqueue_scripts', array($this, 'enqueueJavaScript'), 99);
 		\add_action('wp_enqueue_scripts', array($this, 'enqueueStylesheet'), 99);
 		\add_action('pre_get_posts', array($this, 'customPageQueryVars'));
@@ -85,7 +65,7 @@ class EveOnlineFittingManager {
 		new Libs\Shortcodes;
 
 		/**
-		 * start backend libs
+		 * start backend only libs
 		 */
 		if(\is_admin()) {
 			new Libs\PluginSettings;
@@ -93,6 +73,9 @@ class EveOnlineFittingManager {
 		} // END if(\is_admin())
 	} // END public function init()
 
+	/**
+	 * Set thumbnail sizes
+	 */
 	public function setThumbnailsSizes() {
 		/**
 		 * Thumbnails used for the plugin
@@ -100,55 +83,47 @@ class EveOnlineFittingManager {
 		 */
 		if(\function_exists('\fly_add_image_size')) {
 			\fly_add_image_size('header-image', 1680, 500, true);
-			\fly_add_image_size('post-loop-thumbnail', 705, 395, true);
+			\fly_add_image_size('fitting-helper-post-loop-thumbnail', 705, 395, true);
 		} else {
 			\add_image_size('header-image', 1680, 500, true);
-			\add_image_size('post-loop-thumbnail', 705, 395, true);
+			\add_image_size('fitting-helper-post-loop-thumbnail', 705, 395, true);
 		} // END if(\function_exists('\fly_add_image_size'))
 	} // END public function setThumbnailsSizes()
 
+	/**
+	 * Enqueue our javascript
+	 */
 	public function enqueueJavaScript() {
-		\wp_enqueue_script('bootstrap-js', $this->getPluginUri() . 'bootstrap/js/bootstrap.min.js', array('jquery'), '', true);
-		\wp_enqueue_script('bootstrap-toolkit-js', $this->getPluginUri() . 'bootstrap/bootstrap-toolkit/bootstrap-toolkit.min.js', array('jquery', 'bootstrap-js'), '', true);
-		\wp_enqueue_script('bootstrap-gallery-js', $this->getPluginUri() . 'js/jquery.bootstrap-gallery.min.js', array('jquery', 'bootstrap-js'), '', true);
-//		\wp_enqueue_script('eve-online-fitting-manager-js', $this->getPluginUri() . 'js/eve-online-fitting-manager.min.js', array('jquery'), '', true);
+		\wp_enqueue_script('bootstrap-js', Helper\PluginHelper::getPluginUri('bootstrap/js/bootstrap.min.js'), array('jquery'), '', true);
+		\wp_enqueue_script('bootstrap-toolkit-js', Helper\PluginHelper::getPluginUri('bootstrap/bootstrap-toolkit/bootstrap-toolkit.min.js'), array('jquery', 'bootstrap-js'), '', true);
+		\wp_enqueue_script('bootstrap-gallery-js', Helper\PluginHelper::getPluginUri('js/jquery.bootstrap-gallery.min.js'), array('jquery', 'bootstrap-js'), '', true);
+//		\wp_enqueue_script('eve-online-fitting-manager-js', Helper\PluginHelper::getPluginUri('js/eve-online-fitting-manager.min.js'), array('jquery'), '', true);
 	} // END public function enqueueJavaScript()
 
+	/**
+	 * Enqueue our css
+	 */
 	public function enqueueStylesheet() {
-		\wp_enqueue_style('bootstrap', $this->getPluginUri() . 'bootstrap/css/bootstrap.min.css');
-		\wp_enqueue_style('eve-online-fitting-manager', $this->getPluginUri() . 'css/eve-online-fitting-manager.min.css');
+		\wp_enqueue_style('bootstrap', Helper\PluginHelper::getPluginUri('bootstrap/css/bootstrap.min.css'));
+		\wp_enqueue_style('eve-online-fitting-manager', Helper\PluginHelper::getPluginUri('css/eve-online-fitting-manager.min.css'));
 	} // END public function enqueueStylesheet()
 
 	private function checkDatabaseUpdate() {
-		$currentPluginDatabaseVersion = $this->getCurrentPluginDatabaseVersion();
-		$pluginDatabaseVersion = $this->getPluginDatabaseVersion();
+		$currentPluginDatabaseVersion = Helper\PluginHelper::getCurrentPluginDatabaseVersion();
+		$pluginDatabaseVersion = Helper\PluginHelper::getPluginDatabaseVersion();
 
 		if($pluginDatabaseVersion !== $currentPluginDatabaseVersion) {
-			$this->updateDatabase();
+			Helper\PluginHelper::updateDatabase();
 		} // END if($pluginDatabaseVersion !== $currentPluginDatabaseVersion)
 	} // END private function checkDatabaseUpdate()
 
-	private function updateDatabase() {
-		$defaultSettings = $this->getDefaultSettings();
-		$pluginSettings = $this->getPluginSettings(false);
-
-		// flushing the WP database cache first ...
-		\wp_cache_flush();
-
-		if(\is_array($pluginSettings)) {
-			$newOptions = \array_merge($defaultSettings, $pluginSettings);
-		} else {
-			$newOptions = $defaultSettings;
-		} // END if(\is_array($pluginSettings))
-
-		// Update the options
-		\update_option($this->getOptionFieldName(), $newOptions);
-
-		// Update the DB Version
-		\update_option($this->getDatabaseVersionFieldName(), $this->getCurrentPluginDatabaseVersion());
-	} // END private function updateDatabase()
-
-	public function customPageQueryVars($query) {
+	/**
+	 * Customized query vars for our search function
+	 *
+	 * @param \WP_Query $query
+	 * @return \WP_Query
+	 */
+	public function customPageQueryVars(\WP_Query $query) {
 		if(!\is_admin() && $query->is_main_query()) {
 			if(isset($query->tax_query->queries['0']['taxonomy']) && $query->tax_query->queries['0']['taxonomy'] === 'fitting-doctrines') {
 				$query->set('posts_per_page', 9999);
@@ -166,79 +141,17 @@ class EveOnlineFittingManager {
 		return $query;
 	} // END public function customPageQueryVars($query)
 
+	/**
+	 * Add our own seach key to the search query vars
+	 *
+	 * @param array $queryVars
+	 * @return array
+	 */
 	public function addQueryVarsFilter($queryVars) {
 		$queryVars[] = 'fitting_search';
 
 		return $queryVars;
 	} // END public function addQueryVarsFilter($queryVars)
-
-	/**
-	 * Getting the Plugin's settings
-	 *
-	 * @param boolean $merged Merge with default settings (true/false)
-	 * @return array
-	 */
-	public function getPluginSettings($merged = true) {
-		if($merged === true) {
-			$pluginSettings = \get_option($this->getOptionFieldName(), $this->getDefaultSettings());
-		} else {
-			$pluginSettings = \get_option($this->getOptionFieldName());
-		} // END if($merged === true)
-
-		return $pluginSettings;
-	} // END public function getPluginSettings($merged = true)
-
-	/**
-	 * Returning the deualt settings for this plugin
-	 *
-	 * @return array
-	 */
-	public function getDefaultSettings() {
-		$defaultSettings = array(
-			'edk-killboard-host' => '',
-			'edk-killboard-user' => '',
-			'edk-killboard-name' => '',
-			'edk-killboard-password' => ''
-		);
-
-		return $defaultSettings;
-	} // END public function getDefaultSettings()
-
-	/**
-	 * Getting thew options field name
-	 *
-	 * @return string
-	 */
-	public function getOptionFieldName() {
-		return $this->optionName;
-	} // END public function getOptionFieldName()
-
-	/**
-	 * Getting the Database Version field name
-	 *
-	 * @return string
-	 */
-	public function getDatabaseVersionFieldName() {
-		return $this->dbVersionFieldName;
-	} // END public function getDatabaseVersionFieldName()
-
-	/**
-	 * Getting the Database Version from plugin
-	 *
-	 * @return string
-	 */
-	private function getCurrentPluginDatabaseVersion() {
-		return $this->databaseVersion;
-	} // END private function getCurrentPluginDatabaseVersion()
-
-	/**
-	 * Getting the Database Version from options
-	 *
-	 * @return string
-	 */
-	private function getPluginDatabaseVersion() {
-		return \get_option($this->getDatabaseVersionFieldName());
-	} // END private function getDatabaseVersion()
 
 	/**
 	 * Setting up our text domain for translations
@@ -253,32 +166,14 @@ class EveOnlineFittingManager {
 	 * Loading all libs
 	 */
 	public function loadLibs() {
-		foreach(\glob($this->getPluginDir() . 'helper/*.php') as $lib) {
+		foreach(\glob($this->pluginDir . 'helper/*.php') as $lib) {
 			include_once($lib);
-		} // END foreach(\glob($this->getPluginDir() . 'libs/*.php') as $lib)
+		} // END foreach(\glob($this->pluginDir . 'libs/*.php') as $lib)
 
-		foreach(\glob($this->getPluginDir() . 'libs/*.php') as $lib) {
+		foreach(\glob($this->pluginDir . 'libs/*.php') as $lib) {
 			include_once($lib);
-		} // END foreach(\glob($this->getPluginDir() . 'libs/*.php') as $lib)
+		} // END foreach(\glob($this->pluginDir . 'libs/*.php') as $lib)
 	} // END public function loadLibs()
-
-	/**
-	 * Returning the Plugins relative directory with trailing slash
-	 *
-	 * @return string Plugin Directory
-	 */
-	public function getPluginDir() {
-		return $this->pluginDir;
-	} // END public function getPluginDir()
-
-	/**
-	 * Returning the Plugins URL with trailing slash
-	 *
-	 * @return string Plugin URL
-	 */
-	public function getPluginUri() {
-		return $this->pluginUri;
-	} // END public function getPluginUri()
 
 	/**
 	 * Getting the Plugin's Textdomain for translations

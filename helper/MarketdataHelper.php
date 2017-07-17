@@ -83,8 +83,8 @@ class MarketdataHelper {
 	 * @return string json string of all item marketdata
 	 */
 	public function getMarketDataJson(Array $items) {
-		$typeIdString = implode(',', $items);
-		$transientName = 'eve_fitting_tool_market_data_fitting_' . md5($typeIdString);
+		$typeIdString = \implode(',', $items);
+		$transientName = 'eve_fitting_tool_market_data_fitting_' . \md5($typeIdString);
 		$returnValue = CacheHelper::getInstance()->checkTransientCache($transientName);
 
 		if($returnValue === false) {
@@ -114,11 +114,13 @@ class MarketdataHelper {
 		$ship = array(
 			$fittingArray['0']->itemID
 		);
+
+		// Remove the ship from the array
 		unset($fittingArray['0']);
 
 		$marketJsonShip = $this->getMarketDataJson($ship);
 		if($marketJsonShip !== false) {
-			$marketArrayShip = json_decode($marketJsonShip);
+			$marketArrayShip = \json_decode($marketJsonShip);
 
 			$jitaBuyPrice = array(
 				'ship' => $marketArrayShip['0']->buy->median,
@@ -142,7 +144,7 @@ class MarketdataHelper {
 
 			// If we have the json data
 			if($marketJsonFitting !== false) {
-				$marketArray = json_decode($marketJsonFitting);
+				$marketArray = \json_decode($marketJsonFitting);
 				$jitaBuyPrice['fitting'] = null;
 				$jitaSellPrice['fitting'] = null;
 
@@ -155,16 +157,16 @@ class MarketdataHelper {
 
 				$returnValue = array(
 					'ship' => array(
-						'jitaBuyPrice' => number_format($jitaBuyPrice['ship'], 2, ',', '.') . ' ISK',
-						'jitaSellPrice' => number_format($jitaSellPrice['ship'], 2, ',', '.') . ' ISK'
+						'jitaBuyPrice' => \number_format($jitaBuyPrice['ship'], 2, ',', '.') . ' ISK',
+						'jitaSellPrice' => \number_format($jitaSellPrice['ship'], 2, ',', '.') . ' ISK'
 					),
 					'fitting' => array(
-						'jitaBuyPrice' => number_format($jitaBuyPrice['fitting'], 2, ',', '.') . ' ISK',
-						'jitaSellPrice' => number_format($jitaSellPrice['fitting'], 2, ',', '.') . ' ISK'
+						'jitaBuyPrice' => \number_format($jitaBuyPrice['fitting'], 2, ',', '.') . ' ISK',
+						'jitaSellPrice' => \number_format($jitaSellPrice['fitting'], 2, ',', '.') . ' ISK'
 					),
 					'total' => array(
-						'jitaBuyPrice' => number_format($jitaBuyPrice['total'], 2, ',', '.') . ' ISK',
-						'jitaSellPrice' => number_format($jitaSellPrice['total'], 2, ',', '.') . ' ISK'
+						'jitaBuyPrice' => \number_format($jitaBuyPrice['total'], 2, ',', '.') . ' ISK',
+						'jitaSellPrice' => \number_format($jitaSellPrice['total'], 2, ',', '.') . ' ISK'
 					)
 				);
 			} // END if($marketJson !== false)

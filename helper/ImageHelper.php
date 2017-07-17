@@ -29,7 +29,6 @@ class ImageHelper {
 			 * Otherwise set the remote image as return value.
 			 */
 			if(\is_dir(CacheHelper::getInstance()->getImageCacheDir() . $cacheType) && \is_writable(CacheHelper::getInstance()->getImageCacheDir() . $cacheType)) {
-//				CacheHelper::getInstance()->cacheRemoteImageFile($cacheType, $remoteImageUrl);
 				if(CacheHelper::getInstance()->cacheRemoteImageFile($cacheType, $remoteImageUrl) === true) {
 					$returnValue = $cachedImage;
 				}

@@ -37,6 +37,7 @@ class FittingHelper {
 	 */
 	public static function getMidSlotItemNames($midSlots) {
 		$slots = \unserialize($midSlots);
+
 		$arrayMidSlot = array(
 			'midSlot_1_itemName' => (!empty($slots['midSlot_1'])) ? self::getItemNameById($slots['midSlot_1']) : null,
 			'midSlot_2_itemName' => (!empty($slots['midSlot_2'])) ? self::getItemNameById($slots['midSlot_2']) : null,
@@ -59,6 +60,7 @@ class FittingHelper {
 	 */
 	public static function getLowSlotItemNames($lowSlots) {
 		$slots = \unserialize($lowSlots);
+
 		$arrayLowSlot = array(
 			'lowSlot_1_itemName' => (!empty($slots['lowSlot_1'])) ? self::getItemNameById($slots['lowSlot_1']) : null,
 			'lowSlot_2_itemName' => (!empty($slots['lowSlot_2'])) ? self::getItemNameById($slots['lowSlot_2']) : null,
@@ -81,6 +83,7 @@ class FittingHelper {
 	 */
 	public static function getRigSlotItemNames($rigSlots) {
 		$rigs = \unserialize($rigSlots);
+
 		$arrayRigSlot = array(
 			'rigSlot_1_itemName' => (!empty($rigs['rigSlot_1'])) ? self::getItemNameById($rigs['rigSlot_1']) : null,
 			'rigSlot_2_itemName' => (!empty($rigs['rigSlot_2'])) ? self::getItemNameById($rigs['rigSlot_2']) : null,
@@ -98,15 +101,15 @@ class FittingHelper {
 	 */
 	public static function getSubSystemItemNames($subSystems) {
 		$sub = \unserialize($subSystems);
-		$arrayRigSlot = array(
+
+		$arraySubSystems = array(
 			'subSystem_1_itemName' => (!empty($sub['subSystem_1'])) ? self::getItemNameById($sub['subSystem_1']) : null,
 			'subSystem_2_itemName' => (!empty($sub['subSystem_2'])) ? self::getItemNameById($sub['subSystem_2']) : null,
 			'subSystem_3_itemName' => (!empty($sub['subSystem_3'])) ? self::getItemNameById($sub['subSystem_3']) : null,
 			'subSystem_4_itemName' => (!empty($sub['subSystem_4'])) ? self::getItemNameById($sub['subSystem_4']) : null,
-			'subSystem_5_itemName' => (!empty($sub['subSystem_5'])) ? self::getItemNameById($sub['subSystem_5']) : null,
 		);
 
-		return $arrayRigSlot;
+		return $arraySubSystems;
 	}
 
 	/**
@@ -422,13 +425,13 @@ class FittingHelper {
 		$currentRigSlots = 0;
 		$currentSubSystems = 0;
 
-		$fittedSubSystems = unserialize($fitting['subSystems']);
+		$fittedSubSystems = \unserialize($fitting['subSystems']);
 
 		$arrayStrategicCruiserIDs = array(
-			29984,
-			29986,
-			29988,
-			29990
+			29984, // Tengu
+			29986, // Legion
+			29988, // Proteus
+			29990 // Loki
 		);
 
 		/**
@@ -672,6 +675,7 @@ class FittingHelper {
 	 * @return string
 	 */
 	public static function getContentMenu($taxonomy) {
+		$pluginOptions = PluginHelper::getPluginSettings();
 		$uniqueID = \uniqid();
 
 		$entityListHtml = '<div class="gallery-row row">';
@@ -692,18 +696,20 @@ class FittingHelper {
 			// skip term if it has children or is empty
 			if($entity->parent) {
 				continue;
-			}
+			} // END if($entity->parent)
 
 			$doctrineImage = null;
-			if(\function_exists('\z_taxonomy_image')) {
-				$doctrineImage .= '<a class="doctrine-link-item" href="' . \get_term_link($entity->term_id) . '"><figure class="post-loop-thumbnail">';
-					if(\function_exists('\fly_get_attachment_image')) {
-						$doctrineImage .= \fly_get_attachment_image(\z_get_attachment_id_by_url(\z_taxonomy_image_url($entity->term_id)), 'post-loop-thumbnail');
-					} else {
-						$doctrineImage .= \z_taxonomy_image($entity->term_id, 'post-loop-thumbnail', null, false);
-					} // END if(\function_exists('\fly_get_attachment_image'))
-				$doctrineImage .= '</figure></a>';
-			} // END if(\function_exists('\z_taxonomy_image'))
+			if(!empty($pluginOptions['template-settings']['show-doctrine-images-in-loop'])) {
+				if(\function_exists('\z_taxonomy_image')) {
+					$doctrineImage .= '<a class="doctrine-link-item" href="' . \get_term_link($entity->term_id) . '"><figure class="fitting-helper-post-loop-thumbnail">';
+						if(\function_exists('\fly_get_attachment_image')) {
+							$doctrineImage .= \fly_get_attachment_image(\z_get_attachment_id_by_url(\z_taxonomy_image_url($entity->term_id)), 'fitting-helper-post-loop-thumbnail');
+						} else {
+							$doctrineImage .= \z_taxonomy_image($entity->term_id, 'fitting-helper-post-loop-thumbnail', null, false);
+						} // END if(\function_exists('\fly_get_attachment_image'))
+					$doctrineImage .= '</figure></a>';
+				} // END if(\function_exists('\z_taxonomy_image'))
+			} // END if(!empty($pluginOptions['template-settings']['show-doctrine-images-in-loop']))
 
 			$doctrineListHtml = '<li class="doctrine entity-' . $entity->slug . ' doctrine-id-' . $entity->term_id . '">' . $doctrineImage . '<header class="entry-header"><h2 class="entry-title"><a class="doctrine-link-item" href="' . \get_term_link($entity->term_id) . '">' . $entity->name . '</a></h2></header></li>';
 
@@ -826,7 +832,7 @@ class FittingHelper {
 			$doctrines[$term->name] = $term;
 		}
 
-		ksort($doctrines);
+		\ksort($doctrines);
 
 		return $doctrines;
 	}

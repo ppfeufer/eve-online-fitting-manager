@@ -16,26 +16,37 @@ class CacheHelper {
 	private static $instance = null;
 	private $cacheDirectoryBase;
 
+	/**
+	 * Constructor
+	 */
 	private function __construct() {
 		$this->cacheDirectoryBase = $this->getPluginCacheDir();
 
 		$this->checkOrCreateCacheDirectories();
-	}
+	} // END private function __construct()
 
+	/**
+	 * Getting the instance
+	 *
+	 * @return object
+	 */
 	public static function getInstance() {
 		if(\is_null(self::$instance)) {
 			self::$instance = new self();
-		}
+		} // END if(\is_null(self::$instance))
 
 		return self::$instance;
-	}
+	} // END public static function getInstance()
 
+	/**
+	 * Check if cache directories exist, otherwise try to create them
+	 */
 	public function checkOrCreateCacheDirectories() {
 		$this->createCacheDirectory();
 		$this->createCacheDirectory('images');
 		$this->createCacheDirectory('images/ship');
 		$this->createCacheDirectory('images/item');
-	}
+	} // END public function checkOrCreateCacheDirectories()
 
 	/**
 	 * Getting the absolute path for the cache directory
@@ -84,9 +95,9 @@ class CacheHelper {
 			/**
 			 * Fix for Windows Server since they are to stupid to create nested dirs
 			 */
-			if(strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+			if(\strtoupper(\substr(\PHP_OS, 0, 3)) === 'WIN') {
 				if(!$wpFileSystem->is_dir(\trailingslashit($this->getPluginCacheDir()))) {
-					$subdirs = explode('/', str_replace(\trailingslashit(\WP_CONTENT_DIR), '', $this->getPluginCacheDir()));
+					$subdirs = \explode('/', \str_replace(\trailingslashit(\WP_CONTENT_DIR), '', $this->getPluginCacheDir()));
 
 					$createDir = '';
 					foreach($subdirs as $dir) {
@@ -183,4 +194,4 @@ class CacheHelper {
 	public function setTransientCache($transientName, $data, $time = 2) {
 		\set_transient($transientName, $data, $time * \HOUR_IN_SECONDS);
 	} // END public function setApiCache($transientName, $data)
-}
+} // END class CacheHelper

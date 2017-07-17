@@ -37,13 +37,18 @@ class EveApiHelper {
 		$this->getImageserverEndpoints();
 	} // END public function __construct()
 
+	/**
+	 * Getting the instance
+	 *
+	 * @return object
+	 */
 	public static function getInstance() {
 		if(\is_null(self::$instance)) {
 			self::$instance = new self();
-		}
+		} // END if(\is_null(self::$instance))
 
 		return self::$instance;
-	}
+	} // END public static function getInstance()
 
 	/**
 	 * Assigning Imagesever Endpoints
@@ -66,9 +71,11 @@ class EveApiHelper {
 	 */
 	public function getImageServerUrl($type = null) {
 		$endpoint = '';
+
 		if($type !== null) {
 			$endpoint = $this->imageserverEndpoints[$type];
-		}
+		} // END if($type !== null)
+
 		return $this->imageserverUrl . $endpoint;
 	} // END public function getImageServerUrl()
 } // END class EveApi
