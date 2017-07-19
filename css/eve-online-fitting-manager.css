@@ -165,6 +165,13 @@
 		left: 50%;
 	}
 
+	.doctrine.has-children.open .caret i {
+		-webkit-transform: translate(-50%,-50%) rotate(225deg);
+		-moz-transform: translate(-50%,-50%) rotate(225deg);
+		-ms-transform: translate(-50%,-50%) rotate(225deg);
+		transform: translate(-50%,-50%) rotate(225deg);
+	}
+
 	.sidebar-doctrine-list .dropdown-menu {
 		position: relative;
 		float: none;

@@ -1,13 +1,18 @@
 # Change Log
 
 ## [In Development](https://github.com/ppfeufer/eve-online-fitting-manager)
-[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.1-r20170711...HEAD)
+[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.1-r20170719...HEAD)
+- In development
+
+## [v0.1-r20170719](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.1-r20170719) - 2017-07-19
+[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.1-r20170711...v0.1-r20170719)
 ### Added
 - New option to show the featured images (if you use them) of your fittings in the fitting overview
 
 #### Changed
 - Switched Market API to EVE Central
 - Major code overhaul
+- Visualized an open menu in it's caret as well
 
 ## [v0.1-r20170711](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.1-r20170630) - 2017-07-11
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.1-r20170708...v0.1-r20170711)
