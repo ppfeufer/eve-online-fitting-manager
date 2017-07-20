@@ -4,7 +4,7 @@
  * Plugin URI: https://github.com/ppfeufer/eve-online-fitting-manager
  * Git URI: https://github.com/ppfeufer/eve-online-fitting-manager
  * Description: A little management tool for your doctrine fittings in your WordPress website. (Best with a theme running with <a href="http://getbootstrap.com/">Bootstrap</a>)
- * Version: 0.1-r20170719
+ * Version: 0.1-r20170720
  * Author: Rounon Dax
  * Author URI: http://yulaifederation.net
  * Text Domain: eve-online-fitting-manager
@@ -13,7 +13,8 @@
 
 namespace WordPress\Plugin\EveOnlineFittingManager;
 
-\defined('ABSPATH') or die();
+// Include the autoloader so we can dynamically include the rest of the classes.
+require_once(\trailingslashit(\dirname(__FILE__)) . 'inc/autoloader.php');
 
 class EveOnlineFittingManager {
 	private $textDomain = null;
@@ -26,7 +27,7 @@ class EveOnlineFittingManager {
 	 *
 	 * @param boolean $init
 	 */
-	public function __construct($init = false) {
+	public function __construct() {
 		/**
 		 * Initializing Variables
 		 */
@@ -36,27 +37,23 @@ class EveOnlineFittingManager {
 		$this->localizationDirectory = $this->pluginDir . '/l10n/';
 
 		$this->loadTextDomain();
-
-		/**
-		 * Initialize the plugin
-		 *
-		 * @todo https://premium.wpmudev.org/blog/activate-deactivate-uninstall-hooks/
-		 */
-		if($init === true) {
-			$this->init();
-		} // END if($init === true)
 	} // END public function __construct()
 
 	/**
 	 * Initialize the plugin
 	 */
 	public function init() {
-		$this->loadLibs();
 		$this->checkDatabaseUpdate();
 
+		// Loading CSS
+		$cssLoader = new ResourceLoader\CssLoader;
+		$cssLoader->init();
+
+		// Loading JavaScript
+		$javascriptLoader = new ResourceLoader\JavascriptLoader;
+		$javascriptLoader->init();
+
 		\add_action('init', array($this, 'setThumbnailsSizes'));
-		\add_action('wp_enqueue_scripts', array($this, 'enqueueJavaScript'), 99);
-		\add_action('wp_enqueue_scripts', array($this, 'enqueueStylesheet'), 99);
 		\add_action('pre_get_posts', array($this, 'customPageQueryVars'));
 
 		\add_filter('query_vars', array($this, 'addQueryVarsFilter'));
@@ -89,24 +86,6 @@ class EveOnlineFittingManager {
 			\add_image_size('fitting-helper-post-loop-thumbnail', 705, 395, true);
 		} // END if(\function_exists('\fly_add_image_size'))
 	} // END public function setThumbnailsSizes()
-
-	/**
-	 * Enqueue our javascript
-	 */
-	public function enqueueJavaScript() {
-		\wp_enqueue_script('bootstrap-js', Helper\PluginHelper::getPluginUri('bootstrap/js/bootstrap.min.js'), array('jquery'), '', true);
-		\wp_enqueue_script('bootstrap-toolkit-js', Helper\PluginHelper::getPluginUri('bootstrap/bootstrap-toolkit/bootstrap-toolkit.min.js'), array('jquery', 'bootstrap-js'), '', true);
-		\wp_enqueue_script('bootstrap-gallery-js', Helper\PluginHelper::getPluginUri('js/jquery.bootstrap-gallery.min.js'), array('jquery', 'bootstrap-js'), '', true);
-//		\wp_enqueue_script('eve-online-fitting-manager-js', Helper\PluginHelper::getPluginUri('js/eve-online-fitting-manager.min.js'), array('jquery'), '', true);
-	} // END public function enqueueJavaScript()
-
-	/**
-	 * Enqueue our css
-	 */
-	public function enqueueStylesheet() {
-		\wp_enqueue_style('bootstrap', Helper\PluginHelper::getPluginUri('bootstrap/css/bootstrap.min.css'));
-		\wp_enqueue_style('eve-online-fitting-manager', Helper\PluginHelper::getPluginUri('css/eve-online-fitting-manager.min.css'));
-	} // END public function enqueueStylesheet()
 
 	private function checkDatabaseUpdate() {
 		$currentPluginDatabaseVersion = Helper\PluginHelper::getCurrentPluginDatabaseVersion();
@@ -163,19 +142,6 @@ class EveOnlineFittingManager {
 	} // END public function addTextDomain()
 
 	/**
-	 * Loading all libs
-	 */
-	public function loadLibs() {
-		foreach(\glob($this->pluginDir . 'helper/*.php') as $lib) {
-			include_once($lib);
-		} // END foreach(\glob($this->pluginDir . 'libs/*.php') as $lib)
-
-		foreach(\glob($this->pluginDir . 'libs/*.php') as $lib) {
-			include_once($lib);
-		} // END foreach(\glob($this->pluginDir . 'libs/*.php') as $lib)
-	} // END public function loadLibs()
-
-	/**
 	 * Getting the Plugin's Textdomain for translations
 	 *
 	 * @return string Plugin Textdomain
@@ -197,4 +163,16 @@ class EveOnlineFittingManager {
 /**
  * Start the show ....
  */
-new EveOnlineFittingManager(true);
+function initializePlugin() {
+	$fittingManager = new EveOnlineFittingManager;
+
+	/**
+	 * Initialize the plugin
+	 *
+	 * @todo https://premium.wpmudev.org/blog/activate-deactivate-uninstall-hooks/
+	 */
+	$fittingManager->init();
+} // END function initializePlugin()
+
+// Start the show
+\add_action('plugins_loaded', 'WordPress\Plugin\EveOnlineFittingManager\initializePlugin');

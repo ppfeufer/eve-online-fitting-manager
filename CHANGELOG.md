@@ -2,7 +2,7 @@
 
 ## [In Development](https://github.com/ppfeufer/eve-online-fitting-manager)
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.1-r20170719...HEAD)
-- In development
+- Introduced dynamic autoloader for classes
 
 ## [v0.1-r20170719](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.1-r20170719) - 2017-07-19
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.1-r20170711...v0.1-r20170719)
