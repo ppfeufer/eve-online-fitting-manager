@@ -827,12 +827,15 @@ class FittingHelper {
 
 	public static function getShipUsedInDoctrine() {
 		$terms = \wp_get_object_terms(\get_the_ID(), 'fitting-doctrines');
+		$doctrines = null;
 
 		foreach($terms as $term) {
 			$doctrines[$term->name] = $term;
 		}
 
-		\ksort($doctrines);
+		if($doctrines !== null) {
+			\ksort($doctrines);
+		}
 
 		return $doctrines;
 	}
