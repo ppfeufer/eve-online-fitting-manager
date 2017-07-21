@@ -921,10 +921,10 @@ class SettingsApi {
 									$wpDateFormat = 'yy-mm-dd';
 								} // END if(empty($wpDateFormat))
 
-								$date_format = (!empty($field['format']) ) ? $field['format'] : $wpDateFormat;
+								$dateFormat = (!empty($field['format']) ) ? $field['format'] : $wpDateFormat;
 								?>
 								$('[data-id="<?php echo $fieldKey; ?>"]').datepicker({
-									dateFormat: '<?php echo $date_format; ?>'
+									dateFormat: '<?php echo $dateFormat; ?>'
 								});
 								<?php
 							} // END if($field['type'] == 'datepicker')
