@@ -143,48 +143,48 @@ class SettingsApi {
 	 * Register all fields and settings bound to it from the settingsArray
 	 */
 	public function registerFields() {
-		foreach($this->settingsArray as $page_id => $settings) {
+		foreach($this->settingsArray as $pageId => $settings) {
 			if(!empty($settings['tabs']) && \is_array($settings['tabs'])) {
-				foreach($settings['tabs'] as $tab_id => $item) {
-					$sanitized_tab_id = \sanitize_title($tab_id);
+				foreach($settings['tabs'] as $tabId => $item) {
+					$sanitizedTabId = \sanitize_title($tabId);
 					$tab_description = (!empty($item['tab_description']) ) ? $item['tab_description'] : '';
-					$this->section_id = $sanitized_tab_id;
-					$setting_args = array(
-						'option_group' => 'section_page_' . $page_id . '_' . $sanitized_tab_id,
+					$this->section_id = $sanitizedTabId;
+					$settingArgs = array(
+						'option_group' => 'section_page_' . $pageId . '_' . $sanitizedTabId,
 						'option_name' => $settings['option_name']
 					);
 
-					\register_setting($setting_args['option_group'], $setting_args['option_name']);
+					\register_setting($settingArgs['option_group'], $settingArgs['option_name']);
 
-					$section_args = array(
-						'id' => 'section_id_' . $sanitized_tab_id,
+					$sectionArgs = array(
+						'id' => 'section_id_' . $sanitizedTabId,
 						'title' => $tab_description,
 						'callback' => 'callback',
-						'menu_page' => $page_id . '_' . $sanitized_tab_id
+						'menu_page' => $pageId . '_' . $sanitizedTabId
 					);
 
 					\add_settings_section(
-						$section_args['id'], $section_args['title'], array($this, $section_args['callback']), $section_args['menu_page']
+						$sectionArgs['id'], $sectionArgs['title'], array($this, $sectionArgs['callback']), $sectionArgs['menu_page']
 					);
 
 					if(!empty($item['fields']) && \is_array($item['fields'])) {
-						foreach($item['fields'] as $field_id => $field) {
+						foreach($item['fields'] as $fieldId => $field) {
 							if(\is_array($field)) {
-								$sanitized_field_id = \sanitize_title($field_id);
+								$sanitizedFieldId = \sanitize_title($fieldId);
 								$title = (!empty($field['title']) ) ? $field['title'] : '';
-								$field['field_id'] = $sanitized_field_id;
+								$field['field_id'] = $sanitizedFieldId;
 								$field['option_name'] = $settings['option_name'];
-								$field_args = array(
-									'id' => 'field' . $sanitized_field_id,
+								$fieldArgs = array(
+									'id' => 'field' . $sanitizedFieldId,
 									'title' => $title,
 									'callback' => 'renderFields',
-									'menu_page' => $page_id . '_' . $sanitized_tab_id,
-									'section' => 'section_id_' . $sanitized_tab_id,
+									'menu_page' => $pageId . '_' . $sanitizedTabId,
+									'section' => 'section_id_' . $sanitizedTabId,
 									'args' => $field
 								);
 
 								\add_settings_field(
-									$field_args['id'], $field_args['title'], array($this, $field_args['callback']), $field_args['menu_page'], $field_args['section'], $field_args['args']
+									$fieldArgs['id'], $fieldArgs['title'], array($this, $fieldArgs['callback']), $fieldArgs['menu_page'], $fieldArgs['section'], $fieldArgs['args']
 								);
 							} // END if(is_array($field))
 						} // END foreach($item['fields'] as $field_id => $field)
@@ -200,21 +200,26 @@ class SettingsApi {
 	 */
 	public function registerCallback() {
 		if($this->isSettingsPage() === true) {
-			if(!empty($_GET['callback'])) {
-				$nonce = \wp_verify_nonce($_GET['_wpnonce']);
+			$callbackFiltered = \filter_input(INPUT_GET, 'callback');
+
+			if(!empty($callbackFiltered)) {
+				$wpNonce = \filter_input(INPUT_GET, '_wpnonce');
+				$nonce = \wp_verify_nonce($wpNonce);
 
 				if(!empty($nonce)) {
-					if(function_exists($_GET['callback'])) {
-						$message = \call_user_func($_GET['callback']);
+					$callbackFunction = \filter_input(INPUT_GET, 'callback');
+					if(function_exists($callbackFunction)) {
+						$message = \call_user_func($callbackFunction);
 						\update_option('rsa-message', $message);
 
-						$url = \admin_url('options-general.php?page=' . $_GET['page']);
+						$page = \filter_input(INPUT_GET, 'page');
+						$url = \admin_url('options-general.php?page=' . $page);
 						\wp_redirect($url);
 
 						die;
-					} // END if(function_exists($_GET['callback']))
+					} // END if(function_exists($callbackFunction))
 				} // END if(!empty($nonce))
-			} // END if(!empty($_GET['callback']))
+			} // END if(!empty($callbackFunction))
 		} // END if($this->isSettingsPage() === true)
 	} // END public function registerCallback()
 
@@ -225,13 +230,14 @@ class SettingsApi {
 	 */
 	public function isSettingsPage() {
 		$menus = array();
-		$get_page = (!empty($_GET['page']) ) ? $_GET['page'] : '';
+		$getPageFiltered = \filter_input(INPUT_GET, 'page');
+		$getPage = (!empty($getPageFiltered) ) ? $getPageFiltered : '';
 
 		foreach($this->settingsArray as $menu => $page) {
 			$menus[] = $menu;
 		} // END foreach($this->settingsArray as $menu => $page)
 
-		if(\in_array($get_page, $menus)) {
+		if(\in_array($getPage, $menus)) {
 			return true;
 		} else {
 			return false;
@@ -258,15 +264,14 @@ class SettingsApi {
 	 */
 	public function get() {
 		if(!empty($this->args['get'])) {
-//			$item_array = \call_user_func_array(array($this, 'get_' . $this->args['get']), array($this->args));
-			$item_array = \call_user_func_array(array($this, 'get' . ucfirst(EveOnlineFittingManager\Helper\StringHelper::camelCase($this->args['get']))), array($this->args));
+			$itemArray = \call_user_func_array(array($this, 'get' . ucfirst(EveOnlineFittingManager\Helper\StringHelper::camelCase($this->args['get']))), array($this->args));
 		} elseif(!empty($this->args['choices'])) {
-			$item_array = $this->selectChoices($this->args);
+			$itemArray = $this->selectChoices($this->args);
 		} else {
-			$item_array = array();
+			$itemArray = array();
 		} // END if(!empty($this->args['get']))
 
-		return $item_array;
+		return $itemArray;
 	} // END public function get()
 
 	/**
@@ -316,11 +321,11 @@ class SettingsApi {
 				'suppress_filters' => true
 			);
 
-			$the_query = new \WP_Query($args);
+			$theQuery = new \WP_Query($args);
 
-			if($the_query->have_posts()) {
-				while($the_query->have_posts()) {
-					$the_query->the_post();
+			if($theQuery->have_posts()) {
+				while($theQuery->have_posts()) {
+					$theQuery->the_post();
 
 					global $post;
 
@@ -426,10 +431,10 @@ class SettingsApi {
 	public function getPostTypes() {
 		$items = array();
 		$args = (!empty($this->args['args'])) ? $this->args['args'] : null;
-		$post_types = \get_post_types($args, 'objects');
+		$postTypes = \get_post_types($args, 'objects');
 
-		if(!empty($post_types)) {
-			foreach($post_types as $key => $post_type) {
+		if(!empty($postTypes)) {
+			foreach($postTypes as $key => $post_type) {
 				$items[$key] = $post_type->name;
 			} // END foreach($post_types as $key => $post_type)
 		} // END if(!empty($post_types))
@@ -515,7 +520,7 @@ class SettingsApi {
 	 * field type, return string or array
 	 */
 	public function valueType() {
-		$default_single = array(
+		$defaultSingle = array(
 			'select',
 			'radio',
 			'text',
@@ -532,12 +537,12 @@ class SettingsApi {
 			'image',
 			'file'
 		);
-		$default_multiple = array('multiselect', 'checkbox');
+		$defaultMultiple = array('multiselect', 'checkbox');
 		$value = '';
 
-		if(\in_array($this->args['type'], $default_single)) {
+		if(\in_array($this->args['type'], $defaultSingle)) {
 			return 'string';
-		} elseif(\in_array($this->args['type'], $default_multiple)) {
+		} elseif(\in_array($this->args['type'], $defaultMultiple)) {
 			return 'array';
 		} // END if(in_array($this->args['type'], $default_single))
 	} // END public function valueType()
@@ -557,12 +562,12 @@ class SettingsApi {
 	 * Return the html name of the field
 	 */
 	public function name($slug = '') {
-		$option_name = \sanitize_title($this->args['option_name']);
+		$optionName = \sanitize_title($this->args['option_name']);
 
 		if($this->valueType() == 'array') {
-			return $option_name . '[' . $this->args['field_id'] . '][' . $slug . ']';
+			return $optionName . '[' . $this->args['field_id'] . '][' . $slug . ']';
 		} else {
-			return $option_name . '[' . $this->args['field_id'] . ']';
+			return $optionName . '[' . $this->args['field_id'] . ']';
 		} // END if($this->valueType() == 'array')
 	} // END public function name($slug = '')
 
@@ -576,8 +581,8 @@ class SettingsApi {
 			if(!empty($this->args['size'])) {
 				$count = $this->args['size'];
 			} else {
-				$count = \count($items);
-				$count = (!empty($this->args['empty']) ) ? $count + 1 : $count;
+				$itemCount = \count($items);
+				$count = (!empty($this->args['empty'])) ? $itemCount + 1 : $itemCount;
 			} // END if(!empty($this->args['size']))
 
 			$size = ' size="' . $count . '"';
@@ -596,10 +601,10 @@ class SettingsApi {
 		$options = \get_option($args['option_name'], $this->optionsDefault);
 		$this->options = $options;
 
-		$screen = \get_current_screen();
-		$callback_base = \admin_url() . $screen->parent_file;
+//		$screen = \get_current_screen();
+//		$callbackBase = \admin_url() . $screen->parent_file;
 
-		$option_name = \sanitize_title($args['option_name']);
+		$optionName = \sanitize_title($args['option_name']);
 		$out = '';
 
 		if(!empty($args['type'])) {
@@ -667,23 +672,23 @@ class SettingsApi {
 
 				case 'tinymce':
 					$rows = (isset($args['rows'])) ? $args['rows'] : 5;
-					$tinymce_settings = array(
+					$tinymceSettings = array(
 						'textarea_rows' => $rows,
-						'textarea_name' => $option_name . '[' . $args['field_id'] . ']',
+						'textarea_name' => $optionName . '[' . $args['field_id'] . ']',
 					);
 
-					\wp_editor($this->value(), $args['field_id'], $tinymce_settings);
+					\wp_editor($this->value(), $args['field_id'], $tinymceSettings);
 					break;
 
 				case 'image':
-					$image_obj = (!empty($options[$args['field_id']])) ? \wp_get_attachment_image_src($options[$args['field_id']], 'thumbnail') : '';
-					$image = (!empty($image_obj)) ? $image_obj[0] : '';
-					$upload_status = (!empty($image_obj)) ? ' style="display: none"' : '';
-					$remove_status = (!empty($image_obj)) ? '' : ' style="display: none"';
+					$imageObject = (!empty($options[$args['field_id']])) ? \wp_get_attachment_image_src($options[$args['field_id']], 'thumbnail') : '';
+					$image = (!empty($imageObject)) ? $imageObject[0] : '';
+					$uploadStatus = (!empty($imageObject)) ? ' style="display: none"' : '';
+					$removeStatus = (!empty($imageObject)) ? '' : ' style="display: none"';
 					$value = (!empty($options[$args['field_id']])) ? $options[$args['field_id']] : '';
 					?>
 					<div data-id="<?php echo $args['field_id']; ?>">
-						<div class="upload" data-field-id="<?php echo $args['field_id']; ?>"<?php echo $upload_status; ?>>
+						<div class="upload" data-field-id="<?php echo $args['field_id']; ?>"<?php echo $uploadStatus; ?>>
 							<span class="button upload-button">
 								<a href="#">
 									<i class="fa fa-upload"></i>
@@ -694,7 +699,7 @@ class SettingsApi {
 						<div class="image">
 							<img class="uploaded-image" src="<?php echo $image; ?>" id="<?php echo $args['field_id']; ?>" />
 						</div>
-						<div class="remove"<?php echo $remove_status; ?>>
+						<div class="remove"<?php echo $removeStatus; ?>>
 							<span class="button upload-button">
 								<a href="#">
 									<i class="fa fa-trash"></i>
@@ -702,19 +707,19 @@ class SettingsApi {
 								</a>
 							</span>
 						</div>
-						<input type="hidden" class="attachment_id" value="<?php echo $value; ?>" name="<?php echo $option_name; ?>[<?php echo $args['field_id']; ?>]">
+						<input type="hidden" class="attachment_id" value="<?php echo $value; ?>" name="<?php echo $optionName; ?>[<?php echo $args['field_id']; ?>]">
 					</div>
 					<?php
 					break;
 
 				case 'file':
-					$file_url = (!empty($options[$args['field_id']])) ? \wp_get_attachment_url($options[$args['field_id']]) : '';
-					$upload_status = (!empty($file_url)) ? ' style="display: none"' : '';
-					$remove_status = (!empty($file_url)) ? '' : ' style="display: none"';
+					$fileUrl = (!empty($options[$args['field_id']])) ? \wp_get_attachment_url($options[$args['field_id']]) : '';
+					$uploadStatus = (!empty($fileUrl)) ? ' style="display: none"' : '';
+					$removeStatus = (!empty($fileUrl)) ? '' : ' style="display: none"';
 					$value = (!empty($options[$args['field_id']])) ? $options[$args['field_id']] : '';
 					?>
 					<div data-id="<?php echo $args['field_id']; ?>">
-						<div class="upload" data-field-id="<?php echo $args['field_id']; ?>"<?php echo $upload_status; ?>>
+						<div class="upload" data-field-id="<?php echo $args['field_id']; ?>"<?php echo $uploadStatus; ?>>
 							<span class="button upload-button">
 								<a href="#">
 									<i class="fa fa-upload"></i>
@@ -724,10 +729,10 @@ class SettingsApi {
 						</div>
 						<div class="url">
 							<code class="uploaded-file-url" title="Attachment ID: <?php echo $value; ?>" data-field-id="<?php echo $args['field_id']; ?>">
-								<?php echo $file_url; ?>
+								<?php echo $fileUrl; ?>
 							</code>
 						</div>
-						<div class="remove"<?php echo $remove_status; ?>>
+						<div class="remove"<?php echo $removeStatus; ?>>
 							<span class="button upload-button">
 								<a href="#">
 									<i class="fa fa-trash"></i>
@@ -735,18 +740,20 @@ class SettingsApi {
 								</a>
 							</span>
 						</div>
-						<input type="hidden" class="attachment_id" value="<?php echo $value; ?>" name="<?php echo $option_name; ?>[<?php echo $args['field_id']; ?>]">
+						<input type="hidden" class="attachment_id" value="<?php echo $value; ?>" name="<?php echo $optionName; ?>[<?php echo $args['field_id']; ?>]">
 					</div>
 					<?php
 					break;
 
 				case 'button':
-					$warning_message = (!empty($args['warning-message'])) ? $args['warning-message'] : 'Unsaved settings will be lost. Continue?';
-					$warning = (!empty($args['warning'])) ? ' onclick="return confirm(' . "'" . $warning_message . "'" . ')"' : '';
+					$warningMessage = (!empty($args['warning-message'])) ? $args['warning-message'] : 'Unsaved settings will be lost. Continue?';
+					$warning = (!empty($args['warning'])) ? ' onclick="return confirm(' . "'" . $warningMessage . "'" . ')"' : '';
 					$label = (!empty($args['label'])) ? $args['label'] : '';
-					$complete_url = \wp_nonce_url(\admin_url('options-general.php?page=' . $_GET['page'] . '&callback=' . $args['callback']));
+					$pageFiltered = \filter_input(INPUT_GET, 'page');
+					$callbackFiltered = \filter_input(INPUT_GET, 'callback');
+					$completeUrl = \wp_nonce_url(\admin_url('options-general.php?page=' . $pageFiltered . '&callback=' . $callbackFiltered));
 					?>
-					<a href="<?php echo $complete_url; ?>" class="button button-secondary"<?php echo $warning; ?>><?php echo $label; ?></a>
+					<a href="<?php echo $completeUrl; ?>" class="button button-secondary"<?php echo $warning; ?>><?php echo $label; ?></a>
 					<?php
 					break;
 
@@ -788,7 +795,7 @@ class SettingsApi {
 	public function renderOptions() {
 		global $wp_settings_sections;
 
-		$page = $_GET['page'];
+		$page = \filter_input(INPUT_GET, 'page');
 		$settings = $this->settingsArray[$page];
 		$message = \get_option('rsa-message');
 
@@ -808,12 +815,12 @@ class SettingsApi {
 						<h2 class="nav-tab-wrapper">
 						<?php
 						$i = 0;
-						foreach($settings['tabs'] as $settings_id => $section) {
-							$sanitized_id = \sanitize_title($settings_id);
-							$tab_title = (!empty($section['tab_title'])) ? $section['tab_title'] : $sanitized_id;
+						foreach($settings['tabs'] as $settingsId => $section) {
+							$sanitizedId = \sanitize_title($settingsId);
+							$tabTitle = (!empty($section['tab_title'])) ? $section['tab_title'] : $sanitizedId;
 							$active = ($i == 0) ? ' nav-tab-active' : '';
 
-							echo '<a class="nav-tab nav-tab-' . $sanitized_id . $active . '" href="#tab-content-' . $sanitized_id . '">' . $tab_title . '</a>';
+							echo '<a class="nav-tab nav-tab-' . $sanitizedId . $active . '" href="#tab-content-' . $sanitizedId . '">' . $tabTitle . '</a>';
 
 							$i++;
 						} // END foreach($settings['tabs'] as $settings_id => $section)
@@ -832,23 +839,24 @@ class SettingsApi {
 					} // END if($tab_count > 1)
 
 					$i = 0;
-					foreach($settings['tabs'] as $settings_id => $section) {
-						$sanitized_id = \sanitize_title($settings_id);
-						$page_id = $_GET['page'] . '_' . $sanitized_id;
+					$pageFiltered = \filter_input(INPUT_GET, 'page');
+					foreach($settings['tabs'] as $settingsId => $section) {
+						$sanitizedId = \sanitize_title($settingsId);
+						$pageId = $pageFiltered . '_' . $sanitizedId;
 
 						$display = ($i == 0) ? ' style="display: block;"' : ' style="display:none;"';
 
-						echo '<div class="tab-content" id="tab-content-' . $sanitized_id . '"' . $display . '>';
-						echo \settings_fields('section_page_' . $_GET['page'] . '_' . $sanitized_id);
+						echo '<div class="tab-content" id="tab-content-' . $sanitizedId . '"' . $display . '>';
+						echo \settings_fields('section_page_' . $pageFiltered . '_' . $sanitizedId);
 
-						\do_settings_sections($page_id);
+						\do_settings_sections($pageId);
 
 						echo '</div>';
 
 						$i++;
 					} // END foreach($settings['tabs'] as $settings_id => $section)
 
-					$complete_url = \wp_nonce_url(\admin_url('options-general.php?page=' . $_GET['page'] . '&callback=rsa_delete_settings'));
+//					$completeUrl = \wp_nonce_url(\admin_url('options-general.php?page=' . $pageFiltered. '&callback=rsa_delete_settings'));
 
 					\submit_button();
 					?>
@@ -906,7 +914,7 @@ class SettingsApi {
 
 				foreach($settingsArray as $page) {
 					foreach($page['tabs'] as $tab) {
-						foreach($tab['fields'] as $field_key => $field) {
+						foreach($tab['fields'] as $fieldKey => $field) {
 							if($field['type'] == 'datepicker') {
 								$wpDateFormat = \get_option('date_format');
 								if(empty($wpDateFormat)) {
@@ -915,7 +923,7 @@ class SettingsApi {
 
 								$date_format = (!empty($field['format']) ) ? $field['format'] : $wpDateFormat;
 								?>
-								$('[data-id="<?php echo $field_key; ?>"]').datepicker({
+								$('[data-id="<?php echo $fieldKey; ?>"]').datepicker({
 									dateFormat: '<?php echo $date_format; ?>'
 								});
 								<?php
