@@ -419,23 +419,23 @@ class FittingHelper {
 	 * @return type
 	 */
 	public static function getSlotLayoutFromFittingArray($fitting) {
-		$currentHighSlots = 0;
-		$currenMidSlots = 0;
-		$currentLowSlots = 0;
-		$currentRigSlots = 0;
+		$currentHighSlots = self::getHighSlotCountForShipID($fitting['shipID']);
+		$currenMidSlots = self::getMidSlotCountForShipID($fitting['shipID']);
+		$currentLowSlots = self::getLowSlotCountForShipID($fitting['shipID']);
+		$currentRigSlots = self::getRigSlotCountForShipID($fitting['shipID']);
 		$currentSubSystems = 0;
+		$currentServiceSlots = 0;
 
 		$fittedSubSystems = \unserialize($fitting['subSystems']);
+		$fittedServiceSlots = \unserialize($fitting['serviceSlots']);
 
-		$arrayStrategicCruiserIDs = array(
-			29984, // Tengu
-			29986, // Legion
-			29988, // Proteus
-			29990 // Loki
-		);
+		$arrayStrategicCruiserIDs = self::getStrategicCruiserIds();
+		$arrayUpwellStructureIDs = self::getUpwellStructureIds();
 
 		/**
-		 * Check if it's a strategic cruiser and has sub systems
+		 * Check if:
+		 *	» it's a strategic cruiser and has sub systems
+		 *	» it's an Upwell Structure
 		 */
 		if(\in_array($fitting['shipID'], $arrayStrategicCruiserIDs) && !empty($fittedSubSystems)) {
 			/**
@@ -452,11 +452,11 @@ class FittingHelper {
 
 			$currentRigSlots = self::getRigSlotCountForShipID($fitting['shipID']);
 			$currentSubSystems = 5;
-		} else {
-			$currentHighSlots = self::getHighSlotCountForShipID($fitting['shipID']);
-			$currenMidSlots = self::getMidSlotCountForShipID($fitting['shipID']);
-			$currentLowSlots = self::getLowSlotCountForShipID($fitting['shipID']);
-			$currentRigSlots = self::getRigSlotCountForShipID($fitting['shipID']);
+		} elseif(\in_array($fitting['shipID'], $arrayUpwellStructureIDs) && !empty($fittedServiceSlots)) {
+			/**
+			 * Processing Upwell Structures
+			 */
+			$currentServiceSlots = 5;
 		} // END if(in_array($fitting['shipID'], $arrayStrategicCruiserIDs))
 
 		return array(
@@ -464,9 +464,30 @@ class FittingHelper {
 			'midSlots' => $currenMidSlots,
 			'lowSlots' => $currentLowSlots,
 			'rigSlots' => $currentRigSlots,
-			'subSystems' => $currentSubSystems
+			'subSystems' => $currentSubSystems,
+			'serviceSlots' => $currentServiceSlots
 		);
 	} // END public function getSlotLayoutFromFittingArray($fitting)
+
+	private static function getStrategicCruiserIds() {
+		return array(
+			29984, // Tengu
+			29986, // Legion
+			29988, // Proteus
+			29990 // Loki
+		);
+	}
+
+	private static function getUpwellStructureIds() {
+		return array(
+			35832, // Astrahus
+			35833, // Fortizar
+			35834, // Keepstar
+			35825, // Raitaru
+			35826, // Azbel
+			35827 // Sotiyo
+		);
+	}
 
 	/**
 	 * Getting the count of high slots of a given ship by its ID
@@ -838,5 +859,9 @@ class FittingHelper {
 		}
 
 		return $doctrines;
+	}
+
+	public static function isUpwellStructure($shipID) {
+		return \in_array($shipID, self::getUpwellStructureIds());
 	}
 }

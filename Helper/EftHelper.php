@@ -90,19 +90,21 @@ class EftHelper {
 			$fittingArray['0'] = \str_replace(']', '', $fittingArray['0']);
 			$fittingArray['0'] = \preg_replace('/,(.*)/', '', $fittingArray['0']);
 
-			$count_highSlot = 1;
-			$count_midSlot = 1;
-			$count_lowSlot = 1;
-			$count_rigSlot = 1;
-			$count_subSystem = 1;
-			$count_charges = 1;
-			$count_drones = 1;
+			$countHighSlots = 1;
+			$countMidSlots = 1;
+			$countLowSlots = 1;
+			$countRigSlots = 1;
+			$countSubSystems = 1;
+			$countUpwellServices = 1;
+			$countCharges = 1;
+			$countDrones = 1;
 
-			$arrayHighSlot = array();
-			$arrayMidSlot = array();
-			$arrayLowSlot = array();
-			$arrayRigSlot = array();
-			$arraySubSystem = array();
+			$arrayHighSlots = array();
+			$arrayMidSlots = array();
+			$arrayLowSlots = array();
+			$arrayRigSlots = array();
+			$arraySubSystems = array();
+			$arrayUpwellServices = array();
 			$arrayCharges = array();
 			$arrayDrones = array();
 
@@ -127,48 +129,55 @@ class EftHelper {
 						switch($itemDetail->slotName) {
 							case 'HiSlot':
 							case 'High power':
-								$arrayHighSlot['highSlot_' . $count_highSlot] = $itemDetail->itemID;
-								$count_highSlot++;
+								$arrayHighSlots['highSlot_' . $countHighSlots] = $itemDetail->itemID;
+								$countHighSlots++;
 								break;
 
 							case 'MedSlot':
 							case 'Medium power':
-								$arrayMidSlot['midSlot_' . $count_midSlot] = $itemDetail->itemID;
-								$count_midSlot++;
+								$arrayMidSlots['midSlot_' . $countMidSlots] = $itemDetail->itemID;
+								$countMidSlots++;
 								break;
 
 							case 'LoSlot':
 							case 'Low power':
-								$arrayLowSlot['lowSlot_' . $count_lowSlot] = $itemDetail->itemID;
-								$count_lowSlot++;
+								$arrayLowSlots['lowSlot_' . $countLowSlots] = $itemDetail->itemID;
+								$countLowSlots++;
 								break;
 
 							case 'RigSlot':
 							case 'Rig Slot':
-								$arrayRigSlot['rigSlot_' . $count_rigSlot] = $itemDetail->itemID;
-								$count_rigSlot++;
+								$arrayRigSlots['rigSlot_' . $countRigSlots] = $itemDetail->itemID;
+								$countRigSlots++;
 								break;
 
 							case 'SubSystem':
 							case 'Sub System':
-								$arraySubSystem['subSystem_' . $count_subSystem] = $itemDetail->itemID;
-								$count_subSystem++;
+								$arraySubSystems['subSystem_' . $countSubSystems] = $itemDetail->itemID;
+								$countSubSystems++;
+								break;
+
+							case 'UpwellService':
+							case 'UpwellService':
+							case 'Service Slot':
+								$arrayUpwellServices['upwellService_' . $countUpwellServices] = $itemDetail->itemID;
+								$countUpwellServices++;
 								break;
 
 							case 'charge':
-								$arrayCharges['charge_' . $count_charges] = array(
+								$arrayCharges['charge_' . $countCharges] = array(
 									'itemID' => $itemDetail->itemID,
 									'itemCount' => $itemDetail->itemCount
 								);
-								$count_charges++;
+								$countCharges++;
 								break;
 
 							case 'drone':
-								$arrayDrones['drone_' . $count_drones] = array(
+								$arrayDrones['drone_' . $countDrones] = array(
 									'itemID' => $itemDetail->itemID,
 									'itemCount' => $itemDetail->itemCount
 								);
-								$count_drones++;
+								$countDrones++;
 								break;
 
 							default:
@@ -181,11 +190,12 @@ class EftHelper {
 			} // END foreach($fittingArray as &$line)
 
 			$returnValue = array(
-				'highSlots' => $arrayHighSlot,
-				'midSlots' => $arrayMidSlot,
-				'lowSlots' => $arrayLowSlot,
-				'rigSlots' => $arrayRigSlot,
-				'subSystems' => $arraySubSystem,
+				'highSlots' => $arrayHighSlots,
+				'midSlots' => $arrayMidSlots,
+				'lowSlots' => $arrayLowSlots,
+				'rigSlots' => $arrayRigSlots,
+				'subSystems' => $arraySubSystems,
+				'upwellServices' => $arrayUpwellServices,
 				'charges' => $arrayCharges,
 				'drones' => $arrayDrones
 			);
@@ -266,6 +276,7 @@ class EftHelper {
 		$arrayLowSlots = \unserialize($fitting['lowSlots']);
 		$arrayRigSlots = \unserialize($fitting['rigSlots']);
 		$arraySubSystems = \unserialize($fitting['subSystems']);
+		$arrayServiceSlots = \unserialize($fitting['serviceSlots']);
 		$arrayDrones = \unserialize($fitting['drones']);
 		$arrayCharges = \unserialize($fitting['charges']);
 
@@ -339,6 +350,7 @@ class EftHelper {
 		if($hasRigSlots === true) {
 			$eftImport .= '' . "\n";
 		} // END if($hasRigSlots == true)
+
 		/**
 		 * Sub Systems
 		 */
@@ -352,6 +364,23 @@ class EftHelper {
 			} // END foreach($arrayRigSlots as $rigSlot)
 
 			if($hasSubSystems === true) {
+				$eftImport .= '' . "\n";
+			} // END if($hasRigSlots == true)
+		} // END if(is_array($arraySubSystems))
+
+		/**
+		 * Service Slots
+		 */
+		$hasServiceSlots = false;
+		if(\is_array($arrayServiceSlots)) {
+			foreach($arrayServiceSlots as $serviceSlot) {
+				if($serviceSlot !== false) {
+					$hasServiceSlots = true;
+					$eftImport .= FittingHelper::getItemNameById($serviceSlot) . "\n";
+				} // END if($subSystem != false)
+			} // END foreach($arrayRigSlots as $rigSlot)
+
+			if($hasServiceSlots === true) {
 				$eftImport .= '' . "\n";
 			} // END if($hasRigSlots == true)
 		} // END if(is_array($arraySubSystems))

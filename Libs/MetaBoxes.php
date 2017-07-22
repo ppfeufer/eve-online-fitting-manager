@@ -31,6 +31,7 @@ class MetaBoxes {
 					'lowSlots' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_low_slots', true),
 					'rigSlots' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_rig_slots', true),
 					'subSystems' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_subsystems', true),
+					'serviceSlots' => \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_upwellservices', true),
 					'drones' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_drones', true),
 					'charges' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_charges', true),
 				));
@@ -77,6 +78,7 @@ class MetaBoxes {
 		\update_post_meta($postID, 'eve-online-fitting-manager_fitting_low_slots', (!empty($fittingSlotData['lowSlots'])) ? \serialize($fittingSlotData['lowSlots']) : null);
 		\update_post_meta($postID, 'eve-online-fitting-manager_fitting_rig_slots', (!empty($fittingSlotData['rigSlots'])) ? \serialize($fittingSlotData['rigSlots']) : null);
 		\update_post_meta($postID, 'eve-online-fitting-manager_fitting_subsystems', (!empty($fittingSlotData['subSystems'])) ? \serialize($fittingSlotData['subSystems']) : null);
+		\update_post_meta($postID, 'eve-online-fitting-manager_fitting_upwellservices', (!empty($fittingSlotData['upwellServices'])) ? \serialize($fittingSlotData['upwellServices']) : null);
 		\update_post_meta($postID, 'eve-online-fitting-manager_fitting_drones', (!empty($fittingSlotData['drones'])) ? \serialize($fittingSlotData['drones']) : null);
 		\update_post_meta($postID, 'eve-online-fitting-manager_fitting_charges', (!empty($fittingSlotData['charges'])) ? \serialize($fittingSlotData['charges']) : null);
 		\update_post_meta($postID, 'eve-online-fitting-manager_fitting_dna', (!empty($fittingDna)) ? $fittingDna : null);

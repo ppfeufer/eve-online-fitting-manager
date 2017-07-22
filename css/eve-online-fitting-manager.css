@@ -546,6 +546,55 @@
 		height: 32px;
 	}
 
+	.serviceSlots {
+		position: absolute;
+		left: 0px;
+		top: 0px;
+		width: 398px;
+		height: 398px;
+		z-index: -1;
+	}
+
+	.serviceSlot_1 {
+		position: absolute;
+		left: 118px;
+		top: 132px;
+		width: 32px;
+		height: 32px;
+	}
+
+	.serviceSlot_2 {
+		position: absolute;
+		left: 148px;
+		top: 107px;
+		width: 32px;
+		height: 32px;
+	}
+
+	.serviceSlot_3 {
+		position: absolute;
+		left: 183px;
+		top: 99px;
+		width: 32px;
+		height: 32px;
+	}
+
+	.serviceSlot_4 {
+		position: absolute;
+		left: 220px;
+		top: 107px;
+		width: 32px;
+		height: 32px;
+	}
+
+	.serviceSlot_5 {
+		position: absolute;
+		left: 250px;
+		top: 132px;
+		width: 32px;
+		height: 32px;
+	}
+
 	.shipImage {
 		position: absolute;
 		left: 72px;

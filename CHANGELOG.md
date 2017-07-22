@@ -2,6 +2,9 @@
 
 ## [In Development](https://github.com/ppfeufer/eve-online-fitting-manager)
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.1-r20170719...HEAD)
+### Added
+- Service Slots to Upwell Structures
+
 ### Changed
 - Introduced dynamic autoloader for classes
 

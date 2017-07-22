@@ -5,6 +5,7 @@ $midSlots = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_mi
 $lowSlots = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_low_slots', true);
 $rigSlots = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_rig_slots', true);
 $subSystems = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_subsystems', true);
+$serviceSlots = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_upwellservices', true);
 $fittingDna = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_dna', true);
 
 $fittingSlotLayout = \WordPress\Plugin\EveOnlineFittingManager\Helper\FittingHelper::getSlotLayoutFromFittingArray(array(
@@ -13,32 +14,38 @@ $fittingSlotLayout = \WordPress\Plugin\EveOnlineFittingManager\Helper\FittingHel
 	'midSlots' => $midSlots,
 	'lowSlots' => $lowSlots,
 	'rigSlots' => $rigSlots,
-	'subSystems' => $subSystems
+	'subSystems' => $subSystems,
+	'serviceSlots' => $serviceSlots
 ));
 
 $itemsHighSlots = null;
-if($highSlots !== null) {
+if(!empty($highSlots)) {
 	$itemsHighSlots = \unserialize($highSlots);
 }
 
 $itemsMidSlots = null;
-if($midSlots !== null) {
+if(!empty($midSlots)) {
 	$itemsMidSlots = \unserialize($midSlots);
 }
 
 $itemsLowSlots = null;
-if($lowSlots !== null) {
+if(!empty($lowSlots)) {
 	$itemsLowSlots = \unserialize($lowSlots);
 }
 
 $itemsRigSlots = null;
-if($rigSlots !== null) {
+if(!empty($rigSlots)) {
 	$itemsRigSlots = \unserialize($rigSlots);
 }
 
 $itemsSubSystems = null;
-if($subSystems !== null) {
+if(!empty($subSystems)) {
 	$itemsSubSystems = \unserialize($subSystems);
+}
+
+$itemsServiceSlots = null;
+if(!empty($serviceSlots)) {
+	$itemsServiceSlots = \unserialize($serviceSlots);
 }
 ?>
 
@@ -160,6 +167,29 @@ if($subSystems !== null) {
 			$ssCount++;
 		}
 	}
+
+	if($itemsServiceSlots !== null) {
+		?>
+		<!--
+		// Upwell Services
+		-->
+		<div class="serviceSlots">
+			<img style="border: 0px;" alt="" src="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Helper\PluginHelper::getPluginUri('images/fitting-ring/5s.png'); ?>">
+		</div>
+		<?php
+		$ssCount = 1;
+		foreach($itemsServiceSlots as $serviceSlotItemID) {
+			if(!empty($serviceSlotItemID)) {
+				?>
+				<div class="serviceSlot_<?php echo $ssCount; ?>" data-toggle="tooltip" data-title="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Helper\FittingHelper::getItemNameById($serviceSlotItemID); ?>" data-placement="top">
+					<img width="32" height="32" src="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Helper\ImageHelper::getLocalCacheImageUriForRemoteImage('item', 'https://imageserver.eveonline.com/Type/' . $serviceSlotItemID . '_32.png')?>" class="img-rounded">
+				</div>
+				<?php
+			}
+
+			$ssCount++;
+		}
+	}
 	?>
 
 	<!--
@@ -170,13 +200,19 @@ if($subSystems !== null) {
 	</div>
 </div>
 
-<div class="fitting-view-osmium-loadout">
-	<ul class="nav nav-pills nav-stacked">
-		<li role="presentation">
-			<a href="https://o.smium.org/loadout/dna/<?php echo $fittingDna; ?>" type="button" class="btn btn-default" target="_blank"><?php echo \__('View Loadout @Osmium.org', 'eve-online-fitting-manager') ; ?></a>
-		</li>
-	</ul>
-</div>
+<?php
+if(\WordPress\Plugin\EveOnlineFittingManager\Helper\FittingHelper::isUpwellStructure($shipID) === false) {
+	?>
+	<div class="fitting-view-osmium-loadout">
+		<ul class="nav nav-pills nav-stacked">
+			<li role="presentation">
+				<a href="https://o.smium.org/loadout/dna/<?php echo $fittingDna; ?>" type="button" class="btn btn-default" target="_blank"><?php echo \__('View Loadout @Osmium.org', 'eve-online-fitting-manager') ; ?></a>
+			</li>
+		</ul>
+	</div>
+	<?php
+}
+?>
 
 <script type="text/javascript">
 jQuery(document).ready(function($) {
