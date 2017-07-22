@@ -840,7 +840,9 @@ class FittingHelper {
 					'value' => self::getFittingSearchQuery(),
 					'compare' => 'LIKE'
 				)
-			)
+			),
+			'orderby'=> 'title',
+			'order' => 'ASC'
 		);
 
 		return new \WP_Query($args);
