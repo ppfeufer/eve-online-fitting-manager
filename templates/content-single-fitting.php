@@ -30,7 +30,7 @@
 			?>
 
 			<div class="row">
-				<div class="col-lg-6 col-xl-6 ship-fitting-visualization">
+				<div class="col-lg-7 col-xl-6 ship-fitting-visualization">
 					<?php
 					\WordPress\Plugin\EveOnlineFittingManager\Helper\TemplateHelper::getTemplate('fitting/fitting-ring');
 
@@ -125,7 +125,7 @@
 					?>
 				</div>
 
-				<div class="col-lg-6 col-xl-6 ship-fitting-eft-import">
+				<div class="col-lg-5 col-xl-6 ship-fitting-eft-import">
 					<h3><?php echo \__('EFT Import', 'eve-online-fitting-manager'); ?></h3>
 					<?php
 					echo \nl2br($eftFitting);

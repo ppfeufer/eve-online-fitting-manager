@@ -60,9 +60,11 @@
 		font-size: 18px;
 		font-size: 1.125rem;
 	}
+}
 
-	/* Doctrine List Content Shortcode
-	--------------------------------------------------------------------------*/
+/* Doctrine List Content Shortcode
+----------------------------------------------------------------------------- */
+@media ll {
 	.content-doctrine-list div.doctrine {
 		padding-top: 10px;
 		padding-bottom: 10px;
@@ -107,9 +109,11 @@
 		position: relative;
 		z-index: 999;
 	}
+}
 
-	/* Doctrine List Sidebar
-	--------------------------------------------------------------------------*/
+/* Doctrine List Sidebar
+----------------------------------------------------------------------------- */
+@media all {
 	.fitting-sidebar-search {
 		padding: 10px 0;
 	}
@@ -187,7 +191,8 @@
 		padding-left: 1.5625rem;
 	}
 
-	.sidebar-doctrine-list .dropdown-menu > li > a:hover, .sidebar-doctrine-list .dropdown-menu > li > a:focus {
+	.sidebar-doctrine-list .dropdown-menu > li > a:hover,
+	.sidebar-doctrine-list .dropdown-menu > li > a:focus {
 		background-color: transparent;
 	}
 
@@ -214,13 +219,15 @@
 	.sidebar-doctrine-list > li {
 		padding-left: 0;
 	}
+}
 
-	/* Fitting Ring
-	--------------------------------------------------------------------------*/
+/* Fitting Ring
+----------------------------------------------------------------------------- */
+@media all {
 	.fittingPanel {
 		position: relative;
-		height: 398px;
-		width: 398px;
+		height: 243px;
+		width: 243px;
 		z-index: 3;
 		margin: 0 auto;
 		margin-bottom: 24px;
@@ -231,8 +238,8 @@
 		position: absolute;
 		left: 0px;
 		top: 0px;
-		width: 398px;
-		height: 398px;
+		width: 243px;
+		height: 243px;
 		z-index: -1;
 	}
 
@@ -240,385 +247,412 @@
 		position: absolute;
 		left: 0px;
 		top: 0px;
-		height: 398px;
-		width: 398px;
+		width: 100%;
+		height: auto;
 		border: 0px
 	}
 
-	.highSlots {
-		position: absolute;
-		left: 0px;
-		top: 0px;
-		width: 398px;
-		height: 398px;
-		z-index: -1;
-	}
-
-	.highSlot_1 {
-		position: absolute;
-		left: 73px;
-		top: 60px;
-		width: 32px;
-		height: 32px;
-	}
-
-	.highSlot_2 {
-		position: absolute;
-		left: 102px;
-		top: 42px;
-		width: 32px;
-		height: 32px;
-	}
-
-	.highSlot_3 {
-		position: absolute;
-		left: 134px;
-		top: 27px;
-		width: 32px;
-		height: 32px;
-	}
-
-	.highSlot_4 {
-		position: absolute;
-		left: 169px;
-		top: 21px;
-		width: 32px;
-		height: 32px;
-	}
-
-	.highSlot_5 {
-		position: absolute;
-		left: 203px;
-		top: 22px;
-		width: 32px;
-		height: 32px;
-	}
-
-	.highSlot_6 {
-		position: absolute;
-		left: 238px;
-		top: 30px;
-		width: 32px;
-		height: 32px;
-	}
-
-	.highSlot_7 {
-		position: absolute;
-		left: 270px;
-		top: 45px;
-		width: 32px;
-		height: 32px;
-	}
-
-	.highSlot_8 {
-		position: absolute;
-		left: 295px;
-		top: 64px;
-		width: 32px;
-		height: 32px;
-	}
-
-	.midSlots {
-		position: absolute;
-		left: 0px;
-		top: 0px;
-		width: 398px;
-		height: 398px;
-		z-index: -1;
-	}
-
-	.midSlot_1 {
-		position: absolute;
-		left: 26px;
-		top: 140px;
-		width: 32px;
-		height: 32px;
-	}
-
-	.midSlot_2 {
-		position: absolute;
-		left: 24px;
-		top: 176px;
-		width: 32px;
-		height: 32px;
-	}
-
-	.midSlot_3 {
-		position: absolute;
-		left: 23px;
-		top: 212px;
-		width: 32px;
-		height: 32px;
-	}
-
-	.midSlot_4 {
-		position: absolute;
-		left: 30px;
-		top: 245px;
-		width: 32px;
-		height: 32px;
-	}
-
-	.midSlot_5 {
-		position: absolute;
-		left: 46px;
-		top: 278px;
-		width: 32px;
-		height: 32px;
-	}
-
-	.midSlot_6 {
-		position: absolute;
-		left: 69px;
-		top: 304px;
-		width: 32px;
-		height: 32px;
-	}
-
-	.midSlot_7 {
-		position: absolute;
-		left: 100px;
-		top: 328px;
-		width: 32px;
-		height: 32px;
-	}
-
-	.midSlot_8 {
-		position: absolute;
-		left: 133px;
-		top: 342px;
-		width: 32px;
-		height: 32px;
-	}
-
-	.lowSlots {
-		position: absolute;
-		left: 0px;
-		top: 0px;
-		width: 398px;
-		height: 398px;
-		z-index: -1;
-	}
-
-	.lowSlot_1 {
-		position: absolute;
-		left: 344px;
-		top: 143px;
-		width: 32px;
-		height: 32px;
-	}
-
-	.lowSlot_2 {
-		position: absolute;
-		left: 350px;
-		top: 178px;
-		width: 32px;
-		height: 32px;
-	}
-
-	.lowSlot_3 {
-		position: absolute;
-		left: 349px;
-		top: 213px;
-		width: 32px;
-		height: 32px;
-	}
-
-	.lowSlot_4 {
-		position: absolute;
-		left: 340px;
-		top: 246px;
-		width: 32px;
-		height: 32px;
-	}
-
-	.lowSlot_5 {
-		position: absolute;
-		left: 323px;
-		top: 277px;
-		width: 32px;
-		height: 32px;
-	}
-
-	.lowSlot_6 {
-		position: absolute;
-		left: 300px;
-		top: 304px;
-		width: 32px;
-		height: 32px;
-	}
-
-	.lowSlot_7 {
-		position: absolute;
-		left: 268px;
-		top: 324px;
-		width: 32px;
-		height: 32px;
-	}
-
-	.lowSlot_8 {
-		position: absolute;
-		left: 234px;
-		top: 338px;
-		width: 32px;
-		height: 32px;
-	}
-
-	.rigSlots {
-		position: absolute;
-		left: 0px;
-		top: 0px;
-		width: 398px;
-		height: 398px;
-		z-index: -1;
-	}
-
-	.rigSlot_1 {
-		position: absolute;
-		left: 148px;
-		top: 259px;
-		width: 32px;
-		height: 32px;
-	}
-
-	.rigSlot_2 {
-		position: absolute;
-		left: 184px;
-		top: 267px;
-		width: 32px;
-		height: 32px;
-	}
-
-	.rigSlot_3 {
-		position: absolute;
-		left: 221px;
-		top: 259px;
-		width: 32px;
-		height: 32px;
-	}
-
-	.subSystems {
-		position: absolute;
-		left: 0px;
-		top: 0px;
-		width: 398px;
-		height: 398px;
-		z-index: -1;
-	}
-
-	.subSystem_1 {
-		position: absolute;
-		left: 118px;
-		top: 132px;
-		width: 32px;
-		height: 32px;
-	}
-
-	.subSystem_2 {
-		position: absolute;
-		left: 148px;
-		top: 107px;
-		width: 32px;
-		height: 32px;
-	}
-
-	.subSystem_3 {
-		position: absolute;
-		left: 183px;
-		top: 99px;
-		width: 32px;
-		height: 32px;
-	}
-
-	.subSystem_4 {
-		position: absolute;
-		left: 220px;
-		top: 107px;
-		width: 32px;
-		height: 32px;
-	}
-
-	.subSystem_5 {
-		position: absolute;
-		left: 250px;
-		top: 132px;
-		width: 32px;
-		height: 32px;
-	}
-
+	.highSlots,
+	.midSlots,
+	.lowSlots,
+	.rigSlots,
+	.subSystems,
 	.serviceSlots {
 		position: absolute;
 		left: 0px;
 		top: 0px;
-		width: 398px;
-		height: 398px;
+		width: 243px;
+		height: 243px;
 		z-index: -1;
 	}
 
-	.serviceSlot_1 {
+	.highSlot_1, .highSlot_2, .highSlot_3, .highSlot_4, .highSlot_5, .highSlot_6, .highSlot_7, .highSlot_8,
+	.midSlot_1, .midSlot_2, .midSlot_3, .midSlot_4, .midSlot_5, .midSlot_6, .midSlot_7, .midSlot_8,
+	.lowSlot_1, .lowSlot_2, .lowSlot_3, .lowSlot_4, .lowSlot_5, .lowSlot_6, .lowSlot_7, .lowSlot_8,
+	.rigSlot_1, .rigSlot_2, .rigSlot_3,
+	.subSystem_1, .subSystem_2, .subSystem_3, .subSystem_4, .subSystem_5,
+	.serviceSlot_1, .serviceSlot_2, .serviceSlot_3, .serviceSlot_4, .serviceSlot_5 {
 		position: absolute;
-		left: 118px;
-		top: 132px;
-		width: 32px;
-		height: 32px;
+		width: 25px;
+		height: 25px;
 	}
 
-	.serviceSlot_2 {
-		position: absolute;
-		left: 148px;
-		top: 107px;
-		width: 32px;
-		height: 32px;
+	.highSlot_1 {
+		left: 41px;
+		top: 34px;
 	}
 
-	.serviceSlot_3 {
-		position: absolute;
-		left: 183px;
-		top: 99px;
-		width: 32px;
-		height: 32px;
+	.highSlot_2 {
+		left: 59px;
+		top: 22px;
 	}
 
-	.serviceSlot_4 {
-		position: absolute;
-		left: 220px;
-		top: 107px;
-		width: 32px;
-		height: 32px;
+	.highSlot_3 {
+		left: 79px;
+		top: 13px;
 	}
 
-	.serviceSlot_5 {
-		position: absolute;
-		left: 250px;
-		top: 132px;
-		width: 32px;
-		height: 32px;
+	.highSlot_4 {
+		left: 101px;
+		top: 9px;
+	}
+
+	.highSlot_5 {
+		left: 122px;
+		top: 10px;
+	}
+
+	.highSlot_6 {
+		left: 143px;
+		top: 14px;
+	}
+
+	.highSlot_7 {
+		left: 161px;
+		top: 22px;
+	}
+
+	.highSlot_8 {
+		left: 179px;
+		top: 36px;
+	}
+
+	.midSlot_1 {
+		left: 15px;
+		top: 84px;
+	}
+
+	.midSlot_2 {
+		left: 11px;
+		top: 105px;
+	}
+
+	.midSlot_3 {
+		left: 12px;
+		top: 125px;
+	}
+
+	.midSlot_4 {
+		left: 16px;
+		top: 148px;
+	}
+
+	.midSlot_5 {
+		left: 27px;
+		top: 165px;
+	}
+
+	.midSlot_6 {
+		left: 41px;
+		top: 182px;
+	}
+
+	.midSlot_7 {
+		left: 58px;
+		top: 195px;
+	}
+
+	.midSlot_8 {
+		left: 78px;
+		top: 204px;
+	}
+
+	.lowSlot_1 {
+		left: 208px;
+		top: 82px;
+	}
+
+	.lowSlot_2 {
+		left: 210px;
+		top: 104px;
+	}
+
+	.lowSlot_3 {
+		left: 208px;
+		top: 126px;
+	}
+
+	.lowSlot_4 {
+		left: 203px;
+		top: 146px;
+	}
+
+	.lowSlot_5 {
+		left: 192px;
+		top: 164px;
+	}
+
+	.lowSlot_6 {
+		left: 179px;
+		top: 181px;
+	}
+
+	.lowSlot_7 {
+		left: 161px;
+		top: 194px;
+	}
+
+	.lowSlot_8 {
+		left: 141px;
+		top: 203px;
+	}
+
+	.rigSlot_1 {
+		left: 87px;
+		top: 154px;
+	}
+
+	.rigSlot_2 {
+		left: 110px;
+		top: 159px;
+	}
+
+	.rigSlot_3 {
+		left: 134px;
+		top: 154px;
+	}
+
+	.subSystem_1, .serviceSlot_1 {
+		left: 69px;
+		top: 76px;
+	}
+
+	.subSystem_2, .serviceSlot_2 {
+		left: 87px;
+		top: 62px;
+	}
+
+	.subSystem_3,.serviceSlot_3 {
+		left: 110px;
+		top: 56px;
+	}
+
+	.subSystem_4, .serviceSlot_4 {
+		left: 132px;
+		top: 61px;
+	}
+
+	.subSystem_5, .serviceSlot_5 {
+		left: 151px;
+		top: 77px;
 	}
 
 	.shipImage {
 		position: absolute;
+		left: 54px;
+		top: 51px;
+		width: 145px;
+		height: 145px;
+		z-index: -2;
+	}
+}
+
+@media screen and (min-width: 560px) {
+	.fittingPanel {
+		height: 398px;
+		width: 398px;
+	}
+
+	.fittingRing {
+		width: 398px;
+		height: 398px;
+	}
+
+	.highSlots,
+	.midSlots,
+	.lowSlots,
+	.rigSlots,
+	.subSystems,
+	.serviceSlots {
+		width: 398px;
+		height: 398px;
+	}
+
+	.highSlot_1, .highSlot_2, .highSlot_3, .highSlot_4, .highSlot_5, .highSlot_6, .highSlot_7, .highSlot_8,
+	.midSlot_1, .midSlot_2, .midSlot_3, .midSlot_4, .midSlot_5, .midSlot_6, .midSlot_7, .midSlot_8,
+	.lowSlot_1, .lowSlot_2, .lowSlot_3, .lowSlot_4, .lowSlot_5, .lowSlot_6, .lowSlot_7, .lowSlot_8,
+	.rigSlot_1, .rigSlot_2, .rigSlot_3,
+	.subSystem_1, .subSystem_2, .subSystem_3, .subSystem_4, .subSystem_5,
+	.serviceSlot_1, .serviceSlot_2, .serviceSlot_3, .serviceSlot_4, .serviceSlot_5 {
+		width: 32px;
+		height: 32px;
+	}
+
+	.highSlot_1 {
+		left: 73px;
+		top: 60px;
+	}
+
+	.highSlot_2 {
+		left: 102px;
+		top: 42px;
+	}
+
+	.highSlot_3 {
+		left: 134px;
+		top: 27px;
+	}
+
+	.highSlot_4 {
+		left: 169px;
+		top: 21px;
+	}
+
+	.highSlot_5 {
+		left: 203px;
+		top: 22px;
+	}
+
+	.highSlot_6 {
+		left: 238px;
+		top: 30px;
+	}
+
+	.highSlot_7 {
+		left: 270px;
+		top: 54px;
+	}
+
+	.highSlot_8 {
+		left: 295px;
+		top: 64px;
+	}
+
+	.midSlot_1 {
+		left: 26px;
+		top: 140px;
+	}
+
+	.midSlot_2 {
+		left: 24px;
+		top: 176px;
+	}
+
+	.midSlot_3 {
+		left: 23px;
+		top: 212px;
+	}
+
+	.midSlot_4 {
+		left: 30px;
+		top: 245px;
+	}
+
+	.midSlot_5 {
+		left: 46px;
+		top: 278px;
+	}
+
+	.midSlot_6 {
+		left: 69px;
+		top: 304px;
+	}
+
+	.midSlot_7 {
+		left: 100px;
+		top: 328px;
+	}
+
+	.midSlot_8 {
+		left: 133px;
+		top: 342px;
+	}
+
+	.lowSlot_1 {
+		left: 344px;
+		top: 143px;
+	}
+
+	.lowSlot_2 {
+		left: 350px;
+		top: 178px;
+	}
+
+	.lowSlot_3 {
+		left: 349px;
+		top: 213px;
+	}
+
+	.lowSlot_4 {
+		left: 340px;
+		top: 246px;
+	}
+
+	.lowSlot_5 {
+		left: 323px;
+		top: 277px;
+	}
+
+	.lowSlot_6 {
+		left: 300px;
+		top: 304px;
+	}
+
+	.lowSlot_7 {
+		left: 268px;
+		top: 324px;
+	}
+
+	.lowSlot_8 {
+		left: 234px;
+		top: 338px;
+	}
+
+	.rigSlot_1 {
+		left: 148px;
+		top: 259px;
+	}
+
+	.rigSlot_2 {
+		left: 184px;
+		top: 267px;
+	}
+
+	.rigSlot_3 {
+		left: 221px;
+		top: 259px;
+	}
+
+	.subSystem_1, .serviceSlot_1 {
+		left: 118px;
+		top: 132px;
+	}
+
+	.subSystem_2, .serviceSlot_2 {
+		left: 148px;
+		top: 107px;
+	}
+
+	.subSystem_3,.serviceSlot_3 {
+		left: 183px;
+		top: 99px;
+	}
+
+	.subSystem_4, .serviceSlot_4 {
+		left: 220px;
+		top: 107px;
+	}
+
+	.subSystem_5, .serviceSlot_5 {
+		left: 250px;
+		top: 132px;
+	}
+
+	.shipImage {
 		left: 72px;
 		top: 71px;
 		width: 256px;
 		height: 256px;
-		z-index: -2;
 	}
+}
 
-	/* Market Data Table
-	------------------------------------------------------------------------- */
-	/*	.table-fitting-marketdata th, .table-fitting-marketdata td {
-			text-align: right;
-			border: none;
-			border-top: none;
-		}*/
-
-	/*
-	 * Callouts
-	 *
-	 * Not quite alerts, but custom and helpful notes for folks reading the docs.
-	 * Requires a base and modifier class.
-	 */
-
+/*
+ * Callouts
+ *
+ * Not quite alerts, but custom and helpful notes for folks reading the docs.
+ * Requires a base and modifier class.
+ */
+@media all {
 	/* Common styles for all types */
 	.bs-callout {
 		padding: 20px;
