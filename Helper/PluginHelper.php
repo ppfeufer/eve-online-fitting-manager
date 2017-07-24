@@ -12,11 +12,11 @@ class PluginHelper {
 	public static $databaseVersion = '20170717';
 
 	public static function getPluginPath($file = '') {
-		return \trailingslashit(\WP_CONTENT_DIR) . 'plugins/eve-online-fitting-manager/' . $file;
+		return \trailingslashit(\plugin_dir_path(dirname(__FILE__))) . $file;
 	}
 
 	public static function getPluginUri($file = '') {
-		return \trailingslashit(\WP_CONTENT_URL) . 'plugins/eve-online-fitting-manager/' . $file;
+		return \plugins_url($file, dirname(__FILE__));
 	} // END public function getThemeCacheUri()
 
 	/**

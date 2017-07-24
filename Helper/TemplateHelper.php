@@ -36,7 +36,7 @@ class TemplateHelper {
 
 		// Set default plugin templates path.
 		if(!$default_path) {
-			$default_path = EveOnlineFittingManager\Helper\PluginHelper::getPluginPath() . 'templates/'; // Path to the template folder
+			$default_path = EveOnlineFittingManager\Helper\PluginHelper::getPluginPath('templates/'); // Path to the template folder
 		} // END if(!$default_path)
 
 		// Search template file in theme folder.

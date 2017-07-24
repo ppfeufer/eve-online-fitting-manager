@@ -1,7 +1,11 @@
 # Change Log
 
 ## [In Development](https://github.com/ppfeufer/eve-online-fitting-manager)
-[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.1-r20170719...HEAD)
+[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.1-r20170724...HEAD)
+- in development
+
+## [v0.1-r20170724](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.1-r20170724) - 2017-07-24
+[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.1-r20170719...v0.1-r20170724)
 ### Added
 - Service Slots to Upwell Structures
 
@@ -9,9 +13,10 @@
 - Introduced dynamic autoloader for classes
 
 ### Fixed
-- Warning: ksort() expects parameter 1 to be array, null given in FittingHelper
+- Warning: ksort() expects parameter 1 to be array, null given in FittingHelper class
 - Search result is now sorted alphabetically
 - Fitting visualization is now responsive
+- Plugindir and Pluginpath detection
 
 ## [v0.1-r20170719](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.1-r20170719) - 2017-07-19
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.1-r20170711...v0.1-r20170719)
