@@ -106,23 +106,28 @@
 					} // END if($marketPrices !== false)
 
 					$usedInDoctrines = \WordPress\Plugin\EveOnlineFittingManager\Helper\FittingHelper::getShipUsedInDoctrine();
-					if(!empty($usedInDoctrines) && !\is_wp_error($usedInDoctrines)) {
-						?>
-						<div class="fitting-used-in">
-							<h4>
-								<?php echo \__('This fitting is used in the following doctrines', 'eve-online-fitting-manager'); ?>
-							</h4>
-							<?php
-							echo '<ul class="fitting-used-in-doctrines">';
-							foreach($usedInDoctrines as $doctrine) {
-								echo '<li>» <a href="' . \get_term_link($doctrine) . '">' . $doctrine->name . '</a></li>';
-							} // END foreach($usedInDoctrines as $doctrine)
-							echo '</ul>';
-							?>
-						</div>
-						<?php
-					} // END if(!empty($usedInDoctrines) && !\is_wp_error($usedInDoctrines))
 					?>
+					<div class="fitting-used-in">
+						<h4>
+							<?php echo \__('Doctrines using this fitting', 'eve-online-fitting-manager'); ?>
+						</h4>
+						<?php
+						$fittingUsedInHtml = '<div class="bs-callout bs-callout-info">';
+						$fittingUsedInHtml .= '<p>';
+						$fittingUsedInHtml .= \__('This fitting is currently not used in any doctrine.', 'eve-online-fitting-manager');
+						$fittingUsedInHtml .= '</p>';
+						$fittingUsedInHtml .= '</div>';
+						if(!empty($usedInDoctrines) && !\is_wp_error($usedInDoctrines)) {
+							$fittingUsedInHtml = '<ul class="fitting-used-in-doctrines">';
+							foreach($usedInDoctrines as $doctrine) {
+								$fittingUsedInHtml .= '<li>» <a href="' . \get_term_link($doctrine) . '">' . $doctrine->name . '</a></li>';
+							} // END foreach($usedInDoctrines as $doctrine)
+							$fittingUsedInHtml .= '</ul>';
+						} // END if(!empty($usedInDoctrines) && !\is_wp_error($usedInDoctrines))
+
+						echo $fittingUsedInHtml;
+						?>
+					</div>
 				</div>
 
 				<div class="col-lg-5 col-xl-6 ship-fitting-eft-import">
