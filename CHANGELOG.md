@@ -4,7 +4,7 @@
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.1-r20170724...HEAD)
 ### Added
 - Hint when a fitting is not used in any doctrine
-- Mark fitting as: Concetual Fitting, Fitting Idea, Under Discussion
+- Mark fitting as: Conceptual Fitting, Fitting Idea, Under Discussion
 
 ## [v0.1-r20170724](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.1-r20170724) - 2017-07-24
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.1-r20170719...v0.1-r20170724)
