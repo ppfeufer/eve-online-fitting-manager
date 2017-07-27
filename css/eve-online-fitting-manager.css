@@ -62,6 +62,50 @@
 	}
 }
 
+/* Nav-Tabs
+----------------------------------------------------------------------------- */
+@media all {
+	.nav-tabs > li > a {
+		color: inherit;
+		border: none;
+	}
+
+	.nav-tabs > li > a:hover,
+	.nav-tabs > li > a:focus {
+		background: none;
+	}
+
+	.nav-tabs > li.active > a,
+	.nav-tabs > li.active > a:hover,
+	.nav-tabs > li.active > a:focus {
+		background: none;
+		color: #23527c;
+		border: none;
+	}
+}
+
+@media screen and (min-width: 560px) {
+	.nav-tabs > li {
+		border-left: 1px solid #ddd;
+	}
+
+	.nav-tabs > li:first-child {
+		border-left: none;
+	}
+}
+
+@media screen and (min-width: 1200px) {
+	.nav-tabs > li {
+		border-left: none;
+	}
+}
+
+@media screen and (min-width: 1600px) {
+	.nav-tabs > li {
+		border-left: 1px solid #ddd;
+	}
+}
+
 /* Doctrine List Content Shortcode
 ----------------------------------------------------------------------------- */
 @media all {
