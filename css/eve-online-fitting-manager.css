@@ -23,11 +23,6 @@
 		width: 3rem;
 	}
 
-	.ship-fitting-description {
-		margin-bottom: 48px;
-		margin-bottom: 3rem;
-	}
-
 	.ship-fitting-visualization, .fitting-view-osmium-loadout {
 		margin-bottom: 24px;
 		margin-bottom: 1.5rem;
@@ -59,6 +54,11 @@
 	.doctrine-shipfitting-header {
 		font-size: 18px;
 		font-size: 1.125rem;
+	}
+
+	.tab-pane p:first-child {
+		margin-top: 24px;
+		margin-top: 1.5rem;
 	}
 }
 
@@ -699,11 +699,6 @@
 }
 
 @media screen and (min-width: 1200px) {
-	.ship-fitting-description {
-		margin-bottom: 80px;
-		margin-bottom: 5rem;
-	}
-
 	.ship-fitting-visualization {
 		margin-top: 55px;
 	}
