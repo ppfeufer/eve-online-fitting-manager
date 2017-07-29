@@ -8,6 +8,7 @@
 
 ### Changed
 - EFT Import and Fitting Information are now tabbed
+- Modularized detail template into different templates to make it easier to handle them in the future
 
 ### Fixed
 - An issue with the newly introduced "Mark Fitting as" Meta Box not showing the checkboxes all the time

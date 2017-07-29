@@ -1,13 +1,4 @@
 <?php
-$shipID = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_ship_ID', true);
-$highSlots = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_high_slots', true);
-$midSlots = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_mid_slots', true);
-$lowSlots = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_low_slots', true);
-$rigSlots = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_rig_slots', true);
-$subSystems = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_subsystems', true);
-$serviceSlots = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_upwellservices', true);
-$fittingDna = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_dna', true);
-
 $fittingSlotLayout = \WordPress\Plugin\EveOnlineFittingManager\Helper\FittingHelper::getSlotLayoutFromFittingArray(array(
 	'shipID' => $shipID,
 	'highSlots' => $highSlots,
@@ -199,20 +190,6 @@ if(!empty($serviceSlots)) {
 		<img width="256" height="256" alt="Tengu" class="eveimage img-rounded" src="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Helper\ImageHelper::getLocalCacheImageUriForRemoteImage('ship', 'https://imageserver.eveonline.com/Render/' . $shipID . '_256.png')?>">
 	</div>
 </div>
-
-<?php
-if(\WordPress\Plugin\EveOnlineFittingManager\Helper\FittingHelper::isUpwellStructure($shipID) === false) {
-	?>
-	<div class="fitting-view-osmium-loadout">
-		<ul class="nav nav-pills nav-stacked">
-			<li role="presentation">
-				<a href="https://o.smium.org/loadout/dna/<?php echo $fittingDna; ?>" type="button" class="btn btn-default" target="_blank"><?php echo \__('View Loadout @Osmium.org', 'eve-online-fitting-manager') ; ?></a>
-			</li>
-		</ul>
-	</div>
-	<?php
-}
-?>
 
 <script type="text/javascript">
 jQuery(document).ready(function($) {
