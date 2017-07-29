@@ -66,7 +66,7 @@ class MarketdataHelper {
 	/**
 	 * Getting the instance
 	 *
-	 * @return object Instance
+	 * @return WordPress\Plugin\EveOnlineFittingManager\Helper\MarketdataHelper Instance
 	 */
 	public static function getInstance() {
 		if(\is_null(self::$instance)) {

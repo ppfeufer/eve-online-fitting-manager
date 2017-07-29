@@ -207,12 +207,12 @@ class EftHelper {
 	/**
 	 * Generate a fitting array from the EFT dump
 	 *
-	 * @param type $eftFitting
+	 * @param string $eftFitting
 	 * @return type
 	 */
 	public static function getFittingArrayFromEftData($eftFitting) {
 		/**
-		 * Zeilenumbrüche korrigieren
+		 * fix line breakings
 		 */
 		$fittingArray = \explode("\n", \trim(self::fixLineBreaks($eftFitting)));
 

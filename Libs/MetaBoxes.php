@@ -6,17 +6,32 @@ use WordPress\Plugin\EveOnlineFittingManager;
 
 \defined('ABSPATH') or die();
 
+/**
+ * Add some Meta Boxes to our fitting edit page in the WordPress dashboard
+ */
 class MetaBoxes {
+	/**
+	 * Constructor
+	 */
 	public function __construct() {
 		\add_action('add_meta_boxes', array($this, 'registerMetaBoxes'));
 		\add_action('save_post', array($this, 'saveMetaBoxes'));
 	} // END public function __construct()
 
+	/**
+	 * Registering the Meta Boxes
+	 */
 	public function registerMetaBoxes() {
 		\add_meta_box('eve-online-fitting-manager_eft-fitting', \__('EFT Fitting', 'eve-online-fitting-manager'), array($this, 'renderEftFittingMetaBox'), 'fitting', 'normal');
 		\add_meta_box('eve-online-fitting-manager_fitting-marker', \__('Mark Fitting As ...', 'eve-online-fitting-manager'), array($this, 'renderFittingMarkerMetaBox'), 'fitting', 'side');
 	} // END public function registerMetaBoxes()
 
+	/**
+	 * Rendering the "EFT Fitting" Meta Box
+	 *
+	 * @global string $typenow
+	 * @param object $post The post object of the current post
+	 */
 	public function renderEftFittingMetaBox($post) {
 		global $typenow;
 
@@ -36,8 +51,8 @@ class MetaBoxes {
 					'drones' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_drones', true),
 					'charges' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_charges', true),
 				));
-			}
-		}
+			} // END if(\get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_ship_ID', true) !== null)
+		} // END if(PostType::isEditPage('edit') && $typenow === 'fitting')
 		?>
 		<p class="checkbox-wrapper">
 			<textarea id="eve-online-fitting-manager_eft-import" name="eve-online-fitting-manager_eft-import" style="width: 100%; height: 250px;"><?php echo $eftFitting; ?></textarea>
@@ -47,31 +62,46 @@ class MetaBoxes {
 		\wp_nonce_field('save', '_eve-online-fitting-manager_nonce');
 	} // END public function renderEftFittingMetaBox($post)
 
+	/**
+	 * Rendering the "Mark Fitting as" Meta Box
+	 *
+	 * @global string $typenow
+	 * @param object $post The post object of the current post
+	 */
 	public function renderFittingMarkerMetaBox($post) {
 		global $typenow;
+
+		$isConcept = null;
+		$isIdea = null;
+		$isUnderDiscussion = null;
 
 		if(PostType::isEditPage('edit') && $typenow === 'fitting') {
 			$isConcept = \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_is_concept', true);
 			$isIdea = \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_is_idea', true);
 			$isUnderDiscussion = \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_is_under_discussion', true);
+		} // END if(PostType::isEditPage('edit') && $typenow === 'fitting')
+		?>
+		<p class="checkbox-wrapper">
+			<input id="eve-online-fitting-manager_fitting_is_concept" name="eve-online-fitting-manager_fitting_is_concept" type="checkbox" <?php \checked($isConcept); ?>>
+			<label for="eve-online-fitting-manager_fitting_is_concept"><?php \_e('Conceptual Fitting', 'eve-online-fitting-manager'); ?></label>
+		</p>
+		<p class="checkbox-wrapper">
+			<input id="eve-online-fitting-manager_fitting_is_idea" name="eve-online-fitting-manager_fitting_is_idea" type="checkbox" <?php \checked($isIdea); ?>>
+			<label for="eve-online-fitting-manager_fitting_is_idea"><?php \_e('Fitting Idea', 'eve-online-fitting-manager'); ?></label>
+		</p>
+		<p class="checkbox-wrapper">
+			<input id="eve-online-fitting-manager_fitting_is_under_discussion" name="eve-online-fitting-manager_fitting_is_under_discussion" type="checkbox" <?php \checked($isUnderDiscussion); ?>>
+			<label for="eve-online-fitting-manager_fitting_is_under_discussion"><?php \_e('Under Duscussion', 'eve-online-fitting-manager'); ?></label>
+		</p>
+		<?php
+	} // END public function renderFittingMarkerMetaBox($post)
 
-			?>
-			<p class="checkbox-wrapper">
-				<input id="eve-online-fitting-manager_fitting_is_concept" name="eve-online-fitting-manager_fitting_is_concept" type="checkbox" <?php \checked($isConcept); ?>>
-				<label for="eve-online-fitting-manager_fitting_is_concept"><?php \_e('Conceptual Fitting', 'eve-online-fitting-manager'); ?></label>
-			</p>
-			<p class="checkbox-wrapper">
-				<input id="eve-online-fitting-manager_fitting_is_idea" name="eve-online-fitting-manager_fitting_is_idea" type="checkbox" <?php \checked($isIdea); ?>>
-				<label for="eve-online-fitting-manager_fitting_is_idea"><?php \_e('Fitting Idea', 'eve-online-fitting-manager'); ?></label>
-			</p>
-			<p class="checkbox-wrapper">
-				<input id="eve-online-fitting-manager_fitting_is_under_discussion" name="eve-online-fitting-manager_fitting_is_under_discussion" type="checkbox" <?php \checked($isUnderDiscussion); ?>>
-				<label for="eve-online-fitting-manager_fitting_is_under_discussion"><?php \_e('Under Duscussion', 'eve-online-fitting-manager'); ?></label>
-			</p>
-			<?php
-		}
-	}
-
+	/**
+	 * Save the meta data
+	 *
+	 * @param int $postID ID of the current post
+	 * @return boolean
+	 */
 	public function saveMetaBoxes($postID) {
 		$postNonce = \filter_input(\INPUT_POST, '_eve-online-fitting-manager_nonce');
 

@@ -246,6 +246,8 @@ class SettingsApi {
 
 	/**
 	 * Return an array for the choices in a select field type
+	 *
+	 * @return array
 	 */
 	public function selectChoices() {
 		$items = array();
@@ -261,6 +263,8 @@ class SettingsApi {
 
 	/**
 	 * Get values from built in WordPress functions
+	 *
+	 * @return array
 	 */
 	public function get() {
 		if(!empty($this->args['get'])) {
@@ -276,6 +280,8 @@ class SettingsApi {
 
 	/**
 	 * Get users from WordPress, used by the select field type
+	 *
+	 * @return array
 	 */
 	public function getUsers() {
 		$items = array();
@@ -291,6 +297,8 @@ class SettingsApi {
 
 	/**
 	 * Get menus from WordPress, used by the select field type
+	 *
+	 * @return array
 	 */
 	public function getMenus() {
 		$items = array();
@@ -307,6 +315,9 @@ class SettingsApi {
 
 	/**
 	 * Get posts from WordPress, used by the select field type
+	 *
+	 * @global type $post
+	 * @return array
 	 */
 	public function getPosts() {
 		$items = null;
@@ -341,6 +352,8 @@ class SettingsApi {
 
 	/**
 	 * Get terms from WordPress, used by the select field type
+	 *
+	 * @return array
 	 */
 	public function getTerms() {
 		$items = array();
@@ -359,6 +372,8 @@ class SettingsApi {
 
 	/**
 	 * Get taxonomies from WordPress, used by the select field type
+	 *
+	 * @return array
 	 */
 	public function getTaxonomies() {
 		$items = array();
@@ -376,6 +391,9 @@ class SettingsApi {
 
 	/**
 	 * Get sidebars from WordPress, used by the select field type
+	 *
+	 * @global type $wp_registered_sidebars
+	 * @return array
 	 */
 	public function getSidebars() {
 		$items = array();
@@ -393,6 +411,8 @@ class SettingsApi {
 
 	/**
 	 * Get themes from WordPress, used by the select field type
+	 *
+	 * @return array
 	 */
 	public function getThemes() {
 		$items = array();
@@ -410,6 +430,8 @@ class SettingsApi {
 
 	/**
 	 * Get plugins from WordPress, used by the select field type
+	 *
+	 * @return array
 	 */
 	public function getPlugins() {
 		$items = array();
@@ -427,6 +449,8 @@ class SettingsApi {
 
 	/**
 	 * Get post_types from WordPress, used by the select field type
+	 *
+	 * @return array
 	 */
 	public function getPostTypes() {
 		$items = array();
@@ -444,6 +468,9 @@ class SettingsApi {
 
 	/**
 	 * Find a selected value in select or multiselect field type
+	 *
+	 * @param type $key
+	 * @return string
 	 */
 	public function selected($key) {
 		if($this->valueType() == 'array') {
@@ -455,6 +482,9 @@ class SettingsApi {
 
 	/**
 	 * Return selected html if the value is selected in select field type
+	 *
+	 * @param type $key
+	 * @return string
 	 */
 	public function selectedValue($key) {
 		$result = '';
@@ -468,6 +498,9 @@ class SettingsApi {
 
 	/**
 	 * Return selected html if the value is selected in multiselect field type
+	 *
+	 * @param type $key
+	 * @return string
 	 */
 	public function multiselectedValue($key) {
 		$result = '';
@@ -482,6 +515,9 @@ class SettingsApi {
 
 	/**
 	 * Return checked html if the value is checked in radio or checkboxes
+	 *
+	 * @param type $slug
+	 * @return string
 	 */
 	public function checked($slug) {
 		$value = $this->value();
@@ -499,7 +535,8 @@ class SettingsApi {
 	 * Return the value. If the value is not saved the default value is used if
 	 * exists in the settingsArray.
 	 *
-	 * Return as string or array
+	 * @param type $key
+	 * @return string|array
 	 */
 	public function value($key = null) {
 		$value = '';
@@ -518,6 +555,8 @@ class SettingsApi {
 	/**
 	 * Check if the current value type is a single value or a multiple value
 	 * field type, return string or array
+	 *
+	 * @return string
 	 */
 	public function valueType() {
 		$defaultSingle = array(
@@ -549,6 +588,8 @@ class SettingsApi {
 
 	/**
 	 * Check if a checkbox has items
+	 *
+	 * @return boolean
 	 */
 	public function hasItems() {
 		if(!empty($this->args['choices']) && \is_array($this->args['choices'])) {
@@ -560,6 +601,9 @@ class SettingsApi {
 
 	/**
 	 * Return the html name of the field
+	 *
+	 * @param string $slug
+	 * @return string
 	 */
 	public function name($slug = '') {
 		$optionName = \sanitize_title($this->args['option_name']);
@@ -573,6 +617,9 @@ class SettingsApi {
 
 	/**
 	 * Return the size of a multiselect type. If not set it will calculate it
+	 *
+	 * @param array $items
+	 * @return string
 	 */
 	public function size($items) {
 		$size = '';
@@ -593,6 +640,8 @@ class SettingsApi {
 
 	/**
 	 * All the field types in html
+	 *
+	 * @param array $args
 	 */
 	public function renderFields($args) {
 		$args['field_id'] = \sanitize_title($args['field_id']);
@@ -793,8 +842,6 @@ class SettingsApi {
 	 * Final output on the settings page
 	 */
 	public function renderOptions() {
-		global $wp_settings_sections;
-
 		$page = \filter_input(INPUT_GET, 'page');
 		$settings = $this->settingsArray[$page];
 		$message = \get_option('rsa-message');
@@ -904,6 +951,9 @@ class SettingsApi {
 		} // END if($this->isSettingsPage() === true)
 	} // END public function enqueueStyles()
 
+	/**
+	 * Register Adimin Scripts
+	 */
 	public function adminScripts() {
 		if($this->isSettingsPage() === true) {
 			?>

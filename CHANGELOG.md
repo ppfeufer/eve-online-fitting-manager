@@ -9,6 +9,9 @@
 ### Changed
 - EFT Import and Fitting Information are now tabbed
 
+### Fixed
+- An issue with the newly introduced "Mark Fitting as" Meta Box not showing the checkboxes all the time
+
 ## [v0.1-r20170724](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.1-r20170724) - 2017-07-24
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.1-r20170719...v0.1-r20170724)
 ### Added

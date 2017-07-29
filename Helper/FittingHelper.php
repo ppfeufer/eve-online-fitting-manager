@@ -601,15 +601,23 @@ class FittingHelper {
 		return EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
 	} // END public function getRigSlotCountForShipID($shipID)
 
+	/**
+	 * Getting the ship image by ID
+	 *
+	 * @param type $itemID
+	 * @param type $size
+	 * @return type
+	 */
 	public static function getShipImageById($itemID = null, $size = 512) {
 		$image = ImageHelper::getLocalCacheImageUriForRemoteImage('ship', EveApiHelper::getInstance()->getImageServerUrl('inventory') . $itemID . '_' . $size . '.png');
 
 		return $image;
-	}
+	} // END public static function getShipImageById($itemID = null, $size = 512)
 
 	/**
 	 * Gettng the doctrine menu for the sidebar
 	 *
+	 * @param string $taxonomy
 	 * @return string
 	 */
 	public static function getSidebarMenu($taxonomy) {
@@ -693,6 +701,7 @@ class FittingHelper {
 	/**
 	 * Gettng the doctrine menu for the conten shortcode
 	 *
+	 * @param string $taxonomy
 	 * @return string
 	 */
 	public static function getContentMenu($taxonomy) {
@@ -803,7 +812,6 @@ class FittingHelper {
 	 * Get the search query for fittings search
 	 *
 	 * @param boolean $escaped wether the query should be escaped or not
-	 *
 	 * @return string
 	 */
 	public static function getFittingSearchQuery($escaped = true) {
@@ -863,6 +871,12 @@ class FittingHelper {
 		return $doctrines;
 	}
 
+	/**
+	 * Checl if a shipID is an Upwell Structure or not
+	 *
+	 * @param type $shipID
+	 * @return boolean
+	 */
 	public static function isUpwellStructure($shipID) {
 		return \in_array($shipID, self::getUpwellStructureIds());
 	}

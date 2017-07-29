@@ -27,10 +27,10 @@ class TemplateLoader {
 	public static function getInstance() {
 		if(null == self::$instance) {
 			self::$instance = new TemplateLoader();
-		}
+		} // END if(null == self::$instance)
 
 		return self::$instance;
-	}
+	} // END public static function getInstance()
 
 	/**
 	 * Initializes the plugin by setting filters and administration functions.
@@ -45,7 +45,7 @@ class TemplateLoader {
 		} else {
 			// Add a filter to the wp 4.7 version attributes metabox
 			\add_filter('theme_page_templates', array($this, 'addNewTemplate'));
-		}
+		} // END if(\version_compare(\floatval(\get_bloginfo('version')), '4.7', '<'))
 
 		// Add a filter to the save post to inject out template into the page cache
 		\add_filter('wp_insert_post_data', array($this, 'registerProjectTemplates'));
@@ -60,21 +60,26 @@ class TemplateLoader {
 		$this->templates = array(
 			'../templates/page-fittings.php' => 'Fittings',
 		);
-	}
+	} // END private function __construct()
 
 	/**
 	 * Adds our template to the page dropdown for v4.7+
 	 *
+	 * @param array $posts_templates
+	 * @return array
 	 */
 	public function addNewTemplate($posts_templates) {
 		$posts_templates = \array_merge($posts_templates, $this->templates);
 
 		return $posts_templates;
-	}
+	} // END public function addNewTemplate($posts_templates)
 
 	/**
 	 * Adds our template to the pages cache in order to trick WordPress
 	 * into thinking the template file exists where it doens't really exist.
+	 *
+	 * @param array $atts
+	 * @return array
 	 */
 	public function registerProjectTemplates($atts) {
 		// Create the key used for the themes cache
@@ -86,7 +91,7 @@ class TemplateLoader {
 
 		if(empty($templates)) {
 			$templates = array();
-		}
+		} // END if(empty($templates))
 
 		// New cache, therefore remove the old one
 		\wp_cache_delete($cache_key, 'themes');
@@ -100,10 +105,14 @@ class TemplateLoader {
 		\wp_cache_add($cache_key, $templates, 'themes', 1800);
 
 		return $atts;
-	}
+	} // END public function registerProjectTemplates($atts)
 
 	/**
 	 * Checks if the template is assigned to the page
+	 *
+	 * @global object $post
+	 * @param array $template
+	 * @return string
 	 */
 	public function viewProjectTemplate($template) {
 		// Get global post
@@ -112,12 +121,12 @@ class TemplateLoader {
 		// Return template if post is empty
 		if(!$post) {
 			return $template;
-		}
+		} // END if(!$post)
 
 		// Return default template if we don't have a custom one defined
 		if(!isset($this->templates[\get_post_meta($post->ID, '_wp_page_template', true)])) {
 			return $template;
-		}
+		} // END if(!isset($this->templates[\get_post_meta($post->ID, '_wp_page_template', true)]))
 
 		$file = \plugin_dir_path(__FILE__) . \get_post_meta($post->ID, '_wp_page_template', true);
 
@@ -126,11 +135,14 @@ class TemplateLoader {
 			return $file;
 		} else {
 			echo $file;
-		}
+		} // END if(\file_exists($file))
 
 		// Return template
 		return $template;
-	}
-}
+	} // END public function viewProjectTemplate($template)
+} // END class TemplateLoader
 
+/**
+ * Starting the show ....
+ */
 \add_action('plugins_loaded', array('\WordPress\Plugin\EveOnlineFittingManager\Libs\TemplateLoader', 'getInstance'));

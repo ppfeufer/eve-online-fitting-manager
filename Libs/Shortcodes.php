@@ -7,9 +7,12 @@ namespace WordPress\Plugin\EveOnlineFittingManager\Libs;
 \defined('ABSPATH') or die();
 
 class Shortcodes {
+	/**
+	 * Constructor
+	 */
 	public function __construct() {
 		$this->registerShortcodes();
-	}
+	} // END public function __construct()
 
 	/**
 	 * register all shortcodes
@@ -35,5 +38,5 @@ class Shortcodes {
 		);
 
 		return \WordPress\Plugin\EveOnlineFittingManager\Helper\FittingHelper::getContentMenu('fitting-' . $args['list']);
-	}
-}
+	} // END public function shortcodeFittings($atts)
+} // END class Shortcodes

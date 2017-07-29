@@ -11,10 +11,22 @@ class PluginHelper {
 	public static $dbVersionFieldName = 'eve-online-fitting-manager-database-version';
 	public static $databaseVersion = '20170717';
 
+	/**
+	 * Getting the Plugin Path
+	 *
+	 * @param string $file
+	 * @return string
+	 */
 	public static function getPluginPath($file = '') {
 		return \trailingslashit(\plugin_dir_path(dirname(__FILE__))) . $file;
 	}
 
+	/**
+	 * Getting the Plugin URI
+	 *
+	 * @param string $file
+	 * @return string
+	 */
 	public static function getPluginUri($file = '') {
 		return \plugins_url($file, dirname(__FILE__));
 	} // END public function getThemeCacheUri()
@@ -75,6 +87,9 @@ class PluginHelper {
 		return \get_option(self::getDatabaseVersionFieldName());
 	} // END private function getDatabaseVersion()
 
+	/**
+	 * Update the plugin default settings if needed
+	 */
 	public static function updateDatabase() {
 		$defaultSettings = self::getPluginDefaultSettings();
 		$pluginSettings = self::getPluginSettings(false);
@@ -110,6 +125,9 @@ class PluginHelper {
 
 	/**
 	 * checking for other plugins we might be able to use
+	 *
+	 * @param type $plugin
+	 * @return boolean
 	 */
 	public static function checkPluginDependencies($plugin) {
 		$returnValue = false;

@@ -6,7 +6,13 @@ use WordPress\Plugin\EveOnlineFittingManager;
 
 \defined('ABSPATH') or die();
 
+/**
+ * Managing the custom post type
+ */
 class PostType {
+	/**
+	 * Constructor
+	 */
 	public function __construct() {
 		\add_action('init', array($this, 'customPostType'));
 
@@ -14,6 +20,9 @@ class PostType {
 		\add_filter('page_template', array($this, 'registerPageTemplate'));
 	} // END public function __construct()
 
+	/**
+	 * Registering the custom post type
+	 */
 	public function customPostType() {
 		$var_sSlug = self::getPosttypeSlug('fittings');
 
@@ -114,9 +123,6 @@ class PostType {
 	 *
 	 * If the pages for looping the custom post types have not the same name
 	 * as the custom post type, we need to find its slug to get it working.
-	 *
-	 * @since Talos 1.0
-	 * @author ppfeufer
 	 *
 	 * @param string $postType
 	 */

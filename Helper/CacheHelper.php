@@ -28,7 +28,7 @@ class CacheHelper {
 	/**
 	 * Getting the instance
 	 *
-	 * @return object
+	 * @return WordPress\Plugin\EveOnlineFittingManager\Helper\CacheHelper
 	 */
 	public static function getInstance() {
 		if(\is_null(self::$instance)) {
@@ -87,6 +87,8 @@ class CacheHelper {
 	/**
 	 * creating our needed cache directories under:
 	 *		/wp-content/cache/themes/«theme-name»/
+	 *
+	 * @param string $directory The Directory to create
 	 */
 	public function createCacheDirectory($directory = '') {
 		$wpFileSystem =  new \WP_Filesystem_Direct(null);

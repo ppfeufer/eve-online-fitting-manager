@@ -40,7 +40,7 @@ class EveApiHelper {
 	/**
 	 * Getting the instance
 	 *
-	 * @return object
+	 * @return WordPress\Plugin\EveOnlineFittingManager\Helper\EveApiHelper
 	 */
 	public static function getInstance() {
 		if(\is_null(self::$instance)) {
@@ -67,6 +67,7 @@ class EveApiHelper {
 	/**
 	 * Getting the EVE API Url
 	 *
+	 * @param string $type
 	 * @return string The EVE API Url
 	 */
 	public function getImageServerUrl($type = null) {

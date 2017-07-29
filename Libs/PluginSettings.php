@@ -5,17 +5,26 @@ use WordPress\Plugin\EveOnlineFittingManager;
 
 \defined('ABSPATH') or die();
 
+/**
+ * Registering the plugin settings
+ */
 class PluginSettings {
 	private $settingsFilter = null;
 	private $defaultOptions = null;
 
+	/**
+	 * Constructor
+	 */
 	public function __construct() {
 		$this->settingsFilter = 'register_eve_online_fittings_manager_settings';
 		$this->defaultOptions = EveOnlineFittingManager\Helper\PluginHelper::getPluginDefaultSettings();
 
 		$this->fireSettingsApi();
-	}
+	} // END public function __construct()
 
+	/**
+	 * Fire the Settings API
+	 */
 	public function fireSettingsApi() {
 		$settingsApi = new SettingsApi($this->settingsFilter, $this->defaultOptions);
 		$settingsApi->init();
@@ -23,8 +32,13 @@ class PluginSettings {
 		\add_filter($this->settingsFilter, array($this, 'getSettings'));
 	} // END function fireSettingsApi()
 
+	/**
+	 * Getting the Settings for the PLugin Options Page
+	 *
+	 * @return array The Settings for the Options Page
+	 */
 	public function getSettings() {
-		$themeOptionsPage['eve-online-fittings-manager'] = array(
+		$pluginOptionsPage['eve-online-fittings-manager'] = array(
 			'type' => 'plugin',
 			'menu_title' => \__('EVE Online Fittings Manager', 'eve-online-fitting-manager'),
 			'page_title' => \__('EVE Online Fittings Manager', 'eve-online-fitting-manager'),
@@ -38,9 +52,14 @@ class PluginSettings {
 			)
 		);
 
-		return $themeOptionsPage;
+		return $pluginOptionsPage;
 	} // END function renderSettingsPage()
 
+	/**
+	 * Getting the Killboard Databse Settings
+	 *
+	 * @return array The Killboard Database Setting
+	 */
 	private function getKillboardSettings() {
 		$settings = array(
 			'tab_title' => \__('Killboard Settings', 'eve-online-fitting-manager'),
@@ -51,6 +70,11 @@ class PluginSettings {
 		return $settings;
 	} // END private function getKillboardSettings()
 
+	/**
+	 * Getting the Template related settings
+	 *
+	 * @return array The Template Settings
+	 */
 	private function getTemplateSettings() {
 		$settings = array(
 			'tab_title' => \__('Template Settings', 'eve-online-fitting-manager'),
@@ -60,6 +84,10 @@ class PluginSettings {
 		return $settings;
 	} // END private function getKillboardSettings()
 
+	/**
+	 * Get the settings fields for the Killboard settings
+	 * @return array Settings fields for the Killboard settings
+	 */
 	private function getKillboardSettingsFields() {
 //		$infotext = sprintf(
 //			\__('If you don\'t have a local EDK killboard installation you can use, it is suggested to install and activate the %1$s plugin, so we can use this plugins database.', 'eve-online-fitting-manager'),
@@ -97,6 +125,11 @@ class PluginSettings {
 		return $settingsFields;
 	} // END private function getKillboardSettingsFields()
 
+	/**
+	 * get the settings fields for the template related settings
+	 *
+	 * @return array Settings fields for the template related settings
+	 */
 	private function getTemplateSettingsFields() {
 		$settingsFields = array(
 			'template-settings' => array(
