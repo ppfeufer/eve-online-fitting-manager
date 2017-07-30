@@ -442,12 +442,14 @@ class FittingHelper {
 			 * Processing Strategic Cruiser
 			 * Those ships have their slot layout from their subsystem modifiers
 			 */
-			$maxSubSystems = 5;
+			$maxSubSystems = 4;
 
 			for($i = 1; $i <= $maxSubSystems; $i++) {
-				$currentHighSlots += self::getHighSlotModifierCountForShipID($fittedSubSystems['subSystem_' . $i]);
-				$currenMidSlots += self::getMidSlotModifierCountForShipID($fittedSubSystems['subSystem_' . $i]);
-				$currentLowSlots += self::getLowSlotModifierCountForShipID($fittedSubSystems['subSystem_' . $i]);
+				if(isset($fittedSubSystems['subSystem_' . $i])) {
+					$currentHighSlots += self::getHighSlotModifierCountForShipID($fittedSubSystems['subSystem_' . $i]);
+					$currenMidSlots += self::getMidSlotModifierCountForShipID($fittedSubSystems['subSystem_' . $i]);
+					$currentLowSlots += self::getLowSlotModifierCountForShipID($fittedSubSystems['subSystem_' . $i]);
+				} // END if(isset($fittedSubSystems['subSystem_' . $i]))
 			} // END for($i = 1; $i <= $maxSubSystems; $i++)
 
 			$currentRigSlots = self::getRigSlotCountForShipID($fitting['shipID']);

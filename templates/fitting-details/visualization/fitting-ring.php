@@ -142,7 +142,7 @@ if(!empty($serviceSlots)) {
 		// Subsystems
 		-->
 		<div class="subSystems">
-			<img style="border: 0px;" alt="" src="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Helper\PluginHelper::getPluginUri('images/fitting-ring/5s.png'); ?>">
+			<img style="border: 0px;" alt="" src="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Helper\PluginHelper::getPluginUri('images/fitting-ring/4s.png'); ?>">
 		</div>
 		<?php
 		$ssCount = 1;

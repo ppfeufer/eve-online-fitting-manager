@@ -1,17 +1,19 @@
 # Change Log
 
 ## [In Development](https://github.com/ppfeufer/eve-online-fitting-manager)
-[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.1-r20170724...HEAD)
+[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.1-r20170730...HEAD)
+- in development
+
+## [v0.1-r20170730](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.1-r20170730) - 2017-07-30
+[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.1-r20170724...v0.1-r20170730)
 ### Added
-- Hint when a fitting is not used in any doctrine
-- Mark fitting as: Conceptual Fitting, Fitting Idea, Under Discussion
+- Hint when a fitting is not used in any doctrine in frontend
+- New Meta Box when editing a fitting: "Mark fitting as" Conceptual Fitting, Fitting Idea, Under Discussion
 
 ### Changed
 - EFT Import and Fitting Information are now tabbed
 - Modularized detail template into different templates to make it easier to handle them in the future
-
-### Fixed
-- An issue with the newly introduced "Mark Fitting as" Meta Box not showing the checkboxes all the time
+- Tech 3 Cruiser now only have 4 subsystems (now that finally the EDK update reflecting these changes is available (thanks Salvoxia) / update your KB first)
 
 ## [v0.1-r20170724](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.1-r20170724) - 2017-07-24
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.1-r20170719...v0.1-r20170724)
