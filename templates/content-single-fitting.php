@@ -79,7 +79,9 @@ $eftFitting = \WordPress\Plugin\EveOnlineFittingManager\Helper\EftHelper::getEft
 					/**
 					 * Show copy to clipboard button
 					 */
-					\WordPress\Plugin\EveOnlineFittingManager\Helper\TemplateHelper::getTemplate('fitting-details/utilities/fitting-copy-to-clipboard');
+					\WordPress\Plugin\EveOnlineFittingManager\Helper\TemplateHelper::getTemplate('fitting-details/utilities/fitting-copy-to-clipboard', array(
+						'eftFitting' => $eftFitting
+					));
 
 					/**
 					 * Show Market Prices

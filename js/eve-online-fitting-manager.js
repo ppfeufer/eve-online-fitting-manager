@@ -24,6 +24,7 @@ jQuery(document).ready(function($) {
 		});
 
 		e.clearSelection();
+		clipboard.destroy();
 	});
 
 	/**
