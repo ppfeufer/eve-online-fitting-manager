@@ -23,6 +23,18 @@ class JavascriptLoader implements \WordPress\Plugin\EveOnlineFittingManager\Inte
 			\wp_enqueue_script('bootstrap-gallery-js', \WordPress\Plugin\EveOnlineFittingManager\Helper\PluginHelper::getPluginUri('js/jquery.bootstrap-gallery.min.js'), array('jquery', 'bootstrap-js'), '', true);
 			\wp_enqueue_script('copy-to-clipboard-js', \WordPress\Plugin\EveOnlineFittingManager\Helper\PluginHelper::getPluginUri('js/copy-to-clipboard.min.js'), array('jquery'), '', true);
 			\wp_enqueue_script('eve-online-fitting-manager-js', \WordPress\Plugin\EveOnlineFittingManager\Helper\PluginHelper::getPluginUri('js/eve-online-fitting-manager.min.js'), array('jquery'), '', true);
+			\wp_localize_script('eve-online-fitting-manager-js', 'fittingManagerL10n', $this->getCopyToClipboardJstranslations());
 		}
+	}
+
+	private function getCopyToClipboardJstranslations() {
+		return array(
+			'copyToClipboard' => array(
+				'text' => array(
+					'success' => \__('EFT data successfully copied', 'eve-online-fitting-manager'),
+					'error' => \__('Something went wrong. Nothing copied. Maybe your browser doesn\'t support this function.', 'eve-online-fitting-manager')
+				)
+			)
+		);
 	}
 }
