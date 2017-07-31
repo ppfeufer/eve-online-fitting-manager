@@ -30,9 +30,17 @@ class JavascriptLoader implements \WordPress\Plugin\EveOnlineFittingManager\Inte
 	private function getCopyToClipboardJstranslations() {
 		return array(
 			'copyToClipboard' => array(
-				'text' => array(
-					'success' => \__('EFT data successfully copied', 'eve-online-fitting-manager'),
-					'error' => \__('Something went wrong. Nothing copied. Maybe your browser doesn\'t support this function.', 'eve-online-fitting-manager')
+				'eft' => array(
+					'text' => array(
+						'success' => \__('EFT data successfully copied', 'eve-online-fitting-manager'),
+						'error' => \__('Something went wrong. Nothing copied. Maybe your browser doesn\'t support this function.', 'eve-online-fitting-manager')
+					)
+				),
+				'permalink' => array(
+					'text' => array(
+						'success' => \__('Permalink successfully copied', 'eve-online-fitting-manager'),
+						'error' => \__('Something went wrong. Nothing copied. Maybe your browser doesn\'t support this function.', 'eve-online-fitting-manager')
+					)
 				)
 			)
 		);

@@ -3,7 +3,7 @@
 ## [In Development](https://github.com/ppfeufer/eve-online-fitting-manager)
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.1-r20170730...HEAD)
 ### Added
-- Copy to clipboard
+- Copy to clipboard (EFT data and Permalink)
 
 ## [v0.1-r20170730](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.1-r20170730) - 2017-07-30
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.1-r20170724...v0.1-r20170730)

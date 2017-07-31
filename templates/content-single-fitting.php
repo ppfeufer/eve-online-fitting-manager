@@ -77,11 +77,16 @@ $eftFitting = \WordPress\Plugin\EveOnlineFittingManager\Helper\EftHelper::getEft
 //					));
 
 					/**
-					 * Show copy to clipboard button
+					 * Show copy eft data to clipboard button
 					 */
-					\WordPress\Plugin\EveOnlineFittingManager\Helper\TemplateHelper::getTemplate('fitting-details/utilities/fitting-copy-to-clipboard', array(
+					\WordPress\Plugin\EveOnlineFittingManager\Helper\TemplateHelper::getTemplate('fitting-details/utilities/fitting-copy-eft-to-clipboard', array(
 						'eftFitting' => $eftFitting
 					));
+
+					/**
+					 * Show copy permalink to clipboard button
+					 */
+					\WordPress\Plugin\EveOnlineFittingManager\Helper\TemplateHelper::getTemplate('fitting-details/utilities/fitting-copy-permalink-to-clipboard');
 
 					/**
 					 * Show Market Prices
