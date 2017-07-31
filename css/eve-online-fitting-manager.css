@@ -23,7 +23,9 @@
 		width: 3rem;
 	}
 
-	.ship-fitting-visualization, .fitting-view-osmium-loadout {
+	.ship-fitting-visualization,
+	.fitting-view-osmium-loadout,
+	.fitting-copy-to-clipboard {
 		margin-bottom: 24px;
 		margin-bottom: 1.5rem;
 	}
@@ -59,6 +61,12 @@
 	.tab-pane p:first-child {
 		margin-top: 24px;
 		margin-top: 1.5rem;
+	}
+
+	.btn-copy-to-clipboard {
+		position: relative;
+		display: block;
+		padding: 10px 15px;
 	}
 }
 
