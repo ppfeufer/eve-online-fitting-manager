@@ -36,6 +36,8 @@ jQuery(document).ready(function($) {
 //			console.error('Trigger:', e.trigger);
 
 			$('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Something went wrong. Nothing copied. Maybe your browser doesn\'t support this function.</div>').insertAfter('.fitting-copy-to-clipboard');
+
+			clipboard.destroy();
 		});
 	});
 });
