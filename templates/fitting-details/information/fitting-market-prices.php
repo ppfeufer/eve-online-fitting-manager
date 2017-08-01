@@ -1,6 +1,6 @@
 <div class="fitting-market-price price-jita">
 	<script type="text/javascript">
-	var eftData = <?php echo \json_encode($eftFitting); ?>;
+	var eftData = '<?php echo \urlencode($eftFitting); ?>';
 	</script>
 
 	<h4>
