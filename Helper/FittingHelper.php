@@ -110,7 +110,7 @@ class FittingHelper {
 		);
 
 		return $arraySubSystems;
-	}
+	} // END public static function getSubSystemItemNames($subSystems)
 
 	/**
 	 * Getting Item Description
@@ -120,14 +120,13 @@ class FittingHelper {
 	 */
 	public static function getItemDescription($itemID) {
 		$sql = EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `description` FROM `kb3_invtypes` WHERE `typeID` = %d', array($itemID));
-
 		$description = EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
-		$description = \preg_replace('/<br>/', '##break##', $description);
-		$description = \strip_tags($description);
-		$description = \preg_replace('/##break##/', '<br>', $description);
+//		$description = \preg_replace('/<br>/', '##break##', $description);
+//		$description = \strip_tags($description);
+//		$description = \preg_replace('/##break##/', '<br>', $description);
 
 		return \nl2br($description);
-	}
+	} // END public static function getItemDescription($itemID)
 
 	/**
 	 * Getting Item Details
@@ -200,11 +199,28 @@ class FittingHelper {
 				} // END if($itemData->categoryID == '6')
 
 				/**
+				 * Category: Fuel
+				 */
+				$arrayFuelIDs = array(
+					'16273',	// Liquid Ozone
+					'16274',	// Helium Isotopes
+					'17889',	// Hydrogen Isotopes
+					'17887',	// Oxygen Isotopes
+					'17888',	// Nitrogen Isotopes
+					'16272',	// Heavy Water
+					'16275'		// Strontuim Clathrates
+				);
+				if(\in_array($itemData->itemID, $arrayFuelIDs)) {
+					$itemData->slotName = 'fuel';
+				}
+
+				/**
 				 * Category: Dones
 				 */
 				if($itemData->categoryID == '18') {
 					$itemData->slotName = 'drone';
 				} // END if($itemData->categoryID == '6')
+
 
 				if($itemCount != null) {
 					$itemData->itemCount = $itemCount;

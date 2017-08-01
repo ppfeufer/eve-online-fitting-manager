@@ -106,6 +106,7 @@ class EftHelper {
 			$arraySubSystems = array();
 			$arrayUpwellServices = array();
 			$arrayCharges = array();
+			$arrayFuel = array();
 			$arrayDrones = array();
 
 			foreach($fittingArray as &$line) {
@@ -172,6 +173,14 @@ class EftHelper {
 								$countCharges++;
 								break;
 
+							case 'fuel':
+								$arrayFuel['fuel_' . $countCharges] = array(
+									'itemID' => $itemDetail->itemID,
+									'itemCount' => $itemDetail->itemCount
+								);
+								$countCharges++;
+								break;
+
 							case 'drone':
 								$arrayDrones['drone_' . $countDrones] = array(
 									'itemID' => $itemDetail->itemID,
@@ -197,6 +206,7 @@ class EftHelper {
 				'subSystems' => $arraySubSystems,
 				'upwellServices' => $arrayUpwellServices,
 				'charges' => $arrayCharges,
+				'fuel' => $arrayFuel,
 				'drones' => $arrayDrones
 			);
 		}
@@ -279,6 +289,7 @@ class EftHelper {
 		$arrayServiceSlots = \unserialize($fitting['serviceSlots']);
 		$arrayDrones = \unserialize($fitting['drones']);
 		$arrayCharges = \unserialize($fitting['charges']);
+		$arrayFuel = \unserialize($fitting['fuel']);
 
 		$eftImport = '';
 		$eftImport .= '[' . FittingHelper::getItemNameById($fitting['shipID']) . ', ' . \trim($fitting['fittingType']) . ']' . "\n";
@@ -286,131 +297,114 @@ class EftHelper {
 		/**
 		 * Low Slots
 		 */
-		$hasLowSlots = false;
 		if(\is_array($arrayLowSlots)) {
 			foreach($arrayLowSlots as $lowSlot) {
 				if($lowSlot !== false) {
-					$hasLowSlots = true;
 					$eftImport .= FittingHelper::getItemNameById($lowSlot) . "\n";
 				} // END if($lowSlot != false)
 			} // END foreach($arrayLowSlots as $lowSlot)
-
-			if($hasLowSlots === true) {
-				$eftImport .= '' . "\n";
-			} // END if($hasLowSlots == true)
 		} // END if(is_array($arrayLowSlots))
 
 		/**
 		 * Mid Slots
 		 */
-		$hasMidSlots = false;
-		if(\is_array($arrayMidSlots)) {
+		if(\is_array($arrayMidSlots) && \count($arrayMidSlots) > 0) {
+			$eftImport .= '' . "\n";
+
 			foreach($arrayMidSlots as $midSlot) {
 				if($midSlot !== false) {
-					$hasMidSlots = true;
 					$eftImport .= FittingHelper::getItemNameById($midSlot) . "\n";
 				} // END if($midSlot != false)
 			} // END foreach($arrayMidSlots as $midSlot)
-
-			if($hasMidSlots === true) {
-				$eftImport .= '' . "\n";
-			} // END if($hasMidSlots == true)
 		} // END if(is_array($arrayMidSlots))
 
 		/**
 		 * High Slots
 		 */
-		$hasHighSlots = false;
-		if(\is_array($arrayHighSlots)) {
+		if(\is_array($arrayHighSlots) && \count($arrayHighSlots) > 0) {
+			$eftImport .= '' . "\n";
+
 			foreach($arrayHighSlots as $highSlot) {
 				if($highSlot !== false) {
-					$hasHighSlots = true;
 					$eftImport .= FittingHelper::getItemNameById($highSlot) . "\n";
 				} // END if($highSlot != false)
 			} // END foreach($arrayHighSlots as $highSlot)
-
-			if($hasHighSlots === true) {
-				$eftImport .= '' . "\n";
-			} // END if($hasHighSlots == true)
 		} // END if(is_array($arrayHighSlots))
 
 		/**
 		 * Rig Slots
 		 */
-		$hasRigSlots = false;
-		if(\is_array($arrayRigSlots)) {
+		if(\is_array($arrayRigSlots) && \count($arrayRigSlots) > 0) {
+			$eftImport .= '' . "\n";
+
 			foreach($arrayRigSlots as $rigSlot) {
 				if($rigSlot !== false) {
-					$hasRigSlots = true;
 					$eftImport .= FittingHelper::getItemNameById($rigSlot) . "\n";
 				} // END if($rigSlot != false)
 			} // END foreach($arrayRigSlots as $rigSlot)
 		} // END if(is_array($arrayRigSlots))
 
-		if($hasRigSlots === true) {
-			$eftImport .= '' . "\n";
-		} // END if($hasRigSlots == true)
-
 		/**
 		 * Sub Systems
 		 */
-		$hasSubSystems = false;
-		if(\is_array($arraySubSystems)) {
+		if(\is_array($arraySubSystems) && \count($arraySubSystems) > 0) {
+			$eftImport .= '' . "\n";
+
 			foreach($arraySubSystems as $subSystem) {
 				if($subSystem !== false) {
-					$hasSubSystems = true;
 					$eftImport .= FittingHelper::getItemNameById($subSystem) . "\n";
 				} // END if($subSystem != false)
 			} // END foreach($arrayRigSlots as $rigSlot)
-
-			if($hasSubSystems === true) {
-				$eftImport .= '' . "\n";
-			} // END if($hasRigSlots == true)
 		} // END if(is_array($arraySubSystems))
 
 		/**
 		 * Service Slots
 		 */
-		$hasServiceSlots = false;
-		if(\is_array($arrayServiceSlots)) {
+		if(\is_array($arrayServiceSlots) && \count($arrayServiceSlots) > 0) {
+			$eftImport .= '' . "\n";
+
 			foreach($arrayServiceSlots as $serviceSlot) {
 				if($serviceSlot !== false) {
-					$hasServiceSlots = true;
 					$eftImport .= FittingHelper::getItemNameById($serviceSlot) . "\n";
 				} // END if($subSystem != false)
 			} // END foreach($arrayRigSlots as $rigSlot)
-
-			if($hasServiceSlots === true) {
-				$eftImport .= '' . "\n";
-			} // END if($hasRigSlots == true)
 		} // END if(is_array($arraySubSystems))
 
 		/**
 		 * Drones
 		 */
-		$hasDrones = false;
-		if(\is_array($arrayDrones)) {
+		if(\is_array($arrayDrones) && \count($arrayDrones) > 0) {
+			$eftImport .= '' . "\n";
+
 			foreach($arrayDrones as $drone) {
 				if($drone !== false) {
-					$hasDrones = true;
 					$eftImport .= FittingHelper::getItemNameById($drone['itemID']) . ' x' . $drone['itemCount'] . "\n";
 				} // END if($drones != false)
 			} // END foreach($arrayDrones as $drones)
-
-			if($hasDrones === true) {
-				$eftImport .= '' . "\n";
-			} // END if($hasRigSlots == true)
 		} // END if(is_array($arrayDrones))
 
 		/**
 		 * Charges
 		 */
-		$hasCharges = false;
-		if(\is_array($arrayCharges)) {
+		if(\is_array($arrayCharges) && \count($arrayCharges) > 0) {
+			$eftImport .= '' . "\n";
+
 			foreach($arrayCharges as $charge) {
 				if($charge !== false) {
-					$hasCharges = true;
 					$eftImport .= FittingHelper::getItemNameById($charge['itemID']) . ' x' . $charge['itemCount'] . "\n";
+				} // END if($drones != false)
+			} // END foreach($arrayDrones as $drones)
+		} // END if(is_array($arrayCharges))
+
+		/**
+		 * Fuel
+		 */
+		if(\is_array($arrayFuel) && \count($arrayFuel) > 0) {
+			$eftImport .= '' . "\n";
+
+			foreach($arrayFuel as $fuel) {
+				if($charge !== false) {
+					$eftImport .= FittingHelper::getItemNameById($fuel['itemID']) . ' x' . $fuel['itemCount'] . "\n";
 				} // END if($drones != false)
 			} // END foreach($arrayDrones as $drones)
 		} // END if(is_array($arrayCharges))

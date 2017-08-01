@@ -12,6 +12,7 @@ $subSystems = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_
 $serviceSlots = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_upwellservices', true);
 $drones = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_drones', true);
 $charges = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_charges', true);
+$fuel = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_fuel', true);
 $fittingDna = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_dna', true);
 $eftFitting = \WordPress\Plugin\EveOnlineFittingManager\Helper\EftHelper::getEftImportFromFitting(array(
 	'shipID' => $shipID,
@@ -24,6 +25,7 @@ $eftFitting = \WordPress\Plugin\EveOnlineFittingManager\Helper\EftHelper::getEft
 	'serviceSlots' => $serviceSlots,
 	'drones' => $drones,
 	'charges' => $charges,
+	'fuel' => $fuel
 ));
 ?>
 
@@ -105,10 +107,11 @@ $eftFitting = \WordPress\Plugin\EveOnlineFittingManager\Helper\EftHelper::getEft
 				<div class="col-lg-5 col-xl-6 ship-fitting-information">
 					<?php
 					/**
-					 * Show doctrines tha fitting is used in
+					 * Show information tabs
 					 */
 					\WordPress\Plugin\EveOnlineFittingManager\Helper\TemplateHelper::getTemplate('fitting-details/information/fitting-information-tabs', array(
-						'eftFitting' => $eftFitting
+						'eftFitting' => $eftFitting,
+						'shipID' => $shipID
 					));
 					?>
 				</div>
