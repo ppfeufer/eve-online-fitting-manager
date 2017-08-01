@@ -42,6 +42,12 @@ class JavascriptLoader implements \WordPress\Plugin\EveOnlineFittingManager\Inte
 						'error' => \__('Something went wrong. Nothing copied. Maybe your browser doesn\'t support this function.', 'eve-online-fitting-manager')
 					)
 				)
+			),
+			'ajax' => array(
+				'url' => \admin_url('admin-ajax.php'),
+				'eveFittingMarketData' => array(
+					'nonce' => \wp_create_nonce('ajax-nonce-eve-market-data-for-fitting')
+				)
 			)
 		);
 	}

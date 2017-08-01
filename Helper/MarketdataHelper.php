@@ -6,7 +6,7 @@ use WordPress\Plugin\EveOnlineFittingManager;
 
 \defined('ABSPATH') or die();
 
-class MarketdataHelper {
+class MarketDataHelper {
 	/**
 	 * Instance
 	 *
@@ -66,7 +66,7 @@ class MarketdataHelper {
 	/**
 	 * Getting the instance
 	 *
-	 * @return WordPress\Plugin\EveOnlineFittingManager\Helper\MarketdataHelper Instance
+	 * @return WordPress\Plugin\EveOnlineFittingManager\Helper\MarketDataHelper Instance
 	 */
 	public static function getInstance() {
 		if(\is_null(self::$instance)) {

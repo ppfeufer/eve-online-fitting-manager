@@ -1,4 +1,4 @@
-/* global fittingManagerL10n, Clipboard */
+/* global fittingManagerL10n, Clipboard, eftData */
 
 jQuery(document).ready(function($) {
 	/**
@@ -108,4 +108,39 @@ jQuery(document).ready(function($) {
 			clipboardPermalinkData.destroy();
 		});
 	});
+
+	/**
+	 * Ajax Call EVE Market Data
+	 */
+	var getEveFittingMarketData = {
+		ajaxCall: function() {
+			$.ajax({
+				type: 'post',
+				url: fittingManagerL10n.ajax.url,
+				data: 'action=get-eve-fitting-market-data&nonce=' + fittingManagerL10n.ajax.eveFittingMarketData.nonce + '&eftData=' + eftData,
+				dataType: 'json',
+				success: function(result) {
+					if(result !== null) {
+						$('.eve-market-ship-buy').html(result.ship.jitaBuyPrice);
+						$('.eve-market-fitting-buy').html(result.fitting.jitaBuyPrice);
+						$('.eve-market-total-buy').html(result.total.jitaBuyPrice);
+
+						$('.eve-market-ship-sell').html(result.ship.jitaSellPrice);
+						$('.eve-market-fitting-sell').html(result.fitting.jitaSellPrice);
+						$('.eve-market-total-sell').html(result.total.jitaSellPrice);
+					}
+				},
+				error: function(jqXHR, textStatus, errorThrow) {
+					console.log('Ajax request - ' + textStatus + ': ' + errorThrow);
+				}
+			});
+		}
+	};
+
+	/**
+	 * Only call the market data ajax when the table is found in template
+	 */
+	if($('.fitting-market-price').length) {
+		getEveFittingMarketData.ajaxCall();
+	} // END if($('.fitting-market-price').length)
 });
