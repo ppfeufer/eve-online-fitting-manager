@@ -60,6 +60,7 @@ class EveOnlineFittingManager {
 
 		new Libs\PostType;
 		new Libs\Shortcodes;
+		new Libs\MarketData;
 
 		/**
 		 * start backend only libs

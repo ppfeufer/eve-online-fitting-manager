@@ -5,6 +5,9 @@
 ### Added
 - Copy to clipboard (EFT data and Permalink)
 
+### Changed
+- Market Data is now loaded via ajax call to boost the performance a bit
+
 ## [v0.1-r20170730](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.1-r20170730) - 2017-07-30
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.1-r20170724...v0.1-r20170730)
 ### Added
