@@ -4,6 +4,8 @@
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.1-r20170730...HEAD)
 ### Added
 - Copy to clipboard (EFT data and Permalink)
+- Fuel to EFT data
+- New tab with ship description
 
 ### Changed
 - Market Data is now loaded via ajax call to boost the performance a bit
