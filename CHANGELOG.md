@@ -1,8 +1,13 @@
 # Change Log
 
 ## [In Development](https://github.com/ppfeufer/eve-online-fitting-manager)
-[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.1-r20170730...HEAD)
+[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.1...HEAD)
+- in development
+
+## [v0.1](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.1) - 2017-08-02
+[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.1-r20170730...v0.1)
 ### Added
+- First official release
 - Copy to clipboard (EFT data and Permalink)
 - Fuel to EFT data
 - New tab with ship description
@@ -19,7 +24,7 @@
 ### Changed
 - EFT Import and Fitting Information are now tabbed
 - Modularized detail template into different templates to make it easier to handle them in the future
-- Tech 3 Cruiser now only have 4 subsystems (now that finally the EDK update reflecting these changes is available (thanks Salvoxia) / update your KB first)
+- Tech 3 Cruiser now only have 4 subsystems (now that finally the EDK update reflecting these changes is available (thanks to Salvoxia for his permanent work on the EDK stuff) / update your KB first)
 
 ## [v0.1-r20170724](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.1-r20170724) - 2017-07-24
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.1-r20170719...v0.1-r20170724)
@@ -56,7 +61,7 @@
 
 ## [v0.1-r20170127](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.1-r20170708) - 2017-07-08
 ### Changed
-- First "official" release, still not considered final or stable or what ever :-)
+- First "unofficial" release, still not considered final or stable or what ever :-)
 
 ### Added
 - Metabox for EFT fitting
