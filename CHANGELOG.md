@@ -2,7 +2,8 @@
 
 ## [In Development](https://github.com/ppfeufer/eve-online-fitting-manager)
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.1...HEAD)
-- in development
+### Changed
+- Load CSS and JS only when it's really needed
 
 ## [v0.1](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.1) - 2017-08-02
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.1-r20170730...v0.1)

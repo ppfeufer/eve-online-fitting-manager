@@ -4,8 +4,6 @@ namespace WordPress\Plugin\EveOnlineFittingManager\Libs;
 \defined('ABSPATH') or die();
 
 /**
- *
- *
  * @version 1.6
  * @author Joachim Kudish <info@jkudish.com>
  * @link http://jkudish.com
@@ -86,12 +84,14 @@ class GithubUpdater {
 		$this->init();
 	}
 
-
+	/**
+	 * Fire all WordPress actions
+	 */
 	public function init() {
 		\add_filter('pre_set_site_transient_update_plugins', array($this, 'apiCheck'));
 
 		// Hook into the plugin details screen
-		\add_filter('plugins_api', array($this, 'get_plugin_info'), 10, 3);
+		\add_filter('plugins_api', array($this, 'getPluginInfo'), 10, 3);
 		\add_filter('upgrader_post_install', array($this, 'upgraderPostInstall'), 10, 3);
 
 		// set timeout
@@ -101,8 +101,12 @@ class GithubUpdater {
 		\add_filter('http_request_args', array($this, 'httpRequestSslVerify'), 10, 2);
 	}
 
+	/**
+	 * Check if the minimum configuration is given
+	 *
+	 * @return boolean
+	 */
 	public function hasMinimumConfig() {
-
 		$this->missingConfig = array();
 
 		$required_config_params = array(
@@ -130,7 +134,7 @@ class GithubUpdater {
 	 * @return bool overrule or not
 	 */
 	public function overruleTransients() {
-		return (\defined('WP_GITHUB_FORCE_UPDATE') && WP_GITHUB_FORCE_UPDATE);
+		return (\defined('\WordPress\Plugin\EveOnlineFittingManager\WP_GITHUB_FORCE_UPDATE') && \WordPress\Plugin\EveOnlineFittingManager\WP_GITHUB_FORCE_UPDATE);
 	}
 
 	/**
@@ -141,7 +145,6 @@ class GithubUpdater {
 	 */
 	public function setDefaults() {
 		if(!empty($this->config['access_token'])) {
-
 			// See Downloading a zipball (private repo) https://help.github.com/articles/downloading-files-from-the-command-line
 			$parsedUrl = \parse_url($this->config['zip_url']); // $scheme, $host, $path
 
@@ -220,7 +223,7 @@ class GithubUpdater {
 	public function getNewVersion() {
 		$version = \get_site_transient(\md5($this->config['slug']) . '_new_version');
 
-		if($this->overruleTransients() || (!isset($version) || !$version || '' == $version )) {
+		if($this->overruleTransients() || (!isset($version) || !$version || $version === '')) {
 			$raw_response = $this->remoteGet(\trailingslashit($this->config['raw_url']) . \basename($this->config['slug']));
 
 			if(\is_wp_error($raw_response)) {
@@ -233,15 +236,14 @@ class GithubUpdater {
 				}
 			}
 
-			if(empty($matches[1])) {
-				$version = false;
-			} else {
+			$version = false;
+			if(!empty($matches[1])) {
 				$version = $matches[1];
 			}
 
 			// back compat for older readme version handling
 			// only done when there is no version found in file name
-			if(false === $version) {
+			if($version === false) {
 				$raw_response = $this->remoteGet(\trailingslashit($this->config['raw_url']) . $this->config['readme']);
 
 				if(\is_wp_error($raw_response)) {
@@ -253,14 +255,14 @@ class GithubUpdater {
 				if(isset($__version[1])) {
 					$version_readme = $__version[1];
 
-					if(-1 == \version_compare($version, $version_readme)) {
+					if(\version_compare($version, $version_readme) === -1) {
 						$version = $version_readme;
 					}
 				}
 			}
 
 			// refresh every 6 hours
-			if(false !== $version) {
+			if($version !== false) {
 				\set_site_transient(\md5($this->config['slug']) . '_new_version', $version, 60 * 60 * 6);
 			}
 		}
@@ -300,7 +302,7 @@ class GithubUpdater {
 		} else {
 			$githubData = \get_site_transient(\md5($this->config['slug']) . '_github_data');
 
-			if($this->overruleTransients() || (!isset($githubData) || !$githubData || '' == $githubData )) {
+			if($this->overruleTransients() || (!isset($githubData) || !$githubData || $githubData === '')) {
 				$githubData = $this->remoteGet($this->config['api_url']);
 
 				if(\is_wp_error($githubData)) {
@@ -366,7 +368,6 @@ class GithubUpdater {
 	 * @return object $transient updated plugin data transient
 	 */
 	public function apiCheck($transient) {
-
 		// Check if the transient contains the 'checked' information
 		// If not, just return its value without hacking it
 		if(empty($transient->checked)) {
@@ -376,7 +377,7 @@ class GithubUpdater {
 		// check the version and decide if it's new
 		$update = \version_compare($this->config['new_version'], $this->config['version']);
 
-		if(1 === $update) {
+		if($update === 1) {
 			$response = new \stdClass;
 			$response->new_version = $this->config['new_version'];
 			$response->slug = $this->config['proper_folder_name'];
@@ -384,7 +385,7 @@ class GithubUpdater {
 			$response->package = $this->config['zip_url'];
 
 			// If response is false, don't alter the transient
-			if(false !== $response) {
+			if($response !== false) {
 				$transient->response[$this->config['slug']] = $response;
 			}
 		}

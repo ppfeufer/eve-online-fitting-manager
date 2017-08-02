@@ -11,23 +11,33 @@ class JavascriptLoader implements \WordPress\Plugin\EveOnlineFittingManager\Inte
 	 */
 	public function init() {
 		\add_action('wp_enqueue_scripts', array($this, 'enqueue'), 99);
-	}
+	} // END public function init()
 
 	/**
 	 * Load the JavaScript
 	 */
 	public function enqueue() {
+		/**
+		 * Only in Frontend
+		 */
 		if(!\is_admin()) {
-			\wp_enqueue_script('bootstrap-js', \WordPress\Plugin\EveOnlineFittingManager\Helper\PluginHelper::getPluginUri('bootstrap/js/bootstrap.min.js'), array('jquery'), '', true);
-			\wp_enqueue_script('bootstrap-toolkit-js', \WordPress\Plugin\EveOnlineFittingManager\Helper\PluginHelper::getPluginUri('bootstrap/bootstrap-toolkit/bootstrap-toolkit.min.js'), array('jquery', 'bootstrap-js'), '', true);
-			\wp_enqueue_script('bootstrap-gallery-js', \WordPress\Plugin\EveOnlineFittingManager\Helper\PluginHelper::getPluginUri('js/jquery.bootstrap-gallery.min.js'), array('jquery', 'bootstrap-js'), '', true);
-			\wp_enqueue_script('copy-to-clipboard-js', \WordPress\Plugin\EveOnlineFittingManager\Helper\PluginHelper::getPluginUri('js/copy-to-clipboard.min.js'), array('jquery'), '', true);
-			\wp_enqueue_script('eve-online-fitting-manager-js', \WordPress\Plugin\EveOnlineFittingManager\Helper\PluginHelper::getPluginUri('js/eve-online-fitting-manager.min.js'), array('jquery'), '', true);
-			\wp_localize_script('eve-online-fitting-manager-js', 'fittingManagerL10n', $this->getCopyToClipboardJstranslations());
-		}
-	}
+			if(\is_page(\WordPress\Plugin\EveOnlineFittingManager\Libs\PostType::getPosttypeSlug('fittings')) || \get_post_type() === 'fitting') {
+				\wp_enqueue_script('bootstrap-js', \WordPress\Plugin\EveOnlineFittingManager\Helper\PluginHelper::getPluginUri('bootstrap/js/bootstrap.min.js'), array('jquery'), '', true);
+				\wp_enqueue_script('bootstrap-toolkit-js', \WordPress\Plugin\EveOnlineFittingManager\Helper\PluginHelper::getPluginUri('bootstrap/bootstrap-toolkit/bootstrap-toolkit.min.js'), array('jquery', 'bootstrap-js'), '', true);
+				\wp_enqueue_script('bootstrap-gallery-js', \WordPress\Plugin\EveOnlineFittingManager\Helper\PluginHelper::getPluginUri('js/jquery.bootstrap-gallery.min.js'), array('jquery', 'bootstrap-js'), '', true);
+				\wp_enqueue_script('copy-to-clipboard-js', \WordPress\Plugin\EveOnlineFittingManager\Helper\PluginHelper::getPluginUri('js/copy-to-clipboard.min.js'), array('jquery'), '', true);
+				\wp_enqueue_script('eve-online-fitting-manager-js', \WordPress\Plugin\EveOnlineFittingManager\Helper\PluginHelper::getPluginUri('js/eve-online-fitting-manager.min.js'), array('jquery'), '', true);
+				\wp_localize_script('eve-online-fitting-manager-js', 'fittingManagerL10n', $this->getJavaScriptTranslations());
+			} // END if(\is_page(\WordPress\Plugin\EveOnlineFittingManager\Libs\PostType::getPosttypeSlug('fittings')) || \get_post_type() === 'fitting')
+		} // END if(!\is_admin())
+	} // END public function enqueue()
 
-	private function getCopyToClipboardJstranslations() {
+	/**
+	 * Getting teh translation array to translate strings in JavaScript
+	 *
+	 * @return array
+	 */
+	private function getJavaScriptTranslations() {
 		return array(
 			'copyToClipboard' => array(
 				'eft' => array(
@@ -50,5 +60,5 @@ class JavascriptLoader implements \WordPress\Plugin\EveOnlineFittingManager\Inte
 				)
 			)
 		);
-	}
-}
+	} // END private function getJavaScriptTranslations()
+} // END class JavascriptLoader implements \WordPress\Plugin\EveOnlineFittingManager\Interfaces\AssetsInterface
