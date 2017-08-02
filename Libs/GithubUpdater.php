@@ -102,7 +102,6 @@ class GithubUpdater {
 	}
 
 	public function hasMinimumConfig() {
-
 		$this->missingConfig = array();
 
 		$required_config_params = array(
@@ -141,7 +140,6 @@ class GithubUpdater {
 	 */
 	public function setDefaults() {
 		if(!empty($this->config['access_token'])) {
-
 			// See Downloading a zipball (private repo) https://help.github.com/articles/downloading-files-from-the-command-line
 			$parsedUrl = \parse_url($this->config['zip_url']); // $scheme, $host, $path
 
@@ -220,7 +218,7 @@ class GithubUpdater {
 	public function getNewVersion() {
 		$version = \get_site_transient(\md5($this->config['slug']) . '_new_version');
 
-		if($this->overruleTransients() || (!isset($version) || !$version || '' == $version )) {
+		if($this->overruleTransients() || (!isset($version) || !$version || $version === '')) {
 			$raw_response = $this->remoteGet(\trailingslashit($this->config['raw_url']) . \basename($this->config['slug']));
 
 			if(\is_wp_error($raw_response)) {
@@ -233,9 +231,8 @@ class GithubUpdater {
 				}
 			}
 
-			if(empty($matches[1])) {
-				$version = false;
-			} else {
+			$version = false;
+			if(!empty($matches[1])) {
 				$version = $matches[1];
 			}
 
@@ -366,7 +363,6 @@ class GithubUpdater {
 	 * @return object $transient updated plugin data transient
 	 */
 	public function apiCheck($transient) {
-
 		// Check if the transient contains the 'checked' information
 		// If not, just return its value without hacking it
 		if(empty($transient->checked)) {
