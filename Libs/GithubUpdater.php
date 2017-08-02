@@ -4,8 +4,6 @@ namespace WordPress\Plugin\EveOnlineFittingManager\Libs;
 \defined('ABSPATH') or die();
 
 /**
- *
- *
  * @version 1.6
  * @author Joachim Kudish <info@jkudish.com>
  * @link http://jkudish.com
