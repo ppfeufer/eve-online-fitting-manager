@@ -130,13 +130,15 @@ class MarketDataHelper {
 				'ship' => $marketArrayShip['0']->sell->median,
 				'total' => $marketArrayShip['0']->sell->median
 			);
-		}
+		} // END if($marketJsonShip !== false)
 
 		// Fitting Price
 		$items = null;
-		foreach($fittingArray as $item) {
-			$items[] = $item->itemID;
-		} // END foreach($fittingArray as $item)
+		if(\is_array($fittingArray)) {
+			foreach($fittingArray as $item) {
+				$items[] = $item->itemID;
+			} // END foreach($fittingArray as $item)
+		} // END if(\is_array($fittingArray))
 
 		// if we have items
 		if($items !== null) {
