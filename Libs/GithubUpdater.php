@@ -130,7 +130,7 @@ class GithubUpdater {
 	 * @return bool overrule or not
 	 */
 	public function overruleTransients() {
-		return (\defined('WP_GITHUB_FORCE_UPDATE') && WP_GITHUB_FORCE_UPDATE);
+		return (\defined('\WordPress\Plugin\EveOnlineFittingManager\WP_GITHUB_FORCE_UPDATE') && \WordPress\Plugin\EveOnlineFittingManager\WP_GITHUB_FORCE_UPDATE);
 	}
 
 	/**
