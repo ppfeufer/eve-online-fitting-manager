@@ -107,8 +107,8 @@ class MarketDataHelper {
 	 */
 	public function getMarketPricesFromFittingArray(Array $fittingArray) {
 		$returnValue = false;
-		$jitaBuyPrice = null;
-		$jitaSellPrice = null;
+		$jitaBuyPrice = 0;
+		$jitaSellPrice = 0;
 
 		// Ship price
 		$ship = array(
@@ -122,21 +122,25 @@ class MarketDataHelper {
 		if($marketJsonShip !== false) {
 			$marketArrayShip = \json_decode($marketJsonShip);
 
-			$jitaBuyPrice = array(
-				'ship' => $marketArrayShip['0']->buy->median,
-				'total' => $marketArrayShip['0']->buy->median
-			);
-			$jitaSellPrice = array(
-				'ship' => $marketArrayShip['0']->sell->median,
-				'total' => $marketArrayShip['0']->sell->median
-			);
-		}
+			if($marketArrayShip !== null) {
+				$jitaBuyPrice = array(
+					'ship' => $marketArrayShip['0']->buy->median,
+					'total' => $marketArrayShip['0']->buy->median
+				);
+				$jitaSellPrice = array(
+					'ship' => $marketArrayShip['0']->sell->median,
+					'total' => $marketArrayShip['0']->sell->median
+				);
+			} // END if($marketArrayShip !== null)
+		} // END if($marketJsonShip !== false)
 
 		// Fitting Price
 		$items = null;
-		foreach($fittingArray as $item) {
-			$items[] = $item->itemID;
-		} // END foreach($fittingArray as $item)
+		if(\is_array($fittingArray)) {
+			foreach($fittingArray as $item) {
+				$items[] = $item->itemID;
+			} // END foreach($fittingArray as $item)
+		} // END if(\is_array($fittingArray))
 
 		// if we have items
 		if($items !== null) {
@@ -145,15 +149,17 @@ class MarketDataHelper {
 			// If we have the json data
 			if($marketJsonFitting !== false) {
 				$marketArray = \json_decode($marketJsonFitting);
-				$jitaBuyPrice['fitting'] = null;
-				$jitaSellPrice['fitting'] = null;
+				$jitaBuyPrice['fitting'] = 0;
+				$jitaSellPrice['fitting'] = 0;
 
-				foreach($marketArray as $item) {
-					$jitaBuyPrice['fitting'] += $item->buy->median;
-					$jitaSellPrice['fitting'] += $item->sell->median;
-					$jitaBuyPrice['total'] += $item->buy->median;
-					$jitaSellPrice['total'] += $item->sell->median;
-				} // END foreach($marketArray as $item) s
+				if($marketArray !== null) {
+					foreach($marketArray as $item) {
+						$jitaBuyPrice['fitting'] += $item->buy->median;
+						$jitaSellPrice['fitting'] += $item->sell->median;
+						$jitaBuyPrice['total'] += $item->buy->median;
+						$jitaSellPrice['total'] += $item->sell->median;
+					} // END foreach($marketArray as $item)
+				} // END if($marketArray !== null)
 
 				$returnValue = array(
 					'ship' => array(
