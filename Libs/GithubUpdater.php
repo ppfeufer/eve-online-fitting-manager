@@ -91,7 +91,7 @@ class GithubUpdater {
 		\add_filter('pre_set_site_transient_update_plugins', array($this, 'apiCheck'));
 
 		// Hook into the plugin details screen
-		\add_filter('plugins_api', array($this, 'get_plugin_info'), 10, 3);
+		\add_filter('plugins_api', array($this, 'getPluginInfo'), 10, 3);
 		\add_filter('upgrader_post_install', array($this, 'upgraderPostInstall'), 10, 3);
 
 		// set timeout
