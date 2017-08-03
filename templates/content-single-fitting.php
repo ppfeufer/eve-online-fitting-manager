@@ -70,13 +70,11 @@ $eftFitting = \WordPress\Plugin\EveOnlineFittingManager\Helper\EftHelper::getEft
 
 					/**
 					 * Show the Osmium fitting link
-					 *
-					 * » disabled, Osmium is offline currently «
 					 */
-//					\WordPress\Plugin\EveOnlineFittingManager\Helper\TemplateHelper::getTemplate('fitting-details/utilities/fitting-osmium', array(
-//						'shipID' => $shipID,
-//						'fittingDna' => $fittingDna
-//					));
+					\WordPress\Plugin\EveOnlineFittingManager\Helper\TemplateHelper::getTemplate('fitting-details/utilities/fitting-osmium', array(
+						'shipID' => $shipID,
+						'fittingDna' => $fittingDna
+					));
 
 					/**
 					 * Show copy eft data to clipboard button
