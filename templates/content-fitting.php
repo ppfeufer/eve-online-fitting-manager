@@ -8,9 +8,9 @@ $pluginOptions = \WordPress\Plugin\EveOnlineFittingManager\Helper\PluginHelper::
 	<section class="post-content">
 		<div class="entry-content">
 			<?php
-			if(!empty($pluginOptions['template-settings']['show-ship-images-in-loop'])) {
+			if(isset($pluginOptions['template-image-settings']['show-ship-images-in-loop']) && $pluginOptions['template-image-settings']['show-ship-images-in-loop'] === 'yes') {
 				?>
-				<a href="<?php \the_permalink(); ?>" title="<?php \the_title_attribute('echo=0'); ?>">
+				<a class="fitting-list-item" href="<?php \the_permalink(); ?>" title="<?php \the_title_attribute('echo=0'); ?>">
 					<figure class="post-loop-thumbnail">
 						<?php
 						if(\has_post_thumbnail()) {
@@ -27,23 +27,14 @@ $pluginOptions = \WordPress\Plugin\EveOnlineFittingManager\Helper\PluginHelper::
 						} // END if(\has_post_thumbnail())
 						?>
 					</figure>
-				</a>
 
-				<header class="entry-header">
-					<h2 class="entry-title">
-						<a class="doctrine-link-item" href="<?php \the_permalink(); ?>" title="<?php \printf(\esc_attr__('Permalink to %s', 'eve-online'), \the_title_attribute('echo=0')); ?>" rel="bookmark">
+					<header class="entry-header">
+						<h2 class="entry-title">
 							<?php echo \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_ship_type', true); ?><br>
 							<?php echo \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_name', true); ?>
-						</a>
-					</h2>
-					<aside class="entry-details">
-						<p class="meta">
-							<?php
-							\edit_post_link(__('Edit', 'eve-online'));
-							?>
-						</p>
-					</aside><!--end .entry-details -->
-				</header><!--end .entry-header -->
+						</h2>
+					</header><!--end .entry-header -->
+				</a>
 				<?php
 			} else {
 				?>
@@ -61,7 +52,7 @@ $pluginOptions = \WordPress\Plugin\EveOnlineFittingManager\Helper\PluginHelper::
 					</h3>
 				</a>
 				<?php
-			} // END if(!empty($pluginOptions['template-settings']['show-ship-images-in-loop']))
+			} // END if(!empty($pluginOptions['template-image-settings']['show-ship-images-in-loop']))
 			?>
 		</div>
 	</section>

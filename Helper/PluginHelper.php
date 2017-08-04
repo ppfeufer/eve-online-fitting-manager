@@ -9,7 +9,7 @@ use WordPress\Plugin\EveOnlineFittingManager;
 class PluginHelper {
 	public static $optionName = 'eve-online-fitting-manager-options';
 	public static $dbVersionFieldName = 'eve-online-fitting-manager-database-version';
-	public static $databaseVersion = '20170717';
+	public static $databaseVersion = '20170804';
 
 	/**
 	 * Getting the Plugin Path
@@ -69,9 +69,18 @@ class PluginHelper {
 			'edk-killboard-user' => '',
 			'edk-killboard-name' => '',
 			'edk-killboard-password' => '',
-			'template-settings' => array(
+			'template-image-settings' => array(
 				'show-ship-images-in-loop' => '',
 				'show-doctrine-images-in-loop' => ''
+			),
+			'template-detail-parts-settings' => array(
+				'show-visual-fitting' => 'yes',
+				'show-osmium-link' => 'yes',
+				'show-ship-description' => 'yes',
+				'show-copy-eft' => 'yes',
+				'show-copy-permalink' => 'yes',
+				'show-market-data' => 'yes',
+				'show-doctrines' => 'yes',
 			)
 		);
 

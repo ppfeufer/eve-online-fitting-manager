@@ -34,6 +34,11 @@
 		color: inherit;
 	}
 
+	.fitting-list-item:hover,
+	.fitting-list-item:focus {
+		text-decoration: none;
+	}
+
 	.fitting-used-in-doctrines {
 		list-style: none;
 	}

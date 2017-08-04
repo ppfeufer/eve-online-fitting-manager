@@ -746,8 +746,10 @@ class FittingHelper {
 				continue;
 			} // END if($entity->parent)
 
+			$doctrineListHtml = '<li class="doctrine entity-' . $entity->slug . ' doctrine-id-' . $entity->term_id . '"><header class="entry-header"><h2 class="entry-title"><a class="doctrine-link-item" href="' . \get_term_link($entity->term_id) . '">' . $entity->name . '</a></h2></header></li>';
+
 			$doctrineImage = null;
-			if(!empty($pluginOptions['template-settings']['show-doctrine-images-in-loop'])) {
+			if(isset($pluginOptions['template-image-settings']['show-doctrine-images-in-loop']) && $pluginOptions['template-image-settings']['show-doctrine-images-in-loop'] === 'yes') {
 				if(\function_exists('\z_taxonomy_image')) {
 					$doctrineImage .= '<a class="doctrine-link-item" href="' . \get_term_link($entity->term_id) . '"><figure class="fitting-helper-post-loop-thumbnail">';
 						if(\function_exists('\fly_get_attachment_image')) {
@@ -755,11 +757,11 @@ class FittingHelper {
 						} else {
 							$doctrineImage .= \z_taxonomy_image($entity->term_id, 'fitting-helper-post-loop-thumbnail', null, false);
 						} // END if(\function_exists('\fly_get_attachment_image'))
-					$doctrineImage .= '</figure></a>';
+					$doctrineImage .= '</figure><header class="entry-header"><h2 class="entry-title">' . $entity->name . '</h2></header></a>';
 				} // END if(\function_exists('\z_taxonomy_image'))
-			} // END if(!empty($pluginOptions['template-settings']['show-doctrine-images-in-loop']))
 
-			$doctrineListHtml = '<li class="doctrine entity-' . $entity->slug . ' doctrine-id-' . $entity->term_id . '">' . $doctrineImage . '<header class="entry-header"><h2 class="entry-title"><a class="doctrine-link-item" href="' . \get_term_link($entity->term_id) . '">' . $entity->name . '</a></h2></header></li>';
+				$doctrineListHtml = '<li class="doctrine entity-' . $entity->slug . ' doctrine-id-' . $entity->term_id . '">' . $doctrineImage . '</li>';
+			} // END if(!empty($pluginOptions['template-image-settings']['show-doctrine-images-in-loop']))
 
 			// If the entity has doctrines...
 			if(isset($hierarchy[$entity->term_id])) {
@@ -771,12 +773,15 @@ class FittingHelper {
 				));
 
 				$doctrineListHtml = '<li class="doctrine entity-' . $entity->slug . ' doctrine-id-' . $entity->term_id . ' has-children">' . $doctrineImage . '<header class="entry-header"><h2 class="entry-title"><a class="doctrine-link-item" href="' . \get_term_link($entity->term_id) . '">' . $entity->name . '</a></h2></header>';
+				if(isset($pluginOptions['template-image-settings']['show-doctrine-images-in-loop']) && $pluginOptions['template-image-settings']['show-doctrine-images-in-loop'] === 'yes') {
+					$doctrineListHtml = '<li class="doctrine entity-' . $entity->slug . ' doctrine-id-' . $entity->term_id . '">' . $doctrineImage;
+				} // END if(isset($pluginOptions['template-image-settings']['show-doctrine-images-in-loop']) && $pluginOptions['template-image-settings']['show-doctrine-images-in-loop'] === 'yes')
 				$doctrineListHtml .= '<div class="child-doctrine-list">';
 
 				foreach($doctrines as $doctrine) {
 					if($doctrine->parent && $doctrine->parent !== $entity->term_id) {
 						continue;
-					}
+					} // END if($doctrine->parent && $doctrine->parent !== $entity->term_id)
 
 					$wingListHtml = '<div class="doctrine sub-first-level doctrine entity-' . $entity->slug . ' doctrine-' . $doctrine->slug . ' doctrine-id-' . $doctrine->term_id . '"><a class="doctrine-link-item" href="' . \get_term_link($doctrine->term_id) . '">' . $doctrine->name . '</a></div>';
 
@@ -794,22 +799,22 @@ class FittingHelper {
 						if(isset($hierarchy[$doctrine->term_id])) {
 							foreach($wings as $wing) {
 								$wingListHtml .= '<div class="doctrine entity-' . $entity->slug . ' doctrine-' . $doctrine->slug . ' doctrine-wing-' . $wing->slug . ' doctrine-id-' . $wing->term_id . '"><a class="doctrine-link-item" href="' . \get_term_link($wing->term_id) . '">' . $wing->name . '</a></div>';
-							}
-						}
+							} // END foreach($wings as $wing)
+						} // END if(isset($hierarchy[$doctrine->term_id]))
 
 						$wingListHtml .= '</div>';
 						$wingListHtml .= '</div>';
-					}
+					} // END if(isset($hierarchy[$doctrine->term_id]))
 
 					$doctrineListHtml .= $wingListHtml;
-				}
+				} // END foreach($doctrines as $doctrine)
 
 				$doctrineListHtml .= '</div>';
-			}
+			} // END if(isset($hierarchy[$entity->term_id]))
 
 			$entityListHtml .= $doctrineListHtml;
 			$entityListHtml .= '</li>';
-		}
+		} // END foreach($entities as $entity)
 
 		$entityListHtml .= '</ul>';
 		$entityListHtml .= '</div>';
@@ -824,7 +829,7 @@ class FittingHelper {
 								</script>';
 
 		return $entityListHtml;
-	}
+	} // END public static function getContentMenu($taxonomy)
 
 	/**
 	 * Get the search query for fittings search

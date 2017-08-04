@@ -8,6 +8,17 @@ jQuery(document).ready(function($) {
 		$('.fitting-copy-to-clipboard').remove();
 	} // END if(!Clipboard.isSupported())
 
+	function closeCopyMessageElement(element) {
+		/**
+		 * close after 5 seconds
+		 */
+		$(element).fadeTo(2000, 500).slideUp(500, function(){
+			$(this).slideUp(500, function() {
+				$(this).remove();
+			});
+		});
+	}
+
 	/**
 	 * Show message when copy action was successfull
 	 *
@@ -16,16 +27,9 @@ jQuery(document).ready(function($) {
 	 * @returns {undefined}
 	 */
 	function showSuccess(message, element) {
-		$('<div class="alert alert-success alert-dismissable alert-copy-success"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' + message + '</div>').insertAfter(element);
+		$(element).html('<div class="alert alert-success alert-dismissable alert-copy-success"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' + message + '</div>');
 
-		/**
-		 * close after 5 seconds
-		 */
-		$('.alert-copy-success').fadeTo(2000, 500).slideUp(500, function(){
-			$(this).slideUp(500, function() {
-				$(this).remove();
-			});
-		});
+		closeCopyMessageElement('.alert-copy-success');
 
 		return;
 	} // END function showSuccess(message, element)
@@ -38,7 +42,9 @@ jQuery(document).ready(function($) {
 	 * @returns {undefined}
 	 */
 	function showError(message, element) {
-		$('<div class="alert alert-danger alert-dismissable alert-copy-error"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' + message + '</div>').insertAfter(element);
+		$(element).html('<div class="alert alert-danger alert-dismissable alert-copy-error"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' + message + '</div>');
+
+		closeCopyMessageElement('.alert-copy-error');
 
 		return;
 	} // END function showError(message, element)
@@ -60,7 +66,7 @@ jQuery(document).ready(function($) {
 		 * @param {type} e
 		 */
 		clipboardEftData.on('success', function(e) {
-			showSuccess(fittingManagerL10n.copyToClipboard.eft.text.success, '.copy-eft-to-clipboard');
+			showSuccess(fittingManagerL10n.copyToClipboard.eft.text.success, '.fitting-copy-result');
 
 			e.clearSelection();
 			clipboardEftData.destroy();
@@ -70,7 +76,7 @@ jQuery(document).ready(function($) {
 		 * Copy error
 		 */
 		clipboardEftData.on('error', function() {
-			showError(fittingManagerL10n.copyToClipboard.eft.text.error, '.copy-eft-to-clipboard');
+			showError(fittingManagerL10n.copyToClipboard.eft.text.error, '.fitting-copy-result');
 
 			clipboardEftData.destroy();
 		});
@@ -93,7 +99,7 @@ jQuery(document).ready(function($) {
 		 * @param {type} e
 		 */
 		clipboardPermalinkData.on('success', function(e) {
-			showSuccess(fittingManagerL10n.copyToClipboard.permalink.text.success, '.copy-permalink-to-clipboard');
+			showSuccess(fittingManagerL10n.copyToClipboard.permalink.text.success, '.fitting-copy-result');
 
 			e.clearSelection();
 			clipboardPermalinkData.destroy();
@@ -103,7 +109,7 @@ jQuery(document).ready(function($) {
 		 * Copy error
 		 */
 		clipboardPermalinkData.on('error', function() {
-			showError(fittingManagerL10n.copyToClipboard.permalink.text.error, '.copy-permalink-to-clipboard');
+			showError(fittingManagerL10n.copyToClipboard.permalink.text.error, '.fitting-copy-result');
 
 			clipboardPermalinkData.destroy();
 		});

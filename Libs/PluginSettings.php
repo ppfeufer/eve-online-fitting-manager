@@ -132,16 +132,29 @@ class PluginSettings {
 	 */
 	private function getTemplateSettingsFields() {
 		$settingsFields = array(
-			'template-settings' => array(
+			'template-image-settings' => array(
 				'type' => 'checkbox',
 				'title' => \__('Image Settings', 'eve-online-fitting-manager'),
 				'choices' => array(
-					'show-ship-images-in-loop' => \__('Show ship images in ship list.', 'eve-online-fitting-manager'),
-					'show-doctrine-images-in-loop' => \sprintf(\__('Show doctrine images in doctrine list. <small><em>(You need to have the %1$s plugin installed to make this happen.)</em></small>', 'eve-online-fitting-manager'),
+					'show-ship-images-in-loop' => \__('Show ship images in ship list', 'eve-online-fitting-manager'),
+					'show-doctrine-images-in-loop' => \sprintf(\__('Show doctrine images in doctrine list <small><em>(You need to have the %1$s plugin installed to make this happen)</em></small>', 'eve-online-fitting-manager'),
 						'<a href="https://wordpress.org/plugins/categories-images/" target="_blank">' . \__('Categories Images', 'eve-online-fitting-manager') . '</a>'
 					)
 				),
 			),
+			'template-detail-parts-settings' => array(
+				'type' => 'checkbox',
+				'title' => \__('Detail Page Settings', 'eve-online-fitting-manager'),
+				'choices' => array(
+					'show-visual-fitting' => \__('Show visual fitting', 'eve-online-fitting-manager'),
+					'show-ship-description' => \__('Show ship description', 'eve-online-fitting-manager'),
+					'show-osmium-link' => \__('Show Osmium button', 'eve-online-fitting-manager'),
+					'show-copy-eft' => \__('Show "Copy EFT data to clipboard" button', 'eve-online-fitting-manager'),
+					'show-copy-permalink' => \__('Show "Copy permalink to clipboard" button', 'eve-online-fitting-manager'),
+					'show-market-data' => \__('Show "Estimated Prices" section', 'eve-online-fitting-manager'),
+					'show-doctrines' => \__('Show "Doctrines using this fitting" section', 'eve-online-fitting-manager')
+				),
+			)
 		);
 
 		return $settingsFields;

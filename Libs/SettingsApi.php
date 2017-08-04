@@ -523,9 +523,10 @@ class SettingsApi {
 		$value = $this->value();
 
 		if($this->valueType() === 'array') {
-			$checked = (!empty($value) && \in_array($slug, $this->value())) ? ' checked="checked"' : '';
+//			$checked = (!empty($value) && \in_array($slug, $value)) ? ' checked="checked"' : '';
+			$checked = (!empty($value[$slug]) && $value[$slug] === 'yes') ? ' checked="checked"' : '';
 		} else {
-			$checked = (!empty($value) && $slug == $this->value()) ? ' checked="checked"' : '';
+			$checked = (!empty($value) && $slug == $value) ? ' checked="checked"' : '';
 		} // END if($this->valueType() == 'array')
 
 		return $checked;
@@ -576,7 +577,12 @@ class SettingsApi {
 			'image',
 			'file'
 		);
-		$defaultMultiple = array('multiselect', 'checkbox');
+
+		$defaultMultiple = array(
+			'multiselect',
+			'checkbox'
+		);
+
 		$value = '';
 
 		if(\in_array($this->args['type'], $defaultSingle)) {
@@ -683,7 +689,6 @@ class SettingsApi {
 					break;
 
 				case 'radio':
-				case 'checkbox':
 					if($this->hasItems()) {
 						$horizontal = (isset($args['align']) && (string) $args['align'] == 'horizontal') ? ' class="horizontal"' : '';
 
@@ -694,6 +699,25 @@ class SettingsApi {
 
 							$out .= '<li' . $horizontal . '><label>';
 							$out .= '<input value="' . $slug . '" type="' . $args['type'] . '" name="' . $this->name($slug) . '"' . $checked . '>';
+							$out .= $choice;
+							$out .= '</label></li>';
+						} // END foreach($args['choices'] as $slug => $choice)
+
+						$out .= '</ul>';
+					} // END if($this->hasItems())
+					break;
+
+				case 'checkbox':
+					if($this->hasItems()) {
+						$horizontal = (isset($args['align']) && (string) $args['align'] == 'horizontal') ? ' class="horizontal"' : '';
+
+						$out .= '<ul class="settings-group settings-type-' . $args['type'] . '">';
+
+						foreach($args['choices'] as $slug => $choice) {
+							$checked = $this->checked($slug);
+
+							$out .= '<li' . $horizontal . '><label>';
+							$out .= '<input value="yes" type="' . $args['type'] . '" name="' . $this->name($slug) . '"' . $checked . '>';
 							$out .= $choice;
 							$out .= '</label></li>';
 						} // END foreach($args['choices'] as $slug => $choice)
