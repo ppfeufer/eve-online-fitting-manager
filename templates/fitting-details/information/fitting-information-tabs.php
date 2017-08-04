@@ -4,10 +4,22 @@
 		<li role="presentation" class="active">
 			<a href="#eft-fitting" aria-controls="eft-fitting" role="tab" data-toggle="tab"><h4>EFT Import</h4></a>
 		</li>
-		<li role="presentation">
-			<a href="#ship-description" aria-controls="ship-description" role="tab" data-toggle="tab"><h4>Description</h4></a>
-		</li>
+
 		<?php
+		/**
+		 * Ship description
+		 */
+		if(isset($pluginSettings['template-detail-parts-settings']['show-ship-description']) && $pluginSettings['template-detail-parts-settings']['show-ship-description'] === 'yes') {
+			?>
+			<li role="presentation">
+				<a href="#ship-description" aria-controls="ship-description" role="tab" data-toggle="tab"><h4>Description</h4></a>
+			</li>
+			<?php
+		} // END if(!empty($pluginSettings['template-detail-parts-settings']['show-ship-description']))
+
+		/**
+		 * Fitting description
+		 */
 		$fittingDescription = \get_the_content();
 		if(!empty(\trim($fittingDescription))) {
 			?>
@@ -24,10 +36,22 @@
 		<div role="tabpanel" class="tab-pane active ship-fitting-eft-import" id="eft-fitting">
 			<p><?php echo \nl2br($eftFitting); ?></p>
 		</div>
-		<div role="tabpanel" class="tab-pane ship-description" id="ship-description">
-			<p><?php echo WordPress\Plugin\EveOnlineFittingManager\Helper\FittingHelper::getItemDescription($shipID); ?></p>
-		</div>
+
 		<?php
+		/**
+		 * Ship description
+		 */
+		if(isset($pluginSettings['template-detail-parts-settings']['show-ship-description']) && $pluginSettings['template-detail-parts-settings']['show-ship-description'] === 'yes') {
+			?>
+			<div role="tabpanel" class="tab-pane ship-description" id="ship-description">
+				<p><?php echo WordPress\Plugin\EveOnlineFittingManager\Helper\FittingHelper::getItemDescription($shipID); ?></p>
+			</div>
+			<?php
+		} // END if(!empty($pluginSettings['template-detail-parts-settings']['show-ship-description']))
+
+		/**
+		 * Fitting description
+		 */
 		if(!empty(\trim($fittingDescription))) {
 			?>
 			<div role="tabpanel" class="tab-pane ship-fitting-description" id="fitting-description">

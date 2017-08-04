@@ -34,6 +34,11 @@
 		color: inherit;
 	}
 
+	.fitting-list-item:hover,
+	.fitting-list-item:focus {
+		text-decoration: none;
+	}
+
 	.fitting-used-in-doctrines {
 		list-style: none;
 	}
@@ -67,6 +72,14 @@
 		position: relative;
 		display: block;
 		padding: 10px 15px;
+	}
+}
+
+/* Market Data Table
+----------------------------------------------------------------------------- */
+@media all {
+	.eve-market-price {
+		text-align: right;
 	}
 }
 
