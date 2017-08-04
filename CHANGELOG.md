@@ -2,6 +2,9 @@
 
 ## [In Development](https://github.com/ppfeufer/eve-online-fitting-manager)
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.1...HEAD)
+### Added
+- Loading animation while waiting for market data
+
 ### Changed
 - Load CSS and JS only when it's really needed
 - Osmium is working again, so it's back on the menu

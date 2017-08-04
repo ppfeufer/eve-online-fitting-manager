@@ -19,15 +19,15 @@
 			<table class="table table-condensed table-fitting-marketdata">
 				<tr>
 					<th><?php echo \__('Ship:', 'eve-online-fitting-manager'); ?></th>
-					<td class="eve-market-ship-buy"><span class="loaderImage"></span></td>
+					<td class="eve-market-price eve-market-ship-buy"><span class="loaderImage"></span></td>
 				</tr>
 				<tr>
 					<th><?php echo \__('Fitting:', 'eve-online-fitting-manager'); ?></th>
-					<td class="eve-market-fitting-buy"><span class="loaderImage"></span></td>
+					<td class="eve-market-price eve-market-fitting-buy"><span class="loaderImage"></span></td>
 				</tr>
 				<tr>
 					<th><?php echo \__('Total:', 'eve-online-fitting-manager'); ?></th>
-					<td class="eve-market-total-buy"><span class="loaderImage"></span></td>
+					<td class="eve-market-price eve-market-total-buy"><span class="loaderImage"></span></td>
 				</tr>
 			</table>
 		</div>
@@ -39,15 +39,15 @@
 			<table class="table table-condensed table-fitting-marketdata">
 				<tr>
 					<th><?php echo \__('Ship:', 'eve-online-fitting-manager'); ?></th>
-					<td class="eve-market-ship-sell"><span class="loaderImage"></span></td>
+					<td class="eve-market-price eve-market-ship-sell"><span class="loaderImage"></span></td>
 				</tr>
 				<tr>
 					<th><?php echo \__('Fitting:', 'eve-online-fitting-manager'); ?></th>
-					<td class="eve-market-fitting-sell"><span class="loaderImage"></span></td>
+					<td class="eve-market-price eve-market-fitting-sell"><span class="loaderImage"></span></td>
 				</tr>
 				<tr>
 					<th><?php echo \__('Total:', 'eve-online-fitting-manager'); ?></th>
-					<td class="eve-market-total-sell"><span class="loaderImage"></span></td>
+					<td class="eve-market-price eve-market-total-sell"><span class="loaderImage"></span></td>
 				</tr>
 			</table>
 		</div>
