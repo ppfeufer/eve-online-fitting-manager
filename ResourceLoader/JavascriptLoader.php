@@ -55,6 +55,7 @@ class JavascriptLoader implements \WordPress\Plugin\EveOnlineFittingManager\Inte
 			),
 			'ajax' => array(
 				'url' => \admin_url('admin-ajax.php'),
+				'loaderImage' => \WordPress\Plugin\EveOnlineFittingManager\Helper\PluginHelper::getPluginUri('images/loader-sprite.gif'),
 				'eveFittingMarketData' => array(
 					'nonce' => \wp_create_nonce('ajax-nonce-eve-market-data-for-fitting')
 				)
