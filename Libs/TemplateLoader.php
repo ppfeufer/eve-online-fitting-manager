@@ -12,30 +12,14 @@ namespace WordPress\Plugin\EveOnlineFittingManager\Libs;
 
 class TemplateLoader {
 	/**
-	 * A reference to an instance of this class.
-	 */
-	private static $instance;
-
-	/**
 	 * The array of templates that this plugin tracks.
 	 */
 	protected $templates;
 
 	/**
-	 * Returns an instance of this class.
-	 */
-	public static function getInstance() {
-		if(null == self::$instance) {
-			self::$instance = new TemplateLoader();
-		} // END if(null == self::$instance)
-
-		return self::$instance;
-	} // END public static function getInstance()
-
-	/**
 	 * Initializes the plugin by setting filters and administration functions.
 	 */
-	private function __construct() {
+	public function __construct() {
 		$this->templates = array();
 
 		// Add a filter to the attributes metabox to inject template into the cache.
@@ -141,8 +125,3 @@ class TemplateLoader {
 		return $template;
 	} // END public function viewProjectTemplate($template)
 } // END class TemplateLoader
-
-/**
- * Starting the show ....
- */
-\add_action('plugins_loaded', array('\WordPress\Plugin\EveOnlineFittingManager\Libs\TemplateLoader', 'getInstance'));
