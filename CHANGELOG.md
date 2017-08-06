@@ -2,7 +2,8 @@
 
 ## [In Development](https://github.com/ppfeufer/eve-online-fitting-manager)
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.2...HEAD)
-- in development
+### Changed
+- Thumbnails to a more reasonable size
 
 ## [v0.2](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.2) - 2017-08-05
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.1...v0.2)
