@@ -102,10 +102,10 @@ class EveOnlineFittingManager {
 		 */
 		if(\function_exists('\fly_add_image_size')) {
 			\fly_add_image_size('header-image', 1680, 500, true);
-			\fly_add_image_size('fitting-helper-post-loop-thumbnail', 768, 768, true);
+			\fly_add_image_size('fitting-helper-post-loop-thumbnail', 768, 432, true);
 		} else {
 			\add_image_size('header-image', 1680, 500, true);
-			\add_image_size('fitting-helper-post-loop-thumbnail', 768, 768, true);
+			\add_image_size('fitting-helper-post-loop-thumbnail', 768, 432, true);
 		} // END if(\function_exists('\fly_add_image_size'))
 	} // END public function setThumbnailsSizes()
 
