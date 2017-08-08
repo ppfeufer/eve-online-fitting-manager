@@ -13,43 +13,45 @@
 		</p>
 	</div>
 
-	<div class="col-sm-6 col-md-6 col-lg-12 col-xl-6">
-		<div class="table-responsive">
-			Jita Buy Order Price<br>
-			<table class="table table-condensed table-fitting-marketdata">
-				<tr>
-					<th><?php echo \__('Ship:', 'eve-online-fitting-manager'); ?></th>
-					<td class="eve-market-price eve-market-ship-buy"><span class="loaderImage"></span></td>
-				</tr>
-				<tr>
-					<th><?php echo \__('Fitting:', 'eve-online-fitting-manager'); ?></th>
-					<td class="eve-market-price eve-market-fitting-buy"><span class="loaderImage"></span></td>
-				</tr>
-				<tr>
-					<th><?php echo \__('Total:', 'eve-online-fitting-manager'); ?></th>
-					<td class="eve-market-price eve-market-total-buy"><span class="loaderImage"></span></td>
-				</tr>
-			</table>
+	<div class="row">
+		<div class="col-sm-6 col-md-6 col-lg-12 col-xl-6">
+			<div class="table-responsive">
+				Jita Buy Order Price<br>
+				<table class="table table-condensed table-fitting-marketdata">
+					<tr>
+						<th><?php echo \__('Ship:', 'eve-online-fitting-manager'); ?></th>
+						<td class="eve-market-price eve-market-ship-buy"><span class="loaderImage"></span></td>
+					</tr>
+					<tr>
+						<th><?php echo \__('Fitting:', 'eve-online-fitting-manager'); ?></th>
+						<td class="eve-market-price eve-market-fitting-buy"><span class="loaderImage"></span></td>
+					</tr>
+					<tr>
+						<th><?php echo \__('Total:', 'eve-online-fitting-manager'); ?></th>
+						<td class="eve-market-price eve-market-total-buy"><span class="loaderImage"></span></td>
+					</tr>
+				</table>
+			</div>
 		</div>
-	</div>
 
-	<div class="col-sm-6 col-md-6 col-lg-12 col-xl-6">
-		<div class="table-responsive">
-			Jita Sell Order Price<br>
-			<table class="table table-condensed table-fitting-marketdata">
-				<tr>
-					<th><?php echo \__('Ship:', 'eve-online-fitting-manager'); ?></th>
-					<td class="eve-market-price eve-market-ship-sell"><span class="loaderImage"></span></td>
-				</tr>
-				<tr>
-					<th><?php echo \__('Fitting:', 'eve-online-fitting-manager'); ?></th>
-					<td class="eve-market-price eve-market-fitting-sell"><span class="loaderImage"></span></td>
-				</tr>
-				<tr>
-					<th><?php echo \__('Total:', 'eve-online-fitting-manager'); ?></th>
-					<td class="eve-market-price eve-market-total-sell"><span class="loaderImage"></span></td>
-				</tr>
-			</table>
+		<div class="col-sm-6 col-md-6 col-lg-12 col-xl-6">
+			<div class="table-responsive">
+				Jita Sell Order Price<br>
+				<table class="table table-condensed table-fitting-marketdata">
+					<tr>
+						<th><?php echo \__('Ship:', 'eve-online-fitting-manager'); ?></th>
+						<td class="eve-market-price eve-market-ship-sell"><span class="loaderImage"></span></td>
+					</tr>
+					<tr>
+						<th><?php echo \__('Fitting:', 'eve-online-fitting-manager'); ?></th>
+						<td class="eve-market-price eve-market-fitting-sell"><span class="loaderImage"></span></td>
+					</tr>
+					<tr>
+						<th><?php echo \__('Total:', 'eve-online-fitting-manager'); ?></th>
+						<td class="eve-market-price eve-market-total-sell"><span class="loaderImage"></span></td>
+					</tr>
+				</table>
+			</div>
 		</div>
 	</div>
 </div>
