@@ -4,7 +4,7 @@
  * Plugin URI: https://github.com/ppfeufer/eve-online-fitting-manager
  * Git URI: https://github.com/ppfeufer/eve-online-fitting-manager
  * Description: A little management tool for your doctrine fittings in your WordPress website. (Best with a theme running with <a href="http://getbootstrap.com/">Bootstrap</a>)
- * Version: 0.2
+ * Version: 0.3
  * Author: Rounon Dax
  * Author URI: http://yulaifederation.net
  * Text Domain: eve-online-fitting-manager
@@ -102,10 +102,10 @@ class EveOnlineFittingManager {
 		 */
 		if(\function_exists('\fly_add_image_size')) {
 			\fly_add_image_size('header-image', 1680, 500, true);
-			\fly_add_image_size('fitting-helper-post-loop-thumbnail', 705, 395, true);
+			\fly_add_image_size('fitting-helper-post-loop-thumbnail', 768, 432, true);
 		} else {
 			\add_image_size('header-image', 1680, 500, true);
-			\add_image_size('fitting-helper-post-loop-thumbnail', 705, 395, true);
+			\add_image_size('fitting-helper-post-loop-thumbnail', 768, 432, true);
 		} // END if(\function_exists('\fly_add_image_size'))
 	} // END public function setThumbnailsSizes()
 

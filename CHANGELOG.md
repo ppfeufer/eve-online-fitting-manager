@@ -1,8 +1,17 @@
 # Change Log
 
 ## [In Development](https://github.com/ppfeufer/eve-online-fitting-manager)
-[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.2...HEAD)
+[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.3...HEAD)
 - in development
+
+## [v0.3](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.3) - 2017-08-08
+[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.2...v0.3)
+### Fixed
+- Some minor JS issues (code optimization)
+- Missing row around the market data table
+
+### Changed
+- Thumbnails to a more reasonable size, they are now 16:9 (Please use a plugin like [Force Regenerate Thumbnails](https://de.wordpress.org/plugins/force-regenerate-thumbnails/) to update your thumbnails after updating to this plugin version)
 
 ## [v0.2](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.2) - 2017-08-05
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.1...v0.2)
