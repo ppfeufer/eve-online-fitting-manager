@@ -239,7 +239,7 @@ jQuery(document).ready(function($) {
 		/**
 		 * Start the animation
 		 */
-		imageLoader(cImageSrc, startAnimation)
+		imageLoader(cImageSrc, startAnimation);
 
 		/**
 		 * Call the ajax to get the market data
