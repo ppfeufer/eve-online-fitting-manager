@@ -171,7 +171,7 @@ jQuery(document).ready(function($) {
 			$('.table-fitting-marketdata .loaderImage').css('width', cWidth + 'px');
 			$('.table-fitting-marketdata .loaderImage').css('height', cHeight + 'px');
 
-			FPS = Math.round(100 / cSpeed);
+			var FPS = Math.round(100 / cSpeed);
 			SECONDS_BETWEEN_FRAMES = 1 / FPS;
 
 			cPreloaderTimeout = setTimeout(continueAnimation, SECONDS_BETWEEN_FRAMES / 1000);
@@ -228,7 +228,7 @@ jQuery(document).ready(function($) {
 			clearTimeout(cImageTimeout);
 			cImageTimeout = 0;
 
-			genImage = new Image();
+			var genImage = new Image();
 			genImage.onload = function() {
 				cImageTimeout = setTimeout(fun, 0);
 			};
@@ -239,7 +239,7 @@ jQuery(document).ready(function($) {
 		/**
 		 * Start the animation
 		 */
-		new imageLoader(cImageSrc, startAnimation);
+		imageLoader(cImageSrc, startAnimation)
 
 		/**
 		 * Call the ajax to get the market data

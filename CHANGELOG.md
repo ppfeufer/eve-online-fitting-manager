@@ -2,6 +2,9 @@
 
 ## [In Development](https://github.com/ppfeufer/eve-online-fitting-manager)
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.2...HEAD)
+### Fixed
+- some minor JS issues (code optimization)
+
 ### Changed
 - Thumbnails to a more reasonable size, they are now 16:9 (Please use a plugin like [Force Regenerate Thumbnails](https://de.wordpress.org/plugins/force-regenerate-thumbnails/) to update your thumbnails after updating to this plugin version)
 
