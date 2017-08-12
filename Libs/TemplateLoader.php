@@ -39,7 +39,6 @@ class TemplateLoader {
 		// template assigned and return it's path
 		\add_filter('template_include', array($this, 'viewProjectTemplate'));
 
-
 		// Add your templates to this array.
 		$this->templates = array(
 			'../templates/page-fittings.php' => 'Fittings',

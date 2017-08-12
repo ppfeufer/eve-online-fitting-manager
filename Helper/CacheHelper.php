@@ -12,31 +12,19 @@ use WordPress\Plugin\EveOnlineFittingManager;
 require_once(ABSPATH . 'wp-admin/includes/class-wp-filesystem-base.php');
 require_once(ABSPATH . 'wp-admin/includes/class-wp-filesystem-direct.php');
 
-class CacheHelper {
-	private static $instance = null;
+class CacheHelper extends EveOnlineFittingManager\Singleton\AbstractSingleton {
 	private $cacheDirectoryBase;
 
 	/**
 	 * Constructor
 	 */
-	private function __construct() {
+	protected function __construct() {
+		parent::__construct();
+
 		$this->cacheDirectoryBase = $this->getPluginCacheDir();
 
 		$this->checkOrCreateCacheDirectories();
 	} // END private function __construct()
-
-	/**
-	 * Getting the instance
-	 *
-	 * @return WordPress\Plugin\EveOnlineFittingManager\Helper\CacheHelper
-	 */
-	public static function getInstance() {
-		if(\is_null(self::$instance)) {
-			self::$instance = new self();
-		} // END if(\is_null(self::$instance))
-
-		return self::$instance;
-	} // END public static function getInstance()
 
 	/**
 	 * Check if cache directories exist, otherwise try to create them

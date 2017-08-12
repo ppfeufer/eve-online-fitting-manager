@@ -6,14 +6,7 @@ use WordPress\Plugin\EveOnlineFittingManager;
 
 \defined('ABSPATH') or die();
 
-class MarketDataHelper {
-	/**
-	 * Instance
-	 *
-	 * @var object The current instance
-	 */
-	private static $instance = null;
-
+class MarketDataHelper extends EveOnlineFittingManager\Singleton\AbstractSingleton {
 	/**
 	 * Available Market APIs:
 	 *		EVE Central => https://api.eve-central.com/api/marketstat/json?typeid=3057,2364,3057&regionlimit=10000002&usesystem=30000142
@@ -58,22 +51,11 @@ class MarketDataHelper {
 	/**
 	 * Constructor
 	 */
-	private function __construct() {
+	protected function __construct() {
+		parent::__construct();
+
 //		$this->apiUrl = $this->apiUrlEveMarketer . '?regionlimit=' . $this->marketRegion . '&usesystem=' . $this->marketSystem . '&typeid=';
 		$this->apiUrl = $this->apiUrlEveCentral . '?typeid=';
-	}
-
-	/**
-	 * Getting the instance
-	 *
-	 * @return WordPress\Plugin\EveOnlineFittingManager\Helper\MarketDataHelper Instance
-	 */
-	public static function getInstance() {
-		if(\is_null(self::$instance)) {
-			self::$instance = new self();
-		}
-
-		return self::$instance;
 	}
 
 	/**
