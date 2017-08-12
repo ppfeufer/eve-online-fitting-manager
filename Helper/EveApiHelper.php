@@ -24,31 +24,18 @@ use SimpleXMLElement;
 
 \defined('ABSPATH') or die();
 
-class EveApiHelper {
+class EveApiHelper extends EveOnlineFittingManager\Singleton\AbstractSingleton {
 	public $imageserverUrl = 'https://image.eveonline.com/';
 	public $imageserverEndpoints = null;
-
-	private static $instance = null;
 
 	/**
 	 * The Construtor
 	 */
-	public function __construct() {
+	protected function __construct() {
+		parent::__construct();
+
 		$this->getImageserverEndpoints();
 	} // END public function __construct()
-
-	/**
-	 * Getting the instance
-	 *
-	 * @return WordPress\Plugin\EveOnlineFittingManager\Helper\EveApiHelper
-	 */
-	public static function getInstance() {
-		if(\is_null(self::$instance)) {
-			self::$instance = new self();
-		} // END if(\is_null(self::$instance))
-
-		return self::$instance;
-	} // END public static function getInstance()
 
 	/**
 	 * Assigning Imagesever Endpoints

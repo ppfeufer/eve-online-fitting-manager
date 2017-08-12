@@ -12,31 +12,19 @@ use WordPress\Plugin\EveOnlineFittingManager;
 require_once(ABSPATH . 'wp-admin/includes/class-wp-filesystem-base.php');
 require_once(ABSPATH . 'wp-admin/includes/class-wp-filesystem-direct.php');
 
-class CacheHelper {
-	private static $instance = null;
+class CacheHelper extends EveOnlineFittingManager\Singleton\AbstractSingleton {
 	private $cacheDirectoryBase;
 
 	/**
 	 * Constructor
 	 */
-	private function __construct() {
+	protected function __construct() {
+		parent::__construct();
+
 		$this->cacheDirectoryBase = $this->getPluginCacheDir();
 
 		$this->checkOrCreateCacheDirectories();
 	} // END private function __construct()
-
-	/**
-	 * Getting the instance
-	 *
-	 * @return WordPress\Plugin\EveOnlineFittingManager\Helper\CacheHelper
-	 */
-	public static function getInstance() {
-		if(\is_null(self::$instance)) {
-			self::$instance = new self();
-		} // END if(\is_null(self::$instance))
-
-		return self::$instance;
-	} // END public static function getInstance()
 
 	/**
 	 * Check if cache directories exist, otherwise try to create them
@@ -107,6 +95,14 @@ class CacheHelper {
 
 						if(!$wpFileSystem->is_dir(\trailingslashit(\WP_CONTENT_DIR) . $createDir) && !empty($dir)) {
 							$wpFileSystem->mkdir(\trailingslashit(\WP_CONTENT_DIR) . $createDir, 0755);
+
+							if(!$wpFileSystem->is_file(\trailingslashit($this->getPluginCacheDir()) . $directory . '/index.php')) {
+								$wpFileSystem->put_contents(
+									\trailingslashit($this->getPluginCacheDir()) . $directory . '/index.php',
+									'',
+									0644 // predefined mode settings for WP files
+								);
+							}
 						} // END if(!$wpFileSystem->is_dir(\trailingslashit(\WP_CONTENT_DIR) . $createDir) && !empty($dir))
 					} // END foreach($subdirs as $dir)
 				} // END if(!$wpFileSystem->is_dir(\trailingslashit($this->getPluginCacheDir())))
@@ -114,6 +110,14 @@ class CacheHelper {
 
 			if(!$wpFileSystem->is_dir(\trailingslashit($this->getPluginCacheDir()) . $directory)) {
 				$wpFileSystem->mkdir(\trailingslashit($this->getPluginCacheDir()) . $directory, 0755);
+
+				if(!$wpFileSystem->is_file(\trailingslashit($this->getPluginCacheDir()) . $directory . '/index.php')) {
+					$wpFileSystem->put_contents(
+						\trailingslashit($this->getPluginCacheDir()) . $directory . '/index.php',
+						'',
+						0644 // predefined mode settings for WP files
+					);
+				}
 			} // END if(!$wpFileSystem->is_dir(\trailingslashit($this->getThemeCacheDir()) . $directory))
 		} // END if($wpFileSystem->is_writable($wpFileSystem->wp_content_dir()))
 	} // END public function createCacheDirectories()

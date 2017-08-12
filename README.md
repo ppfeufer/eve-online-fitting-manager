@@ -10,7 +10,7 @@ This plugin works best with WordPress themes utilizing the Bootstrap Framework. 
 Works best with the [EVE Online WordPress Theme](https://github.com/ppfeufer/eve-online-wordpress-theme)
 
 ### Installation
-To install the plugin simply [download the archive](https://github.com/ppfeufer/eve-online-fitting-manager/archive/master.zip) or one of the [releases](https://github.com/ppfeufer/eve-online-fitting-manager/releases), unzip it and copy the folder into your plugin directory in your WordPress installation.
+To install the plugin simply [download the archive](https://github.com/ppfeufer/eve-online-fitting-manager/archive/master.zip) or one of the [releases](https://github.com/ppfeufer/eve-online-fitting-manager/releases), unzip it, rename the folder to `eve-online-fitting-manager` (this is important, or automatic updates might cause trouble) and copy the folder into your plugin directory in your WordPress installation.
 
 ### Set Up
 Now go to your Pages menu in your WordPress Backend and add a new page called "Fittings" or what ever you like it to be called.

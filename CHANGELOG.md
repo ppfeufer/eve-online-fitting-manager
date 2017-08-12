@@ -1,8 +1,14 @@
 # Change Log
 
 ## [In Development](https://github.com/ppfeufer/eve-online-fitting-manager)
-[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.3...HEAD)
+[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.4...HEAD)
 - in development
+
+## [v0.4](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.4) - 2017-08-12
+[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.3...v0.4)
+### Changed
+- Writing empty index.php files into our cache directories, so the directory listing doesn't work there
+- CacheHelper file permissions for dummy index.php
 
 ## [v0.3](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.3) - 2017-08-08
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.2...v0.3)
