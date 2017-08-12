@@ -112,7 +112,7 @@ class CacheHelper {
 								$wpFileSystem->put_contents(
 									\trailingslashit($this->getPluginCacheDir()) . $directory . '/index.php',
 									'',
-									FS_CHMOD_FILE // predefined mode settings for WP files
+									0644 // predefined mode settings for WP files
 								);
 							}
 						} // END if(!$wpFileSystem->is_dir(\trailingslashit(\WP_CONTENT_DIR) . $createDir) && !empty($dir))
@@ -127,7 +127,7 @@ class CacheHelper {
 					$wpFileSystem->put_contents(
 						\trailingslashit($this->getPluginCacheDir()) . $directory . '/index.php',
 						'',
-						FS_CHMOD_FILE // predefined mode settings for WP files
+						0644 // predefined mode settings for WP files
 					);
 				}
 			} // END if(!$wpFileSystem->is_dir(\trailingslashit($this->getThemeCacheDir()) . $directory))
