@@ -4,9 +4,9 @@
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.5...HEAD)
 - in development
 
-## [v0.4](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.5) - 2017-08-13
+## [v0.5](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.5) - 2017-08-13
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.4...v0.5)
-Fixed
+### Fixed
 - PHP Fatal error: Class 'WordPress\\Plugin\\EveOnlineKillboardWidget\\Singleton\\AbstractSingleton' not found
 
 ## [v0.4](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.4) - 2017-08-12
