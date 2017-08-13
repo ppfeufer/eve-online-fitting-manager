@@ -8,7 +8,7 @@ use WordPress\Plugin\EveOnlineFittingManager;
 /**
  * Registering the Killboard Database as its own instance of wpdb
  */
-class Database extends \WordPress\Plugin\EveOnlineKillboardWidget\Singleton\AbstractSingleton {
+class Database extends EveOnlineFittingManager\Singleton\AbstractSingleton {
 	private $pluginSettings = null;
 
 	public $db = null;
