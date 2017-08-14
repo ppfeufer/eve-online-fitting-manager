@@ -44,7 +44,7 @@
 		if(isset($pluginSettings['template-detail-parts-settings']['show-ship-description']) && $pluginSettings['template-detail-parts-settings']['show-ship-description'] === 'yes') {
 			?>
 			<div role="tabpanel" class="tab-pane ship-description" id="ship-description">
-				<p><?php echo WordPress\Plugin\EveOnlineFittingManager\Helper\FittingHelper::getItemDescription($shipID); ?></p>
+				<?php echo WordPress\Plugin\EveOnlineFittingManager\Helper\FittingHelper::getItemDescription($shipID); ?>
 			</div>
 			<?php
 		} // END if(!empty($pluginSettings['template-detail-parts-settings']['show-ship-description']))

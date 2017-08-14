@@ -121,11 +121,8 @@ class FittingHelper {
 	public static function getItemDescription($itemID) {
 		$sql = EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `description` FROM `kb3_invtypes` WHERE `typeID` = %d', array($itemID));
 		$description = EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
-//		$description = \preg_replace('/<br>/', '##break##', $description);
-//		$description = \strip_tags($description);
-//		$description = \preg_replace('/##break##/', '<br>', $description);
 
-		return \nl2br($description);
+		return \wpautop($description);
 	} // END public static function getItemDescription($itemID)
 
 	/**
