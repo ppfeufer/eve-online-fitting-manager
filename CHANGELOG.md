@@ -2,7 +2,8 @@
 
 ## [In Development](https://github.com/ppfeufer/eve-online-fitting-manager)
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.5...HEAD)
-- in development
+### Changed
+- Ship description now formatted in proper paragraphs
 
 ## [v0.5](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.5) - 2017-08-13
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.4...v0.5)
