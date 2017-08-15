@@ -1,12 +1,20 @@
 # Change Log
 
 ## [In Development](https://github.com/ppfeufer/eve-online-fitting-manager)
-[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.5...HEAD)
+[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.5.1...HEAD)
 - in development
 
-## [v0.4](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.5) - 2017-08-13
+## [v0.5.1](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.5.1) - 2017-08-15
+[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.5...v0.5.1)
+### Changed
+- Ship description now formatted in proper paragraphs
+
+### Removed
+- A check that doesn't make sense in the way we are working with it
+
+## [v0.5](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.5) - 2017-08-13
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.4...v0.5)
-Fixed
+### Fixed
 - PHP Fatal error: Class 'WordPress\\Plugin\\EveOnlineKillboardWidget\\Singleton\\AbstractSingleton' not found
 
 ## [v0.4](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.4) - 2017-08-12

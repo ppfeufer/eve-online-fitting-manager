@@ -29,11 +29,6 @@ class MarketData {
 	 * Getting the market data for a fitting
 	 */
 	public function ajaxGetFittingMarketData() {
-		$nonce = \filter_input(\INPUT_POST, 'nonce');
-		if(!\wp_verify_nonce($nonce, 'ajax-nonce-eve-market-data-for-fitting')) {
-			die('Busted!');
-		}
-
 		$eftFitting = \filter_input(\INPUT_POST, 'eftData');
 		$fittingArray = \WordPress\Plugin\EveOnlineFittingManager\Helper\EftHelper::getFittingArrayFromEftData($eftFitting);
 		$marketPrices = \WordPress\Plugin\EveOnlineFittingManager\Helper\MarketDataHelper::getInstance()->getMarketPricesFromFittingArray($fittingArray);
