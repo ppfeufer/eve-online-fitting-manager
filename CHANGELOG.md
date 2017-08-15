@@ -5,6 +5,9 @@
 ### Changed
 - Ship description now formatted in proper paragraphs
 
+### Removed
+- A check that doesn't make sense in the way we are working with it
+
 ## [v0.5](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.5) - 2017-08-13
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.4...v0.5)
 ### Fixed
