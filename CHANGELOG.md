@@ -5,6 +5,9 @@
 ### Changed
 - Switched codebase to short array syntax
 
+### Removed
+- Last fragments of am earlier change
+
 ## [v0.5.1](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.5.1) - 2017-08-15
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.5...v0.5.1)
 ### Changed
