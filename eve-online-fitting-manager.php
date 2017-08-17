@@ -4,7 +4,7 @@
  * Plugin URI: https://github.com/ppfeufer/eve-online-fitting-manager
  * Git URI: https://github.com/ppfeufer/eve-online-fitting-manager
  * Description: A little management tool for your doctrine fittings in your WordPress website. (Best with a theme running with <a href="http://getbootstrap.com/">Bootstrap</a>)
- * Version: 0.5.1
+ * Version: 0.6-dev
  * Author: Rounon Dax
  * Author URI: http://yulaifederation.net
  * Text Domain: eve-online-fitting-manager
@@ -54,10 +54,10 @@ class EveOnlineFittingManager {
 		$javascriptLoader = new ResourceLoader\JavascriptLoader;
 		$javascriptLoader->init();
 
-		\add_action('init', array($this, 'setThumbnailsSizes'));
-		\add_action('pre_get_posts', array($this, 'customPageQueryVars'));
+		\add_action('init', [$this, 'setThumbnailsSizes']);
+		\add_action('pre_get_posts', [$this, 'customPageQueryVars']);
 
-		\add_filter('query_vars', array($this, 'addQueryVarsFilter'));
+		\add_filter('query_vars', [$this, 'addQueryVarsFilter']);
 
 		new Libs\PostType;
 		new Libs\Shortcodes;
@@ -74,7 +74,7 @@ class EveOnlineFittingManager {
 			/**
 			 * Check Github for updates
 			 */
-			$githubConfig = array(
+			$githubConfig = [
 				'slug' => \plugin_basename(__FILE__),
 				'proper_folder_name' => 'eve-online-fitting-manager',
 				'api_url' => 'https://api.github.com/repos/ppfeufer/eve-online-fitting-manager',
@@ -86,7 +86,7 @@ class EveOnlineFittingManager {
 				'tested' => '4.8',
 				'readme' => 'README.md',
 				'access_token' => '',
-			);
+			];
 
 			new Libs\GithubUpdater($githubConfig);
 		} // END if(\is_admin())

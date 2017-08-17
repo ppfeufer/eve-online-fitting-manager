@@ -21,8 +21,8 @@ class MarketData {
 	 * Initialize the actions
 	 */
 	private function initActions() {
-		\add_action('wp_ajax_nopriv_get-eve-fitting-market-data', array($this, 'ajaxGetFittingMarketData'));
-		\add_action('wp_ajax_get-eve-fitting-market-data', array($this, 'ajaxGetFittingMarketData'));
+		\add_action('wp_ajax_nopriv_get-eve-fitting-market-data', [$this, 'ajaxGetFittingMarketData']);
+		\add_action('wp_ajax_get-eve-fitting-market-data', [$this, 'ajaxGetFittingMarketData']);
 	}
 
 	/**

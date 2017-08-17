@@ -41,14 +41,14 @@ class EveApiHelper extends EveOnlineFittingManager\Singleton\AbstractSingleton {
 	 * Assigning Imagesever Endpoints
 	 */
 	private function getImageserverEndpoints() {
-		$this->imageserverEndpoints = array(
+		$this->imageserverEndpoints = [
 			'alliance' => 'Alliance/',
 			'corporation' => 'Corporation/',
 			'character' => 'Character/',
 			'item' => 'Type/',
 			'ship' => 'Render/',
 			'inventory' => 'InventoryType/' // all the other stuff
-		);
+		];
 	} // END private function setImageserverEndpoints()
 
 	/**

@@ -14,10 +14,10 @@ class PostType {
 	 * Constructor
 	 */
 	public function __construct() {
-		\add_action('init', array($this, 'customPostType'));
+		\add_action('init', [$this, 'customPostType']);
 
-		\add_filter('template_include', array($this, 'templateLoader'));
-		\add_filter('page_template', array($this, 'registerPageTemplate'));
+		\add_filter('template_include', [$this, 'templateLoader']);
+		\add_filter('page_template', [$this, 'registerPageTemplate']);
 	} // END public function __construct()
 
 	/**
@@ -26,7 +26,7 @@ class PostType {
 	public function customPostType() {
 		$var_sSlug = self::getPosttypeSlug('fittings');
 
-		$labelsDoctrine = array(
+		$labelsDoctrine = [
 			'name' => \__('Doctrines', 'eve-online-fitting-manager'),
 			'singular_name' => \__('Doctrine', 'eve-online-fitting-manager'),
 			'search_items' => \__('Search Doctrines', 'eve-online-fitting-manager'),
@@ -40,9 +40,9 @@ class PostType {
 			'separate_items_with_commas' => \__('Separate Doctrines with commas', 'eve-online-fitting-manager'),
 			'add_or_remove_items' => \__('Add or remove Doctrine', 'eve-online-fitting-manager'),
 			'choose_from_most_used' => \__('Choose from most used Doctrines', 'eve-online-fitting-manager')
-		);
+		];
 
-		$labelsShip = array(
+		$labelsShip = [
 			'name' => \__('Ship Types', 'eve-online-fitting-manager'),
 			'singular_name' => \__('Ship Type', 'eve-online-fitting-manager'),
 			'search_items' => \__('Search Ship Types', 'eve-online-fitting-manager'),
@@ -56,66 +56,66 @@ class PostType {
 			'separate_items_with_commas' => \__('Separate Ship Types with commas', 'eve-online-fitting-manager'),
 			'add_or_remove_items' => \__('Add or remove Ship Type', 'eve-online-fitting-manager'),
 			'choose_from_most_used' => \__('Choose from most used Ship Types', 'eve-online-fitting-manager')
-		);
+		];
 
-		$argsTaxDoctrine = array(
+		$argsTaxDoctrine = [
 			'label' => \__('Doctrines', 'eve-online-fitting-manager'),
 			'labels' => $labelsDoctrine,
 			'public' => true,
 			'hierarchical' => true,
 			'show_ui' => true,
 			'show_in_nav_menus' => true,
-			'args' => array(
+			'args' => [
 				'orderby' => 'term_order'
-			),
-			'rewrite' => array(
+			],
+			'rewrite' => [
 				'slug' => $var_sSlug . '/doctrine',
 				'with_front' => true
-			),
+			],
 			'query_var' => true
-		);
+		];
 
-		$argsTaxShip = array(
+		$argsTaxShip = [
 			'label' => \__('Ship Types', 'eve-online-fitting-manager'),
 			'labels' => $labelsShip,
 			'public' => true,
 			'hierarchical' => true,
 			'show_ui' => true,
 			'show_in_nav_menus' => true,
-			'args' => array(
+			'args' => [
 				'orderby' => 'term_order'
-			),
-			'rewrite' => array(
+			],
+			'rewrite' => [
 				'slug' => $var_sSlug . '/ship',
 				'with_front' => true
-			),
+			],
 			'query_var' => true
-		);
+		];
 
-		\register_taxonomy('fitting-doctrines', array('fitting'), $argsTaxDoctrine);
-		\register_taxonomy('fitting-ships', array('fitting'), $argsTaxShip);
+		\register_taxonomy('fitting-doctrines', ['fitting'], $argsTaxDoctrine);
+		\register_taxonomy('fitting-ships', ['fitting'], $argsTaxShip);
 
-		\register_post_type('fitting', array(
-			'labels' => array(
+		\register_post_type('fitting', [
+			'labels' => [
 				'name' => \__('Fittings', 'eve-online-fitting-manager'),
 				'singular_name' => \__('Fitting', 'eve-online-fitting-manager')
-			),
+			],
 			'public' => true,
 			'show_ui' => true,
 			'show_in_menu' => true,
-			'supports' => array(
+			'supports' => [
 				'title',
 				'editor',
 				'author',
 				'thumbnail',
 				'revisions',
 				'custom-fields'
-			),
-			'rewrite' => array(
+			],
+			'rewrite' => [
 				'slug' => $var_sSlug,
 				'with_front' => true
-			)
-		));
+			]
+		]);
 	} // END public function customPostType()
 
 	/**
@@ -215,15 +215,15 @@ class PostType {
 
 		switch($newEdit) {
 			case 'edit':
-				return \in_array($pagenow, array('post.php'));
+				return \in_array($pagenow, ['post.php']);
 				break;
 
 			case 'new':
-				return \in_array($pagenow, array('post-new.php'));
+				return \in_array($pagenow, ['post-new.php']);
 				break;
 
 			default:
-				return \in_array($pagenow, array('post.php', 'post-new.php'));
+				return \in_array($pagenow, ['post.php', 'post-new.php']);
 				break;
 		} // END switch($newEdit)
 	} // END public static function isEditPage($newEdit = null)

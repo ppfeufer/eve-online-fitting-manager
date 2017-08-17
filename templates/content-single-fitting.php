@@ -15,7 +15,7 @@ $drones = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_dron
 $charges = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_charges', true);
 $fuel = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_fuel', true);
 $fittingDna = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_dna', true);
-$eftFitting = \WordPress\Plugin\EveOnlineFittingManager\Helper\EftHelper::getEftImportFromFitting(array(
+$eftFitting = \WordPress\Plugin\EveOnlineFittingManager\Helper\EftHelper::getEftImportFromFitting([
 	'shipID' => $shipID,
 	'fittingType' => $fittingType,
 	'highSlots' => $highSlots,
@@ -27,7 +27,7 @@ $eftFitting = \WordPress\Plugin\EveOnlineFittingManager\Helper\EftHelper::getEft
 	'drones' => $drones,
 	'charges' => $charges,
 	'fuel' => $fuel
-));
+]);
 ?>
 
 <header class="entry-header">
@@ -60,7 +60,7 @@ $eftFitting = \WordPress\Plugin\EveOnlineFittingManager\Helper\EftHelper::getEft
 					 * Show visual fitting
 					 */
 					if(isset($pluginSettings['template-detail-parts-settings']['show-visual-fitting']) && $pluginSettings['template-detail-parts-settings']['show-visual-fitting'] === 'yes') {
-						\WordPress\Plugin\EveOnlineFittingManager\Helper\TemplateHelper::getTemplate('fitting-details/visualization/fitting-ring', array(
+						\WordPress\Plugin\EveOnlineFittingManager\Helper\TemplateHelper::getTemplate('fitting-details/visualization/fitting-ring', [
 							'shipID' => $shipID,
 							'highSlots' => $highSlots,
 							'midSlots' => $midSlots,
@@ -68,16 +68,16 @@ $eftFitting = \WordPress\Plugin\EveOnlineFittingManager\Helper\EftHelper::getEft
 							'rigSlots' => $rigSlots,
 							'subSystems' => $subSystems,
 							'serviceSlots' => $serviceSlots
-						));
+						]);
 					} // END if(!isset($pluginSettings['template-detail-parts-settings']['show-visual-fitting']) && $pluginSettings['template-detail-parts-settings']['show-visual-fitting'] === 'yes')
 
 					if(isset($pluginSettings['template-detail-parts-settings']['show-osmium-link']) && $pluginSettings['template-detail-parts-settings']['show-osmium-link'] === 'yes') {
-						\WordPress\Plugin\EveOnlineFittingManager\Helper\TemplateHelper::getTemplate('fitting-details/utilities/fitting-service-buttons', array(
+						\WordPress\Plugin\EveOnlineFittingManager\Helper\TemplateHelper::getTemplate('fitting-details/utilities/fitting-service-buttons', [
 							'shipID' => $shipID,
 							'fittingDna' => $fittingDna,
 							'eftFitting' => $eftFitting,
 							'pluginSettings' => $pluginSettings
-						));
+						]);
 					} // END if(isset($pluginSettings['template-detail-parts-settings']['show-osmium-link']) && $pluginSettings['template-detail-parts-settings']['show-osmium-link'] === 'yes')
 					/**
 					 * Show the Osmium fitting link
@@ -109,9 +109,9 @@ $eftFitting = \WordPress\Plugin\EveOnlineFittingManager\Helper\EftHelper::getEft
 					 * Show Market Prices
 					 */
 					if(isset($pluginSettings['template-detail-parts-settings']['show-market-data']) && $pluginSettings['template-detail-parts-settings']['show-market-data'] === 'yes') {
-						\WordPress\Plugin\EveOnlineFittingManager\Helper\TemplateHelper::getTemplate('fitting-details/information/fitting-market-prices', array(
+						\WordPress\Plugin\EveOnlineFittingManager\Helper\TemplateHelper::getTemplate('fitting-details/information/fitting-market-prices', [
 							'eftFitting' => $eftFitting
-						));
+						]);
 					} // END if(isset($pluginSettings['template-detail-parts-settings']['show-market-data']) && $pluginSettings['template-detail-parts-settings']['show-market-data'] === 'yes')
 
 					/**
@@ -128,11 +128,11 @@ $eftFitting = \WordPress\Plugin\EveOnlineFittingManager\Helper\EftHelper::getEft
 					/**
 					 * Show information tabs
 					 */
-					\WordPress\Plugin\EveOnlineFittingManager\Helper\TemplateHelper::getTemplate('fitting-details/information/fitting-information-tabs', array(
+					\WordPress\Plugin\EveOnlineFittingManager\Helper\TemplateHelper::getTemplate('fitting-details/information/fitting-information-tabs', [
 						'pluginSettings' => $pluginSettings,
 						'eftFitting' => $eftFitting,
 						'shipID' => $shipID
-					));
+					]);
 					?>
 				</div>
 			</div>

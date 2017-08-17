@@ -64,16 +64,16 @@ class PluginHelper {
 	 * @return array
 	 */
 	public static function getPluginDefaultSettings() {
-		$defaultSettings = array(
+		$defaultSettings = [
 			'edk-killboard-host' => '',
 			'edk-killboard-user' => '',
 			'edk-killboard-name' => '',
 			'edk-killboard-password' => '',
-			'template-image-settings' => array(
+			'template-image-settings' => [
 				'show-ship-images-in-loop' => '',
 				'show-doctrine-images-in-loop' => ''
-			),
-			'template-detail-parts-settings' => array(
+			],
+			'template-detail-parts-settings' => [
 				'show-visual-fitting' => 'yes',
 				'show-osmium-link' => 'yes',
 				'show-ship-description' => 'yes',
@@ -81,8 +81,8 @@ class PluginHelper {
 				'show-copy-permalink' => 'yes',
 				'show-market-data' => 'yes',
 				'show-doctrines' => 'yes',
-			)
-		);
+			]
+		];
 
 		return $defaultSettings;
 	} // END public static function getPluginDefaultSettings()

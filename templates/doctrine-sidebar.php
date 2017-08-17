@@ -4,7 +4,11 @@
 	/**
 	 * Filter the Navigation by doctrines
 	 */
-	$countDoctrineShips = \get_terms(array('taxonomy' => 'fitting-doctrines', 'fields' => 'count'));
+	$countDoctrineShips = \get_terms([
+		'taxonomy' => 'fitting-doctrines',
+		'fields' => 'count'
+	]);
+
 	if($countDoctrineShips > 0) {
 		?>
 		<aside class="eve-online-fitting-search">
@@ -38,7 +42,7 @@
 	/**
 	 * Filter the Navigation by ship types
 	 */
-	$countShipTypes = \get_terms(array('taxonomy' => 'fitting-ships', 'fields' => 'count'));
+	$countShipTypes = \get_terms(['taxonomy' => 'fitting-ships', 'fields' => 'count']);
 	if($countShipTypes > 0) {
 		?>
 		<aside class="eve-online-fitting-ships">

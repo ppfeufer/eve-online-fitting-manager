@@ -18,7 +18,7 @@ class Shortcodes {
 	 * register all shortcodes
 	 */
 	public function registerShortcodes() {
-		\add_shortcode('fittings', array($this, 'shortcodeFittings'));
+		\add_shortcode('fittings', [$this, 'shortcodeFittings']);
 	} // END public function registerShortcodes()
 
 	/**
@@ -31,9 +31,9 @@ class Shortcodes {
 	 */
 	public function shortcodeFittings($atts) {
 		$args = \shortcode_atts(
-			array(
+			[
 				'list' => 'doctrines'
-			),
+			],
 			$atts
 		);
 

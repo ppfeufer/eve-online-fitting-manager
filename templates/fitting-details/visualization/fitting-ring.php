@@ -1,5 +1,5 @@
 <?php
-$fittingSlotLayout = \WordPress\Plugin\EveOnlineFittingManager\Helper\FittingHelper::getSlotLayoutFromFittingArray(array(
+$fittingSlotLayout = \WordPress\Plugin\EveOnlineFittingManager\Helper\FittingHelper::getSlotLayoutFromFittingArray([
 	'shipID' => $shipID,
 	'highSlots' => $highSlots,
 	'midSlots' => $midSlots,
@@ -7,7 +7,7 @@ $fittingSlotLayout = \WordPress\Plugin\EveOnlineFittingManager\Helper\FittingHel
 	'rigSlots' => $rigSlots,
 	'subSystems' => $subSystems,
 	'serviceSlots' => $serviceSlots
-));
+]);
 
 $itemsHighSlots = null;
 if(!empty($highSlots)) {

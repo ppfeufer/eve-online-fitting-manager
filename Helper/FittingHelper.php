@@ -15,7 +15,7 @@ class FittingHelper {
 	 */
 	public static function getHighSlotItemNames($highSlots) {
 		$slots = \unserialize($highSlots);
-		$arrayHighSlot = array(
+		$arrayHighSlot = [
 			'highSlot_1_itemName' => (!empty($slots['highSlot_1'])) ? self::getItemNameById($slots['highSlot_1']) : null,
 			'highSlot_2_itemName' => (!empty($slots['highSlot_2'])) ? self::getItemNameById($slots['highSlot_2']) : null,
 			'highSlot_3_itemName' => (!empty($slots['highSlot_3'])) ? self::getItemNameById($slots['highSlot_3']) : null,
@@ -24,7 +24,7 @@ class FittingHelper {
 			'highSlot_6_itemName' => (!empty($slots['highSlot_6'])) ? self::getItemNameById($slots['highSlot_6']) : null,
 			'highSlot_7_itemName' => (!empty($slots['highSlot_7'])) ? self::getItemNameById($slots['highSlot_7']) : null,
 			'highSlot_8_itemName' => (!empty($slots['highSlot_8'])) ? self::getItemNameById($slots['highSlot_8']) : null,
-		);
+		];
 
 		return $arrayHighSlot;
 	}
@@ -38,7 +38,7 @@ class FittingHelper {
 	public static function getMidSlotItemNames($midSlots) {
 		$slots = \unserialize($midSlots);
 
-		$arrayMidSlot = array(
+		$arrayMidSlot = [
 			'midSlot_1_itemName' => (!empty($slots['midSlot_1'])) ? self::getItemNameById($slots['midSlot_1']) : null,
 			'midSlot_2_itemName' => (!empty($slots['midSlot_2'])) ? self::getItemNameById($slots['midSlot_2']) : null,
 			'midSlot_3_itemName' => (!empty($slots['midSlot_3'])) ? self::getItemNameById($slots['midSlot_3']) : null,
@@ -47,7 +47,7 @@ class FittingHelper {
 			'midSlot_6_itemName' => (!empty($slots['midSlot_6'])) ? self::getItemNameById($slots['midSlot_6']) : null,
 			'midSlot_7_itemName' => (!empty($slots['midSlot_7'])) ? self::getItemNameById($slots['midSlot_7']) : null,
 			'midSlot_8_itemName' => (!empty($slots['midSlot_8'])) ? self::getItemNameById($slots['midSlot_8']) : null,
-		);
+		];
 
 		return $arrayMidSlot;
 	}
@@ -61,7 +61,7 @@ class FittingHelper {
 	public static function getLowSlotItemNames($lowSlots) {
 		$slots = \unserialize($lowSlots);
 
-		$arrayLowSlot = array(
+		$arrayLowSlot = [
 			'lowSlot_1_itemName' => (!empty($slots['lowSlot_1'])) ? self::getItemNameById($slots['lowSlot_1']) : null,
 			'lowSlot_2_itemName' => (!empty($slots['lowSlot_2'])) ? self::getItemNameById($slots['lowSlot_2']) : null,
 			'lowSlot_3_itemName' => (!empty($slots['lowSlot_3'])) ? self::getItemNameById($slots['lowSlot_3']) : null,
@@ -70,7 +70,7 @@ class FittingHelper {
 			'lowSlot_6_itemName' => (!empty($slots['lowSlot_6'])) ? self::getItemNameById($slots['lowSlot_6']) : null,
 			'lowSlot_7_itemName' => (!empty($slots['lowSlot_7'])) ? self::getItemNameById($slots['lowSlot_7']) : null,
 			'lowSlot_8_itemName' => (!empty($slots['lowSlot_8'])) ? self::getItemNameById($slots['lowSlot_8']) : null,
-		);
+		];
 
 		return $arrayLowSlot;
 	}
@@ -84,11 +84,11 @@ class FittingHelper {
 	public static function getRigSlotItemNames($rigSlots) {
 		$rigs = \unserialize($rigSlots);
 
-		$arrayRigSlot = array(
+		$arrayRigSlot = [
 			'rigSlot_1_itemName' => (!empty($rigs['rigSlot_1'])) ? self::getItemNameById($rigs['rigSlot_1']) : null,
 			'rigSlot_2_itemName' => (!empty($rigs['rigSlot_2'])) ? self::getItemNameById($rigs['rigSlot_2']) : null,
 			'rigSlot_3_itemName' => (!empty($rigs['rigSlot_3'])) ? self::getItemNameById($rigs['rigSlot_3']) : null,
-		);
+		];
 
 		return $arrayRigSlot;
 	}
@@ -102,12 +102,12 @@ class FittingHelper {
 	public static function getSubSystemItemNames($subSystems) {
 		$sub = \unserialize($subSystems);
 
-		$arraySubSystems = array(
+		$arraySubSystems = [
 			'subSystem_1_itemName' => (!empty($sub['subSystem_1'])) ? self::getItemNameById($sub['subSystem_1']) : null,
 			'subSystem_2_itemName' => (!empty($sub['subSystem_2'])) ? self::getItemNameById($sub['subSystem_2']) : null,
 			'subSystem_3_itemName' => (!empty($sub['subSystem_3'])) ? self::getItemNameById($sub['subSystem_3']) : null,
 			'subSystem_4_itemName' => (!empty($sub['subSystem_4'])) ? self::getItemNameById($sub['subSystem_4']) : null,
-		);
+		];
 
 		return $arraySubSystems;
 	} // END public static function getSubSystemItemNames($subSystems)
@@ -119,7 +119,7 @@ class FittingHelper {
 	 * @return array
 	 */
 	public static function getItemDescription($itemID) {
-		$sql = EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `description` FROM `kb3_invtypes` WHERE `typeID` = %d', array($itemID));
+		$sql = EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `description` FROM `kb3_invtypes` WHERE `typeID` = %d', [$itemID]);
 		$description = EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
 
 		return \wpautop($description);
@@ -154,7 +154,7 @@ class FittingHelper {
 				INNER JOIN kb3_dgmeffects e ON e.effectID = te.effectID
 				INNER JOIN kb3_item_types itt ON itt.itt_id = it.groupID
 				WHERE it.typeName = %s
-				AND itt.itt_id = it.groupID;', array($itemName));
+				AND itt.itt_id = it.groupID;', [$itemName]);
 		$itemData = EveOnlineFittingManager\Libs\Database::getInstance()->db->get_results($sql, \OBJECT);
 
 		/**
@@ -173,7 +173,7 @@ class FittingHelper {
 					FROM `kb3_invtypes`, `kb3_item_types`, `kb3_item_locations`
 					WHERE `typeName` = %s
 					AND `kb3_item_types`.`itt_id` = `kb3_invtypes`.`groupID`
-					AND `kb3_item_locations`.`itl_flagID` = `kb3_item_types`.`itt_slot`;', array($itemName));
+					AND `kb3_item_locations`.`itl_flagID` = `kb3_item_types`.`itt_slot`;', [$itemName]);
 			$itemData = EveOnlineFittingManager\Libs\Database::getInstance()->db->get_results($sql, \OBJECT);
 		} // END if(!$itemData)
 
@@ -198,7 +198,7 @@ class FittingHelper {
 				/**
 				 * Category: Fuel
 				 */
-				$arrayFuelIDs = array(
+				$arrayFuelIDs = [
 					'16273',	// Liquid Ozone
 					'16274',	// Helium Isotopes
 					'17889',	// Hydrogen Isotopes
@@ -206,7 +206,7 @@ class FittingHelper {
 					'17888',	// Nitrogen Isotopes
 					'16272',	// Heavy Water
 					'16275'		// Strontuim Clathrates
-				);
+				];
 				if(\in_array($itemData->itemID, $arrayFuelIDs)) {
 					$itemData->slotName = 'fuel';
 				}
@@ -237,7 +237,7 @@ class FittingHelper {
 	 * @return boolean
 	 */
 	public static function getItems($itemName) {
-		$sql = EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `kb3_invtypes`.`typeName` AS `itemName` FROM `kb3_invtypes` WHERE `typeName` LIKE %s', array('%' . $itemName . '%'));
+		$sql = EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `kb3_invtypes`.`typeName` AS `itemName` FROM `kb3_invtypes` WHERE `typeName` LIKE %s', ['%' . $itemName . '%']);
 		$itemData = EveOnlineFittingManager\Libs\Database::getInstance()->db->get_results($sql, \OBJECT);
 
 		if($itemData) {
@@ -261,7 +261,7 @@ class FittingHelper {
 		$returnValue = null;
 
 		if(!empty($itemName)) {
-			$sql = EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `kb3_invtypes`.`typeID` AS `itemID` from `kb3_invtypes` WHERE `kb3_invtypes`.`typeName` = %s', array($itemName));
+			$sql = EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `kb3_invtypes`.`typeID` AS `itemID` from `kb3_invtypes` WHERE `kb3_invtypes`.`typeName` = %s', [$itemName]);
 			$returnValue = EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
 		}
 
@@ -276,17 +276,17 @@ class FittingHelper {
 	 */
 	public static function getItemNameById($itemID) {
 		if(\is_array($itemID)) {
-			$itemNames = array();
+			$itemNames = [];
 
 			foreach($itemID as $id) {
-				$sql = EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `kb3_invtypes`.`typeName` AS `itemName` from `kb3_invtypes` WHERE `kb3_invtypes`.`typeID` = %d', array($id));
+				$sql = EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `kb3_invtypes`.`typeName` AS `itemName` from `kb3_invtypes` WHERE `kb3_invtypes`.`typeID` = %d', [$id]);
 				$itemNames[$id] = EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
 			} // END foreach($itemID as $id)
 
 			return $itemNames;
 		} // END if(is_array($itemID))
 
-		$sql = EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `kb3_invtypes`.`typeName` AS `itemName` from `kb3_invtypes` WHERE `kb3_invtypes`.`typeID` = %d', array($itemID));
+		$sql = EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `kb3_invtypes`.`typeName` AS `itemName` from `kb3_invtypes` WHERE `kb3_invtypes`.`typeID` = %d', [$itemID]);
 		$itemName = EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
 
 		return $itemName;
@@ -305,14 +305,14 @@ class FittingHelper {
 	 * @return string
 	 */
 	public static function getShipDnaFromFittingData($fittingData) {
-		$highSlots = array();
-		$midSlots = array();
-		$lowSlots = array();
-		$subSystems = array();
-		$rigSlots = array();
-		$shipData = array();
-		$charges = array();
-		$drones = array();
+		$highSlots = [];
+		$midSlots = [];
+		$lowSlots = [];
+		$subSystems = [];
+		$rigSlots = [];
+		$shipData = [];
+		$charges = [];
+		$drones = [];
 
 		foreach($fittingData as $data) {
 			switch($data->slotName) {
@@ -474,34 +474,34 @@ class FittingHelper {
 			$currentServiceSlots = 5;
 		} // END if(in_array($fitting['shipID'], $arrayStrategicCruiserIDs))
 
-		return array(
+		return [
 			'highSlots' => $currentHighSlots,
 			'midSlots' => $currenMidSlots,
 			'lowSlots' => $currentLowSlots,
 			'rigSlots' => $currentRigSlots,
 			'subSystems' => $currentSubSystems,
 			'serviceSlots' => $currentServiceSlots
-		);
+		];
 	} // END public function getSlotLayoutFromFittingArray($fitting)
 
 	private static function getStrategicCruiserIds() {
-		return array(
+		return [
 			29984, // Tengu
 			29986, // Legion
 			29988, // Proteus
 			29990 // Loki
-		);
+		];
 	}
 
 	private static function getUpwellStructureIds() {
-		return array(
+		return [
 			35832, // Astrahus
 			35833, // Fortizar
 			35834, // Keepstar
 			35825, // Raitaru
 			35826, // Azbel
 			35827 // Sotiyo
-		);
+		];
 	}
 
 	/**
@@ -515,7 +515,7 @@ class FittingHelper {
 				FROM `kb3_dgmtypeattributes`
 				JOIN `kb3_dgmattributetypes` ON `attributeName` = "hiSlots"
 				WHERE `kb3_dgmattributetypes`.`attributeID` = `kb3_dgmtypeattributes`.`attributeID`
-				AND `kb3_dgmtypeattributes`.`typeID` = %d', array($shipID));
+				AND `kb3_dgmtypeattributes`.`typeID` = %d', [$shipID]);
 
 		return EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
 	} // END public function getHighSlotCountForShipID($shipID)
@@ -531,7 +531,7 @@ class FittingHelper {
 				FROM `kb3_dgmtypeattributes`
 				JOIN `kb3_dgmattributetypes` ON `attributeName` = "medSlots"
 				WHERE `kb3_dgmattributetypes`.`attributeID` = `kb3_dgmtypeattributes`.`attributeID`
-				AND `kb3_dgmtypeattributes`.`typeID` = %d', array($shipID));
+				AND `kb3_dgmtypeattributes`.`typeID` = %d', [$shipID]);
 
 		return EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
 	} // END public function getMidSlotCountForShipID($shipID)
@@ -547,7 +547,7 @@ class FittingHelper {
 				FROM `kb3_dgmtypeattributes`
 				JOIN `kb3_dgmattributetypes` ON `attributeName` = "lowSlots"
 				WHERE `kb3_dgmattributetypes`.`attributeID` = `kb3_dgmtypeattributes`.`attributeID`
-				AND `kb3_dgmtypeattributes`.`typeID` = %d', array($shipID));
+				AND `kb3_dgmtypeattributes`.`typeID` = %d', [$shipID]);
 
 		return EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
 	} // END public function getLowSlotCountForShipID($shipID)
@@ -563,7 +563,7 @@ class FittingHelper {
 				FROM `kb3_dgmtypeattributes`
 				JOIN `kb3_dgmattributetypes` ON `attributeName` = "hiSlotModifier"
 				WHERE `kb3_dgmattributetypes`.`attributeID` = `kb3_dgmtypeattributes`.`attributeID`
-				AND `kb3_dgmtypeattributes`.`typeID` = %d', array($subsystemID));
+				AND `kb3_dgmtypeattributes`.`typeID` = %d', [$subsystemID]);
 
 		return EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
 	} // END public function getHighSlotModifierCountForShipID($subsystemID)
@@ -579,7 +579,7 @@ class FittingHelper {
 				FROM `kb3_dgmtypeattributes`
 				JOIN `kb3_dgmattributetypes` ON `attributeName` = "medSlotModifier"
 				WHERE `kb3_dgmattributetypes`.`attributeID` = `kb3_dgmtypeattributes`.`attributeID`
-				AND `kb3_dgmtypeattributes`.`typeID` = %d', array($subsystemID));
+				AND `kb3_dgmtypeattributes`.`typeID` = %d', [$subsystemID]);
 
 		return EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
 	} // END public function getMidSlotModifierCountForShipID($subsystemID)
@@ -595,7 +595,7 @@ class FittingHelper {
 				FROM `kb3_dgmtypeattributes`
 				JOIN `kb3_dgmattributetypes` ON `attributeName` = "lowSlotModifier"
 				WHERE `kb3_dgmattributetypes`.`attributeID` = `kb3_dgmtypeattributes`.`attributeID`
-				AND `kb3_dgmtypeattributes`.`typeID` = %d', array($subsystemID));
+				AND `kb3_dgmtypeattributes`.`typeID` = %d', [$subsystemID]);
 
 		return EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
 	} // END public function getLowSlotModifierCountForShipID($subsystemID)
@@ -611,7 +611,7 @@ class FittingHelper {
 				FROM `kb3_dgmtypeattributes`
 				JOIN `kb3_dgmattributetypes` ON `attributeName` = "rigSlots"
 				WHERE `kb3_dgmattributetypes`.`attributeID` = `kb3_dgmtypeattributes`.`attributeID`
-				AND `kb3_dgmtypeattributes`.`typeID` = %d', array($shipID));
+				AND `kb3_dgmtypeattributes`.`typeID` = %d', [$shipID]);
 
 		return EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
 	} // END public function getRigSlotCountForShipID($shipID)
@@ -639,11 +639,11 @@ class FittingHelper {
 		$entityListHtml = '<ul class="sidebar-doctrine-list doctrine-list menu-' . $taxonomy . '">';
 
 		// get all taxonomy terms
-		$entities = \get_terms(array(
+		$entities = \get_terms([
 			'taxonomy' => $taxonomy,
 			'orderby' => 'name',
 			'order' => 'ASC'
-		));
+		]);
 
 		// get terms that have children
 		$hierarchy = \_get_term_hierarchy($taxonomy);
@@ -659,12 +659,12 @@ class FittingHelper {
 
 			// If the entity has doctrines...
 			if(isset($hierarchy[$entity->term_id])) {
-				$doctrines = \get_terms(array(
+				$doctrines = \get_terms([
 					'taxonomy' => $taxonomy,
 					'orderby' => 'name',
 					'order' => 'ASC',
 					'child_of' => $entity->term_id
-				));
+				]);
 
 				$doctrineListHtml = '<li class="doctrine entity-' . $entity->slug . ' doctrine-id-' . $entity->term_id . ' has-children" data-doctrine="' . $entity->slug . '"><a class="doctrine-link-item" href="' . \get_term_link($entity->term_id) . '">' . $entity->name . '</a><span class="caret dropdown-toggle" data-toggle="dropdown"><i></i></span>';
 				$doctrineListHtml .= '<ul class="dropdown-menu child-doctrine-list">';
@@ -677,12 +677,12 @@ class FittingHelper {
 					$wingListHtml = '<li class="doctrine entity-' . $entity->slug . ' doctrine-' . $doctrine->slug . ' doctrine-id-' . $doctrine->term_id . '" data-doctrine="' . $doctrine->slug . '"><a class="doctrine-link-item" href="' . \get_term_link($doctrine->term_id) . '">' . $doctrine->name . '</a></li>';
 
 					if(isset($hierarchy[$doctrine->term_id])) {
-						$wings = \get_terms(array(
+						$wings = \get_terms([
 							'taxonomy' => $taxonomy,
 							'orderby' => 'name',
 							'order' => 'ASC',
 							'child_of' => $doctrine->term_id
-						));
+						]);
 
 						$wingListHtml = '<li class="doctrine entity-' . $entity->slug . ' doctrine-' . $doctrine->slug . ' doctrine-id-' . $doctrine->term_id . ' has-children" data-doctrine="' . $doctrine->slug . '"><a class="doctrine-link-item" href="' . \get_term_link($doctrine->term_id) . '">' . $doctrine->name . '</a>';
 						$wingListHtml .= '<ul class="dropdown-menu child-doctrine-second-level child-doctrine-list">';
@@ -727,11 +727,11 @@ class FittingHelper {
 		$entityListHtml .= '<ul class="content-doctrine-list doctrine-list menu-' . $taxonomy . ' bootstrap-gallery bootstrap-post-loop-fittings bootstrap-post-loop-fittings-' . $uniqueID . ' clearfix">';
 
 		// get all taxonomy terms
-		$entities = \get_terms(array(
+		$entities = \get_terms([
 			'taxonomy' => $taxonomy,
 			'orderby' => 'name',
 			'order' => 'ASC'
-		));
+		]);
 
 		// get terms that have children
 		$hierarchy = \_get_term_hierarchy($taxonomy);
@@ -762,12 +762,12 @@ class FittingHelper {
 
 			// If the entity has doctrines...
 			if(isset($hierarchy[$entity->term_id])) {
-				$doctrines = \get_terms(array(
+				$doctrines = \get_terms([
 					'taxonomy' => $taxonomy,
 					'orderby' => 'name',
 					'order' => 'ASC',
 					'child_of' => $entity->term_id
-				));
+				]);
 
 				$doctrineListHtml = '<li class="doctrine entity-' . $entity->slug . ' doctrine-id-' . $entity->term_id . ' has-children">' . $doctrineImage . '<header class="entry-header"><h2 class="entry-title"><a class="doctrine-link-item" href="' . \get_term_link($entity->term_id) . '">' . $entity->name . '</a></h2></header>';
 				if(isset($pluginOptions['template-image-settings']['show-doctrine-images-in-loop']) && $pluginOptions['template-image-settings']['show-doctrine-images-in-loop'] === 'yes') {
@@ -783,12 +783,12 @@ class FittingHelper {
 					$wingListHtml = '<div class="doctrine sub-first-level doctrine entity-' . $entity->slug . ' doctrine-' . $doctrine->slug . ' doctrine-id-' . $doctrine->term_id . '"><a class="doctrine-link-item" href="' . \get_term_link($doctrine->term_id) . '">' . $doctrine->name . '</a></div>';
 
 					if(isset($hierarchy[$doctrine->term_id])) {
-						$wings = \get_terms(array(
+						$wings = \get_terms([
 							'taxonomy' => $taxonomy,
 							'orderby' => 'name',
 							'order' => 'ASC',
 							'child_of' => $doctrine->term_id
-						));
+						]);
 
 						$wingListHtml = '<div class="doctrine sub-first-level doctrine entity-' . $entity->slug . ' doctrine-' . $doctrine->slug . ' doctrine-id-' . $doctrine->term_id . ' has-children"><a class="doctrine-link-item" href="' . \get_term_link($doctrine->term_id) . '">' . $doctrine->name . '</a><span class="caret dropdown-toggle" data-toggle="dropdown"><i></i></span>';
 						$wingListHtml .= '<div class="child-doctrine-second-level child-doctrine-list">';
@@ -852,26 +852,26 @@ class FittingHelper {
 	}
 
 	public static function searchFittings() {
-		$args = array(
+		$args = [
 			'post_type' => 'fitting',
 			'_meta_or_title' => self::getFittingSearchQuery(),
 			'compare' => 'LIKE',
-			'meta_query' => array(
+			'meta_query' => [
 				'relation' => 'OR',
-				array(
+				[
 					'key' => 'eve-online-fitting-manager_ship_type',
 					'value' => self::getFittingSearchQuery(),
 					'compare' => 'LIKE'
-				),
-				array(
+				],
+				[
 					'key' => 'eve-online-fitting-manager_fitting_name',
 					'value' => self::getFittingSearchQuery(),
 					'compare' => 'LIKE'
-				)
-			),
+				]
+			],
 			'orderby'=> 'title',
 			'order' => 'ASC'
-		);
+		];
 
 		return new \WP_Query($args);
 	}

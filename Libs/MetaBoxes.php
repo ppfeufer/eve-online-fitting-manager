@@ -14,16 +14,16 @@ class MetaBoxes {
 	 * Constructor
 	 */
 	public function __construct() {
-		\add_action('add_meta_boxes', array($this, 'registerMetaBoxes'));
-		\add_action('save_post', array($this, 'saveMetaBoxes'));
+		\add_action('add_meta_boxes', [$this, 'registerMetaBoxes']);
+		\add_action('save_post', [$this, 'saveMetaBoxes']);
 	} // END public function __construct()
 
 	/**
 	 * Registering the Meta Boxes
 	 */
 	public function registerMetaBoxes() {
-		\add_meta_box('eve-online-fitting-manager_eft-fitting', \__('EFT Fitting', 'eve-online-fitting-manager'), array($this, 'renderEftFittingMetaBox'), 'fitting', 'normal');
-		\add_meta_box('eve-online-fitting-manager_fitting-marker', \__('Mark Fitting As ...', 'eve-online-fitting-manager'), array($this, 'renderFittingMarkerMetaBox'), 'fitting', 'side');
+		\add_meta_box('eve-online-fitting-manager_eft-fitting', \__('EFT Fitting', 'eve-online-fitting-manager'), [$this, 'renderEftFittingMetaBox'], 'fitting', 'normal');
+		\add_meta_box('eve-online-fitting-manager_fitting-marker', \__('Mark Fitting As ...', 'eve-online-fitting-manager'), [$this, 'renderFittingMarkerMetaBox'], 'fitting', 'side');
 	} // END public function registerMetaBoxes()
 
 	/**
@@ -39,7 +39,7 @@ class MetaBoxes {
 
 		if(PostType::isEditPage('edit') && $typenow === 'fitting') {
 			if(\get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_ship_ID', true) !== null) {
-				$eftFitting = EveOnlineFittingManager\Helper\EftHelper::getEftImportFromFitting(array(
+				$eftFitting = EveOnlineFittingManager\Helper\EftHelper::getEftImportFromFitting([
 					'shipID' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_ship_ID', true),
 					'fittingType' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_name', true),
 					'highSlots' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_high_slots', true),
@@ -51,7 +51,7 @@ class MetaBoxes {
 					'drones' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_drones', true),
 					'charges' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_charges', true),
 					'fuel' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_fuel', true),
-				));
+				]);
 			} // END if(\get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_ship_ID', true) !== null)
 		} // END if(PostType::isEditPage('edit') && $typenow === 'fitting')
 		?>

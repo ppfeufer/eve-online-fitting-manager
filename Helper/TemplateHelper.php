@@ -40,10 +40,10 @@ class TemplateHelper {
 		} // END if(!$default_path)
 
 		// Search template file in theme folder.
-		$template = \locate_template(array(
+		$template = \locate_template([
 			$template_path . $template_name,
 			$template_name
-		));
+		]);
 
 		// Get plugins template file.
 		if(!$template) {
@@ -67,7 +67,7 @@ class TemplateHelper {
 	 * @param string 	$tempate_path			Path to templates.
 	 * @param string	$default_path			Default path to template files.
 	 */
-	public static function getTemplate($template_name, $args = array(), $tempate_path = '', $default_path = '') {
+	public static function getTemplate($template_name, $args = [], $tempate_path = '', $default_path = '') {
 		if(\is_array($args) && isset($args)) {
 			\extract($args);
 		} // END if(\is_array($args) && isset($args))
