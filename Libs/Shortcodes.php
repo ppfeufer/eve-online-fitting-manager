@@ -2,8 +2,6 @@
 
 namespace WordPress\Plugin\EveOnlineFittingManager\Libs;
 
-//use WordPress\Plugin\EveOnlineFittingManager;
-
 \defined('ABSPATH') or die();
 
 class Shortcodes {
@@ -18,7 +16,7 @@ class Shortcodes {
 	 * register all shortcodes
 	 */
 	public function registerShortcodes() {
-		\add_shortcode('fittings', array($this, 'shortcodeFittings'));
+		\add_shortcode('fittings', [$this, 'shortcodeFittings']);
 	} // END public function registerShortcodes()
 
 	/**
@@ -30,13 +28,10 @@ class Shortcodes {
 	 * @param array $atts
 	 */
 	public function shortcodeFittings($atts) {
-		$args = \shortcode_atts(
-			array(
-				'list' => 'doctrines'
-			),
-			$atts
-		);
+		$args = \shortcode_atts([
+			'list' => 'doctrines'
+		], $atts);
 
-		return \WordPress\Plugin\EveOnlineFittingManager\Helper\FittingHelper::getContentMenu('fitting-' . $args['list']);
+		return Helper\FittingHelper::getContentMenu('fitting-' . $args['list']);
 	} // END public function shortcodeFittings($atts)
 } // END class Shortcodes

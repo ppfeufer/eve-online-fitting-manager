@@ -1,8 +1,6 @@
 <?php
 
-namespace WordPress\Plugin\EveOnlineFittingManager\Helper;
-
-use WordPress\Plugin\EveOnlineFittingManager;
+namespace WordPress\Plugin\EveOnlineFittingManager\Libs\Helper;
 
 \defined('ABSPATH') or die();
 
@@ -18,7 +16,7 @@ class PluginHelper {
 	 * @return string
 	 */
 	public static function getPluginPath($file = '') {
-		return \trailingslashit(\plugin_dir_path(dirname(__FILE__))) . $file;
+		return \trailingslashit(\plugin_dir_path(\dirname(\dirname(__FILE__)))) . $file;
 	}
 
 	/**
@@ -28,7 +26,7 @@ class PluginHelper {
 	 * @return string
 	 */
 	public static function getPluginUri($file = '') {
-		return \plugins_url($file, dirname(__FILE__));
+		return \plugins_url($file, \dirname(\dirname(__FILE__)));
 	} // END public function getThemeCacheUri()
 
 	/**
@@ -64,16 +62,16 @@ class PluginHelper {
 	 * @return array
 	 */
 	public static function getPluginDefaultSettings() {
-		$defaultSettings = array(
+		$defaultSettings = [
 			'edk-killboard-host' => '',
 			'edk-killboard-user' => '',
 			'edk-killboard-name' => '',
 			'edk-killboard-password' => '',
-			'template-image-settings' => array(
+			'template-image-settings' => [
 				'show-ship-images-in-loop' => '',
 				'show-doctrine-images-in-loop' => ''
-			),
-			'template-detail-parts-settings' => array(
+			],
+			'template-detail-parts-settings' => [
 				'show-visual-fitting' => 'yes',
 				'show-osmium-link' => 'yes',
 				'show-ship-description' => 'yes',
@@ -81,8 +79,8 @@ class PluginHelper {
 				'show-copy-permalink' => 'yes',
 				'show-market-data' => 'yes',
 				'show-doctrines' => 'yes',
-			)
-		);
+			]
+		];
 
 		return $defaultSettings;
 	} // END public static function getPluginDefaultSettings()

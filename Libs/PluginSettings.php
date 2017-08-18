@@ -1,8 +1,6 @@
 <?php
 namespace WordPress\Plugin\EveOnlineFittingManager\Libs;
 
-use WordPress\Plugin\EveOnlineFittingManager;
-
 \defined('ABSPATH') or die();
 
 /**
@@ -17,7 +15,7 @@ class PluginSettings {
 	 */
 	public function __construct() {
 		$this->settingsFilter = 'register_eve_online_fittings_manager_settings';
-		$this->defaultOptions = EveOnlineFittingManager\Helper\PluginHelper::getPluginDefaultSettings();
+		$this->defaultOptions = Helper\PluginHelper::getPluginDefaultSettings();
 
 		$this->fireSettingsApi();
 	} // END public function __construct()
@@ -29,7 +27,7 @@ class PluginSettings {
 		$settingsApi = new SettingsApi($this->settingsFilter, $this->defaultOptions);
 		$settingsApi->init();
 
-		\add_filter($this->settingsFilter, array($this, 'getSettings'));
+		\add_filter($this->settingsFilter, [$this, 'getSettings']);
 	} // END function fireSettingsApi()
 
 	/**
@@ -38,19 +36,19 @@ class PluginSettings {
 	 * @return array The Settings for the Options Page
 	 */
 	public function getSettings() {
-		$pluginOptionsPage['eve-online-fittings-manager'] = array(
+		$pluginOptionsPage['eve-online-fittings-manager'] = [
 			'type' => 'plugin',
 			'menu_title' => \__('EVE Online Fittings Manager', 'eve-online-fitting-manager'),
 			'page_title' => \__('EVE Online Fittings Manager', 'eve-online-fitting-manager'),
-			'option_name' => EveOnlineFittingManager\Helper\PluginHelper::getOptionFieldName(), // Your settings name. With this name your settings are saved in the database.
-			'tabs' => array(
+			'option_name' => Helper\PluginHelper::getOptionFieldName(), // Your settings name. With this name your settings are saved in the database.
+			'tabs' => [
 				/**
 				 * killboard settings tab
 				 */
 				'general-settings' => $this->getKillboardSettings(),
 				'template-settings' => $this->getTemplateSettings()
-			)
-		);
+			]
+		];
 
 		return $pluginOptionsPage;
 	} // END function renderSettingsPage()
@@ -61,11 +59,11 @@ class PluginSettings {
 	 * @return array The Killboard Database Setting
 	 */
 	private function getKillboardSettings() {
-		$settings = array(
+		$settings = [
 			'tab_title' => \__('Killboard Settings', 'eve-online-fitting-manager'),
 			'tab_description' => \__('You need to have a connection to a EDK killboard database in order to use this plugin. The database is needed to gather all the ship and item information.', 'eve-online-fitting-manager'),
 			'fields' => $this->getKillboardSettingsFields()
-		);
+		];
 
 		return $settings;
 	} // END private function getKillboardSettings()
@@ -76,10 +74,10 @@ class PluginSettings {
 	 * @return array The Template Settings
 	 */
 	private function getTemplateSettings() {
-		$settings = array(
+		$settings = [
 			'tab_title' => \__('Template Settings', 'eve-online-fitting-manager'),
 			'fields' => $this->getTemplateSettingsFields()
-		);
+		];
 
 		return $settings;
 	} // END private function getKillboardSettings()
@@ -98,29 +96,29 @@ class PluginSettings {
 //			$infotext = \__('Since you already have the EVE ShipInfo Plugin installed and activated, there is no need for any other settings, we can use that plugins database straight away.', 'eve-online-fitting-manager');
 //		} // END if(EveOnlineFittingManager\Helper\PluginHelper::checkPluginDependencies('EVEShipInfo') === true)
 
-		$settingsFields = array(
-			'' => array(
+		$settingsFields = [
+			'' => [
 				'type' => 'info',
 //				'infotext' => $infotext
-			),
-			'edk-killboard-host' => array(
+			],
+			'edk-killboard-host' => [
 				'type' => 'text',
 				'title' => \__('DB Host', 'eve-online-fitting-manager'),
 				'default' => 'localhost'
-			),
-			'edk-killboard-name' => array(
+			],
+			'edk-killboard-name' => [
 				'type' => 'text',
 				'title' => \__('DB Name', 'eve-online-fitting-manager'),
-			),
-			'edk-killboard-user' => array(
+			],
+			'edk-killboard-user' => [
 				'type' => 'text',
 				'title' => \__('DB User', 'eve-online-fitting-manager'),
-			),
-			'edk-killboard-password' => array(
+			],
+			'edk-killboard-password' => [
 				'type' => 'password',
 				'title' => \__('DB Password', 'eve-online-fitting-manager'),
-			)
-		);
+			]
+		];
 
 		return $settingsFields;
 	} // END private function getKillboardSettingsFields()
@@ -131,21 +129,21 @@ class PluginSettings {
 	 * @return array Settings fields for the template related settings
 	 */
 	private function getTemplateSettingsFields() {
-		$settingsFields = array(
-			'template-image-settings' => array(
+		$settingsFields = [
+			'template-image-settings' => [
 				'type' => 'checkbox',
 				'title' => \__('Image Settings', 'eve-online-fitting-manager'),
-				'choices' => array(
+				'choices' => [
 					'show-ship-images-in-loop' => \__('Show ship images in ship list', 'eve-online-fitting-manager'),
 					'show-doctrine-images-in-loop' => \sprintf(\__('Show doctrine images in doctrine list <small><em>(You need to have the %1$s plugin installed to make this happen)</em></small>', 'eve-online-fitting-manager'),
 						'<a href="https://wordpress.org/plugins/categories-images/" target="_blank">' . \__('Categories Images', 'eve-online-fitting-manager') . '</a>'
 					)
-				),
-			),
-			'template-detail-parts-settings' => array(
+				],
+			],
+			'template-detail-parts-settings' => [
 				'type' => 'checkbox',
 				'title' => \__('Detail Page Settings', 'eve-online-fitting-manager'),
-				'choices' => array(
+				'choices' => [
 					'show-visual-fitting' => \__('Show visual fitting', 'eve-online-fitting-manager'),
 					'show-ship-description' => \__('Show ship description', 'eve-online-fitting-manager'),
 					'show-osmium-link' => \__('Show Osmium button', 'eve-online-fitting-manager'),
@@ -153,9 +151,9 @@ class PluginSettings {
 					'show-copy-permalink' => \__('Show "Copy permalink to clipboard" button', 'eve-online-fitting-manager'),
 					'show-market-data' => \__('Show "Estimated Prices" section', 'eve-online-fitting-manager'),
 					'show-doctrines' => \__('Show "Doctrines using this fitting" section', 'eve-online-fitting-manager')
-				),
-			)
-		);
+				],
+			]
+		];
 
 		return $settingsFields;
 	} // END private function getKillboardSettingsFields()

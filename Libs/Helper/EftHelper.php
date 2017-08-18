@@ -1,8 +1,6 @@
 <?php
 
-namespace WordPress\Plugin\EveOnlineFittingManager\Helper;
-
-use WordPress\Plugin\EveOnlineFittingManager;
+namespace WordPress\Plugin\EveOnlineFittingManager\Libs\Helper;
 
 \defined('ABSPATH') or die();
 
@@ -85,7 +83,7 @@ class EftHelper {
 			 */
 			$fittingArray = \explode("\n", \trim(self::fixLineBreaks($eftFitting)));
 
-			$fittingData = array();
+			$fittingData = [];
 			$fittingArray['0'] = \str_replace('[', '', $fittingArray['0']);
 			$fittingArray['0'] = \str_replace(']', '', $fittingArray['0']);
 			$fittingArray['0'] = \preg_replace('/,(.*)/', '', $fittingArray['0']);
@@ -99,15 +97,15 @@ class EftHelper {
 			$countCharges = 1;
 			$countDrones = 1;
 
-			$arrayHighSlots = array();
-			$arrayMidSlots = array();
-			$arrayLowSlots = array();
-			$arrayRigSlots = array();
-			$arraySubSystems = array();
-			$arrayUpwellServices = array();
-			$arrayCharges = array();
-			$arrayFuel = array();
-			$arrayDrones = array();
+			$arrayHighSlots = [];
+			$arrayMidSlots = [];
+			$arrayLowSlots = [];
+			$arrayRigSlots = [];
+			$arraySubSystems = [];
+			$arrayUpwellServices = [];
+			$arrayCharges = [];
+			$arrayFuel = [];
+			$arrayDrones = [];
 
 			foreach($fittingArray as &$line) {
 				$line = \trim($line);
@@ -166,26 +164,26 @@ class EftHelper {
 								break;
 
 							case 'charge':
-								$arrayCharges['charge_' . $countCharges] = array(
+								$arrayCharges['charge_' . $countCharges] = [
 									'itemID' => $itemDetail->itemID,
 									'itemCount' => $itemDetail->itemCount
-								);
+								];
 								$countCharges++;
 								break;
 
 							case 'fuel':
-								$arrayFuel['fuel_' . $countCharges] = array(
+								$arrayFuel['fuel_' . $countCharges] = [
 									'itemID' => $itemDetail->itemID,
 									'itemCount' => $itemDetail->itemCount
-								);
+								];
 								$countCharges++;
 								break;
 
 							case 'drone':
-								$arrayDrones['drone_' . $countDrones] = array(
+								$arrayDrones['drone_' . $countDrones] = [
 									'itemID' => $itemDetail->itemID,
 									'itemCount' => $itemDetail->itemCount
-								);
+								];
 								$countDrones++;
 								break;
 
@@ -198,7 +196,7 @@ class EftHelper {
 				} // END if(!empty(trim($line)))
 			} // END foreach($fittingArray as &$line)
 
-			$returnValue = array(
+			$returnValue = [
 				'highSlots' => $arrayHighSlots,
 				'midSlots' => $arrayMidSlots,
 				'lowSlots' => $arrayLowSlots,
@@ -208,7 +206,7 @@ class EftHelper {
 				'charges' => $arrayCharges,
 				'fuel' => $arrayFuel,
 				'drones' => $arrayDrones
-			);
+			];
 		}
 
 		return $returnValue;
@@ -226,7 +224,7 @@ class EftHelper {
 		 */
 		$fittingArray = \explode("\n", \trim(self::fixLineBreaks($eftFitting)));
 
-		$fittingData = array();
+		$fittingData = [];
 		$fittingArray['0'] = \str_replace('[', '', $fittingArray['0']);
 		$fittingArray['0'] = \str_replace(']', '', $fittingArray['0']);
 		$fittingArray['0'] = \preg_replace('/,(.*)/', '', $fittingArray['0']);
@@ -411,10 +409,10 @@ class EftHelper {
 
 		$returnValue = $eftImport;
 		if($withShipDna === true) {
-			$returnValue = array(
+			$returnValue = [
 				'eftImport' => $eftImport,
 				'shipDna' => $fitting['shipDNA']
-			);
+			];
 		}
 
 		return $returnValue;

@@ -2,8 +2,6 @@
 
 namespace WordPress\Plugin\EveOnlineFittingManager\Libs;
 
-use WordPress\Plugin\EveOnlineFittingManager;
-
 \defined('ABSPATH') or die();
 
 /**
@@ -21,8 +19,8 @@ class MarketData {
 	 * Initialize the actions
 	 */
 	private function initActions() {
-		\add_action('wp_ajax_nopriv_get-eve-fitting-market-data', array($this, 'ajaxGetFittingMarketData'));
-		\add_action('wp_ajax_get-eve-fitting-market-data', array($this, 'ajaxGetFittingMarketData'));
+		\add_action('wp_ajax_nopriv_get-eve-fitting-market-data', [$this, 'ajaxGetFittingMarketData']);
+		\add_action('wp_ajax_get-eve-fitting-market-data', [$this, 'ajaxGetFittingMarketData']);
 	}
 
 	/**
@@ -30,8 +28,8 @@ class MarketData {
 	 */
 	public function ajaxGetFittingMarketData() {
 		$eftFitting = \filter_input(\INPUT_POST, 'eftData');
-		$fittingArray = \WordPress\Plugin\EveOnlineFittingManager\Helper\EftHelper::getFittingArrayFromEftData($eftFitting);
-		$marketPrices = \WordPress\Plugin\EveOnlineFittingManager\Helper\MarketDataHelper::getInstance()->getMarketPricesFromFittingArray($fittingArray);
+		$fittingArray = Helper\EftHelper::getFittingArrayFromEftData($eftFitting);
+		$marketPrices = Helper\MarketDataHelper::getInstance()->getMarketPricesFromFittingArray($fittingArray);
 
 		echo \json_encode($marketPrices);
 

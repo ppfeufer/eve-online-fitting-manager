@@ -1,12 +1,10 @@
 <?php
 
-namespace WordPress\Plugin\EveOnlineFittingManager\Helper;
-
-use WordPress\Plugin\EveOnlineFittingManager;
+namespace WordPress\Plugin\EveOnlineFittingManager\Libs\Helper;
 
 \defined('ABSPATH') or die();
 
-class MarketDataHelper extends EveOnlineFittingManager\Singleton\AbstractSingleton {
+class MarketDataHelper extends \WordPress\Plugin\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton {
 	/**
 	 * Available Market APIs:
 	 *		EVE Central => https://api.eve-central.com/api/marketstat/json?typeid=3057,2364,3057&regionlimit=10000002&usesystem=30000142
@@ -64,7 +62,7 @@ class MarketDataHelper extends EveOnlineFittingManager\Singleton\AbstractSinglet
 	 * @param array $items
 	 * @return string json string of all item marketdata
 	 */
-	public function getMarketDataJson(Array $items) {
+	public function getMarketDataJson(array $items) {
 		$typeIdString = \implode(',', $items);
 		$transientName = 'eve_fitting_tool_market_data_fitting_' . \md5($typeIdString);
 		$returnValue = CacheHelper::getInstance()->checkTransientCache($transientName);
@@ -87,15 +85,15 @@ class MarketDataHelper extends EveOnlineFittingManager\Singleton\AbstractSinglet
 	 * @param array $fittingArray EFT fitting array from WordPress\Plugin\EveOnlineFittingManager\Helper\EftHelper::getFittingArrayFromEftData($eftFitting);
 	 * @return array Sell and Buy order prices from Jita
 	 */
-	public function getMarketPricesFromFittingArray(Array $fittingArray) {
+	public function getMarketPricesFromFittingArray(array $fittingArray) {
 		$returnValue = false;
 		$jitaBuyPrice = 0;
 		$jitaSellPrice = 0;
 
 		// Ship price
-		$ship = array(
+		$ship = [
 			$fittingArray['0']->itemID
-		);
+		];
 
 		// Remove the ship from the array
 		unset($fittingArray['0']);
@@ -105,14 +103,14 @@ class MarketDataHelper extends EveOnlineFittingManager\Singleton\AbstractSinglet
 			$marketArrayShip = \json_decode($marketJsonShip);
 
 			if($marketArrayShip !== null) {
-				$jitaBuyPrice = array(
+				$jitaBuyPrice = [
 					'ship' => $marketArrayShip['0']->buy->median,
 					'total' => $marketArrayShip['0']->buy->median
-				);
-				$jitaSellPrice = array(
+				];
+				$jitaSellPrice = [
 					'ship' => $marketArrayShip['0']->sell->median,
 					'total' => $marketArrayShip['0']->sell->median
-				);
+				];
 			} // END if($marketArrayShip !== null)
 		} // END if($marketJsonShip !== false)
 
@@ -143,20 +141,20 @@ class MarketDataHelper extends EveOnlineFittingManager\Singleton\AbstractSinglet
 					} // END foreach($marketArray as $item)
 				} // END if($marketArray !== null)
 
-				$returnValue = array(
-					'ship' => array(
+				$returnValue = [
+					'ship' => [
 						'jitaBuyPrice' => \number_format($jitaBuyPrice['ship'], 2, ',', '.') . ' ISK',
 						'jitaSellPrice' => \number_format($jitaSellPrice['ship'], 2, ',', '.') . ' ISK'
-					),
-					'fitting' => array(
+					],
+					'fitting' => [
 						'jitaBuyPrice' => \number_format($jitaBuyPrice['fitting'], 2, ',', '.') . ' ISK',
 						'jitaSellPrice' => \number_format($jitaSellPrice['fitting'], 2, ',', '.') . ' ISK'
-					),
-					'total' => array(
+					],
+					'total' => [
 						'jitaBuyPrice' => \number_format($jitaBuyPrice['total'], 2, ',', '.') . ' ISK',
 						'jitaSellPrice' => \number_format($jitaSellPrice['total'], 2, ',', '.') . ' ISK'
-					)
-				);
+					]
+				];
 			} // END if($marketJson !== false)
 		} // END if($items !== null)
 

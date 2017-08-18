@@ -127,7 +127,7 @@ jQuery(document).ready(function($) {
 				$.ajax({
 					type: 'post',
 					url: fittingManagerL10n.ajax.url,
-					data: 'action=get-eve-fitting-market-data&nonce=' + fittingManagerL10n.ajax.eveFittingMarketData.nonce + '&eftData=' + eftData,
+					data: 'action=get-eve-fitting-market-data&eftData=' + eftData,
 					dataType: 'json',
 					success: function(result) {
 						if(result !== null) {

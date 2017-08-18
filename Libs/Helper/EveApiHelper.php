@@ -17,14 +17,11 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-namespace WordPress\Plugin\EveOnlineFittingManager\Helper;
-
-use WordPress\Plugin\EveOnlineFittingManager;
-use SimpleXMLElement;
+namespace WordPress\Plugin\EveOnlineFittingManager\Libs\Helper;
 
 \defined('ABSPATH') or die();
 
-class EveApiHelper extends EveOnlineFittingManager\Singleton\AbstractSingleton {
+class EveApiHelper extends \WordPress\Plugin\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton {
 	public $imageserverUrl = 'https://image.eveonline.com/';
 	public $imageserverEndpoints = null;
 
@@ -41,14 +38,14 @@ class EveApiHelper extends EveOnlineFittingManager\Singleton\AbstractSingleton {
 	 * Assigning Imagesever Endpoints
 	 */
 	private function getImageserverEndpoints() {
-		$this->imageserverEndpoints = array(
+		$this->imageserverEndpoints = [
 			'alliance' => 'Alliance/',
 			'corporation' => 'Corporation/',
 			'character' => 'Character/',
 			'item' => 'Type/',
 			'ship' => 'Render/',
 			'inventory' => 'InventoryType/' // all the other stuff
-		);
+		];
 	} // END private function setImageserverEndpoints()
 
 	/**
