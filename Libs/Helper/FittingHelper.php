@@ -515,7 +515,7 @@ class FittingHelper {
 				WHERE `kb3_dgmattributetypes`.`attributeID` = `kb3_dgmtypeattributes`.`attributeID`
 				AND `kb3_dgmtypeattributes`.`typeID` = %d', [$shipID]);
 
-		return EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
+		return \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
 	} // END public function getHighSlotCountForShipID($shipID)
 
 	/**
