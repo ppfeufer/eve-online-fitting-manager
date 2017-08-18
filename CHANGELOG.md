@@ -4,6 +4,7 @@
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.5.1...HEAD)
 ### Changed
 - Switched codebase to short array syntax
+- Restructured file base
 
 ### Removed
 - Last fragments of am earlier change
