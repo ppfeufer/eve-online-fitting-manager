@@ -1,10 +1,13 @@
 # Change Log
 
 ## [In Development](https://github.com/ppfeufer/eve-online-fitting-manager)
-[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.5.1...HEAD)
+[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.6...HEAD)
+
+## [v0.6](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.6) - 2017-08-18
+[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.5.1...v0.6)
 ### Changed
 - Switched codebase to short array syntax
-- Restructured file base
+- Restructured file base (makes more sense now ...)
 
 ### Removed
 - Last fragments of am earlier change
