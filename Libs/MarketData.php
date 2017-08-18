@@ -2,8 +2,6 @@
 
 namespace WordPress\Plugin\EveOnlineFittingManager\Libs;
 
-use WordPress\Plugin\EveOnlineFittingManager;
-
 \defined('ABSPATH') or die();
 
 /**
@@ -30,8 +28,8 @@ class MarketData {
 	 */
 	public function ajaxGetFittingMarketData() {
 		$eftFitting = \filter_input(\INPUT_POST, 'eftData');
-		$fittingArray = \WordPress\Plugin\EveOnlineFittingManager\Helper\EftHelper::getFittingArrayFromEftData($eftFitting);
-		$marketPrices = \WordPress\Plugin\EveOnlineFittingManager\Helper\MarketDataHelper::getInstance()->getMarketPricesFromFittingArray($fittingArray);
+		$fittingArray = Helper\EftHelper::getFittingArrayFromEftData($eftFitting);
+		$marketPrices = Helper\MarketDataHelper::getInstance()->getMarketPricesFromFittingArray($fittingArray);
 
 		echo \json_encode($marketPrices);
 

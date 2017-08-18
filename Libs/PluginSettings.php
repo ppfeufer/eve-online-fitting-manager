@@ -1,8 +1,6 @@
 <?php
 namespace WordPress\Plugin\EveOnlineFittingManager\Libs;
 
-use WordPress\Plugin\EveOnlineFittingManager;
-
 \defined('ABSPATH') or die();
 
 /**
@@ -17,7 +15,7 @@ class PluginSettings {
 	 */
 	public function __construct() {
 		$this->settingsFilter = 'register_eve_online_fittings_manager_settings';
-		$this->defaultOptions = EveOnlineFittingManager\Helper\PluginHelper::getPluginDefaultSettings();
+		$this->defaultOptions = Helper\PluginHelper::getPluginDefaultSettings();
 
 		$this->fireSettingsApi();
 	} // END public function __construct()
@@ -42,7 +40,7 @@ class PluginSettings {
 			'type' => 'plugin',
 			'menu_title' => \__('EVE Online Fittings Manager', 'eve-online-fitting-manager'),
 			'page_title' => \__('EVE Online Fittings Manager', 'eve-online-fitting-manager'),
-			'option_name' => EveOnlineFittingManager\Helper\PluginHelper::getOptionFieldName(), // Your settings name. With this name your settings are saved in the database.
+			'option_name' => Helper\PluginHelper::getOptionFieldName(), // Your settings name. With this name your settings are saved in the database.
 			'tabs' => [
 				/**
 				 * killboard settings tab

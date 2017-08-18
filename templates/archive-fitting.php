@@ -37,7 +37,7 @@ $doctrineData = \get_queried_object();
 							echo '<li>';
 						} // END if(\get_post_type() === 'fitting')
 
-						\WordPress\Plugin\EveOnlineFittingManager\Helper\TemplateHelper::getTemplate('content-fitting');
+						\WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\TemplateHelper::getTemplate('content-fitting');
 
 						if(\get_post_type() === 'fitting') {
 							echo '</li>';
@@ -64,7 +64,7 @@ $doctrineData = \get_queried_object();
 			</div> <!-- /.content -->
 		</div> <!-- /.col -->
 
-		<?php \WordPress\Plugin\EveOnlineFittingManager\Helper\TemplateHelper::getTemplate('doctrine-sidebar'); ?>
+		<?php \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\TemplateHelper::getTemplate('doctrine-sidebar'); ?>
 	</div> <!--/.row -->
 </div><!-- container -->
 

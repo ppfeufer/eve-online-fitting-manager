@@ -1,8 +1,6 @@
 <?php
 
-namespace WordPress\Plugin\EveOnlineFittingManager\Helper;
-
-use WordPress\Plugin\EveOnlineFittingManager;
+namespace WordPress\Plugin\EveOnlineFittingManager\Libs\Helper;
 
 \defined('ABSPATH') or die();
 
@@ -12,7 +10,7 @@ use WordPress\Plugin\EveOnlineFittingManager;
 require_once(ABSPATH . 'wp-admin/includes/class-wp-filesystem-base.php');
 require_once(ABSPATH . 'wp-admin/includes/class-wp-filesystem-direct.php');
 
-class CacheHelper extends EveOnlineFittingManager\Singleton\AbstractSingleton {
+class CacheHelper extends \WordPress\Plugin\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton {
 	private $cacheDirectoryBase;
 
 	/**

@@ -1,6 +1,6 @@
 <?php
 
-namespace WordPress\Plugin\EveOnlineFittingManager\Singleton;
+namespace WordPress\Plugin\EveOnlineFittingManager\Libs\Singletons;
 
 \defined('ABSPATH') or die();
 

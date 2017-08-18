@@ -1,8 +1,6 @@
 <?php
 
-namespace WordPress\Plugin\EveOnlineFittingManager\Helper;
-
-use WordPress\Plugin\EveOnlineFittingManager;
+namespace WordPress\Plugin\EveOnlineFittingManager\Libs\Helper;
 
 \defined('ABSPATH') or die();
 
@@ -36,7 +34,7 @@ class TemplateHelper {
 
 		// Set default plugin templates path.
 		if(!$default_path) {
-			$default_path = EveOnlineFittingManager\Helper\PluginHelper::getPluginPath('templates/'); // Path to the template folder
+			$default_path = PluginHelper::getPluginPath('templates/'); // Path to the template folder
 		} // END if(!$default_path)
 
 		// Search template file in theme folder.

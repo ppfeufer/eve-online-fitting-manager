@@ -2,8 +2,6 @@
 
 namespace WordPress\Plugin\EveOnlineFittingManager\Libs;
 
-use WordPress\Plugin\EveOnlineFittingManager;
-
 \defined('ABSPATH') or die();
 
 /**
@@ -176,9 +174,9 @@ class PostType {
 		} // END if(\is_singular('fitting'))
 
 		if($templateFile !== null) {
-			if(\file_exists(EveOnlineFittingManager\Helper\TemplateHelper::locateTemplate($templateFile))) {
-				$template = EveOnlineFittingManager\Helper\TemplateHelper::locateTemplate($templateFile);
-			} // END if(\file_exists(EveOnlineFittingManager\Helper\TemplateHelper::locateTemplate($file)))
+			if(\file_exists(Helper\TemplateHelper::locateTemplate($templateFile))) {
+				$template = Helper\TemplateHelper::locateTemplate($templateFile);
+			} // END if(\file_exists(Helper\TemplateHelper::locateTemplate($file)))
 		} // END if($templateFile !== null)
 
 		return $template;
@@ -192,7 +190,7 @@ class PostType {
 	 */
 	public function registerPageTemplate($pageTemplate) {
 		if(\is_page(self::getPosttypeSlug('fittings'))) {
-			$pageTemplate = EveOnlineFittingManager\Helper\PluginHelper::getPluginPath('templates/page-fittings.php');
+			$pageTemplate = Helper\PluginHelper::getPluginPath('templates/page-fittings.php');
 		} // END if(\is_page($this->getPosttypeSlug('fittings')))
 
 		return $pageTemplate;

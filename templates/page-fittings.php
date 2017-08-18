@@ -2,8 +2,9 @@
 /**
  * Template Name: Fittings
  */
+
+get_header();
 ?>
-<?php get_header(); ?>
 
 <div class="container main template-page-fittings">
 	<?php
@@ -31,7 +32,7 @@
 						<article class="post clearfix" id="post-<?php \the_ID(); ?>">
 							<?php
 							if(!empty(\get_query_var('fitting_search'))) {
-								$query = \WordPress\Plugin\EveOnlineFittingManager\Helper\FittingHelper::searchFittings();
+								$query = \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\FittingHelper::searchFittings();
 
 								if($query->have_posts()) {
 									$uniqueID = \uniqid();
@@ -43,7 +44,7 @@
 										$query->the_post();
 
 										echo '<li>';
-										\WordPress\Plugin\EveOnlineFittingManager\Helper\TemplateHelper::getTemplate('content-fitting');
+										\WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\TemplateHelper::getTemplate('content-fitting');
 										echo '</li>';
 									}
 
@@ -68,7 +69,7 @@
 				</div> <!-- /.col -->
 
 				<?php
-				\WordPress\Plugin\EveOnlineFittingManager\Helper\TemplateHelper::getTemplate('doctrine-sidebar');
+				\WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\TemplateHelper::getTemplate('doctrine-sidebar');
 				?>
 			</div> <!--/.row -->
 			<?php

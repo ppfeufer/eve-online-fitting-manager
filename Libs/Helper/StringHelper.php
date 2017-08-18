@@ -1,6 +1,6 @@
 <?php
 
-namespace WordPress\Plugin\EveOnlineFittingManager\Helper;
+namespace WordPress\Plugin\EveOnlineFittingManager\Libs\Helper;
 
 /**
  * Helper Class for manipulating and/or checking strings

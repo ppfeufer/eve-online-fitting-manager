@@ -1,14 +1,12 @@
 <?php
 namespace WordPress\Plugin\EveOnlineFittingManager\Libs;
 
-use WordPress\Plugin\EveOnlineFittingManager;
-
 \defined('ABSPATH') or die();
 
 /**
  * Registering the Killboard Database as its own instance of wpdb
  */
-class Database extends EveOnlineFittingManager\Singleton\AbstractSingleton {
+class Database extends Singletons\AbstractSingleton {
 	private $pluginSettings = null;
 
 	public $db = null;
@@ -19,7 +17,7 @@ class Database extends EveOnlineFittingManager\Singleton\AbstractSingleton {
 	protected function __construct() {
 		parent::__construct();
 
-		$this->pluginSettings = \get_option(EveOnlineFittingManager\Helper\PluginHelper::getOptionFieldName(), EveOnlineFittingManager\Helper\PluginHelper::getPluginDefaultSettings());
+		$this->pluginSettings = \get_option(Helper\PluginHelper::getOptionFieldName(), Helper\PluginHelper::getPluginDefaultSettings());
 
 		$this->db = $this->initiateKillboardDatabase();
 	} // END private function __construct()

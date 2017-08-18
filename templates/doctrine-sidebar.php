@@ -18,7 +18,7 @@
 					<form action="/<?php echo \WordPress\Plugin\EveOnlineFittingManager\Libs\PostType::getPosttypeSlug('fittings'); ?>/" method="GET" id="fitting_search" role="search">
 						<div class="input-group">
 							<label class="sr-only" for="fitting_search"><?php echo \__('Search', 'eve-online-fitting-manager') ?></label>
-							<input type="text" class="form-control" id="fitting_search" name="fitting_search" placeholder="<?php echo \__('Search Ship Type', 'eve-online-fitting-manager') ?>" value="<?php echo WordPress\Plugin\EveOnlineFittingManager\Helper\FittingHelper::getFittingSearchQuery(true); ?>">
+							<input type="text" class="form-control" id="fitting_search" name="fitting_search" placeholder="<?php echo \__('Search Ship Type', 'eve-online-fitting-manager') ?>" value="<?php echo WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\FittingHelper::getFittingSearchQuery(true); ?>">
 							<div class="input-group-btn">
 								<button type="submit" class="btn btn-default">
 									<span class="glyphicon glyphicon-search"></span>
@@ -33,7 +33,7 @@
 		<aside class="eve-online-fitting-doctrines">
 			<div class="widget">
 				<h4 class="widget-title"><?php echo \__('Doctrines', 'eve-online-fitting-manager'); ?></h4>
-				<?php echo \WordPress\Plugin\EveOnlineFittingManager\Helper\FittingHelper::getSidebarMenu('fitting-doctrines'); ?>
+				<?php echo \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\FittingHelper::getSidebarMenu('fitting-doctrines'); ?>
 			</div>
 		</aside>
 		<?php
@@ -48,7 +48,7 @@
 		<aside class="eve-online-fitting-ships">
 			<div class="widget">
 				<h4 class="widget-title"><?php echo \__('Ship Types', 'eve-online-fitting-manager'); ?></h4>
-				<?php echo \WordPress\Plugin\EveOnlineFittingManager\Helper\FittingHelper::getSidebarMenu('fitting-ships'); ?>
+				<?php echo \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\FittingHelper::getSidebarMenu('fitting-ships'); ?>
 			</div>
 		</aside>
 		<?php

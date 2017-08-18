@@ -1,8 +1,6 @@
 <?php
 
-namespace WordPress\Plugin\EveOnlineFittingManager\Helper;
-
-use WordPress\Plugin\EveOnlineFittingManager;
+namespace WordPress\Plugin\EveOnlineFittingManager\Libs\Helper;
 
 \defined('ABSPATH') or die();
 
@@ -18,7 +16,7 @@ class PluginHelper {
 	 * @return string
 	 */
 	public static function getPluginPath($file = '') {
-		return \trailingslashit(\plugin_dir_path(dirname(__FILE__))) . $file;
+		return \trailingslashit(\plugin_dir_path(\dirname(\dirname(__FILE__)))) . $file;
 	}
 
 	/**
@@ -28,7 +26,7 @@ class PluginHelper {
 	 * @return string
 	 */
 	public static function getPluginUri($file = '') {
-		return \plugins_url($file, dirname(__FILE__));
+		return \plugins_url($file, \dirname(\dirname(__FILE__)));
 	} // END public function getThemeCacheUri()
 
 	/**

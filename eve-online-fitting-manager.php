@@ -47,11 +47,11 @@ class EveOnlineFittingManager {
 		$this->checkDatabaseUpdate();
 
 		// Loading CSS
-		$cssLoader = new ResourceLoader\CssLoader;
+		$cssLoader = new Libs\ResourceLoader\CssLoader;
 		$cssLoader->init();
 
 		// Loading JavaScript
-		$javascriptLoader = new ResourceLoader\JavascriptLoader;
+		$javascriptLoader = new Libs\ResourceLoader\JavascriptLoader;
 		$javascriptLoader->init();
 
 		\add_action('init', [$this, 'setThumbnailsSizes']);
@@ -113,11 +113,11 @@ class EveOnlineFittingManager {
 	 * Check if the plugin settings have to be updated
 	 */
 	private function checkDatabaseUpdate() {
-		$currentPluginDatabaseVersion = Helper\PluginHelper::getCurrentPluginDatabaseVersion();
-		$pluginDatabaseVersion = Helper\PluginHelper::getPluginDatabaseVersion();
+		$currentPluginDatabaseVersion = Libs\Helper\PluginHelper::getCurrentPluginDatabaseVersion();
+		$pluginDatabaseVersion = Libs\Helper\PluginHelper::getPluginDatabaseVersion();
 
 		if($pluginDatabaseVersion !== $currentPluginDatabaseVersion) {
-			Helper\PluginHelper::updateDatabase();
+			Libs\Helper\PluginHelper::updateDatabase();
 		} // END if($pluginDatabaseVersion !== $currentPluginDatabaseVersion)
 	} // END private function checkDatabaseUpdate()
 

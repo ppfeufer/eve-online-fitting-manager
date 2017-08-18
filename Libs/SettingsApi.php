@@ -13,8 +13,6 @@
 
 namespace WordPress\Plugin\EveOnlineFittingManager\Libs;
 
-use WordPress\Plugin\EveOnlineFittingManager;
-
 \defined('ABSPATH') or die();
 
 class SettingsApi {
@@ -184,7 +182,15 @@ class SettingsApi {
 								];
 
 								\add_settings_field(
-									$fieldArgs['id'], $fieldArgs['title'], [$this, $fieldArgs['callback']], $fieldArgs['menu_page'], $fieldArgs['section'], $fieldArgs['args']
+									$fieldArgs['id'],
+									$fieldArgs['title'],
+									[
+										$this,
+										$fieldArgs['callback']
+									],
+									$fieldArgs['menu_page'],
+									$fieldArgs['section'],
+									$fieldArgs['args']
 								);
 							} // END if(is_array($field))
 						} // END foreach($item['fields'] as $field_id => $field)
@@ -200,19 +206,19 @@ class SettingsApi {
 	 */
 	public function registerCallback() {
 		if($this->isSettingsPage() === true) {
-			$callbackFiltered = \filter_input(INPUT_GET, 'callback');
+			$callbackFiltered = \filter_input(\INPUT_GET, 'callback');
 
 			if(!empty($callbackFiltered)) {
-				$wpNonce = \filter_input(INPUT_GET, '_wpnonce');
+				$wpNonce = \filter_input(\INPUT_GET, '_wpnonce');
 				$nonce = \wp_verify_nonce($wpNonce);
 
 				if(!empty($nonce)) {
-					$callbackFunction = \filter_input(INPUT_GET, 'callback');
+					$callbackFunction = \filter_input(\INPUT_GET, 'callback');
 					if(function_exists($callbackFunction)) {
 						$message = \call_user_func($callbackFunction);
 						\update_option('rsa-message', $message);
 
-						$page = \filter_input(INPUT_GET, 'page');
+						$page = \filter_input(\INPUT_GET, 'page');
 						$url = \admin_url('options-general.php?page=' . $page);
 						\wp_redirect($url);
 
@@ -230,7 +236,7 @@ class SettingsApi {
 	 */
 	public function isSettingsPage() {
 		$menus = [];
-		$getPageFiltered = \filter_input(INPUT_GET, 'page');
+		$getPageFiltered = \filter_input(\INPUT_GET, 'page');
 		$getPage = (!empty($getPageFiltered) ) ? $getPageFiltered : '';
 
 		foreach($this->settingsArray as $menu => $page) {
@@ -268,7 +274,7 @@ class SettingsApi {
 	 */
 	public function get() {
 		if(!empty($this->args['get'])) {
-			$itemArray = \call_user_func_array([$this, 'get' . ucfirst(EveOnlineFittingManager\Helper\StringHelper::camelCase($this->args['get']))], [$this->args]);
+			$itemArray = \call_user_func_array([$this, 'get' . ucfirst(Helper\StringHelper::camelCase($this->args['get']))], [$this->args]);
 		} elseif(!empty($this->args['choices'])) {
 			$itemArray = $this->selectChoices($this->args);
 		} else {
@@ -583,13 +589,17 @@ class SettingsApi {
 			'checkbox'
 		];
 
-		$value = '';
+		$valueType = null;
 
 		if(\in_array($this->args['type'], $defaultSingle)) {
-			return 'string';
-		} elseif(\in_array($this->args['type'], $defaultMultiple)) {
-			return 'array';
+			$valueType = 'string';
+		}
+
+		if(\in_array($this->args['type'], $defaultMultiple)) {
+			$valueType = 'array';
 		} // END if(in_array($this->args['type'], $default_single))
+
+		return $valueType;
 	} // END public function valueType()
 
 	/**
@@ -598,11 +608,13 @@ class SettingsApi {
 	 * @return boolean
 	 */
 	public function hasItems() {
+		$returnValue = false;
+
 		if(!empty($this->args['choices']) && \is_array($this->args['choices'])) {
-			return true;
+			$returnValue = true;
 		} // END if(!empty($this->args['choices']) && is_array($this->args['choices']))
 
-		return false;
+		return $returnValue;
 	} // END public function hasItems()
 
 	/**
@@ -614,11 +626,13 @@ class SettingsApi {
 	public function name($slug = '') {
 		$optionName = \sanitize_title($this->args['option_name']);
 
+		$returnValue = $optionName . '[' . $this->args['field_id'] . ']';
+
 		if($this->valueType() == 'array') {
-			return $optionName . '[' . $this->args['field_id'] . '][' . $slug . ']';
-		} else {
-			return $optionName . '[' . $this->args['field_id'] . ']';
-		} // END if($this->valueType() == 'array')
+			$returnValue = $optionName . '[' . $this->args['field_id'] . '][' . $slug . ']';
+		}
+
+		return $returnValue;
 	} // END public function name($slug = '')
 
 	/**
@@ -822,8 +836,8 @@ class SettingsApi {
 					$warningMessage = (!empty($args['warning-message'])) ? $args['warning-message'] : 'Unsaved settings will be lost. Continue?';
 					$warning = (!empty($args['warning'])) ? ' onclick="return confirm(' . "'" . $warningMessage . "'" . ')"' : '';
 					$label = (!empty($args['label'])) ? $args['label'] : '';
-					$pageFiltered = \filter_input(INPUT_GET, 'page');
-					$callbackFiltered = \filter_input(INPUT_GET, 'callback');
+					$pageFiltered = \filter_input(\INPUT_GET, 'page');
+					$callbackFiltered = \filter_input(\INPUT_GET, 'callback');
 					$completeUrl = \wp_nonce_url(\admin_url('options-general.php?page=' . $pageFiltered . '&callback=' . $callbackFiltered));
 					?>
 					<a href="<?php echo $completeUrl; ?>" class="button button-secondary"<?php echo $warning; ?>><?php echo $label; ?></a>
@@ -866,7 +880,7 @@ class SettingsApi {
 	 * Final output on the settings page
 	 */
 	public function renderOptions() {
-		$page = \filter_input(INPUT_GET, 'page');
+		$page = \filter_input(\INPUT_GET, 'page');
 		$settings = $this->settingsArray[$page];
 		$message = \get_option('rsa-message');
 
@@ -952,7 +966,7 @@ class SettingsApi {
 //			\wp_enqueue_script('jquery-ui-datepicker');
 			\wp_enqueue_script(
 				'settings-api',
-				(\WP_DEBUG === true) ? EveOnlineFittingManager\Helper\PluginHelper::getPluginUri('js/settings-api.js') : EveOnlineFittingManager\Helper\PluginHelper::getPluginUri('js/settings-api.min.js')
+				(\WP_DEBUG === true) ? Helper\PluginHelper::getPluginUri('js/settings-api.js') : Helper\PluginHelper::getPluginUri('js/settings-api.min.js')
 			);
 		} // END if($this->isSettingsPage() === true)
 	} // END public function enqueueScripts()
@@ -963,14 +977,14 @@ class SettingsApi {
 	public function enqueueStyles() {
 		if($this->isSettingsPage() === true) {
 //			\wp_enqueue_style('wp-color-picker');
-//			\wp_enqueue_style('jquery-ui', EveOnlineFittingManager\Helper\PluginHelper::getPluginUri('css/jquery-ui.min.css'));
+//			\wp_enqueue_style('jquery-ui', Helper\PluginHelper::getPluginUri('css/jquery-ui.min.css'));
 //			\wp_enqueue_style(
 //				'font-awesome',
-//				(\WP_DEBUG === true) ? EveOnlineFittingManager\Helper\PluginHelper::getPluginUri('css/font-awesome.css') : EveOnlineFittingManager\Helper\PluginHelper::getPluginUri('css/font-awesome.min.css')
+//				(\WP_DEBUG === true) ? Helper\PluginHelper::getPluginUri('css/font-awesome.css') : Helper\PluginHelper::getPluginUri('css/font-awesome.min.css')
 //			);
 			\wp_enqueue_style(
 				'settings-api',
-				(\WP_DEBUG === true) ? EveOnlineFittingManager\Helper\PluginHelper::getPluginUri('css/settings-api.css') : EveOnlineFittingManager\Helper\PluginHelper::getPluginUri('css/settings-api.min.css')
+				(\WP_DEBUG === true) ? Helper\PluginHelper::getPluginUri('css/settings-api.css') : Helper\PluginHelper::getPluginUri('css/settings-api.min.css')
 			);
 		} // END if($this->isSettingsPage() === true)
 	} // END public function enqueueStyles()
