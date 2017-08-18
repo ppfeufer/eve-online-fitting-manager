@@ -16,8 +16,8 @@ class PluginHelper {
 	 * @return string
 	 */
 	public static function getPluginPath($file = '') {
-		return \trailingslashit(\plugin_dir_path(\dirname(\dirname(__FILE__)))) . $file;
-	}
+		return \WP_PLUGIN_DIR . '/eve-online-fitting-manager/' . $file;
+	} // END public function getPluginPath($file = '')
 
 	/**
 	 * Getting the Plugin URI
@@ -26,8 +26,8 @@ class PluginHelper {
 	 * @return string
 	 */
 	public static function getPluginUri($file = '') {
-		return \plugins_url($file, \dirname(\dirname(__FILE__)));
-	} // END public function getThemeCacheUri()
+		return \WP_PLUGIN_URL . '/eve-online-fitting-manager/' . $file;
+	} // END public function getPluginUri()
 
 	/**
 	 * Getting thew options field name
