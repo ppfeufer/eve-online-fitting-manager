@@ -3,7 +3,7 @@ Contributors: ppfeufer
 Tags: Eve Online, Fitting, Shortcode, Bootstrap
 Requires at least: 4.7
 Tested up to: 4.9-alpha
-Stable tag: 0.3
+Stable tag: 0.8
 License: GPLv3
 License URI: https://github.com/ppfeufer/eve-online-fitting-manager/blob/master/LICENSE
 
@@ -28,6 +28,47 @@ Build your doctrine fitting overview for your corporation, alliance or even coal
 3. Fitting Details
 
 == Changelog ==
+= [v0.8](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.8) - 2017-08-20 =
+[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.7...v0.8)
+### Added
+- Implants and Booster to EFT data
+
+= [v0.7](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.7) - 2017-08-18 =
+[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.6...v0.7)
+### Changed
+- More reliable way to create the cache directories
+
+### Fixed
+- Error: Class `WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\EveOnlineFittingManager\Libs\Database` not found
+
+= [v0.6](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.6) - 2017-08-18 =
+[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.5.1...v0.6)
+### Changed
+- Switched codebase to short array syntax
+- Restructured file base (makes more sense now ...)
+
+### Removed
+- Last fragments of am earlier change
+
+= [v0.5.1](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.5.1) - 2017-08-15 =
+[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.5...v0.5.1)
+### Changed
+- Ship description now formatted in proper paragraphs
+
+### Removed
+- A check that doesn't make sense in the way we are working with it
+
+= [v0.5](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.5) - 2017-08-13 =
+[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.4...v0.5)
+### Fixed
+- PHP Fatal error: Class 'WordPress\\Plugin\\EveOnlineKillboardWidget\\Singleton\\AbstractSingleton' not found
+
+= [v0.4](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.4) - 2017-08-12 =
+[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.3...v0.4)
+### Changed
+- Writing empty index.php files into our cache directories, so the directory listing doesn't work there
+- CacheHelper file permissions for dummy index.php
+
 = [v0.3](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.3) - 2017-08-08 =
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.2...v0.3)
 ### Fixed

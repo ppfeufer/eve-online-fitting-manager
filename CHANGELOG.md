@@ -1,7 +1,11 @@
 # Change Log
 
 ## [In Development](https://github.com/ppfeufer/eve-online-fitting-manager)
-[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.7...HEAD)
+[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.8...HEAD)
+- in development
+
+## [v0.8](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.8) - 2017-08-20
+[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.7...v0.8)
 ### Added
 - Implants and Booster to EFT data
 
