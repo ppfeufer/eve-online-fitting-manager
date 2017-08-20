@@ -95,6 +95,8 @@ class EftHelper {
 			$countSubSystems = 1;
 			$countUpwellServices = 1;
 			$countCharges = 1;
+			$countFuel = 1;
+			$countImplantsAndBooster = 1;
 			$countDrones = 1;
 
 			$arrayHighSlots = [];
@@ -105,6 +107,7 @@ class EftHelper {
 			$arrayUpwellServices = [];
 			$arrayCharges = [];
 			$arrayFuel = [];
+			$arrayImplantsAndBooster = [];
 			$arrayDrones = [];
 
 			foreach($fittingArray as &$line) {
@@ -172,11 +175,19 @@ class EftHelper {
 								break;
 
 							case 'fuel':
-								$arrayFuel['fuel_' . $countCharges] = [
+								$arrayFuel['fuel_' . $countFuel] = [
 									'itemID' => $itemDetail->itemID,
 									'itemCount' => $itemDetail->itemCount
 								];
-								$countCharges++;
+								$countFuel++;
+								break;
+
+							case 'Implants and Booster':
+								$arrayImplantsAndBooster['implants_booster_' . $countImplantsAndBooster] = [
+									'itemID' => $itemDetail->itemID,
+									'itemCount' => $itemDetail->itemCount
+								];
+								$countImplantsAndBooster++;
 								break;
 
 							case 'drone':
@@ -205,6 +216,7 @@ class EftHelper {
 				'upwellServices' => $arrayUpwellServices,
 				'charges' => $arrayCharges,
 				'fuel' => $arrayFuel,
+				'implantsAndBooster' => $arrayImplantsAndBooster,
 				'drones' => $arrayDrones
 			];
 		}
@@ -288,6 +300,7 @@ class EftHelper {
 		$arrayDrones = \unserialize($fitting['drones']);
 		$arrayCharges = \unserialize($fitting['charges']);
 		$arrayFuel = \unserialize($fitting['fuel']);
+		$arrayImplantsAndBooster = \unserialize($fitting['implantsAndBooster']);
 
 		$eftImport = '';
 		$eftImport .= '[' . FittingHelper::getItemNameById($fitting['shipID']) . ', ' . \trim($fitting['fittingType']) . ']' . "\n";
@@ -401,8 +414,21 @@ class EftHelper {
 			$eftImport .= '' . "\n";
 
 			foreach($arrayFuel as $fuel) {
-				if($charge !== false) {
+				if($fuel !== false) {
 					$eftImport .= FittingHelper::getItemNameById($fuel['itemID']) . ' x' . $fuel['itemCount'] . "\n";
+				} // END if($drones != false)
+			} // END foreach($arrayDrones as $drones)
+		} // END if(is_array($arrayCharges))
+
+		/**
+		 * Implants and Booster
+		 */
+		if(\is_array($arrayImplantsAndBooster) && \count($arrayImplantsAndBooster) > 0) {
+			$eftImport .= '' . "\n";
+
+			foreach($arrayImplantsAndBooster as $item) {
+				if($item !== false) {
+					$eftImport .= FittingHelper::getItemNameById($item['itemID']) . ' x' . $item['itemCount'] . "\n";
 				} // END if($drones != false)
 			} // END foreach($arrayDrones as $drones)
 		} // END if(is_array($arrayCharges))

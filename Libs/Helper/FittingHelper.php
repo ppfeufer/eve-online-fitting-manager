@@ -174,7 +174,7 @@ class FittingHelper {
 					AND `kb3_item_locations`.`itl_flagID` = `kb3_item_types`.`itt_slot`;', [$itemName]);
 			$itemData = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_results($sql, \OBJECT);
 		} // END if(!$itemData)
-
+//echo '<pre>' . print_r($itemData, true) . '</pre>';
 		if($itemData) {
 			$itemData = $itemData['0'];
 
@@ -182,14 +182,14 @@ class FittingHelper {
 				/**
 				 * Category: Ships
 				 */
-				if($itemData->categoryID == '6') {
+				if($itemData->categoryID === '6') {
 					$itemData->slotName = 'ship';
 				} // END if($itemData->categoryID == '6')
 
 				/**
 				 * Category: Charges
 				 */
-				if($itemData->categoryID == '8') {
+				if($itemData->categoryID === '8') {
 					$itemData->slotName = 'charge';
 				} // END if($itemData->categoryID == '6')
 
@@ -207,12 +207,19 @@ class FittingHelper {
 				];
 				if(\in_array($itemData->itemID, $arrayFuelIDs)) {
 					$itemData->slotName = 'fuel';
-				}
+				} // END if(\in_array($itemData->itemID, $arrayFuelIDs))
+
+				/**
+				 * Category: Implants and Booster
+				 */
+				if($itemData->categoryID === '20') {
+					$itemData->slotName = 'Implants and Booster';
+				} // END if($itemData->categoryID === '20')
 
 				/**
 				 * Category: Dones
 				 */
-				if($itemData->categoryID == '18') {
+				if($itemData->categoryID === '18') {
 					$itemData->slotName = 'drone';
 				} // END if($itemData->categoryID == '6')
 

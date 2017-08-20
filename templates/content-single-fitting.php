@@ -1,8 +1,10 @@
 <?php
 defined('ABSPATH') or die();
 
-// Let's get seom variables sorted first
+// Plugin Settings
 $pluginSettings = \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\PluginHelper::getPluginSettings();
+
+// Information to build the EFT data structure
 $shipID = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_ship_ID', true);
 $fittingType = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_name', true);
 $highSlots = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_high_slots', true);
@@ -14,7 +16,10 @@ $serviceSlots = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fittin
 $drones = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_drones', true);
 $charges = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_charges', true);
 $fuel = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_fuel', true);
+$implantsAndBooster = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_implants_and_booster', true);
 $fittingDna = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_dna', true);
+
+// Build EFT data
 $eftFitting = \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\EftHelper::getEftImportFromFitting([
 	'shipID' => $shipID,
 	'fittingType' => $fittingType,
@@ -26,7 +31,8 @@ $eftFitting = \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\EftHelper::g
 	'serviceSlots' => $serviceSlots,
 	'drones' => $drones,
 	'charges' => $charges,
-	'fuel' => $fuel
+	'fuel' => $fuel,
+	'implantsAndBooster' => $implantsAndBooster
 ]);
 ?>
 
@@ -71,42 +77,18 @@ $eftFitting = \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\EftHelper::g
 						]);
 					} // END if(!isset($pluginSettings['template-detail-parts-settings']['show-visual-fitting']) && $pluginSettings['template-detail-parts-settings']['show-visual-fitting'] === 'yes')
 
-					if(isset($pluginSettings['template-detail-parts-settings']['show-osmium-link']) && $pluginSettings['template-detail-parts-settings']['show-osmium-link'] === 'yes') {
-						\WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\TemplateHelper::getTemplate('fitting-details/utilities/fitting-service-buttons', [
-							'shipID' => $shipID,
-							'fittingDna' => $fittingDna,
-							'eftFitting' => $eftFitting,
-							'pluginSettings' => $pluginSettings
-						]);
-					} // END if(isset($pluginSettings['template-detail-parts-settings']['show-osmium-link']) && $pluginSettings['template-detail-parts-settings']['show-osmium-link'] === 'yes')
 					/**
-					 * Show the Osmium fitting link
+					 * Show service buttons
 					 */
-//					if(isset($pluginSettings['template-detail-parts-settings']['show-osmium-link']) && $pluginSettings['template-detail-parts-settings']['show-osmium-link'] === 'yes') {
-//						\WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\TemplateHelper::getTemplate('fitting-details/utilities/fitting-osmium', array(
-//							'shipID' => $shipID,
-//							'fittingDna' => $fittingDna
-//						));
-//					} // END if(isset($pluginSettings['template-detail-parts-settings']['show-osmium-link']) && $pluginSettings['template-detail-parts-settings']['show-osmium-link'] === 'yes')
+					\WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\TemplateHelper::getTemplate('fitting-details/utilities/fitting-service-buttons', [
+						'shipID' => $shipID,
+						'fittingDna' => $fittingDna,
+						'eftFitting' => $eftFitting,
+						'pluginSettings' => $pluginSettings
+					]);
 
 					/**
-					 * Show copy eft data to clipboard button
-					 */
-//					if(isset($pluginSettings['template-detail-parts-settings']['show-copy-eft']) && $pluginSettings['template-detail-parts-settings']['show-copy-eft'] === 'yes') {
-//						\WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\TemplateHelper::getTemplate('fitting-details/utilities/fitting-copy-eft-to-clipboard', array(
-//							'eftFitting' => $eftFitting
-//						));
-//					} // END if(isset($pluginSettings['template-detail-parts-settings']['show-copy-eft']) && $pluginSettings['template-detail-parts-settings']['show-copy-eft'] === 'yes')
-
-					/**
-					 * Show copy permalink to clipboard button
-					 */
-//					if(isset($pluginSettings['template-detail-parts-settings']['show-copy-permalink']) && $pluginSettings['template-detail-parts-settings']['show-copy-permalink'] === 'yes') {
-//						\WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\TemplateHelper::getTemplate('fitting-details/utilities/fitting-copy-permalink-to-clipboard');
-//					} // END if(isset($pluginSettings['template-detail-parts-settings']['show-copy-permalink']) && $pluginSettings['template-detail-parts-settings']['show-copy-permalink'] === 'yes')
-
-					/**
-					 * Show Market Prices
+					 * Show market prices
 					 */
 					if(isset($pluginSettings['template-detail-parts-settings']['show-market-data']) && $pluginSettings['template-detail-parts-settings']['show-market-data'] === 'yes') {
 						\WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\TemplateHelper::getTemplate('fitting-details/information/fitting-market-prices', [
