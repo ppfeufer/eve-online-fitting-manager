@@ -49,6 +49,7 @@ class MetaBoxes {
 					'drones' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_drones', true),
 					'charges' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_charges', true),
 					'fuel' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_fuel', true),
+					'implantsAndBooster' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_implants_and_booster', true),
 				]);
 			} // END if(\get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_ship_ID', true) !== null)
 		} // END if(PostType::isEditPage('edit') && $typenow === 'fitting')
@@ -138,6 +139,7 @@ class MetaBoxes {
 		\update_post_meta($postID, 'eve-online-fitting-manager_fitting_drones', (!empty($fittingSlotData['drones'])) ? \serialize($fittingSlotData['drones']) : null);
 		\update_post_meta($postID, 'eve-online-fitting-manager_fitting_charges', (!empty($fittingSlotData['charges'])) ? \serialize($fittingSlotData['charges']) : null);
 		\update_post_meta($postID, 'eve-online-fitting-manager_fitting_fuel', (!empty($fittingSlotData['fuel'])) ? \serialize($fittingSlotData['fuel']) : null);
+		\update_post_meta($postID, 'eve-online-fitting-manager_fitting_implants_and_booster', (!empty($fittingSlotData['implantsAndBooster'])) ? \serialize($fittingSlotData['implantsAndBooster']) : null);
 		\update_post_meta($postID, 'eve-online-fitting-manager_fitting_dna', (!empty($fittingDna)) ? $fittingDna : null);
 
 		// Mark Fitting As
