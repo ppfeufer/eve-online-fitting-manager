@@ -174,7 +174,7 @@ class FittingHelper {
 					AND `kb3_item_locations`.`itl_flagID` = `kb3_item_types`.`itt_slot`;', [$itemName]);
 			$itemData = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_results($sql, \OBJECT);
 		} // END if(!$itemData)
-//echo '<pre>' . print_r($itemData, true) . '</pre>';
+
 		if($itemData) {
 			$itemData = $itemData['0'];
 

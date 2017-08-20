@@ -83,7 +83,6 @@ class EftHelper {
 			 */
 			$fittingArray = \explode("\n", \trim(self::fixLineBreaks($eftFitting)));
 
-			$fittingData = [];
 			$fittingArray['0'] = \str_replace('[', '', $fittingArray['0']);
 			$fittingArray['0'] = \str_replace(']', '', $fittingArray['0']);
 			$fittingArray['0'] = \preg_replace('/,(.*)/', '', $fittingArray['0']);
@@ -201,8 +200,6 @@ class EftHelper {
 							default:
 								break;
 						} // END switch($itemDetail['slotName'])
-
-						$fittingData[] = $itemDetail;
 					} // END if(!empty($itemDetails))
 				} // END if(!empty(trim($line)))
 			} // END foreach($fittingArray as &$line)
