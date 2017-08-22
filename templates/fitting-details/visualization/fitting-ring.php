@@ -58,7 +58,7 @@ if(!empty($serviceSlots)) {
 			if(!empty($highSlotItemID)) {
 				?>
 				<div class="highSlot_<?php echo $hsCount; ?>" data-toggle="tooltip" data-title="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\FittingHelper::getItemNameById($highSlotItemID); ?>" data-placement="top">
-					<img width="32" height="32" src="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\ImageHelper::getLocalCacheImageUriForRemoteImage('item', 'https://imageserver.eveonline.com/Type/' . $highSlotItemID . '_32.png')?>" class="img-rounded">
+					<img width="32" height="32" src="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\ImageHelper::getInstance()->getLocalCacheImageUriForRemoteImage('item', 'https://imageserver.eveonline.com/Type/' . $highSlotItemID . '_32.png')?>" class="img-rounded">
 				</div>
 				<?php
 			}
@@ -81,7 +81,7 @@ if(!empty($serviceSlots)) {
 			if(!empty($midSlotItemID)) {
 				?>
 				<div class="midSlot_<?php echo $msCount; ?>" data-toggle="tooltip" data-title="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\FittingHelper::getItemNameById($midSlotItemID); ?>" data-placement="top">
-					<img width="32" height="32" src="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\ImageHelper::getLocalCacheImageUriForRemoteImage('item', 'https://imageserver.eveonline.com/Type/' . $midSlotItemID . '_32.png')?>" class="img-rounded">
+					<img width="32" height="32" src="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\ImageHelper::getInstance()->getLocalCacheImageUriForRemoteImage('item', 'https://imageserver.eveonline.com/Type/' . $midSlotItemID . '_32.png')?>" class="img-rounded">
 				</div>
 				<?php
 			}
@@ -104,7 +104,7 @@ if(!empty($serviceSlots)) {
 			if(!empty($lowSlotItemID)) {
 				?>
 				<div class="lowSlot_<?php echo $lsCount; ?>" data-toggle="tooltip" data-title="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\FittingHelper::getItemNameById($lowSlotItemID); ?>" data-placement="top">
-					<img width="32" height="32" src="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\ImageHelper::getLocalCacheImageUriForRemoteImage('item', 'https://imageserver.eveonline.com/Type/' . $lowSlotItemID . '_32.png')?>" class="img-rounded">
+					<img width="32" height="32" src="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\ImageHelper::getInstance()->getLocalCacheImageUriForRemoteImage('item', 'https://imageserver.eveonline.com/Type/' . $lowSlotItemID . '_32.png')?>" class="img-rounded">
 				</div>
 				<?php
 			}
@@ -127,7 +127,7 @@ if(!empty($serviceSlots)) {
 			if(!empty($rigSlotItemID)) {
 				?>
 				<div class="rigSlot_<?php echo $rsCount; ?>" data-toggle="tooltip" data-title="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\FittingHelper::getItemNameById($rigSlotItemID); ?>" data-placement="top">
-					<img width="32" height="32" src="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\ImageHelper::getLocalCacheImageUriForRemoteImage('item', 'https://imageserver.eveonline.com/Type/' . $rigSlotItemID . '_32.png')?>" class="img-rounded">
+					<img width="32" height="32" src="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\ImageHelper::getInstance()->getLocalCacheImageUriForRemoteImage('item', 'https://imageserver.eveonline.com/Type/' . $rigSlotItemID . '_32.png')?>" class="img-rounded">
 				</div>
 				<?php
 			}
@@ -150,7 +150,7 @@ if(!empty($serviceSlots)) {
 			if(!empty($subSystemItemID)) {
 				?>
 				<div class="subSystem_<?php echo $ssCount; ?>" data-toggle="tooltip" data-title="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\FittingHelper::getItemNameById($subSystemItemID); ?>" data-placement="top">
-					<img width="32" height="32" src="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\ImageHelper::getLocalCacheImageUriForRemoteImage('item', 'https://imageserver.eveonline.com/Type/' . $subSystemItemID . '_32.png')?>" class="img-rounded">
+					<img width="32" height="32" src="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\ImageHelper::getInstance()->getLocalCacheImageUriForRemoteImage('item', 'https://imageserver.eveonline.com/Type/' . $subSystemItemID . '_32.png')?>" class="img-rounded">
 				</div>
 				<?php
 			}
@@ -173,7 +173,7 @@ if(!empty($serviceSlots)) {
 			if(!empty($serviceSlotItemID)) {
 				?>
 				<div class="serviceSlot_<?php echo $ssCount; ?>" data-toggle="tooltip" data-title="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\FittingHelper::getItemNameById($serviceSlotItemID); ?>" data-placement="top">
-					<img width="32" height="32" src="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\ImageHelper::getLocalCacheImageUriForRemoteImage('item', 'https://imageserver.eveonline.com/Type/' . $serviceSlotItemID . '_32.png')?>" class="img-rounded">
+					<img width="32" height="32" src="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\ImageHelper::getInstance()->getLocalCacheImageUriForRemoteImage('item', 'https://imageserver.eveonline.com/Type/' . $serviceSlotItemID . '_32.png')?>" class="img-rounded">
 				</div>
 				<?php
 			}
@@ -187,7 +187,7 @@ if(!empty($serviceSlots)) {
 	// Ship
 	-->
 	<div class="shipImage">
-		<img width="256" height="256" alt="Tengu" class="eveimage img-rounded" src="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\ImageHelper::getLocalCacheImageUriForRemoteImage('ship', 'https://imageserver.eveonline.com/Render/' . $shipID . '_256.png')?>">
+		<img width="256" height="256" alt="Tengu" class="eveimage img-rounded" src="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\ImageHelper::getInstance()->getLocalCacheImageUriForRemoteImage('ship', 'https://imageserver.eveonline.com/Render/' . $shipID . '_256.png')?>">
 	</div>
 </div>
 
