@@ -22,7 +22,18 @@ namespace WordPress\Plugin\EveOnlineFittingManager\Libs\Helper;
 \defined('ABSPATH') or die();
 
 class ImageHelper extends \WordPress\Plugin\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton {
+	/**
+	 * base URL to CCP's image server
+	 *
+	 * @var var
+	 */
 	public $imageserverUrl = null;
+
+	/**
+	 * Array with possible end point on CCP's image server
+	 *
+	 * @var array
+	 */
 	public $imageserverEndpoints = null;
 
 	/**
@@ -39,7 +50,7 @@ class ImageHelper extends \WordPress\Plugin\EveOnlineFittingManager\Libs\Singlet
 	 * Assigning Imagesever Endpoints
 	 */
 	private function getImageserverEndpoints() {
-		$this->imageserverEndpoints = [
+		return [
 			'alliance' => 'Alliance/',
 			'corporation' => 'Corporation/',
 			'character' => 'Character/',
