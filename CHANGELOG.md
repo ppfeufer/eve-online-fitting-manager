@@ -1,8 +1,13 @@
 # Change Log
 
 ## [In Development](https://github.com/ppfeufer/eve-online-fitting-manager)
-[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.9...HEAD)
+[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.9.1...HEAD)
 - in development
+
+## [v0.9.1](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.9.1) - 2017-08-22
+[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.9...v0.9.1)
+### Fixed
+- An issue determining the image server end point
 
 ## [v0.9](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.9) - 2017-08-22
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.8...v0.9)
