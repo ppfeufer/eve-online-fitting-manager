@@ -162,4 +162,47 @@ class PluginHelper {
 
 		return $returnValue;
 	} // END public function checkPluginDependencies($plugin)
+
+	/**
+	 * Alias for is_active_sidebar()
+	 *
+	 * @param string $sidebarPosition
+	 * @return boolean
+	 * @uses is_active_sidebar() Whether a sidebar is in use.
+	 */
+	public static function hasSidebar($sidebarPosition) {
+		return \is_active_sidebar($sidebarPosition);
+	} // END public static function hasSidebar($sidebarPosition)
+
+	public static function getMainContentColClasses($echo = false) {
+		$contentColClass = 'col-lg-12 col-md-12 col-sm-12 col-12';
+
+		if(self::hasSidebar('sidebar-fitting-manager')) {
+			$contentColClass = 'col-lg-9 col-md-9 col-sm-9 col-9';
+		} else {
+			$contentColClass = 'col-lg-12 col-md-12 col-sm-12 col-12';
+		} // END if(ThemeHelper::getInstance()->hasSidebar('sidebar-page') || ThemeHelper::getInstance()->hasSidebar('sidebar-general') || ThemeHelper::getInstance()->hasSidebar('sidebar-post'))
+
+		if($echo === true) {
+			echo $contentColClass;
+		} else {
+			return $contentColClass;
+		} // END if($echo === true)
+	} // END public static function getMainContentColClasses($echo = false)
+
+	public static function getLoopContentClasses($echo = false) {
+		$contentColClass = 'col-lg-3 col-md-4 col-sm-6 col-xs-12';
+
+		if(self::hasSidebar('sidebar-fitting-manager')) {
+			$contentColClass = 'col-lg-4 col-md-6 col-sm-12 col-xs-12';
+		} else {
+			$contentColClass = 'col-lg-3 col-md-4 col-sm-6 col-xs-12';
+		} // END if(ThemeHelper::getInstance()->hasSidebar('sidebar-page') || ThemeHelper::getInstance()->hasSidebar('sidebar-general'))
+
+		if($echo === true) {
+			echo $contentColClass;
+		} else {
+			return $contentColClass;
+		} // END if($echo === true)
+	} // END public static function geLoopContentClasses($echo = false)
 } // END class PluginHelper

@@ -8,7 +8,7 @@ $doctrineData = \get_queried_object();
 
 <div class="container main template-archive-fitting" data-doctrine="<?php echo $doctrineData->slug; ?>">
 	<div class="main-content clearfix">
-		<div class="col-lg-9 col-md-9 col-sm-9 col-9">
+		<div class="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\PluginHelper::getMainContentColClasses(); ?>">
 			<div class="content content-archive doctrine-list">
 				<header class="page-title">
 					<h2>
@@ -51,7 +51,7 @@ $doctrineData = \get_queried_object();
 						echo '<script type="text/javascript">
 								jQuery(document).ready(function() {
 									jQuery("ul.bootstrap-post-loop-fittings-' . $uniqueID . '").bootstrapGallery({
-										"classes" : "col-lg-4 col-md-6 col-sm-6 col-xs-12",
+										"classes" : "' . \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\PluginHelper::getLoopContentClasses() . '",
 										"hasModal" : false
 									});
 								});
@@ -64,7 +64,17 @@ $doctrineData = \get_queried_object();
 			</div> <!-- /.content -->
 		</div> <!-- /.col -->
 
-		<?php \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\TemplateHelper::getTemplate('doctrine-sidebar'); ?>
+		<?php
+		if(\WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\PluginHelper::hasSidebar('sidebar-fitting-manager')) {
+			?>
+			<div class="col-lg-3 col-md-3 col-sm-3 col-3 sidebar-wrapper">
+				<?php
+				\WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\TemplateHelper::getTemplate('sidebar-fitting-manager');
+				?>
+			</div><!--/.col -->
+			<?php
+		} // END if(\WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\PluginHelper::hasSidebar('sidebar-fitting-manager'))
+		?>
 	</div> <!--/.row -->
 </div><!-- container -->
 

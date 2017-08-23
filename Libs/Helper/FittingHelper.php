@@ -841,7 +841,7 @@ class FittingHelper {
 		$entityListHtml .= '<script type="text/javascript">
 								jQuery(document).ready(function() {
 									jQuery("ul.bootstrap-post-loop-fittings-' . $uniqueID . '").bootstrapGallery({
-										"classes" : "col-lg-4 col-md-6 col-sm-6 col-xs-12",
+										"classes" : "' . \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\PluginHelper::getLoopContentClasses() . '",
 										"hasModal" : false
 									});
 								});
