@@ -1,8 +1,19 @@
 # Change Log
 
 ## [In Development](https://github.com/ppfeufer/eve-online-fitting-manager)
-[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.9.1...HEAD)
+[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.10...HEAD)
 - in development
+
+## [v0.10](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.10) - 2017-08-23
+[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.9.1...v0.10)
+### Added
+- Widget to search the fittings
+- Widget to navigate through the doctrines
+- Widget to navigate through the ship types
+
+### Changed
+- Sidebar for the fitting pages is now a widget area
+- Content of the former static sidebar is now available in 3 widgets
 
 ## [v0.9.1](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.9.1) - 2017-08-22
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.9...v0.9.1)
