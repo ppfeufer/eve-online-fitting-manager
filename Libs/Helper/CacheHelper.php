@@ -57,7 +57,7 @@ class CacheHelper extends \WordPress\Plugin\EveOnlineFittingManager\Libs\Singlet
 	 * @return string absolute path for the cache directory
 	 */
 	public function getPluginCacheDir() {
-		return \trailingslashit(\WP_CONTENT_DIR) . 'cache/plugins/eve-online-fitting-manager/';
+		return \trailingslashit(\WP_CONTENT_DIR) . 'cache/eve-online/';
 	} // END public static function getThemeCacheDir()
 
 	/**
@@ -66,7 +66,7 @@ class CacheHelper extends \WordPress\Plugin\EveOnlineFittingManager\Libs\Singlet
 	 * @return string URI for the cache directory
 	 */
 	public function getPluginCacheUri() {
-		return \trailingslashit(\WP_CONTENT_URL) . 'cache/plugins/eve-online-fitting-manager/';
+		return \trailingslashit(\WP_CONTENT_URL) . 'cache/eve-online/';
 	} // END public function getThemeCacheUri()
 
 	/**
