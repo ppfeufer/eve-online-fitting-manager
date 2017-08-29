@@ -11,32 +11,32 @@ $fittingSlotLayout = \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\Fitti
 
 $itemsHighSlots = null;
 if(!empty($highSlots)) {
-	$itemsHighSlots = \unserialize($highSlots);
+	$itemsHighSlots = \maybe_unserialize($highSlots);
 }
 
 $itemsMidSlots = null;
 if(!empty($midSlots)) {
-	$itemsMidSlots = \unserialize($midSlots);
+	$itemsMidSlots = \maybe_unserialize($midSlots);
 }
 
 $itemsLowSlots = null;
 if(!empty($lowSlots)) {
-	$itemsLowSlots = \unserialize($lowSlots);
+	$itemsLowSlots = \maybe_unserialize($lowSlots);
 }
 
 $itemsRigSlots = null;
 if(!empty($rigSlots)) {
-	$itemsRigSlots = \unserialize($rigSlots);
+	$itemsRigSlots = \maybe_unserialize($rigSlots);
 }
 
 $itemsSubSystems = null;
 if(!empty($subSystems)) {
-	$itemsSubSystems = \unserialize($subSystems);
+	$itemsSubSystems = \maybe_unserialize($subSystems);
 }
 
 $itemsServiceSlots = null;
 if(!empty($serviceSlots)) {
-	$itemsServiceSlots = \unserialize($serviceSlots);
+	$itemsServiceSlots = \maybe_unserialize($serviceSlots);
 }
 ?>
 
