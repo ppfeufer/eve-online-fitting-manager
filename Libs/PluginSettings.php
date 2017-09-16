@@ -64,6 +64,7 @@ class PluginSettings {
 				 * killboard settings tab
 				 */
 				'general-settings' => $this->getKillboardSettings(),
+				'marketdata-settings' => $this->getMarketDataSettings(),
 				'template-settings' => $this->getTemplateSettings()
 			]
 		];
@@ -85,6 +86,20 @@ class PluginSettings {
 
 		return $settings;
 	} // END private function getKillboardSettings()
+
+	/**
+	 * Getting the Killboard Databse Settings
+	 *
+	 * @return array The Killboard Database Setting
+	 */
+	private function getMarketDataSettings() {
+		$settings = [
+			'tab_title' => \__('Market API Settings', 'eve-online-fitting-manager'),
+			'fields' => $this->getMarketDataSettingsFields()
+		];
+
+		return $settings;
+	} // END private function getMarketDataSettings()
 
 	/**
 	 * Getting the Template related settings
@@ -135,6 +150,26 @@ class PluginSettings {
 			'edk-killboard-password' => [
 				'type' => 'password',
 				'title' => \__('DB Password', 'eve-online-fitting-manager'),
+			]
+		];
+
+		return $settingsFields;
+	} // END private function getKillboardSettingsFields()
+
+	/**
+	 * get the settings fields for the template related settings
+	 *
+	 * @return array Settings fields for the template related settings
+	 */
+	private function getMarketDataSettingsFields() {
+		$settingsFields = [
+			'market-data-api' => [
+				'type' => 'radio',
+				'title' => \__('Market Data API', 'eve-online-fitting-manager'),
+				'choices' => [
+					'eve-central' => \__('EVE Central', 'eve-online-fitting-manager') . ' (<a href="https://eve-central.com/" target="_blank">https://eve-central.com/</a>)',
+					'eve-marketer' => \__('EVE Marketer', 'eve-online-fitting-manager') . ' (<a href="https://evemarketer.com/" target="_blank">https://evemarketer.com/</a>)',
+				],
 			]
 		];
 

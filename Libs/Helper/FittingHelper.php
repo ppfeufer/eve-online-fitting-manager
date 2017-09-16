@@ -29,7 +29,7 @@ class FittingHelper {
 	 * @return array
 	 */
 	public static function getHighSlotItemNames($highSlots) {
-		$slots = \unserialize($highSlots);
+		$slots = \maybe_unserialize($highSlots);
 		$arrayHighSlot = [
 			'highSlot_1_itemName' => (!empty($slots['highSlot_1'])) ? self::getItemNameById($slots['highSlot_1']) : null,
 			'highSlot_2_itemName' => (!empty($slots['highSlot_2'])) ? self::getItemNameById($slots['highSlot_2']) : null,
@@ -51,7 +51,7 @@ class FittingHelper {
 	 * @return array
 	 */
 	public static function getMidSlotItemNames($midSlots) {
-		$slots = \unserialize($midSlots);
+		$slots = \maybe_unserialize($midSlots);
 
 		$arrayMidSlot = [
 			'midSlot_1_itemName' => (!empty($slots['midSlot_1'])) ? self::getItemNameById($slots['midSlot_1']) : null,
@@ -74,7 +74,7 @@ class FittingHelper {
 	 * @return srray
 	 */
 	public static function getLowSlotItemNames($lowSlots) {
-		$slots = \unserialize($lowSlots);
+		$slots = \maybe_unserialize($lowSlots);
 
 		$arrayLowSlot = [
 			'lowSlot_1_itemName' => (!empty($slots['lowSlot_1'])) ? self::getItemNameById($slots['lowSlot_1']) : null,
@@ -97,7 +97,7 @@ class FittingHelper {
 	 * @return array
 	 */
 	public static function getRigSlotItemNames($rigSlots) {
-		$rigs = \unserialize($rigSlots);
+		$rigs = \maybe_unserialize($rigSlots);
 
 		$arrayRigSlot = [
 			'rigSlot_1_itemName' => (!empty($rigs['rigSlot_1'])) ? self::getItemNameById($rigs['rigSlot_1']) : null,
@@ -115,7 +115,7 @@ class FittingHelper {
 	 * @return array
 	 */
 	public static function getSubSystemItemNames($subSystems) {
-		$sub = \unserialize($subSystems);
+		$sub = \maybe_unserialize($subSystems);
 
 		$arraySubSystems = [
 			'subSystem_1_itemName' => (!empty($sub['subSystem_1'])) ? self::getItemNameById($sub['subSystem_1']) : null,
@@ -461,8 +461,8 @@ class FittingHelper {
 		$currentSubSystems = 0;
 		$currentServiceSlots = 0;
 
-		$fittedSubSystems = \unserialize($fitting['subSystems']);
-		$fittedServiceSlots = \unserialize($fitting['serviceSlots']);
+		$fittedSubSystems = \maybe_unserialize($fitting['subSystems']);
+		$fittedServiceSlots = \maybe_unserialize($fitting['serviceSlots']);
 
 		$arrayStrategicCruiserIDs = self::getStrategicCruiserIds();
 		$arrayUpwellStructureIDs = self::getUpwellStructureIds();

@@ -9,7 +9,7 @@
 
 	<div class="bs-callout bs-callout-info">
 		<p class="small">
-			<?php echo \__('These are only estimated market prices and can vary from ingame prices depending on the shiptype and market you are looking at. Especially capital ships that are not traded at the Jita market can be miles off.', ''); ?>
+			<?php echo \__('These are only estimated market prices and can vary from ingame prices depending on the shiptype and market you are looking at. Especially capital ships that are not traded at the Jita market can be miles off.', 'eve-online-fitting-manager'); ?>
 		</p>
 	</div>
 

@@ -4,7 +4,7 @@
  * Plugin URI: https://github.com/ppfeufer/eve-online-fitting-manager
  * Git URI: https://github.com/ppfeufer/eve-online-fitting-manager
  * Description: A little management tool for your doctrine fittings in your WordPress website. (Best with a theme running with <a href="http://getbootstrap.com/">Bootstrap</a>)
- * Version: 0.11
+ * Version: 0.12
  * Author: Rounon Dax
  * Author URI: http://yulaifederation.net
  * Text Domain: eve-online-fitting-manager
@@ -37,7 +37,7 @@ class EveOnlineFittingManager {
 		$this->textDomain = 'eve-online-fitting-manager';
 		$this->pluginDir =  \plugin_dir_path(__FILE__);
 		$this->pluginUri = \trailingslashit(\plugins_url('/', __FILE__));
-		$this->localizationDirectory = $this->pluginDir . '/l10n/';
+		$this->localizationDirectory = \basename(\dirname(__FILE__)) . '/l10n/';
 
 		$this->loadTextDomain();
 	} // END public function __construct()

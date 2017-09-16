@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-27 07:26+0000\n"
+"POT-Creation-Date: 2017-09-16 14:34+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -14,183 +14,395 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco - https://localise.biz/"
 
-#: libs/MetaBoxes.php:16
+#: templates/archive-fitting.php:15
+msgid "Doctrine:"
+msgstr ""
+
+#: templates/archive-fitting.php:61
+msgid ""
+"Sorry, but currently there are no fittings listed for this doctrine. Maybe "
+"using the search function will help you out."
+msgstr ""
+
+#: templates/content-single-fitting.php:47
+msgid "Edit"
+msgstr ""
+
+#: templates/archive-ship.php:15
+#: templates/fitting-details/information/fitting-market-prices.php:22
+#: templates/fitting-details/information/fitting-market-prices.php:42
+msgid "Ship:"
+msgstr ""
+
+#: templates/archive-ship.php:61
+msgid ""
+"Sorry, but currently there are no fittings listed for this ship type. Maybe "
+"using the search function will help you out."
+msgstr ""
+
+#: Libs/PostType.php:45 Libs/PostType.php:77
+#: Libs/Widgets/DoctrinesWidget.php:84
+msgid "Doctrines"
+msgstr ""
+
+#: Libs/PostType.php:46
+msgid "Doctrine"
+msgstr ""
+
+#: Libs/PostType.php:47 Libs/Widgets/SearchWidget.php:75
+msgid "Search Doctrines"
+msgstr ""
+
+#: Libs/PostType.php:48
+msgid "Popular Doctrines"
+msgstr ""
+
+#: Libs/PostType.php:49
+msgid "All Doctrines"
+msgstr ""
+
+#: Libs/PostType.php:50
+msgid "Parent Doctrine"
+msgstr ""
+
+#: Libs/PostType.php:51
+msgid "Edit Doctrine"
+msgstr ""
+
+#: Libs/PostType.php:52
+msgid "Update Doctrine"
+msgstr ""
+
+#: Libs/PostType.php:53
+msgid "Add New Doctrine"
+msgstr ""
+
+#: Libs/PostType.php:54
+msgid "New Doctrine"
+msgstr ""
+
+#: Libs/PostType.php:55
+msgid "Separate Doctrines with commas"
+msgstr ""
+
+#: Libs/PostType.php:56
+msgid "Add or remove Doctrine"
+msgstr ""
+
+#: Libs/PostType.php:57
+msgid "Choose from most used Doctrines"
+msgstr ""
+
+#: Libs/PostType.php:61 Libs/PostType.php:94
+#: Libs/Widgets/ShiptypesWidget.php:84
+msgid "Ship Types"
+msgstr ""
+
+#: Libs/PostType.php:62
+msgid "Ship Type"
+msgstr ""
+
+#: Libs/PostType.php:63
+msgid "Search Ship Types"
+msgstr ""
+
+#: Libs/PostType.php:64
+msgid "Popular Ship Types"
+msgstr ""
+
+#: Libs/PostType.php:65
+msgid "All Ship Types"
+msgstr ""
+
+#: Libs/PostType.php:66
+msgid "Parent Ship Type"
+msgstr ""
+
+#: Libs/PostType.php:67
+msgid "Edit Ship Type"
+msgstr ""
+
+#: Libs/PostType.php:68
+msgid "Update Ship Type"
+msgstr ""
+
+#: Libs/PostType.php:69
+msgid "Add New Ship Type"
+msgstr ""
+
+#: Libs/PostType.php:70
+msgid "New Ship Type"
+msgstr ""
+
+#: Libs/PostType.php:71
+msgid "Separate Ship Types with commas"
+msgstr ""
+
+#: Libs/PostType.php:72
+msgid "Add or remove Ship Type"
+msgstr ""
+
+#: Libs/PostType.php:73
+msgid "Choose from most used Ship Types"
+msgstr ""
+
+#: Libs/PostType.php:115
+msgid "Fittings"
+msgstr ""
+
+#: Libs/PostType.php:116
+msgid "Fitting"
+msgstr ""
+
+#: Libs/Widgets.php:48
+msgid "Fitting Manager Sidebar"
+msgstr ""
+
+#: Libs/Widgets.php:49
+msgid "Sidebar to use with your Fitting Manager pages."
+msgstr ""
+
+#: Libs/GithubUpdater.php:93
+msgid ""
+"The GitHub Updater was initialized without the minimum required "
+"configuration, please check the config in your plugin. The following params "
+"are missing: "
+msgstr ""
+
+#: Libs/GithubUpdater.php:468
+msgid ""
+"The plugin has been updated, but could not be reactivated. Please reactivate "
+"it manually."
+msgstr ""
+
+#: Libs/GithubUpdater.php:469
+msgid "Plugin reactivated successfully."
+msgstr ""
+
+#: Libs/MetaBoxes.php:40
 msgid "EFT Fitting"
 msgstr ""
 
-#: libs/PluginSettings.php:31 libs/PluginSettings.php:32
+#: Libs/MetaBoxes.php:41
+msgid "Mark Fitting As ..."
+msgstr ""
+
+#: Libs/MetaBoxes.php:103
+#: templates/fitting-details/information/fitting-marker.php:14
+msgid "Conceptual Fitting"
+msgstr ""
+
+#: Libs/MetaBoxes.php:107
+#: templates/fitting-details/information/fitting-marker.php:18
+msgid "Fitting Idea"
+msgstr ""
+
+#: Libs/MetaBoxes.php:111
+msgid "Under Duscussion"
+msgstr ""
+
+#: Libs/PluginSettings.php:59 Libs/PluginSettings.php:60
 msgid "EVE Online Fittings Manager"
 msgstr ""
 
-#: libs/PluginSettings.php:47
+#: Libs/PluginSettings.php:82
 msgid "Killboard Settings"
 msgstr ""
 
-#: libs/PluginSettings.php:48
+#: Libs/PluginSettings.php:83
 msgid ""
 "You need to have a connection to a EDK killboard database in order to use "
 "this plugin. The database is needed to gather all the ship and item "
 "information."
 msgstr ""
 
-#: libs/PluginSettings.php:72
+#: Libs/PluginSettings.php:97
+msgid "Market API Settings"
+msgstr ""
+
+#: Libs/PluginSettings.php:111
+msgid "Template Settings"
+msgstr ""
+
+#: Libs/PluginSettings.php:139
 msgid "DB Host"
 msgstr ""
 
-#: libs/PluginSettings.php:77
+#: Libs/PluginSettings.php:144
 msgid "DB Name"
 msgstr ""
 
-#: libs/PluginSettings.php:81
+#: Libs/PluginSettings.php:148
 msgid "DB User"
 msgstr ""
 
-#: libs/PluginSettings.php:85
+#: Libs/PluginSettings.php:152
 msgid "DB Password"
 msgstr ""
 
-#: libs/PostType.php:21 libs/PostType.php:53 templates/doctrine-sidebar.php:31
-msgid "Doctrines"
+#: Libs/PluginSettings.php:168
+msgid "Market Data API"
 msgstr ""
 
-#: libs/PostType.php:22
-msgid "Doctrine"
+#: Libs/PluginSettings.php:170
+msgid "EVE Central"
 msgstr ""
 
-#: libs/PostType.php:23 templates/doctrine-sidebar.php:12
-msgid "Search Doctrines"
+#: Libs/PluginSettings.php:171
+msgid "EVE Marketer"
 msgstr ""
 
-#: libs/PostType.php:24
-msgid "Popular Doctrines"
+#: Libs/PluginSettings.php:188
+msgid "Image Settings"
 msgstr ""
 
-#: libs/PostType.php:25
-msgid "All Doctrines"
+#: Libs/PluginSettings.php:190
+msgid "Show ship images in ship list"
 msgstr ""
 
-#: libs/PostType.php:26
-msgid "Parent Doctrine"
+#: Libs/PluginSettings.php:191
+#, php-format
+msgid ""
+"Show doctrine images in doctrine list <small><em>(You need to have the %1$s "
+"plugin installed to make this happen)</em></small>"
 msgstr ""
 
-#: libs/PostType.php:27
-msgid "Edit Doctrine"
+#: Libs/PluginSettings.php:192
+msgid "Categories Images"
 msgstr ""
 
-#: libs/PostType.php:28
-msgid "Update Doctrine"
+#: Libs/PluginSettings.php:198
+msgid "Detail Page Settings"
 msgstr ""
 
-#: libs/PostType.php:29
-msgid "Add New Doctrine"
+#: Libs/PluginSettings.php:200
+msgid "Show visual fitting"
 msgstr ""
 
-#: libs/PostType.php:30
-msgid "New Doctrine"
+#: Libs/PluginSettings.php:201
+msgid "Show ship description"
 msgstr ""
 
-#: libs/PostType.php:31
-msgid "Separate Doctrines with commas"
+#: Libs/PluginSettings.php:202
+msgid "Show Osmium button"
 msgstr ""
 
-#: libs/PostType.php:32
-msgid "Add or remove Doctrine"
+#: Libs/PluginSettings.php:203
+msgid "Show \"Copy EFT data to clipboard\" button"
 msgstr ""
 
-#: libs/PostType.php:33
-msgid "Choose from most used Doctrines"
+#: Libs/PluginSettings.php:204
+msgid "Show \"Copy permalink to clipboard\" button"
 msgstr ""
 
-#: libs/PostType.php:37 libs/PostType.php:70 templates/doctrine-sidebar.php:46
-msgid "Ship Types"
+#: Libs/PluginSettings.php:205
+msgid "Show \"Estimated Prices\" section"
 msgstr ""
 
-#: libs/PostType.php:38
-msgid "Ship Type"
+#: Libs/PluginSettings.php:206
+msgid "Show \"Doctrines using this fitting\" section"
 msgstr ""
 
-#: libs/PostType.php:39
-msgid "Search Ship Types"
+#: Libs/Widgets/ShiptypesWidget.php:57
+msgid "Displaying the ship types list in your sidebar."
 msgstr ""
 
-#: libs/PostType.php:40
-msgid "Popular Ship Types"
+#: Libs/Widgets/SearchWidget.php:57
+msgid "Displaying the search field in your sidebar."
 msgstr ""
 
-#: libs/PostType.php:41
-msgid "All Ship Types"
-msgstr ""
-
-#: libs/PostType.php:42
-msgid "Parent Ship Type"
-msgstr ""
-
-#: libs/PostType.php:43
-msgid "Edit Ship Type"
-msgstr ""
-
-#: libs/PostType.php:44
-msgid "Update Ship Type"
-msgstr ""
-
-#: libs/PostType.php:45
-msgid "Add New Ship Type"
-msgstr ""
-
-#: libs/PostType.php:46
-msgid "New Ship Type"
-msgstr ""
-
-#: libs/PostType.php:47
-msgid "Separate Ship Types with commas"
-msgstr ""
-
-#: libs/PostType.php:48
-msgid "Add or remove Ship Type"
-msgstr ""
-
-#: libs/PostType.php:49
-msgid "Choose from most used Ship Types"
-msgstr ""
-
-#: libs/PostType.php:91
-msgid "Fittings"
-msgstr ""
-
-#: libs/PostType.php:92
-msgid "Fitting"
-msgstr ""
-
-#: templates/content-single-fitting.php:11
-msgid "Edit"
-msgstr ""
-
-#: templates/content-single-fitting.php:24
-msgid "Fitting Description and Information"
-msgstr ""
-
-#: templates/content-single-fitting.php:34
-msgid "Fitting Visualization"
-msgstr ""
-
-#: templates/content-single-fitting.php:43
-msgid "This fitting is used in the following doctrines:"
-msgstr ""
-
-#: templates/content-single-fitting.php:59
-msgid "EFT Import"
-msgstr ""
-
-#: templates/doctrine-sidebar.php:16
+#: Libs/Widgets/SearchWidget.php:88
 msgid "Search"
 msgstr ""
 
-#: templates/doctrine-sidebar.php:17
+#: Libs/Widgets/SearchWidget.php:89
 msgid "Search Ship Type"
 msgstr ""
 
-#: templates/fitting/fitting-ring.php:176
-msgid "View Loadout @Osmium.org"
+#: Libs/Widgets/DoctrinesWidget.php:57
+msgid "Displaying the doctrine list in your sidebar."
+msgstr ""
+
+#: Libs/ResourceLoader/JavascriptLoader.php:64
+msgid "EFT data successfully copied"
+msgstr ""
+
+#: Libs/ResourceLoader/JavascriptLoader.php:65
+#: Libs/ResourceLoader/JavascriptLoader.php:71
+msgid ""
+"Something went wrong. Nothing copied. Maybe your browser doesn't support "
+"this function."
+msgstr ""
+
+#: Libs/ResourceLoader/JavascriptLoader.php:70
+msgid "Permalink successfully copied"
+msgstr ""
+
+#: templates/fitting-details/utilities/fitting-copy-permalink-to-clipboard.php:11
+msgid "Copy Permalink"
+msgstr ""
+
+#: templates/fitting-details/utilities/fitting-copy-eft-to-clipboard.php:12
+msgid "Copy EFT Data"
+msgstr ""
+
+#: templates/fitting-details/utilities/fitting-osmium.php:4
+msgid "View @Osmium.org"
+msgstr ""
+
+#: templates/fitting-details/information/fitting-market-prices.php:7
+msgid "Estimated Prices"
+msgstr ""
+
+#: templates/fitting-details/information/fitting-market-prices.php:12
+msgid ""
+"These are only estimated market prices and can vary from ingame prices "
+"depending on the shiptype and market you are looking at. Especially capital "
+"ships that are not traded at the Jita market can be miles off."
+msgstr ""
+
+#: templates/fitting-details/information/fitting-market-prices.php:26
+#: templates/fitting-details/information/fitting-market-prices.php:46
+msgid "Fitting:"
+msgstr ""
+
+#: templates/fitting-details/information/fitting-market-prices.php:30
+#: templates/fitting-details/information/fitting-market-prices.php:50
+msgid "Total:"
+msgstr ""
+
+#: templates/fitting-details/information/fitting-marker.php:11
+msgid "This fitting is marked as:"
+msgstr ""
+
+#: templates/fitting-details/information/fitting-marker.php:22
+msgid "Under Discussion"
+msgstr ""
+
+#: templates/fitting-details/information/fitting-marker.php:27
+msgid ""
+"This means, this fitting might not be a part of any official doctrine and/or "
+"is still under discussion."
+msgstr ""
+
+#: templates/fitting-details/information/fitting-doctrine-usage.php:7
+msgid "Doctrines using this fitting"
+msgstr ""
+
+#: templates/fitting-details/information/fitting-doctrine-usage.php:12
+msgid "This fitting is currently not used in any doctrine."
+msgstr ""
+
+#: templates/fitting-details/information/fitting-information-tabs.php:5
+msgid "EFT Import"
+msgstr ""
+
+#: templates/fitting-details/information/fitting-information-tabs.php:16
+msgid "Information"
+msgstr ""
+
+#: templates/fitting-details/information/fitting-information-tabs.php:27
+msgid "Description"
 msgstr ""
 
 #. Name of the plugin

@@ -305,16 +305,16 @@ class EftHelper {
 	 * @return string
 	 */
 	public static function getEftImportFromFitting($fitting, $withShipDna = false) {
-		$arrayHighSlots = \unserialize($fitting['highSlots']);
-		$arrayMidSlots = \unserialize($fitting['midSlots']);
-		$arrayLowSlots = \unserialize($fitting['lowSlots']);
-		$arrayRigSlots = \unserialize($fitting['rigSlots']);
-		$arraySubSystems = \unserialize($fitting['subSystems']);
-		$arrayServiceSlots = \unserialize($fitting['serviceSlots']);
-		$arrayDrones = \unserialize($fitting['drones']);
-		$arrayCharges = \unserialize($fitting['charges']);
-		$arrayFuel = \unserialize($fitting['fuel']);
-		$arrayImplantsAndBooster = \unserialize($fitting['implantsAndBooster']);
+		$arrayHighSlots = \maybe_unserialize($fitting['highSlots']);
+		$arrayMidSlots = \maybe_unserialize($fitting['midSlots']);
+		$arrayLowSlots = \maybe_unserialize($fitting['lowSlots']);
+		$arrayRigSlots = \maybe_unserialize($fitting['rigSlots']);
+		$arraySubSystems = \maybe_unserialize($fitting['subSystems']);
+		$arrayServiceSlots = \maybe_unserialize($fitting['serviceSlots']);
+		$arrayDrones = \maybe_unserialize($fitting['drones']);
+		$arrayCharges = \maybe_unserialize($fitting['charges']);
+		$arrayFuel = \maybe_unserialize($fitting['fuel']);
+		$arrayImplantsAndBooster = \maybe_unserialize($fitting['implantsAndBooster']);
 
 		$eftImport = '';
 		$eftImport .= '[' . FittingHelper::getItemNameById($fitting['shipID']) . ', ' . \trim($fitting['fittingType']) . ']' . "\n";
