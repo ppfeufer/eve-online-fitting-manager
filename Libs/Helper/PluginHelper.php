@@ -24,7 +24,7 @@ namespace WordPress\Plugin\EveOnlineFittingManager\Libs\Helper;
 class PluginHelper {
 	public static $optionName = 'eve-online-fitting-manager-options';
 	public static $dbVersionFieldName = 'eve-online-fitting-manager-database-version';
-	public static $databaseVersion = '20170804';
+	public static $databaseVersion = '20170916';
 
 	/**
 	 * Getting the Plugin Path
@@ -84,6 +84,7 @@ class PluginHelper {
 			'edk-killboard-user' => '',
 			'edk-killboard-name' => '',
 			'edk-killboard-password' => '',
+			'market-data-api' => 'eve-central',
 			'template-image-settings' => [
 				'show-ship-images-in-loop' => '',
 				'show-doctrine-images-in-loop' => ''

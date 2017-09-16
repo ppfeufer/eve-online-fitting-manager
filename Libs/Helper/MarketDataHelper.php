@@ -64,14 +64,53 @@ class MarketDataHelper extends \WordPress\Plugin\EveOnlineFittingManager\Libs\Si
 	public $marketSystem = 30000142; // Jita
 
 	/**
+	 * Plugin Settings
+	 *
+	 * @var array
+	 */
+	public $pluginSettings = null;
+
+	/**
 	 * Constructor
 	 */
 	protected function __construct() {
 		parent::__construct();
 
-//		$this->apiUrl = $this->apiUrlEveMarketer . '?regionlimit=' . $this->marketRegion . '&usesystem=' . $this->marketSystem . '&typeid=';
-		$this->apiUrl = $this->apiUrlEveCentral . '?typeid=';
-	}
+		$this->pluginSettings = PluginHelper::getPluginSettings();
+
+		$this->setMarketApi();
+	} // END protected function __construct()
+
+	/**
+	 * Set the market API that is to be used
+	 */
+	public function setMarketApi() {
+		$urlParameters = '?regionlimit=' . $this->marketRegion . '&usesystem=' . $this->marketSystem . '&typeid=';
+
+		switch($this->pluginSettings['market-data-api']) {
+			/**
+			 * EVE Central
+			 */
+			case 'eve-central':
+				$this->apiUrl = $this->apiUrlEveCentral . $urlParameters;
+				break;
+
+			/**
+			 * EVE Marketer
+			 */
+			case 'eve-marketer':
+				$this->apiUrl = $this->apiUrlEveMarketer . $urlParameters;
+				break;
+
+			/**
+			 * Default: EVE Central
+			 * (If for whatever reason none is set in plugin settings)
+			 */
+			default:
+				$this->apiUrl = $this->apiUrlEveCentral . $urlParameters;
+				break;
+		} // END switch($this->pluginSettings['market-data-api'])
+	} // END public function setMarketApi()
 
 	/**
 	 * Getting the marketdata json
@@ -81,7 +120,7 @@ class MarketDataHelper extends \WordPress\Plugin\EveOnlineFittingManager\Libs\Si
 	 */
 	public function getMarketDataJson(array $items) {
 		$typeIdString = \implode(',', $items);
-		$transientName = 'eve_fitting_tool_market_data_fitting_' . \md5($typeIdString);
+		$transientName = 'eve_fitting_tool_' . $this->pluginSettings['market-data-api'] . '-market-data_fitting_' . \md5($typeIdString);
 		$returnValue = CacheHelper::getInstance()->checkTransientCache($transientName);
 
 		if($returnValue === false) {
@@ -124,6 +163,7 @@ class MarketDataHelper extends \WordPress\Plugin\EveOnlineFittingManager\Libs\Si
 					'ship' => $marketArrayShip['0']->buy->median,
 					'total' => $marketArrayShip['0']->buy->median
 				];
+
 				$jitaSellPrice = [
 					'ship' => $marketArrayShip['0']->sell->median,
 					'total' => $marketArrayShip['0']->sell->median
@@ -163,10 +203,12 @@ class MarketDataHelper extends \WordPress\Plugin\EveOnlineFittingManager\Libs\Si
 						'jitaBuyPrice' => \number_format($jitaBuyPrice['ship'], 2, ',', '.') . ' ISK',
 						'jitaSellPrice' => \number_format($jitaSellPrice['ship'], 2, ',', '.') . ' ISK'
 					],
+
 					'fitting' => [
 						'jitaBuyPrice' => \number_format($jitaBuyPrice['fitting'], 2, ',', '.') . ' ISK',
 						'jitaSellPrice' => \number_format($jitaSellPrice['fitting'], 2, ',', '.') . ' ISK'
 					],
+
 					'total' => [
 						'jitaBuyPrice' => \number_format($jitaBuyPrice['total'], 2, ',', '.') . ' ISK',
 						'jitaSellPrice' => \number_format($jitaSellPrice['total'], 2, ',', '.') . ' ISK'
