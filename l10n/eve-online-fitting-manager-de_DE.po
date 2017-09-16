@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: EVE Online Fitting Manager for WordPress\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-27 07:27+0000\n"
-"PO-Revision-Date: 2017-06-27 07:27+0000\n"
-"Last-Translator: ppfeufer <p.pfeufer@thamm-it.de>\n"
+"POT-Creation-Date: 2017-09-16 14:34+0000\n"
+"PO-Revision-Date: 2017-09-16 14:36+0000\n"
+"Last-Translator: Rounon Dax <dev@ppfeufer.de>\n"
 "Language-Team: German\n"
 "Language: de-DE\n"
 "Plural-Forms: nplurals=2; plural=n != 1\n"
@@ -13,23 +13,232 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco - https://localise.biz/"
 
-#: libs/PostType.php:45
+#: templates/fitting-details/information/fitting-market-prices.php:12
+msgid ""
+"These are only estimated market prices and can vary from ingame prices "
+"depending on the shiptype and market you are looking at. Especially capital "
+"ships that are not traded at the Jita market can be miles off."
+msgstr ""
+"Dies sind nur geschätzte Preise welche von den Preisen innerhalb des Spiels "
+"stark abweichen können, abhängig davon auf welchen Markt Du gerade schaust. "
+"Speziell Capital Schiffe können große Preisabweichungen haben."
+
+#: templates/fitting-details/information/fitting-information-tabs.php:5
+msgid "EFT Import"
+msgstr "EFT Daten"
+
+#: templates/fitting-details/information/fitting-information-tabs.php:16
+msgid "Information"
+msgstr "Fitting-Informationen"
+
+#: templates/fitting-details/information/fitting-information-tabs.php:27
+msgid "Description"
+msgstr "Schiffs-Beschreibung"
+
+#: templates/archive-fitting.php:15
+msgid "Doctrine:"
+msgstr "Doktrin:"
+
+#: templates/archive-fitting.php:61
+msgid ""
+"Sorry, but currently there are no fittings listed for this doctrine. Maybe "
+"using the search function will help you out."
+msgstr ""
+"Es sind keine Fittings für diese Doktrin hinterlegt. Vielleicht hilft die "
+"Suche weiter."
+
+#: templates/content-single-fitting.php:47
+msgid "Edit"
+msgstr "Bearbeiten"
+
+#: templates/archive-ship.php:15
+#: templates/fitting-details/information/fitting-market-prices.php:22
+#: templates/fitting-details/information/fitting-market-prices.php:42
+msgid "Ship:"
+msgstr "Schiff:"
+
+#: templates/archive-ship.php:61
+msgid ""
+"Sorry, but currently there are no fittings listed for this ship type. Maybe "
+"using the search function will help you out."
+msgstr ""
+"Es sind keine Fittings für diesen Schiffstyp hinterlegt. Vielleicht hilft "
+"die Suche weiter."
+
+#: Libs/PostType.php:45 Libs/PostType.php:77
+#: Libs/Widgets/DoctrinesWidget.php:84
+msgid "Doctrines"
+msgstr "Doktrinen"
+
+#: Libs/PostType.php:46
+msgid "Doctrine"
+msgstr "Doktrin"
+
+#: Libs/PostType.php:47 Libs/Widgets/SearchWidget.php:75
+msgid "Search Doctrines"
+msgstr "Doktrinen durchsuchen"
+
+#: Libs/PostType.php:48
+msgid "Popular Doctrines"
+msgstr "Beliebte Doktrinen"
+
+#: Libs/PostType.php:49
+msgid "All Doctrines"
+msgstr "Alle Doktrinen"
+
+#: Libs/PostType.php:50
+msgid "Parent Doctrine"
+msgstr "Übergeordnete Doktrin"
+
+#: Libs/PostType.php:51
+msgid "Edit Doctrine"
+msgstr "Doktrin bearbeiten"
+
+#: Libs/PostType.php:52
+msgid "Update Doctrine"
+msgstr "Doktrin aktualisieren"
+
+#: Libs/PostType.php:53
+msgid "Add New Doctrine"
+msgstr "Neue Doktrin hinzufügen"
+
+#: Libs/PostType.php:54
+msgid "New Doctrine"
+msgstr "Neue Doktrin"
+
+#: Libs/PostType.php:55
+msgid "Separate Doctrines with commas"
+msgstr "Trenne Doktrinen mit Komma"
+
+#: Libs/PostType.php:56
+msgid "Add or remove Doctrine"
+msgstr "Doktrin hinzufügen oder entfernen"
+
+#: Libs/PostType.php:57
+msgid "Choose from most used Doctrines"
+msgstr "Wähle von den meist genutzten Doktrinen"
+
+#: Libs/PostType.php:61 Libs/PostType.php:94
+#: Libs/Widgets/ShiptypesWidget.php:84
+msgid "Ship Types"
+msgstr "Schiffstypen"
+
+#: Libs/PostType.php:62
+msgid "Ship Type"
+msgstr "Shiffstyp"
+
+#: Libs/PostType.php:63
+msgid "Search Ship Types"
+msgstr "Schiffstypen durchsuchen"
+
+#: Libs/PostType.php:64
+msgid "Popular Ship Types"
+msgstr "Beliebte Schiffstypen"
+
+#: Libs/PostType.php:65
+msgid "All Ship Types"
+msgstr "Alle Schiffstypen"
+
+#: Libs/PostType.php:66
+msgid "Parent Ship Type"
+msgstr "Übergeordnete Schiffstypen"
+
+#: Libs/PostType.php:67
+msgid "Edit Ship Type"
+msgstr "Schiffstyp bearbeiten"
+
+#: Libs/PostType.php:68
+msgid "Update Ship Type"
+msgstr "Schiffstyp aktualisieren"
+
+#: Libs/PostType.php:69
 msgid "Add New Ship Type"
 msgstr "Neuen Schiffstyp hinzufügen"
 
-#: libs/MetaBoxes.php:16
+#: Libs/PostType.php:70
+msgid "New Ship Type"
+msgstr "Neuer Schiffstyp"
+
+#: Libs/PostType.php:71
+msgid "Separate Ship Types with commas"
+msgstr "Trenne Schiffstypen mit Komma"
+
+#: Libs/PostType.php:72
+msgid "Add or remove Ship Type"
+msgstr "Schiffstyp hinzufügen oder entfernem"
+
+#: Libs/PostType.php:73
+msgid "Choose from most used Ship Types"
+msgstr "Wähle von den meist genutzten Schiffstypen"
+
+#: Libs/PostType.php:115
+msgid "Fittings"
+msgstr "Fittings"
+
+#: Libs/PostType.php:116
+msgid "Fitting"
+msgstr "Fitting"
+
+#: Libs/Widgets.php:48
+msgid "Fitting Manager Sidebar"
+msgstr "Fitting Manager Sidebar"
+
+#: Libs/Widgets.php:49
+msgid "Sidebar to use with your Fitting Manager pages."
+msgstr "Sidebar für die Seiten des Fitting Managers."
+
+#: Libs/GithubUpdater.php:93
+msgid ""
+"The GitHub Updater was initialized without the minimum required "
+"configuration, please check the config in your plugin. The following params "
+"are missing: "
+msgstr ""
+"Der GitHub Updater wurde ohne die Minimalkonfiguration initialisiert. Bitte "
+"prüfe die Einstellungen im Plugin selbst. Folgende Parameter werden vermisst:"
+
+#: Libs/GithubUpdater.php:468
+msgid ""
+"The plugin has been updated, but could not be reactivated. Please reactivate "
+"it manually."
+msgstr ""
+"Das Plugin wurde aktualisiert, konnte aber nicht reaktiviert werden. Bitte "
+"aktiviere es manuell."
+
+#: Libs/GithubUpdater.php:469
+msgid "Plugin reactivated successfully."
+msgstr "Plugin erfolgreich reaktiviert."
+
+#: Libs/MetaBoxes.php:40
 msgid "EFT Fitting"
 msgstr "EFT Fitting"
 
-#: libs/PluginSettings.php:31 libs/PluginSettings.php:32
+#: Libs/MetaBoxes.php:41
+msgid "Mark Fitting As ..."
+msgstr "Markiere Fitting als ..."
+
+#: Libs/MetaBoxes.php:103
+#: templates/fitting-details/information/fitting-marker.php:14
+msgid "Conceptual Fitting"
+msgstr "Fitting-Konzept"
+
+#: Libs/MetaBoxes.php:107
+#: templates/fitting-details/information/fitting-marker.php:18
+msgid "Fitting Idea"
+msgstr "Fitting Idee"
+
+#: Libs/MetaBoxes.php:111
+msgid "Under Duscussion"
+msgstr "In Diskussion"
+
+#: Libs/PluginSettings.php:59 Libs/PluginSettings.php:60
 msgid "EVE Online Fittings Manager"
 msgstr "EVE Online Fittings Manager"
 
-#: libs/PluginSettings.php:47
+#: Libs/PluginSettings.php:82
 msgid "Killboard Settings"
 msgstr "Killboard Einstellungen"
 
-#: libs/PluginSettings.php:48
+#: Libs/PluginSettings.php:83
 msgid ""
 "You need to have a connection to a EDK killboard database in order to use "
 "this plugin. The database is needed to gather all the ship and item "
@@ -39,161 +248,181 @@ msgstr ""
 "dieses Plugin funktioniert. Aus dieser Datenbank werden die notwendigen "
 "Informationen zu Schiffen und Modulen gelesen."
 
-#: libs/PluginSettings.php:72
+#: Libs/PluginSettings.php:97
+msgid "Market API Settings"
+msgstr "Markt-Daten API Einstellungen"
+
+#: Libs/PluginSettings.php:111
+msgid "Template Settings"
+msgstr "Template Einstellungen"
+
+#: Libs/PluginSettings.php:139
 msgid "DB Host"
 msgstr "DB Host"
 
-#: libs/PluginSettings.php:77
+#: Libs/PluginSettings.php:144
 msgid "DB Name"
 msgstr "DB Name"
 
-#: libs/PluginSettings.php:81
+#: Libs/PluginSettings.php:148
 msgid "DB User"
 msgstr "DB Nutzer"
 
-#: libs/PluginSettings.php:85
+#: Libs/PluginSettings.php:152
 msgid "DB Password"
 msgstr "DB Passwort"
 
-#: libs/PostType.php:21 libs/PostType.php:53 templates/doctrine-sidebar.php:31
-msgid "Doctrines"
-msgstr "Doktrinen"
+#: Libs/PluginSettings.php:168
+msgid "Market Data API"
+msgstr "Markt-Daten API"
 
-#: libs/PostType.php:22
-msgid "Doctrine"
-msgstr "Doktrin"
+#: Libs/PluginSettings.php:170
+msgid "EVE Central"
+msgstr "EVE Central"
 
-#: libs/PostType.php:23 templates/doctrine-sidebar.php:12
-msgid "Search Doctrines"
-msgstr "Doktrinen durchsuchen"
+#: Libs/PluginSettings.php:171
+msgid "EVE Marketer"
+msgstr "EVE Marketer"
 
-#: libs/PostType.php:24
-msgid "Popular Doctrines"
-msgstr "Beliebte Doktrinen"
+#: Libs/PluginSettings.php:188
+msgid "Image Settings"
+msgstr "Bilder Einstellungen"
 
-#: libs/PostType.php:25
-msgid "All Doctrines"
-msgstr "Alle Doktrinen"
+#: Libs/PluginSettings.php:190
+msgid "Show ship images in ship list"
+msgstr "Zeige Schiffsbilder in der Listenansicht"
 
-#: libs/PostType.php:26
-msgid "Parent Doctrine"
-msgstr "Übergeordnete Doktrin"
+#: Libs/PluginSettings.php:191
+#, php-format
+msgid ""
+"Show doctrine images in doctrine list <small><em>(You need to have the %1$s "
+"plugin installed to make this happen)</em></small>"
+msgstr ""
+"Zeige Doktrin Bilder in der Doktrin Liste <small><em>(Das %1$s Plugin muss "
+"hierfür installiert sein)</em></small>"
 
-#: libs/PostType.php:27
-msgid "Edit Doctrine"
-msgstr "Doktrin bearbeiten"
+#: Libs/PluginSettings.php:192
+msgid "Categories Images"
+msgstr "Kategorie-Bilder"
 
-#: libs/PostType.php:28
-msgid "Update Doctrine"
-msgstr "Doktrin aktualisieren"
+#: Libs/PluginSettings.php:198
+msgid "Detail Page Settings"
+msgstr "Detail-Seiten Einstellungen"
 
-#: libs/PostType.php:29
-msgid "Add New Doctrine"
-msgstr "Neue Doktrin hinzufügen"
+#: Libs/PluginSettings.php:200
+msgid "Show visual fitting"
+msgstr "Zeige visuelles Fitting"
 
-#: libs/PostType.php:30
-msgid "New Doctrine"
-msgstr "Neue Doktrin"
+#: Libs/PluginSettings.php:201
+msgid "Show ship description"
+msgstr "Zeige Schiffsbeschreibung"
 
-#: libs/PostType.php:31
-msgid "Separate Doctrines with commas"
-msgstr "Trenne Doktrinen mit Komma"
+#: Libs/PluginSettings.php:202
+msgid "Show Osmium button"
+msgstr "Zeige Osmium button"
 
-#: libs/PostType.php:32
-msgid "Add or remove Doctrine"
-msgstr "Doktrin hinzufügen oder entfernen"
+#: Libs/PluginSettings.php:203
+msgid "Show \"Copy EFT data to clipboard\" button"
+msgstr "Zeige \"EFT Daten  kopieren\" button"
 
-#: libs/PostType.php:33
-msgid "Choose from most used Doctrines"
-msgstr "Wähle von den meist genutzten Doktrinen"
+#: Libs/PluginSettings.php:204
+msgid "Show \"Copy permalink to clipboard\" button"
+msgstr "Zeige \"Link kopieren\" button"
 
-#: libs/PostType.php:37 libs/PostType.php:70 templates/doctrine-sidebar.php:46
-msgid "Ship Types"
-msgstr "Schiffstypen"
+#: Libs/PluginSettings.php:205
+msgid "Show \"Estimated Prices\" section"
+msgstr "Zeige \"Geschätzte Preise\""
 
-#: libs/PostType.php:38
-msgid "Ship Type"
-msgstr "Shiffstyp"
+#: Libs/PluginSettings.php:206
+msgid "Show \"Doctrines using this fitting\" section"
+msgstr "Zeige \"Doktrinen welche dieses Fitting nutzen\""
 
-#: libs/PostType.php:39
-msgid "Search Ship Types"
-msgstr "Schiffstypen durchsuchen"
+#: Libs/Widgets/ShiptypesWidget.php:57
+msgid "Displaying the ship types list in your sidebar."
+msgstr "Zeigt die Liste der Schiffstypen in der Sidebar an."
 
-#: libs/PostType.php:40
-msgid "Popular Ship Types"
-msgstr "Beliebte Schiffstypen"
+#: Libs/Widgets/SearchWidget.php:57
+msgid "Displaying the search field in your sidebar."
+msgstr "Zeigt das Suchfeld in der Sidebar an."
 
-#: libs/PostType.php:41
-msgid "All Ship Types"
-msgstr "Alle Schiffstypen"
-
-#: libs/PostType.php:42
-msgid "Parent Ship Type"
-msgstr "Übergeordnete Schiffstypen"
-
-#: libs/PostType.php:43
-msgid "Edit Ship Type"
-msgstr "Schiffstyp bearbeiten"
-
-#: libs/PostType.php:44
-msgid "Update Ship Type"
-msgstr "Schiffstyp aktualisieren"
-
-#: libs/PostType.php:46
-msgid "New Ship Type"
-msgstr "Neuer Schiffstyp"
-
-#: libs/PostType.php:47
-msgid "Separate Ship Types with commas"
-msgstr "Trenne Schiffstypen mit Komma"
-
-#: libs/PostType.php:48
-msgid "Add or remove Ship Type"
-msgstr "Schiffstyp hinzufügen oder entfernem"
-
-#: libs/PostType.php:49
-msgid "Choose from most used Ship Types"
-msgstr "Wähle von den meist genutzten Schiffstypen"
-
-#: libs/PostType.php:91
-msgid "Fittings"
-msgstr "Fittings"
-
-#: libs/PostType.php:92
-msgid "Fitting"
-msgstr "Fitting"
-
-#: templates/content-single-fitting.php:11
-msgid "Edit"
-msgstr "Bearbeiten"
-
-#: templates/content-single-fitting.php:24
-msgid "Fitting Description and Information"
-msgstr "Fitting Beschreibung und Informationen"
-
-#: templates/content-single-fitting.php:34
-msgid "Fitting Visualization"
-msgstr "Visuelle Darstellung"
-
-#: templates/content-single-fitting.php:43
-msgid "This fitting is used in the following doctrines:"
-msgstr "Dieses Fitting wird in folgenden Doktrinen genutzt:"
-
-#: templates/content-single-fitting.php:59
-msgid "EFT Import"
-msgstr "EFT Import"
-
-#: templates/doctrine-sidebar.php:16
+#: Libs/Widgets/SearchWidget.php:88
 msgid "Search"
 msgstr "Suche"
 
-#: templates/doctrine-sidebar.php:17
+#: Libs/Widgets/SearchWidget.php:89
 msgid "Search Ship Type"
 msgstr "Suche Shiffstyp"
 
-#: templates/fitting/fitting-ring.php:176
-msgid "View Loadout @Osmium.org"
-msgstr "Fitting anzeigen @Osmium.org"
+#: Libs/Widgets/DoctrinesWidget.php:57
+msgid "Displaying the doctrine list in your sidebar."
+msgstr "Zeigt die Doktrin Liste in der Sidebar an."
+
+#: Libs/ResourceLoader/JavascriptLoader.php:64
+msgid "EFT data successfully copied"
+msgstr "EFT Daten erfolgreich kopiert"
+
+#: Libs/ResourceLoader/JavascriptLoader.php:65
+#: Libs/ResourceLoader/JavascriptLoader.php:71
+msgid ""
+"Something went wrong. Nothing copied. Maybe your browser doesn't support "
+"this function."
+msgstr ""
+"Irgendwas ist schief gelaufen. Nichts wurde kopiert. Vielleicht unterstützt "
+"Dein Browser diese Funktion nicht."
+
+#: Libs/ResourceLoader/JavascriptLoader.php:70
+msgid "Permalink successfully copied"
+msgstr "Link erfolgreich kopiert"
+
+#: templates/fitting-details/utilities/fitting-copy-permalink-to-clipboard.php:11
+msgid "Copy Permalink"
+msgstr "Link kopieren"
+
+#: templates/fitting-details/utilities/fitting-copy-eft-to-clipboard.php:12
+msgid "Copy EFT Data"
+msgstr "EFT Daten kopieren"
+
+#: templates/fitting-details/utilities/fitting-osmium.php:4
+msgid "View @Osmium.org"
+msgstr "In @Osmium.org"
+
+#: templates/fitting-details/information/fitting-market-prices.php:7
+msgid "Estimated Prices"
+msgstr "Geschätzte Preise"
+
+#: templates/fitting-details/information/fitting-market-prices.php:26
+#: templates/fitting-details/information/fitting-market-prices.php:46
+msgid "Fitting:"
+msgstr "Fitting:"
+
+#: templates/fitting-details/information/fitting-market-prices.php:30
+#: templates/fitting-details/information/fitting-market-prices.php:50
+msgid "Total:"
+msgstr "Gesamt:"
+
+#: templates/fitting-details/information/fitting-marker.php:11
+msgid "This fitting is marked as:"
+msgstr "Dieses Fitting ist markiert als:"
+
+#: templates/fitting-details/information/fitting-marker.php:22
+msgid "Under Discussion"
+msgstr "In Diskussion"
+
+#: templates/fitting-details/information/fitting-marker.php:27
+msgid ""
+"This means, this fitting might not be a part of any official doctrine and/or "
+"is still under discussion."
+msgstr ""
+"Dies bedeutet, dass dieses Fitting möglicherweise nicht Teil einer "
+"offiziellen Doktrin ist, und/oder immer noch diskutiert wird."
+
+#: templates/fitting-details/information/fitting-doctrine-usage.php:7
+msgid "Doctrines using this fitting"
+msgstr "Doktrinen welche dieses Fitting nutzen"
+
+#: templates/fitting-details/information/fitting-doctrine-usage.php:12
+msgid "This fitting is currently not used in any doctrine."
+msgstr "Dieses Fitting wird momentan in keiner Doktrin verwendet."
 
 #. Name of the plugin
 msgid "EVE Online Fitting Manager for WordPress"

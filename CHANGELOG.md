@@ -1,8 +1,16 @@
 # Change Log
 
-## [In Development](https://github.com/ppfeufer/eve-online-fitting-manager)
-[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.11...HEAD)
+## [In Development](https://github.com/ppfeufer/eve-online-fitting-manager/tree/development)
+[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.12...HEAD)
 - in development
+
+## [v0.12](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.12) - 2017-09-16
+[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.11...v0.12)
+### Added
+- Settings for Market API
+
+### Fixed
+- Translations
 
 ## [v0.11](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.11) - 2017-08-24
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.10...v0.11)

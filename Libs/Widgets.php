@@ -46,7 +46,7 @@ class Widgets {
 		\register_sidebar(
 			[
 				'name' => \__('Fitting Manager Sidebar', 'eve-online-fitting-manager'),
-				'description' => \__('Sidebar to use with your gitting manager pages.', 'eve-online-fitting-manager'),
+				'description' => \__('Sidebar to use with your Fitting Manager pages.', 'eve-online-fitting-manager'),
 				'id' => 'sidebar-fitting-manager',
 				'before_widget' => '<aside><div id="%1$s" class="widget %2$s">',
 				'after_widget' => "</div></aside>",
