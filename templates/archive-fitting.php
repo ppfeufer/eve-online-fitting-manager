@@ -2,8 +2,15 @@
 defined('ABSPATH') or die();
 
 \get_header();
-
+$taxonomy = 'fitting-doctrines';
 $doctrineData = \get_queried_object();
+
+$subDoctrines = \get_terms([
+	'taxonomy' => $taxonomy,
+	'orderby' => 'name',
+	'order' => 'ASC',
+	'child_of' => $doctrineData->term_id
+]);
 ?>
 
 <div class="container main template-archive-fitting" data-doctrine="<?php echo $doctrineData->slug; ?>">
@@ -22,16 +29,32 @@ $doctrineData = \get_queried_object();
 					?>
 				</header>
 				<?php
-				if(\have_posts()) {
+
+				$argsMainDoctrine = [
+					'post_type' => 'fitting',
+					'tax_query' => [
+						[
+							'taxonomy' => $taxonomy,
+							'field' => 'id',
+							'terms' => $doctrineData->term_id,
+							'include_children' => false
+						]
+					]
+				];
+				$resultMainDoctrine = new \WP_Query($argsMainDoctrine);
+
+				// loop through the main doctrine
+				if($resultMainDoctrine->have_posts()) {
 					if(\get_post_type() === 'fitting') {
 						$uniqueID = \uniqid();
 
+						echo '<header><h3 class="entry-title header-subdoctrine">' . \__('Main Line Doctrine Ships', 'eve-online-fitting-manager') . '</h3></header>';
 						echo '<div class="gallery-row row">';
 						echo '<ul class="bootstrap-post-loop-fittings bootstrap-post-loop-fittings-' . $uniqueID . ' clearfix">';
 					} // END if(\get_post_type() === 'fitting')
 
-					while(\have_posts()) {
-						\the_post();
+					while($resultMainDoctrine->have_posts()) {
+						$resultMainDoctrine->the_post();
 
 						if(\get_post_type() === 'fitting') {
 							echo '<li>';
@@ -43,6 +66,7 @@ $doctrineData = \get_queried_object();
 							echo '</li>';
 						} // END if(\get_post_type() === 'fitting')
 					} // END while (have_posts())
+					\wp_reset_postdata();
 
 					if(\get_post_type() === 'fitting') {
 						echo '</ul>';
@@ -57,9 +81,68 @@ $doctrineData = \get_queried_object();
 								});
 								</script>';
 					} // END if(\get_post_type() === 'fitting')
-				} else {
-					echo \__('Sorry, but currently there are no fittings listed for this doctrine. Maybe using the search function will help you out.', 'eve-online-fitting-manager');
-				} // END if(have_posts())
+				} // if($resultMainDoctrine->have_posts())
+
+				// Loop throgh the sub doctrines ...
+				if(\count($subDoctrines) > 0) {
+					foreach($subDoctrines as $subDoctrine) {
+						$argsSubDoctrine = [
+							'post_type' => 'fitting',
+							'tax_query' => [
+								[
+									'taxonomy' => $taxonomy,
+									'field' => 'id',
+									'terms' => $subDoctrine->term_id,
+									'include_children' => false
+								]
+							]
+						];
+						$resultSubDoctrine = new \WP_Query($argsSubDoctrine);
+
+						if($resultSubDoctrine->have_posts()) {
+							if(\get_post_type() === 'fitting') {
+								$uniqueID = \uniqid();
+
+								echo '<header><h3 class="entry-title header-subdoctrine">' . $subDoctrine->name . '</h3></header>';
+								echo '<div class="gallery-row row">';
+								echo '<ul class="bootstrap-post-loop-fittings bootstrap-post-loop-fittings-' . $uniqueID . ' clearfix">';
+							} // END if(\get_post_type() === 'fitting')
+
+							while($resultSubDoctrine->have_posts()) {
+								$resultSubDoctrine->the_post();
+
+								if(\get_post_type() === 'fitting') {
+									echo '<li>';
+								} // END if(\get_post_type() === 'fitting')
+
+								\WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\TemplateHelper::getTemplate('content-fitting');
+
+								if(\get_post_type() === 'fitting') {
+									echo '</li>';
+								} // END if(\get_post_type() === 'fitting')
+							} // END while (have_posts())
+							\wp_reset_postdata();
+
+							if(\get_post_type() === 'fitting') {
+								echo '</ul>';
+								echo '</div>';
+
+								echo '<script type="text/javascript">
+										jQuery(document).ready(function() {
+											jQuery("ul.bootstrap-post-loop-fittings-' . $uniqueID . '").bootstrapGallery({
+												"classes" : "' . \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\PluginHelper::getLoopContentClasses() . '",
+												"hasModal" : false
+											});
+										});
+										</script>';
+							} // END if(\get_post_type() === 'fitting')
+						} // if($resultSubDoctrine->have_posts())
+					}
+				}
+
+//				else {
+//					echo \__('Sorry, but currently there are no fittings listed for this doctrine. Maybe using the search function will help you out.', 'eve-online-fitting-manager');
+//				} // END if(have_posts())
 				?>
 			</div> <!-- /.content -->
 		</div> <!-- /.col -->
