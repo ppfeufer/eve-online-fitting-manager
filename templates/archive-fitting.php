@@ -139,10 +139,6 @@ $subDoctrines = \get_terms([
 						} // if($resultSubDoctrine->have_posts())
 					}
 				}
-
-//				else {
-//					echo \__('Sorry, but currently there are no fittings listed for this doctrine. Maybe using the search function will help you out.', 'eve-online-fitting-manager');
-//				} // END if(have_posts())
 				?>
 			</div> <!-- /.content -->
 		</div> <!-- /.col -->
