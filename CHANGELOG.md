@@ -2,7 +2,8 @@
 
 ## [In Development](https://github.com/ppfeufer/eve-online-fitting-manager/tree/development)
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.12...HEAD)
-- in development
+### Changed
+- Tweaked the overview of ships in a doctrine a bit
 
 ## [v0.12](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.12) - 2017-09-16
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.11...v0.12)
