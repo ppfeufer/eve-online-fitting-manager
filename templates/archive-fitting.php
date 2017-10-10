@@ -48,7 +48,7 @@ $subDoctrines = \get_terms([
 					if(\get_post_type() === 'fitting') {
 						$uniqueID = \uniqid();
 
-						echo '<header><h3 class="entry-title header-subdoctrine">' . \__('Main Line Doctrine Ships', 'eve-online-fitting-manager') . '</h3></header>';
+						echo '<header class="entry-header header-doctrine"><h2 class="entry-title header-subdoctrine">' . \__('Main Line Doctrine Ships', 'eve-online-fitting-manager') . '</h2></header>';
 						echo '<div class="gallery-row row">';
 						echo '<ul class="bootstrap-post-loop-fittings bootstrap-post-loop-fittings-' . $uniqueID . ' clearfix">';
 					} // END if(\get_post_type() === 'fitting')
@@ -103,7 +103,7 @@ $subDoctrines = \get_terms([
 							if(\get_post_type() === 'fitting') {
 								$uniqueID = \uniqid();
 
-								echo '<header><h3 class="entry-title header-subdoctrine">' . $subDoctrine->name . '</h3></header>';
+								echo '<header class="entry-header header-doctrine"><h2 class="entry-title header-subdoctrine">' . $subDoctrine->name . '</h2></header>';
 								echo '<div class="gallery-row row">';
 								echo '<ul class="bootstrap-post-loop-fittings bootstrap-post-loop-fittings-' . $uniqueID . ' clearfix">';
 							} // END if(\get_post_type() === 'fitting')

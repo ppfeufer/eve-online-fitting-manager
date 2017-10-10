@@ -74,7 +74,14 @@
 		padding: 10px 15px;
 	}
 
-	header .header-subdoctrine {
+	.doctrine-list header.header-doctrine {
+		margin-bottom: 16px;
+		margin-bottom: 1rem;
+	}
+
+	.doctrine-list header.header-doctrine .header-subdoctrine {
+		font-size: 24px;
+		font-size: 1.5rem;
 		border-bottom: 1px solid rgb(220,220,220);
 	}
 }

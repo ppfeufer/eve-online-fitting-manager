@@ -1,9 +1,13 @@
 # Change Log
 
 ## [In Development](https://github.com/ppfeufer/eve-online-fitting-manager/tree/development)
-[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.12...HEAD)
+[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.13...HEAD)
+- in development
+
+## [v0.13](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.13) - 2017-10-10
+[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.12...v0.13)
 ### Changed
-- Tweaked the overview of ships in a doctrine a bit
+- Tweaked the overview of ships in a doctrine a bit to make it more clear when ships belong to a "sub" doctrine like Logis for example.
 
 ## [v0.12](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.12) - 2017-09-16
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.11...v0.12)
