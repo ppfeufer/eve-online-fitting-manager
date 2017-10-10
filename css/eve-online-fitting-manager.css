@@ -14,6 +14,10 @@
 		vertical-align: middle;
 	}
 
+	.doctrine-shipfitting-header span small {
+		font-size: 75%;
+	}
+
 	.doctrine-shipfitting-header-wrapper {
 		width: 100%;
 	}
