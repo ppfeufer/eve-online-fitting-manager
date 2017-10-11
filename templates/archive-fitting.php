@@ -2,6 +2,7 @@
 defined('ABSPATH') or die();
 
 \get_header();
+
 $taxonomy = 'fitting-doctrines';
 $doctrineData = \get_queried_object();
 
@@ -28,8 +29,8 @@ $subDoctrines = \get_terms([
 					} // END if(!empty($doctrine->description))
 					?>
 				</header>
-				<?php
 
+				<?php
 				$argsMainDoctrine = [
 					'post_type' => 'fitting',
 					'orderby' => 'name',
