@@ -1,8 +1,13 @@
 # Change Log
 
 ## [In Development](https://github.com/ppfeufer/eve-online-fitting-manager/tree/development)
-[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.13...HEAD)
+[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.13.1...HEAD)
 - in development
+
+## [v0.13.1](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.13.1) - 2017-10-11
+[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.13...v0.13.1)
+### Fixed
+- Ships are now in alphabetical order again
 
 ## [v0.13](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.13) - 2017-10-10
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.12...v0.13)

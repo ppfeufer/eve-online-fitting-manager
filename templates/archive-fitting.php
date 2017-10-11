@@ -32,6 +32,8 @@ $subDoctrines = \get_terms([
 
 				$argsMainDoctrine = [
 					'post_type' => 'fitting',
+					'orderby' => 'name',
+					'order' => 'ASC',
 					'tax_query' => [
 						[
 							'taxonomy' => $taxonomy,
@@ -88,6 +90,8 @@ $subDoctrines = \get_terms([
 					foreach($subDoctrines as $subDoctrine) {
 						$argsSubDoctrine = [
 							'post_type' => 'fitting',
+							'orderby' => 'name',
+							'order' => 'ASC',
 							'tax_query' => [
 								[
 									'taxonomy' => $taxonomy,
