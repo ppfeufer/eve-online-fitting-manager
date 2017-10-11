@@ -30,7 +30,7 @@ $pluginOptions = \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\PluginHel
 
 					<header class="entry-header">
 						<h2 class="entry-title">
-							<?php echo \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_ship_type', true); ?><br>
+							<?php echo \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_ship_type', true); ?> -
 							<?php echo \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_name', true); ?>
 						</h2>
 					</header><!--end .entry-header -->
@@ -46,7 +46,7 @@ $pluginOptions = \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\PluginHel
 							</span>
 							<span class="doctrine-shipfitting-header-fitting-name">
 								<?php echo \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_ship_type', true); ?><br>
-								<?php echo \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_name', true); ?>
+								<small><?php echo \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_name', true); ?></small>
 							</span>
 						</span>
 					</h3>

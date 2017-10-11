@@ -32,6 +32,8 @@ $subDoctrines = \get_terms([
 
 				$argsMainDoctrine = [
 					'post_type' => 'fitting',
+					'orderby' => 'name',
+					'order' => 'ASC',
 					'tax_query' => [
 						[
 							'taxonomy' => $taxonomy,
@@ -88,6 +90,8 @@ $subDoctrines = \get_terms([
 					foreach($subDoctrines as $subDoctrine) {
 						$argsSubDoctrine = [
 							'post_type' => 'fitting',
+							'orderby' => 'name',
+							'order' => 'ASC',
 							'tax_query' => [
 								[
 									'taxonomy' => $taxonomy,
@@ -139,10 +143,6 @@ $subDoctrines = \get_terms([
 						} // if($resultSubDoctrine->have_posts())
 					}
 				}
-
-//				else {
-//					echo \__('Sorry, but currently there are no fittings listed for this doctrine. Maybe using the search function will help you out.', 'eve-online-fitting-manager');
-//				} // END if(have_posts())
 				?>
 			</div> <!-- /.content -->
 		</div> <!-- /.col -->
