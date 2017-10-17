@@ -187,7 +187,7 @@ if(!empty($serviceSlots)) {
 	// Ship
 	-->
 	<div class="shipImage">
-		<img width="256" height="256" alt="Tengu" class="eveimage img-rounded" src="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\ImageHelper::getInstance()->getLocalCacheImageUriForRemoteImage('ship', 'https://imageserver.eveonline.com/Render/' . $shipID . '_256.png')?>">
+		<img width="256" height="256" alt="Tengu" class="eveimage img-rounded" src="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\ImageHelper::getInstance()->getLocalCacheImageUriForRemoteImage('render', 'https://imageserver.eveonline.com/Render/' . $shipID . '_256.png')?>">
 	</div>
 </div>
 
