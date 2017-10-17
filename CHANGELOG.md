@@ -1,8 +1,17 @@
 # Change Log
 
 ## [In Development](https://github.com/ppfeufer/eve-online-fitting-manager/tree/development)
-[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.13.1...HEAD)
+[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.13.2...HEAD)
 - in development
+
+## [v0.13.2](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.13.2) - 2017-10-17
+[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.13.1...v0.13.2)
+### Changed
+- Ship types overview now as well in the new look
+- Moved some code into its own template
+
+### Fixed
+- Images from "Render" endpoint now using the right cache directory
 
 ## [v0.13.1](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.13.1) - 2017-10-11
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.13...v0.13.1)

@@ -3,6 +3,7 @@ defined('ABSPATH') or die();
 
 \get_header();
 
+$taxonomy = 'fitting-ships';
 $doctrineData = \get_queried_object();
 ?>
 
@@ -21,45 +22,12 @@ $doctrineData = \get_queried_object();
 					} // END if(!empty($doctrine->description))
 					?>
 				</header>
+
 				<?php
-				if(\have_posts()) {
-					if(\get_post_type() === 'fitting') {
-						$uniqueID = \uniqid();
-
-						echo '<div class="gallery-row row">';
-						echo '<ul class="bootstrap-post-loop-fittings bootstrap-post-loop-fittings-' . $uniqueID . ' clearfix">';
-					} // END if(\get_post_type() === 'fitting')
-
-					while(\have_posts()) {
-						\the_post();
-
-						if(\get_post_type() === 'fitting') {
-							echo '<li>';
-						} // END if(\get_post_type() === 'fitting')
-
-						\WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\TemplateHelper::getTemplate('content-fitting');
-
-						if(\get_post_type() === 'fitting') {
-							echo '</li>';
-						} // END if(\get_post_type() === 'fitting')
-					} // END while (have_posts())
-
-					if(\get_post_type() === 'fitting') {
-						echo '</ul>';
-						echo '</div>';
-
-						echo '<script type="text/javascript">
-								jQuery(document).ready(function() {
-									jQuery("ul.bootstrap-post-loop-fittings-' . $uniqueID . '").bootstrapGallery({
-										"classes" : "' . \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\PluginHelper::getLoopContentClasses() . '",
-										"hasModal" : false
-									});
-								});
-								</script>';
-					} // END if(\get_post_type() === 'fitting')
-				} else {
-					echo \__('Sorry, but currently there are no fittings listed for this ship type. Maybe using the search function will help you out.', 'eve-online-fitting-manager');
-				} // END if(have_posts())
+				\WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\TemplateHelper::getTemplate('archive/archive-loop', [
+					'taxonomy' => $taxonomy,
+					'doctrineData' => $doctrineData
+				]);
 				?>
 			</div> <!-- /.content -->
 		</div> <!-- /.col -->
