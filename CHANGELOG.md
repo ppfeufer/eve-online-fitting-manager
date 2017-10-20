@@ -2,7 +2,8 @@
 
 ## [In Development](https://github.com/ppfeufer/eve-online-fitting-manager/tree/development)
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.13.2...HEAD)
-- in development
+### Fixed
+- Cached images will be renewed when file size is 0 (broken images)
 
 ## [v0.13.2](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.13.2) - 2017-10-17
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.13.1...v0.13.2)
