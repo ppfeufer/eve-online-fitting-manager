@@ -50,6 +50,7 @@ class CacheHelper extends \WordPress\Plugin\EveOnlineFittingManager\Libs\Singlet
 		$this->createCacheDirectory('images/ship');
 		$this->createCacheDirectory('images/item');
 		$this->createCacheDirectory('images/render');
+		$this->createCacheDirectory('esi');
 	} // END public function checkOrCreateCacheDirectories()
 
 	/**
