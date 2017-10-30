@@ -50,6 +50,7 @@ class CacheHelper extends \WordPress\Plugin\EveOnlineFittingManager\Libs\Singlet
 		$this->createCacheDirectory('images/ship');
 		$this->createCacheDirectory('images/item');
 		$this->createCacheDirectory('images/render');
+		$this->createCacheDirectory('esi');
 	} // END public function checkOrCreateCacheDirectories()
 
 	/**
@@ -126,13 +127,13 @@ class CacheHelper extends \WordPress\Plugin\EveOnlineFittingManager\Libs\Singlet
 			 *
 			 * This is just in case our cronjob doesn't run for whetever reason
 			 */
-			if(\time() - \filemtime($cacheDir . $imageName) > 24 * 3600) {
+			if(((\time() - \filemtime($cacheDir . $imageName) > 24 * 3600 * 20)) || (\filesize($cacheDir . $imageName) === 0)) {
 				\unlink($cacheDir . $imageName);
 
 				$returnValue = false;
 			} else {
 				$returnValue = true;
-			} // END if(\time() - \filemtime($cacheDir . $imageName) > 2 * 3600)
+			} // END if(((\time() - \filemtime($cacheDir . $imageName) > 24 * 3600 * 20)) || (\filesize($cacheDir . $imageName) === 0))
 		} else {
 			$returnValue = false;
 		} // END if(\file_exists($cacheDir . $imageName))

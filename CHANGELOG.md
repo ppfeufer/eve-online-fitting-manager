@@ -1,8 +1,16 @@
 # Change Log
 
 ## [In Development](https://github.com/ppfeufer/eve-online-fitting-manager/tree/development)
-[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.13.2...HEAD)
+[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.13.3...HEAD)
 - in development
+
+## [v0.13.3](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.13.3) - 2017-10-30
+[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.13.2...v0.13.3)
+### Fixed
+- Cached images will be renewed when file size is 0 (broken images)
+
+### Added
+- Athanor and Tatara to the list of Upwell structures
 
 ## [v0.13.2](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.13.2) - 2017-10-17
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.13.1...v0.13.2)

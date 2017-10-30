@@ -522,7 +522,9 @@ class FittingHelper {
 			35834, // Keepstar
 			35825, // Raitaru
 			35826, // Azbel
-			35827 // Sotiyo
+			35827, // Sotiyo
+			35835, // Athanor
+			35836 // Tatara
 		];
 	}
 
