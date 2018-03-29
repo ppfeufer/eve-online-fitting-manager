@@ -36,6 +36,8 @@ class ImageHelper extends \WordPress\Plugin\EveOnlineFittingManager\Libs\Singlet
 	 */
 	public $imageserverEndpoints = null;
 
+	public $pluginSettings = null;
+
 	/**
 	 * The Construtor
 	 */
@@ -44,6 +46,7 @@ class ImageHelper extends \WordPress\Plugin\EveOnlineFittingManager\Libs\Singlet
 
 		$this->imageserverUrl = 'https://image.eveonline.com/';
 		$this->imageserverEndpoints = $this->getImageserverEndpoints();
+		$this->pluginSettings = PluginHelper::getPluginSettings(true);
 	} // END public function __construct()
 
 	/**
@@ -86,25 +89,27 @@ class ImageHelper extends \WordPress\Plugin\EveOnlineFittingManager\Libs\Singlet
 	public function getLocalCacheImageUriForRemoteImage($cacheType = null, $remoteImageUrl = null) {
 		$returnValue = $remoteImageUrl;
 
-		// Check if we should use image cache
-		$explodedImageUrl = \explode('/', $remoteImageUrl);
-		$imageFilename = \end($explodedImageUrl);
-		$cachedImage = CacheHelper::getInstance()->getImageCacheUri() . $cacheType . '/' . $imageFilename;
+		// Check if we should use image cache first
+		if(isset($this->pluginSettings['template-image-settings']['use-image-cache']) && $this->pluginSettings['template-image-settings']['use-image-cache'] === 'yes') {
+			$explodedImageUrl = \explode('/', $remoteImageUrl);
+			$imageFilename = \end($explodedImageUrl);
+			$cachedImage = CacheHelper::getInstance()->getImageCacheUri() . $cacheType . '/' . $imageFilename;
 
-		// if we don't have the image cached already
-		if(CacheHelper::getInstance()->checkCachedImage($cacheType, $imageFilename) === false) {
-			/**
-			 * Check if the content dir is writable and cache the image.
-			 * Otherwise set the remote image as return value.
-			 */
-			if(\is_dir(CacheHelper::getInstance()->getImageCacheDir() . $cacheType) && \is_writable(CacheHelper::getInstance()->getImageCacheDir() . $cacheType)) {
-				if(CacheHelper::getInstance()->cacheRemoteImageFile($cacheType, $remoteImageUrl) === true) {
-					$returnValue = $cachedImage;
-				}
-			} // END if(\is_dir(CacheHelper::getImageCacheDir() . $cacheType) && \is_writable(CacheHelper::getImageCacheDir() . $cacheType))
-		} else {
-			$returnValue = $cachedImage;
-		} // END if(CacheHelper::checkCachedImage($cacheType, $imageName) === false)
+			// if we don't have the image cached already
+			if(CacheHelper::getInstance()->checkCachedImage($cacheType, $imageFilename) === false) {
+				/**
+				 * Check if the content dir is writable and cache the image.
+				 * Otherwise set the remote image as return value.
+				 */
+				if(\is_dir(CacheHelper::getInstance()->getImageCacheDir() . $cacheType) && \is_writable(CacheHelper::getInstance()->getImageCacheDir() . $cacheType)) {
+					if(CacheHelper::getInstance()->cacheRemoteImageFile($cacheType, $remoteImageUrl) === true) {
+						$returnValue = $cachedImage;
+					}
+				} // END if(\is_dir(CacheHelper::getImageCacheDir() . $cacheType) && \is_writable(CacheHelper::getImageCacheDir() . $cacheType))
+			} else {
+				$returnValue = $cachedImage;
+			} // END if(CacheHelper::checkCachedImage($cacheType, $imageName) === false)
+		} // if($this->pluginSettings['template-image-settings']['use-image-cache'] === 'yes')
 
 		return $returnValue;
 	} // END public static function getLocalCacheImageUri($cacheType = null, $remoteImageUrl = null)

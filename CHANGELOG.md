@@ -2,7 +2,11 @@
 
 ## [In Development](https://github.com/ppfeufer/eve-online-fitting-manager/tree/development)
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.13.3...HEAD)
-- in development
+### Added
+- Option for using image cache or CCPs image server
+
+### Fixed
+- Buttons automatically arranged in fitting view
 
 ## [v0.13.3](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.13.3) - 2017-10-30
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.13.2...v0.13.3)

@@ -24,7 +24,7 @@ namespace WordPress\Plugin\EveOnlineFittingManager\Libs\Helper;
 class PluginHelper {
 	public static $optionName = 'eve-online-fitting-manager-options';
 	public static $dbVersionFieldName = 'eve-online-fitting-manager-database-version';
-	public static $databaseVersion = '20170916';
+	public static $databaseVersion = '20180329';
 
 	/**
 	 * Getting the Plugin Path
@@ -87,7 +87,8 @@ class PluginHelper {
 			'market-data-api' => 'eve-central',
 			'template-image-settings' => [
 				'show-ship-images-in-loop' => '',
-				'show-doctrine-images-in-loop' => ''
+				'show-doctrine-images-in-loop' => '',
+				'use-image-cache' => ''
 			],
 			'template-detail-parts-settings' => [
 				'show-visual-fitting' => 'yes',
