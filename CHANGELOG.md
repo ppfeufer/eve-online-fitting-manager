@@ -1,8 +1,17 @@
 # Change Log
 
 ## [In Development](https://github.com/ppfeufer/eve-online-fitting-manager/tree/development)
-[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.13.3...HEAD)
+[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.13.4...HEAD)
 - in development
+
+## [v0.13.4](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.13.4) - 2018-05-09
+[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.13.3...v0.13.4)
+### Added
+- Option for using image cache or CCPs image server
+
+### Fixed
+- Buttons automatically arranged in fitting view
+- Number of ships displayed at once is no longer limited by WordPress settings (this should fix issue #37)
 
 ## [v0.13.3](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.13.3) - 2017-10-30
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.13.2...v0.13.3)
