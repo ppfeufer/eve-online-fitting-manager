@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (C) 2017 Rounon Dax
  *
@@ -26,7 +27,7 @@ namespace WordPress\Plugin\EveOnlineFittingManager\Libs\Interfaces;
  * stylesheets, JavaScript, or other assets should implement.
  */
 interface AssetsInterface {
-	public function init();
+    public function init();
 
-	public function enqueue();
-} // END interface AssetsInterface
+    public function enqueue();
+}

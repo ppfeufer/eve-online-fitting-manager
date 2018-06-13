@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (C) 2017 Rounon Dax
  *
@@ -22,201 +23,200 @@ namespace WordPress\Plugin\EveOnlineFittingManager\Libs\Helper;
 \defined('ABSPATH') or die();
 
 class MarketDataHelper extends \WordPress\Plugin\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton {
-	/**
-	 * Available Market APIs:
-	 *		EVE Central => https://api.eve-central.com/api/marketstat/json?typeid=3057,2364,3057&regionlimit=10000002&usesystem=30000142
-	 *		EVE Marketer => https://api.evemarketer.com/ec/marketstat/json?typeid=3057,2364,3057&regionlimit=10000002&usesystem=30000142
-	 */
+    /**
+     * Available Market APIs:
+     *      EVE Central => https://api.eve-central.com/api/marketstat/json?typeid=3057,2364,3057&regionlimit=10000002&usesystem=30000142
+     *      EVE Marketer => https://api.evemarketer.com/ec/marketstat/json?typeid=3057,2364,3057&regionlimit=10000002&usesystem=30000142
+     */
 
-	/**
-	 * EVE Central API Url
-	 *
-	 * @var string API Url
-	 */
-	public $apiUrlEveCentral = 'https://api.eve-central.com/api/marketstat/json';
+    /**
+     * EVE Central API Url
+     *
+     * @var string API Url
+     */
+    public $apiUrlEveCentral = 'https://api.eve-central.com/api/marketstat/json';
 
-	/**
-	 *	EVE Marketer API Url
-	 *
-	 * @var string API Url
-	 */
-	public $apiUrlEveMarketer = 'https://api.evemarketer.com/ec/marketstat/json';
+    /**
+     * EVE Marketer API Url
+     *
+     * @var string API Url
+     */
+    public $apiUrlEveMarketer = 'https://api.evemarketer.com/ec/marketstat/json';
 
-	/**
-	 * API Url
-	 *
-	 * @var string API Url to use
-	 */
-	public $apiUrl =  null;
+    /**
+     * API Url
+     *
+     * @var string API Url to use
+     */
+    public $apiUrl = null;
 
-	/**
-	 * Market Region Limiter
-	 *
-	 * @var int Market Region to use
-	 */
-	public $marketRegion = 10000002; // The Forge
+    /**
+     * Market Region Limiter
+     *
+     * @var int Market Region to use
+     */
+    public $marketRegion = 10000002; // The Forge
 
-	/**
-	 * Market System Limiter
-	 *
-	 * @var int Market System to use
-	 */
-	public $marketSystem = 30000142; // Jita
+    /**
+     * Market System Limiter
+     *
+     * @var int Market System to use
+     */
+    public $marketSystem = 30000142; // Jita
 
-	/**
-	 * Plugin Settings
-	 *
-	 * @var array
-	 */
-	public $pluginSettings = null;
+    /**
+     * Plugin Settings
+     *
+     * @var array
+     */
+    public $pluginSettings = null;
 
-	/**
-	 * Constructor
-	 */
-	protected function __construct() {
-		parent::__construct();
+    /**
+     * Constructor
+     */
+    protected function __construct() {
+        parent::__construct();
 
-		$this->pluginSettings = PluginHelper::getPluginSettings();
+        $this->pluginSettings = PluginHelper::getPluginSettings();
 
-		$this->setMarketApi();
-	} // END protected function __construct()
+        $this->setMarketApi();
+    }
 
-	/**
-	 * Set the market API that is to be used
-	 */
-	public function setMarketApi() {
-		$urlParameters = '?regionlimit=' . $this->marketRegion . '&usesystem=' . $this->marketSystem . '&typeid=';
+    /**
+     * Set the market API that is to be used
+     */
+    public function setMarketApi() {
+        $urlParameters = '?regionlimit=' . $this->marketRegion . '&usesystem=' . $this->marketSystem . '&typeid=';
 
-		switch($this->pluginSettings['market-data-api']) {
-			/**
-			 * EVE Central
-			 */
-			case 'eve-central':
-				$this->apiUrl = $this->apiUrlEveCentral . $urlParameters;
-				break;
+        switch($this->pluginSettings['market-data-api']) {
+            /**
+             * EVE Central
+             */
+            case 'eve-central':
+                $this->apiUrl = $this->apiUrlEveCentral . $urlParameters;
+                break;
 
-			/**
-			 * EVE Marketer
-			 */
-			case 'eve-marketer':
-				$this->apiUrl = $this->apiUrlEveMarketer . $urlParameters;
-				break;
+            /**
+             * EVE Marketer
+             */
+            case 'eve-marketer':
+                $this->apiUrl = $this->apiUrlEveMarketer . $urlParameters;
+                break;
 
-			/**
-			 * Default: EVE Central
-			 * (If for whatever reason none is set in plugin settings)
-			 */
-			default:
-				$this->apiUrl = $this->apiUrlEveCentral . $urlParameters;
-				break;
-		} // END switch($this->pluginSettings['market-data-api'])
-	} // END public function setMarketApi()
+            /**
+             * Default: EVE Central
+             * (If for whatever reason none is set in plugin settings)
+             */
+            default:
+                $this->apiUrl = $this->apiUrlEveCentral . $urlParameters;
+                break;
+        }
+    }
 
-	/**
-	 * Getting the marketdata json
-	 *
-	 * @param array $items
-	 * @return string json string of all item marketdata
-	 */
-	public function getMarketDataJson(array $items) {
-		$typeIdString = \implode(',', $items);
-		$transientName = 'eve_fitting_tool_' . $this->pluginSettings['market-data-api'] . '-market-data_fitting_' . \md5($typeIdString);
-		$returnValue = CacheHelper::getInstance()->checkTransientCache($transientName);
+    /**
+     * Getting the marketdata json
+     *
+     * @param array $items
+     * @return string json string of all item marketdata
+     */
+    public function getMarketDataJson(array $items) {
+        $typeIdString = \implode(',', $items);
+        $transientName = 'eve_fitting_tool_' . $this->pluginSettings['market-data-api'] . '-market-data_fitting_' . \md5($typeIdString);
+        $returnValue = CacheHelper::getInstance()->checkTransientCache($transientName);
 
-		if($returnValue === false) {
-			$get = \wp_remote_get($this->apiUrl . $typeIdString);
-			$json = \wp_remote_retrieve_body($get);
+        if($returnValue === false) {
+            $get = \wp_remote_get($this->apiUrl . $typeIdString);
+            $json = \wp_remote_retrieve_body($get);
 
-			CacheHelper::getInstance()->setTransientCache($transientName, $json, 1);
+            CacheHelper::getInstance()->setTransientCache($transientName, $json, 1);
 
-			$returnValue = $json;
-		} // END if($returnValue === false)
+            $returnValue = $json;
+        }
 
-		return $returnValue;
-	} // END public function getMarketDataJson(Array $items)
+        return $returnValue;
+    }
 
-	/**
-	 * Getting the market prices for our fitting ...
-	 *
-	 * @param array $fittingArray EFT fitting array from WordPress\Plugin\EveOnlineFittingManager\Helper\EftHelper::getFittingArrayFromEftData($eftFitting);
-	 * @return array Sell and Buy order prices from Jita
-	 */
-	public function getMarketPricesFromFittingArray(array $fittingArray) {
-		$returnValue = false;
-		$jitaBuyPrice = 0;
-		$jitaSellPrice = 0;
+    /**
+     * Getting the market prices for our fitting ...
+     *
+     * @param array $fittingArray EFT fitting array from WordPress\Plugin\EveOnlineFittingManager\Helper\EftHelper::getFittingArrayFromEftData($eftFitting);
+     * @return array Sell and Buy order prices from Jita
+     */
+    public function getMarketPricesFromFittingArray(array $fittingArray) {
+        $returnValue = false;
+        $jitaBuyPrice = 0;
+        $jitaSellPrice = 0;
 
-		// Ship price
-		$ship = [
-			$fittingArray['0']->itemID
-		];
+        // Ship price
+        $ship = [
+            $fittingArray['0']->itemID
+        ];
 
-		// Remove the ship from the array
-		unset($fittingArray['0']);
+        // Remove the ship from the array
+        unset($fittingArray['0']);
 
-		$marketJsonShip = $this->getMarketDataJson($ship);
-		if($marketJsonShip !== false) {
-			$marketArrayShip = \json_decode($marketJsonShip);
+        $marketJsonShip = $this->getMarketDataJson($ship);
+        if($marketJsonShip !== false) {
+            $marketArrayShip = \json_decode($marketJsonShip);
 
-			if($marketArrayShip !== null) {
-				$jitaBuyPrice = [
-					'ship' => $marketArrayShip['0']->buy->median,
-					'total' => $marketArrayShip['0']->buy->median
-				];
+            if($marketArrayShip !== null) {
+                $jitaBuyPrice = [
+                    'ship' => $marketArrayShip['0']->buy->median,
+                    'total' => $marketArrayShip['0']->buy->median
+                ];
 
-				$jitaSellPrice = [
-					'ship' => $marketArrayShip['0']->sell->median,
-					'total' => $marketArrayShip['0']->sell->median
-				];
-			} // END if($marketArrayShip !== null)
-		} // END if($marketJsonShip !== false)
+                $jitaSellPrice = [
+                    'ship' => $marketArrayShip['0']->sell->median,
+                    'total' => $marketArrayShip['0']->sell->median
+                ];
+            }
+        }
 
-		// Fitting Price
-		$items = null;
-		if(\is_array($fittingArray)) {
-			foreach($fittingArray as $item) {
-				$items[] = $item->itemID;
-			} // END foreach($fittingArray as $item)
-		} // END if(\is_array($fittingArray))
+        // Fitting Price
+        $items = null;
 
-		// if we have items
-		if($items !== null) {
-			$marketJsonFitting = $this->getMarketDataJson($items);
+        if(\is_array($fittingArray)) {
+            foreach($fittingArray as $item) {
+                $items[] = $item->itemID;
+            }
+        }
 
-			// If we have the json data
-			if($marketJsonFitting !== false) {
-				$marketArray = \json_decode($marketJsonFitting);
-				$jitaBuyPrice['fitting'] = 0;
-				$jitaSellPrice['fitting'] = 0;
+        // if we have items
+        if($items !== null) {
+            $marketJsonFitting = $this->getMarketDataJson($items);
 
-				if($marketArray !== null) {
-					foreach($marketArray as $item) {
-						$jitaBuyPrice['fitting'] += $item->buy->median;
-						$jitaSellPrice['fitting'] += $item->sell->median;
-						$jitaBuyPrice['total'] += $item->buy->median;
-						$jitaSellPrice['total'] += $item->sell->median;
-					} // END foreach($marketArray as $item)
-				} // END if($marketArray !== null)
+            // If we have the json data
+            if($marketJsonFitting !== false) {
+                $marketArray = \json_decode($marketJsonFitting);
+                $jitaBuyPrice['fitting'] = 0;
+                $jitaSellPrice['fitting'] = 0;
 
-				$returnValue = [
-					'ship' => [
-						'jitaBuyPrice' => \number_format($jitaBuyPrice['ship'], 2, ',', '.') . ' ISK',
-						'jitaSellPrice' => \number_format($jitaSellPrice['ship'], 2, ',', '.') . ' ISK'
-					],
+                if($marketArray !== null) {
+                    foreach($marketArray as $item) {
+                        $jitaBuyPrice['fitting'] += $item->buy->median;
+                        $jitaSellPrice['fitting'] += $item->sell->median;
+                        $jitaBuyPrice['total'] += $item->buy->median;
+                        $jitaSellPrice['total'] += $item->sell->median;
+                    }
+                }
 
-					'fitting' => [
-						'jitaBuyPrice' => \number_format($jitaBuyPrice['fitting'], 2, ',', '.') . ' ISK',
-						'jitaSellPrice' => \number_format($jitaSellPrice['fitting'], 2, ',', '.') . ' ISK'
-					],
+                $returnValue = [
+                    'ship' => [
+                        'jitaBuyPrice' => \number_format($jitaBuyPrice['ship'], 2, ',', '.') . ' ISK',
+                        'jitaSellPrice' => \number_format($jitaSellPrice['ship'], 2, ',', '.') . ' ISK'
+                    ],
+                    'fitting' => [
+                        'jitaBuyPrice' => \number_format($jitaBuyPrice['fitting'], 2, ',', '.') . ' ISK',
+                        'jitaSellPrice' => \number_format($jitaSellPrice['fitting'], 2, ',', '.') . ' ISK'
+                    ],
+                    'total' => [
+                        'jitaBuyPrice' => \number_format($jitaBuyPrice['total'], 2, ',', '.') . ' ISK',
+                        'jitaSellPrice' => \number_format($jitaSellPrice['total'], 2, ',', '.') . ' ISK'
+                    ]
+                ];
+            }
+        }
 
-					'total' => [
-						'jitaBuyPrice' => \number_format($jitaBuyPrice['total'], 2, ',', '.') . ' ISK',
-						'jitaSellPrice' => \number_format($jitaSellPrice['total'], 2, ',', '.') . ' ISK'
-					]
-				];
-			} // END if($marketJson !== false)
-		} // END if($items !== null)
-
-		return $returnValue;
-	} // END public function getMarketPrices(Array $fittingArray)
-} // END class MarketdataHelper
+        return $returnValue;
+    }
+}

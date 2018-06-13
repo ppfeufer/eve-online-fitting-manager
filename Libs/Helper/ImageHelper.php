@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (C) 2017 Rounon Dax
  *
@@ -22,95 +23,94 @@ namespace WordPress\Plugin\EveOnlineFittingManager\Libs\Helper;
 \defined('ABSPATH') or die();
 
 class ImageHelper extends \WordPress\Plugin\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton {
-	/**
-	 * base URL to CCP's image server
-	 *
-	 * @var var
-	 */
-	public $imageserverUrl = null;
+    /**
+     * base URL to CCP's image server
+     *
+     * @var var
+     */
+    public $imageserverUrl = null;
 
-	/**
-	 * Array with possible end point on CCP's image server
-	 *
-	 * @var array
-	 */
-	public $imageserverEndpoints = null;
+    /**
+     * Array with possible end point on CCP's image server
+     *
+     * @var array
+     */
+    public $imageserverEndpoints = null;
+    public $pluginSettings = null;
 
-	public $pluginSettings = null;
+    /**
+     * The Construtor
+     */
+    protected function __construct() {
+        parent::__construct();
 
-	/**
-	 * The Construtor
-	 */
-	protected function __construct() {
-		parent::__construct();
+        $this->imageserverUrl = 'https://image.eveonline.com/';
+        $this->imageserverEndpoints = $this->getImageserverEndpoints();
+        $this->pluginSettings = PluginHelper::getPluginSettings(true);
+    }
 
-		$this->imageserverUrl = 'https://image.eveonline.com/';
-		$this->imageserverEndpoints = $this->getImageserverEndpoints();
-		$this->pluginSettings = PluginHelper::getPluginSettings(true);
-	} // END public function __construct()
+    /**
+     * Assigning Imagesever Endpoints
+     */
+    private function getImageserverEndpoints() {
+        return [
+            'alliance' => 'Alliance/',
+            'corporation' => 'Corporation/',
+            'character' => 'Character/',
+            'item' => 'Type/',
+            'ship' => 'Render/',
+            'inventory' => 'InventoryType/' // all the other stuff
+        ];
+    }
 
-	/**
-	 * Assigning Imagesever Endpoints
-	 */
-	private function getImageserverEndpoints() {
-		return [
-			'alliance' => 'Alliance/',
-			'corporation' => 'Corporation/',
-			'character' => 'Character/',
-			'item' => 'Type/',
-			'ship' => 'Render/',
-			'inventory' => 'InventoryType/' // all the other stuff
-		];
-	} // END private function setImageserverEndpoints()
+    /**
+     * Getting the EVE API Url
+     *
+     * @param string $type
+     * @return string The EVE API Url
+     */
+    public function getImageServerUrl($type = null) {
+        $endpoint = '';
 
-	/**
-	 * Getting the EVE API Url
-	 *
-	 * @param string $type
-	 * @return string The EVE API Url
-	 */
-	public function getImageServerUrl($type = null) {
-		$endpoint = '';
+        if($type !== null) {
+            $endpoint = $this->imageserverEndpoints[$type];
+        }
 
-		if($type !== null) {
-			$endpoint = $this->imageserverEndpoints[$type];
-		} // END if($type !== null)
+        return $this->imageserverUrl . $endpoint;
+    }
 
-		return $this->imageserverUrl . $endpoint;
-	} // END public function getImageServerUrl()
+    /**
+     * Getting the cached URL for a remote image
+     *
+     * @param string $cacheType The subdirectory in the image cache filesystem
+     * @param string $remoteImageUrl The URL for the remote image
+     * @return string The cached Image URL
+     */
+    public function getLocalCacheImageUriForRemoteImage($cacheType = null, $remoteImageUrl = null) {
+        $returnValue = $remoteImageUrl;
 
-	/**
-	 * Getting the cached URL for a remote image
-	 *
-	 * @param string $cacheType The subdirectory in the image cache filesystem
-	 * @param string $remoteImageUrl The URL for the remote image
-	 * @return string The cached Image URL
-	 */
-	public function getLocalCacheImageUriForRemoteImage($cacheType = null, $remoteImageUrl = null) {
-		$returnValue = $remoteImageUrl;
+        // Check if we should use image cache first
+        if(isset($this->pluginSettings['template-image-settings']['use-image-cache']) && $this->pluginSettings['template-image-settings']['use-image-cache'] === 'yes') {
+            $explodedImageUrl = \explode('/', $remoteImageUrl);
+            $imageFilename = \end($explodedImageUrl);
+            $cachedImage = CacheHelper::getInstance()->getImageCacheUri() . $cacheType . '/' . $imageFilename;
 
-		// Check if we should use image cache first
-		if(isset($this->pluginSettings['template-image-settings']['use-image-cache']) && $this->pluginSettings['template-image-settings']['use-image-cache'] === 'yes') {
-			$explodedImageUrl = \explode('/', $remoteImageUrl);
-			$imageFilename = \end($explodedImageUrl);
-			$cachedImage = CacheHelper::getInstance()->getImageCacheUri() . $cacheType . '/' . $imageFilename;
+            // if we don't have the image cached already
+            if(CacheHelper::getInstance()->checkCachedImage($cacheType, $imageFilename) === false) {
+                /**
+                 * Check if the content dir is writable and cache the image.
+                 * Otherwise set the remote image as return value.
+                 */
+                if(\is_dir(CacheHelper::getInstance()->getImageCacheDir() . $cacheType) && \is_writable(CacheHelper::getInstance()->getImageCacheDir() . $cacheType)) {
+                    if(CacheHelper::getInstance()->cacheRemoteImageFile($cacheType, $remoteImageUrl) === true) {
+                        $returnValue = $cachedImage;
+                    }
+                }
+            } else {
+                $returnValue = $cachedImage;
+            }
+        }
 
-			// if we don't have the image cached already
-			if(CacheHelper::getInstance()->checkCachedImage($cacheType, $imageFilename) === false) {
-				/**
-				 * Check if the content dir is writable and cache the image.
-				 * Otherwise set the remote image as return value.
-				 */
-				if(\is_dir(CacheHelper::getInstance()->getImageCacheDir() . $cacheType) && \is_writable(CacheHelper::getInstance()->getImageCacheDir() . $cacheType)) {
-					if(CacheHelper::getInstance()->cacheRemoteImageFile($cacheType, $remoteImageUrl) === true) {
-						$returnValue = $cachedImage;
-					}
-				} // END if(\is_dir(CacheHelper::getImageCacheDir() . $cacheType) && \is_writable(CacheHelper::getImageCacheDir() . $cacheType))
-			} else {
-				$returnValue = $cachedImage;
-			} // END if(CacheHelper::checkCachedImage($cacheType, $imageName) === false)
-		} // if($this->pluginSettings['template-image-settings']['use-image-cache'] === 'yes')
-
-		return $returnValue;
-	} // END public static function getLocalCacheImageUri($cacheType = null, $remoteImageUrl = null)
-} // END class ImageHelper
+        return $returnValue;
+    }
+}
