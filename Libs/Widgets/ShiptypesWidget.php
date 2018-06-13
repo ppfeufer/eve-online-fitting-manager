@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (C) 2017 Rounon Dax
  *
@@ -22,70 +23,70 @@ namespace WordPress\Plugin\EveOnlineFittingManager\Libs\Widgets;
 \defined('ABSPATH') or die();
 
 class ShiptypesWidget extends \WP_Widget {
-	/**
-	 * Root ID for all widgets of this type.
-	 *
-	 * @since 2.8.0
-	 * @access public
-	 * @var mixed|string
-	 */
-	public $id_base;
+    /**
+     * Root ID for all widgets of this type.
+     *
+     * @since 2.8.0
+     * @access public
+     * @var mixed|string
+     */
+    public $id_base;
 
-	/**
-	 * Name for this widget type.
-	 *
-	 * @since 2.8.0
-	 * @access public
-	 * @var string
-	 */
-	public $name;
+    /**
+     * Name for this widget type.
+     *
+     * @since 2.8.0
+     * @access public
+     * @var string
+     */
+    public $name;
 
-	/**
-	 * Unique ID number of the current instance.
-	 *
-	 * @since 2.8.0
-	 * @var bool|int
-	 */
-	public $number = false;
+    /**
+     * Unique ID number of the current instance.
+     *
+     * @since 2.8.0
+     * @var bool|int
+     */
+    public $number = false;
 
-	/**
-	 * Constructor
-	 */
-	public function __construct() {
-		$widgetOptions = [
-			'classname' => 'fitting-manager-shiptypes-sidebar-widget',
-			'description' => \__('Displaying the ship types list in your sidebar.', 'eve-online-fitting-manager')
-		];
+    /**
+     * Constructor
+     */
+    public function __construct() {
+        $widgetOptions = [
+            'classname' => 'fitting-manager-shiptypes-sidebar-widget',
+            'description' => \__('Displaying the ship types list in your sidebar.', 'eve-online-fitting-manager')
+        ];
 
-		$controlOptions = [];
+        $controlOptions = [];
 
-		parent::__construct('fitting_manager_shiptypes_sidebar_widget', __('Fitting Manager Ship Types Widget', 'fitting-manager-shiptypes-sidebar-widget'), $widgetOptions, $controlOptions);
-	} // END public function __construct($id_base, $name, $widget_options = array(), $control_options = array())
+        parent::__construct('fitting_manager_shiptypes_sidebar_widget', __('Fitting Manager Ship Types Widget', 'fitting-manager-shiptypes-sidebar-widget'), $widgetOptions, $controlOptions);
+    }
 
-	/**
-	 * Widget Output
-	 *
-	 * @param array $args
-	 * @param array $instance
-	 */
-	public function widget($args, $instance) {
-		echo $args['before_widget'];
+    /**
+     * Widget Output
+     *
+     * @param array $args
+     * @param array $instance
+     */
+    public function widget($args, $instance) {
+        echo $args['before_widget'];
 
-		/**
-		 * Filter the Navigation by ship types
-		 */
-		$countShipTypes = \get_terms([
-			'taxonomy' => 'fitting-ships',
-			'fields' => 'count'
-		]);
+        /**
+         * Filter the Navigation by ship types
+         */
+        $countShipTypes = \get_terms([
+            'taxonomy' => 'fitting-ships',
+            'fields' => 'count'
+        ]);
 
-		if($countShipTypes > 0) {
-			echo $args['before_title'];
-			echo \__('Ship Types', 'eve-online-fitting-manager');
-			echo $args['after_title'];
-			echo \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\FittingHelper::getSidebarMenu('fitting-ships');
-		} // END if($countDoctrineShips > 0)
+        if($countShipTypes > 0) {
+            echo $args['before_title'];
+            echo \__('Ship Types', 'eve-online-fitting-manager');
+            echo $args['after_title'];
+            echo \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\FittingHelper::getSidebarMenu('fitting-ships');
+        }
 
-		echo $args['after_widget'];
-	} // END public function widget($args, $instance)
-} // END class ShiptypesWidget extends \WP_Widget
+        echo $args['after_widget'];
+    }
+}

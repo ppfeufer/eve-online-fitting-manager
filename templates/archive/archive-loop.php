@@ -5,7 +5,7 @@ $subDoctrines = \get_terms([
     'orderby' => 'name',
     'order' => 'ASC',
     'child_of' => $doctrineData->term_id
-    ]);
+]);
 
 $resultMainDoctrine = new \WP_Query([
     'post_type' => 'fitting',
@@ -20,7 +20,7 @@ $resultMainDoctrine = new \WP_Query([
             'include_children' => false
         ]
     ]
-    ]);
+]);
 
 // loop through the main doctrine
 if($resultMainDoctrine->have_posts()) {
@@ -65,7 +65,7 @@ if($resultMainDoctrine->have_posts()) {
                 </script>';
     } // if(\get_post_type() === 'fitting')
 } // if($resultMainDoctrine->have_posts())
-//
+
 // Loop throgh the sub doctrines ...
 if(\count($subDoctrines) > 0) {
     foreach($subDoctrines as $subDoctrine) {

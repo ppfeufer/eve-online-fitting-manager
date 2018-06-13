@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (C) 2017 Rounon Dax
  *
@@ -22,37 +23,37 @@ namespace WordPress\Plugin\EveOnlineFittingManager\Libs;
 \defined('ABSPATH') or die();
 
 class Widgets {
-	/**
-	 * Constructor
-	 */
-	public function __construct() {
-		;
-	} // END public function __construct()
+    /**
+     * Constructor
+     */
+    public function __construct() {
+        ;
+    }
 
-	/**
-	 * Initialize the show
-	 */
-	public function init() {
-		\add_action('init', [$this, 'registerSidebar'], 99);
-		\add_action('widgets_init', \create_function('', 'return register_widget("WordPress\Plugin\EveOnlineFittingManager\Libs\Widgets\DoctrinesWidget");'));
-		\add_action('widgets_init', \create_function('', 'return register_widget("WordPress\Plugin\EveOnlineFittingManager\Libs\Widgets\ShiptypesWidget");'));
-		\add_action('widgets_init', \create_function('', 'return register_widget("WordPress\Plugin\EveOnlineFittingManager\Libs\Widgets\SearchWidget");'));
-	} // END public function init()
+    /**
+     * Initialize the show
+     */
+    public function init() {
+        \add_action('init', [$this, 'registerSidebar'], 99);
+        \add_action('widgets_init', \create_function('', 'return register_widget("WordPress\Plugin\EveOnlineFittingManager\Libs\Widgets\DoctrinesWidget");'));
+        \add_action('widgets_init', \create_function('', 'return register_widget("WordPress\Plugin\EveOnlineFittingManager\Libs\Widgets\ShiptypesWidget");'));
+        \add_action('widgets_init', \create_function('', 'return register_widget("WordPress\Plugin\EveOnlineFittingManager\Libs\Widgets\SearchWidget");'));
+    }
 
-	/**
-	 * Register our sidebar
-	 */
-	public function registerSidebar() {
-		\register_sidebar(
-			[
-				'name' => \__('Fitting Manager Sidebar', 'eve-online-fitting-manager'),
-				'description' => \__('Sidebar to use with your Fitting Manager pages.', 'eve-online-fitting-manager'),
-				'id' => 'sidebar-fitting-manager',
-				'before_widget' => '<aside><div id="%1$s" class="widget %2$s">',
-				'after_widget' => "</div></aside>",
-				'before_title' => '<h4 class="widget-title">',
-				'after_title' => '</h4>',
-			]
-		);
-	} // END public function registerSidebar()
-} // END class Widgets
+    /**
+     * Register our sidebar
+     */
+    public function registerSidebar() {
+        \register_sidebar(
+            [
+                'name' => \__('Fitting Manager Sidebar', 'eve-online-fitting-manager'),
+                'description' => \__('Sidebar to use with your Fitting Manager pages.', 'eve-online-fitting-manager'),
+                'id' => 'sidebar-fitting-manager',
+                'before_widget' => '<aside><div id="%1$s" class="widget %2$s">',
+                'after_widget' => "</div></aside>",
+                'before_title' => '<h4 class="widget-title">',
+                'after_title' => '</h4>',
+            ]
+        );
+    }
+}

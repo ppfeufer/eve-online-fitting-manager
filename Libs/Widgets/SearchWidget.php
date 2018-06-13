@@ -22,82 +22,82 @@ namespace WordPress\Plugin\EveOnlineFittingManager\Libs\Widgets;
 \defined('ABSPATH') or die();
 
 class SearchWidget extends \WP_Widget {
-	/**
-	 * Root ID for all widgets of this type.
-	 *
-	 * @since 2.8.0
-	 * @access public
-	 * @var mixed|string
-	 */
-	public $id_base;
+    /**
+     * Root ID for all widgets of this type.
+     *
+     * @since 2.8.0
+     * @access public
+     * @var mixed|string
+     */
+    public $id_base;
 
-	/**
-	 * Name for this widget type.
-	 *
-	 * @since 2.8.0
-	 * @access public
-	 * @var string
-	 */
-	public $name;
+    /**
+     * Name for this widget type.
+     *
+     * @since 2.8.0
+     * @access public
+     * @var string
+     */
+    public $name;
 
-	/**
-	 * Unique ID number of the current instance.
-	 *
-	 * @since 2.8.0
-	 * @var bool|int
-	 */
-	public $number = false;
+    /**
+     * Unique ID number of the current instance.
+     *
+     * @since 2.8.0
+     * @var bool|int
+     */
+    public $number = false;
 
-	/**
-	 * Constructor
-	 */
-	public function __construct() {
-		$widgetOptions = [
-			'classname' => 'fitting-manager-search-sidebar-widget',
-			'description' => \__('Displaying the search field in your sidebar.', 'eve-online-fitting-manager')
-		];
+    /**
+     * Constructor
+     */
+    public function __construct() {
+        $widgetOptions = [
+            'classname' => 'fitting-manager-search-sidebar-widget',
+            'description' => \__('Displaying the search field in your sidebar.', 'eve-online-fitting-manager')
+        ];
 
-		$controlOptions = [];
+        $controlOptions = [];
 
-		parent::__construct('fitting_manager_search_sidebar_widget', __('Fitting Manager Search Widget', 'fitting-manager-search-sidebar-widget'), $widgetOptions, $controlOptions);
-	} // END public function __construct($id_base, $name, $widget_options = array(), $control_options = array())
+        parent::__construct('fitting_manager_search_sidebar_widget', __('Fitting Manager Search Widget', 'fitting-manager-search-sidebar-widget'), $widgetOptions, $controlOptions);
+    }
 
-	/**
-	 * Widget Output
-	 *
-	 * @param array $args
-	 * @param array $instance
-	 */
-	public function widget($args, $instance) {
-		echo $args['before_widget'];
+    /**
+     * Widget Output
+     *
+     * @param array $args
+     * @param array $instance
+     */
+    public function widget($args, $instance) {
+        echo $args['before_widget'];
 
-		echo $args['before_title'];
-		echo \__('Search Doctrines', 'eve-online-fitting-manager');
-		echo $args['after_title'];
+        echo $args['before_title'];
+        echo \__('Search Doctrines', 'eve-online-fitting-manager');
+        echo $args['after_title'];
 
-		$countDoctrineShips = \get_terms([
-			'taxonomy' => 'fitting-doctrines',
-			'fields' => 'count'
-		]);
+        $countDoctrineShips = \get_terms([
+            'taxonomy' => 'fitting-doctrines',
+            'fields' => 'count'
+        ]);
 
-		if($countDoctrineShips > 0) {
-			?>
-			<div class="fitting-sidebar-search">
-				<form action="/<?php echo \WordPress\Plugin\EveOnlineFittingManager\Libs\PostType::getPosttypeSlug('fittings'); ?>/" method="GET" id="fitting_search" role="search">
-					<div class="input-group">
-						<label class="sr-only" for="fitting_search"><?php echo \__('Search', 'eve-online-fitting-manager') ?></label>
-						<input type="text" class="form-control" id="fitting_search" name="fitting_search" placeholder="<?php echo \__('Search Ship Type', 'eve-online-fitting-manager') ?>" value="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\FittingHelper::getFittingSearchQuery(true); ?>">
-						<div class="input-group-btn">
-							<button type="submit" class="btn btn-default">
-								<span class="glyphicon glyphicon-search"></span>
-							</button>
-						</div>
-					</div>
-				</form>
-			</div>
-			<?php
-		} // END if($countDoctrineShips > 0)
+        if($countDoctrineShips > 0) {
+            ?>
+            <div class="fitting-sidebar-search">
+                <form action="/<?php echo \WordPress\Plugin\EveOnlineFittingManager\Libs\PostType::getPosttypeSlug('fittings'); ?>/" method="GET" id="fitting_search" role="search">
+                    <div class="input-group">
+                        <label class="sr-only" for="fitting_search"><?php echo \__('Search', 'eve-online-fitting-manager') ?></label>
+                        <input type="text" class="form-control" id="fitting_search" name="fitting_search" placeholder="<?php echo \__('Search Ship Type', 'eve-online-fitting-manager') ?>" value="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\FittingHelper::getFittingSearchQuery(true); ?>">
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-default">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <?php
+        }
 
-		echo $args['after_widget'];
-	} // END public function widget($args, $instance)
-} // END class ShiptypesWidget extends \WP_Widget
+        echo $args['after_widget'];
+    }
+}

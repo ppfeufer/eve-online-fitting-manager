@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (C) 2017 Rounon Dax
  *
@@ -22,33 +23,33 @@ namespace WordPress\Plugin\EveOnlineFittingManager\Libs;
 \defined('ABSPATH') or die();
 
 class Shortcodes {
-	/**
-	 * Constructor
-	 */
-	public function __construct() {
-		$this->registerShortcodes();
-	} // END public function __construct()
+    /**
+     * Constructor
+     */
+    public function __construct() {
+        $this->registerShortcodes();
+    }
 
-	/**
-	 * register all shortcodes
-	 */
-	public function registerShortcodes() {
-		\add_shortcode('fittings', [$this, 'shortcodeFittings']);
-	} // END public function registerShortcodes()
+    /**
+     * register all shortcodes
+     */
+    public function registerShortcodes() {
+        \add_shortcode('fittings', [$this, 'shortcodeFittings']);
+    }
 
-	/**
-	 * Shortcode for fitting navigation inside a page or post
-	 *
-	 * allowed args:
-	 *	list => doctrines or shiptypes
-	 *
-	 * @param array $atts
-	 */
-	public function shortcodeFittings($atts) {
-		$args = \shortcode_atts([
-			'list' => 'doctrines'
-		], $atts);
+    /**
+     * Shortcode for fitting navigation inside a page or post
+     *
+     * allowed args:
+     *      list => doctrines or shiptypes
+     *
+     * @param array $atts
+     */
+    public function shortcodeFittings($atts) {
+        $args = \shortcode_atts([
+            'list' => 'doctrines'
+            ], $atts);
 
-		return Helper\FittingHelper::getContentMenu('fitting-' . $args['list']);
-	} // END public function shortcodeFittings($atts)
-} // END class Shortcodes
+        return Helper\FittingHelper::getContentMenu('fitting-' . $args['list']);
+    }
+}

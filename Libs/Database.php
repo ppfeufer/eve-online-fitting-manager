@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (C) 2017 Rounon Dax
  *
@@ -25,33 +26,32 @@ namespace WordPress\Plugin\EveOnlineFittingManager\Libs;
  * Registering the Killboard Database as its own instance of wpdb
  */
 class Database extends Singletons\AbstractSingleton {
-	private $pluginSettings = null;
+    private $pluginSettings = null;
+    public $db = null;
 
-	public $db = null;
+    /**
+     * Constructor
+     */
+    protected function __construct() {
+        parent::__construct();
 
-	/**
-	 * Constructor
-	 */
-	protected function __construct() {
-		parent::__construct();
+        $this->pluginSettings = \get_option(Helper\PluginHelper::getOptionFieldName(), Helper\PluginHelper::getPluginDefaultSettings());
 
-		$this->pluginSettings = \get_option(Helper\PluginHelper::getOptionFieldName(), Helper\PluginHelper::getPluginDefaultSettings());
+        $this->db = $this->initiateKillboardDatabase();
+    }
 
-		$this->db = $this->initiateKillboardDatabase();
-	} // END private function __construct()
+    /**
+     * Initializing the Database
+     *
+     * @return \wpdb WordPress Database Object
+     */
+    private function initiateKillboardDatabase() {
+        $returnValue = false;
 
-	/**
-	 * Initializing the Database
-	 *
-	 * @return \wpdb WordPress Database Object
-	 */
-	private function initiateKillboardDatabase() {
-		$returnValue = false;
+        if(!empty($this->pluginSettings['edk-killboard-user']) && !empty($this->pluginSettings['edk-killboard-password']) && !empty($this->pluginSettings['edk-killboard-name']) && !empty($this->pluginSettings['edk-killboard-host'])) {
+            $returnValue = new \wpdb($this->pluginSettings['edk-killboard-user'], $this->pluginSettings['edk-killboard-password'], $this->pluginSettings['edk-killboard-name'], $this->pluginSettings['edk-killboard-host']);
+        }
 
-		if(!empty($this->pluginSettings['edk-killboard-user']) && !empty($this->pluginSettings['edk-killboard-password']) && !empty($this->pluginSettings['edk-killboard-name']) && !empty($this->pluginSettings['edk-killboard-host'])) {
-			$returnValue = new \wpdb($this->pluginSettings['edk-killboard-user'], $this->pluginSettings['edk-killboard-password'], $this->pluginSettings['edk-killboard-name'], $this->pluginSettings['edk-killboard-host']);
-		} // END if(!empty($this->pluginSettings['edk-killboard-user']) && !empty($this->pluginSettings['edk-killboard-password']) && !empty($this->pluginSettings['edk-killboard-name']) && !empty($this->pluginSettings['edk-killboard-host']))
-
-		return $returnValue;
-	} // END private function initiateKillboardDatabase()
-} // END class Database
+        return $returnValue;
+    }
+}

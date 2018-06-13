@@ -2,7 +2,8 @@
 
 ## [In Development](https://github.com/ppfeufer/eve-online-fitting-manager/tree/development)
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.13.4...HEAD)
-- in development
+### Fixed
+- Formatted doctrine description
 
 ## [v0.13.4](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.13.4) - 2018-05-09
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.13.3...v0.13.4)

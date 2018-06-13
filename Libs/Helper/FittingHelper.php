@@ -22,7 +22,6 @@ namespace WordPress\Plugin\EveOnlineFittingManager\Libs\Helper;
 \defined('ABSPATH') or die();
 
 class FittingHelper {
-
     /**
      * Getting High Slot Item Names
      *
@@ -126,7 +125,7 @@ class FittingHelper {
         ];
 
         return $arraySubSystems;
-    } // END public static function getSubSystemItemNames($subSystems)
+    }
 
     /**
      * Getting Item Description
@@ -139,7 +138,7 @@ class FittingHelper {
         $description = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
 
         return \wpautop($description);
-    } // END public static function getItemDescription($itemID)
+    }
 
     /**
      * Getting Item Details
@@ -202,14 +201,14 @@ class FittingHelper {
                  */
                 if($itemData->categoryID === '6') {
                     $itemData->slotName = 'ship';
-                } // END if($itemData->categoryID == '6')
+                }
 
                 /**
                  * Category: Charges
                  */
                 if($itemData->categoryID === '8') {
                     $itemData->slotName = 'charge';
-                } // END if($itemData->categoryID == '6')
+                }
 
                 /**
                  * Category: Fuel
@@ -223,35 +222,36 @@ class FittingHelper {
                     '16272', // Heavy Water
                     '16275'  // Strontuim Clathrates
                 ];
+
                 if(\in_array($itemData->itemID, $arrayFuelIDs)) {
                     $itemData->slotName = 'fuel';
-                } // END if(\in_array($itemData->itemID, $arrayFuelIDs))
+                }
 
                 /**
                  * Category: Implants and Booster
                  */
                 if($itemData->categoryID === '20') {
                     $itemData->slotName = 'Implants and Booster';
-                } // END if($itemData->categoryID === '20')
+                }
 
                 /**
                  * Category: Dones
                  */
                 if($itemData->categoryID === '18') {
                     $itemData->slotName = 'drone';
-                } // END if($itemData->categoryID == '6')
+                }
 
 
                 if($itemCount != null) {
                     $itemData->itemCount = $itemCount;
-                } // END if($itemCount != null)
+                }
 
                 return $itemData;
-            } // END if(!empty($itemData['itemID']))
+            }
         }
 
         return false;
-    } // END public function getItemDetailsByItemName($itemName)
+    }
 
     /**
      * Getting Items Data
@@ -272,7 +272,7 @@ class FittingHelper {
         }
 
         return false;
-    } // END public function getItemDetailsByItemName($itemName)
+    }
 
     /**
      * Getting an item ID ny its item name
@@ -289,7 +289,7 @@ class FittingHelper {
         }
 
         return $returnValue;
-    } // END public function getItemIdByName($itemName)
+    }
 
     /**
      * Getting an item name by its iten ID
@@ -304,22 +304,22 @@ class FittingHelper {
             foreach($itemID as $id) {
                 $sql = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `kb3_invtypes`.`typeName` AS `itemName` from `kb3_invtypes` WHERE `kb3_invtypes`.`typeID` = %d', [$id]);
                 $itemNames[$id] = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
-            } // END foreach($itemID as $id)
+            }
 
             return $itemNames;
-        } // END if(is_array($itemID))
+        }
 
         $sql = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `kb3_invtypes`.`typeName` AS `itemName` from `kb3_invtypes` WHERE `kb3_invtypes`.`typeID` = %d', [$itemID]);
         $itemName = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
 
         return $itemName;
-    } // END public function getItemNameById($itemID)
+    }
 
     public static function getDescriptionItemDetailsByItemName($itemName) {
         $itemDetails = self::getItemDetailsByItemName($itemName);
 
         return $itemDetails;
-    } // END public function getDescriptionItemDetailsByItemName($itemName)
+    }
 
     /**
      * Getting a fitting DNA from its fitting data
@@ -374,8 +374,8 @@ class FittingHelper {
                 case 'drone':
                     $drones[] = $data;
                     break;
-            } // END switch($fittingData['slotName'])
-        } // END foreach($fittingData as $data)
+            }
+        }
 
         $shipDnaString = '';
         $shipDnaString .= $shipData->itemID . ':';
@@ -386,8 +386,8 @@ class FittingHelper {
         if(!empty($subSystems)) {
             foreach($subSystems as $sub) {
                 $shipDnaString .= $sub->itemID . ';' . $sub->itemCount . ':';
-            } // END foreach($subSystems as $sub)
-        } // END if(!empty($subSystems))
+            }
+        }
 
         /**
          * Highslots
@@ -395,8 +395,8 @@ class FittingHelper {
         if(!empty($highSlots)) {
             foreach($highSlots as $high) {
                 $shipDnaString .= $high->itemID . ';' . $high->itemCount . ':';
-            } // END foreach($highSlots as $high)
-        } // END if(!empty($highSlots))
+            }
+        }
 
         /**
          * Medslots
@@ -404,8 +404,8 @@ class FittingHelper {
         if(!empty($midSlots)) {
             foreach($midSlots as $mid) {
                 $shipDnaString .= $mid->itemID . ';' . $mid->itemCount . ':';
-            } // END foreach($midSlots as $mid)
-        } // END if(!empty($midSlots))
+            }
+        }
 
         /**
          * Lowslots
@@ -413,8 +413,8 @@ class FittingHelper {
         if(!empty($lowSlots)) {
             foreach($lowSlots as $low) {
                 $shipDnaString .= $low->itemID . ';' . $low->itemCount . ':';
-            } // END foreach($lowSlots as $low)
-        } // END if(!empty($lowSlots))
+            }
+        }
 
         /**
          * Rigs
@@ -422,8 +422,8 @@ class FittingHelper {
         if(!empty($rigSlots)) {
             foreach($rigSlots as $rig) {
                 $shipDnaString .= $rig->itemID . ';' . $rig->itemCount . ':';
-            } // END foreach($rigSlots as $rig)
-        } // END if(!empty($rigSlots))
+            }
+        }
 
         /**
          * Charges
@@ -431,8 +431,8 @@ class FittingHelper {
         if(!empty($charges)) {
             foreach($charges as $charge) {
                 $shipDnaString .= $charge->itemID . ';' . $charge->itemCount . ':';
-            } // END foreach($charges as $rig)
-        } // END if(!empty($charges))
+            }
+        }
 
         /**
          * Drones
@@ -440,13 +440,13 @@ class FittingHelper {
         if(!empty($drones)) {
             foreach($drones as $drone) {
                 $shipDnaString .= $drone->itemID . ';' . $drone->itemCount . ':';
-            } // END foreach($drones as $rig)
-        } // END if(!empty($drones))
+            }
+        }
 
         $shipDnaString .= ':';
 
         return $shipDnaString;
-    } // END public function getShipDnaFromFittingData($fittingData)
+    }
 
     /**
      * Getting the slot layout from fitting data
@@ -470,8 +470,8 @@ class FittingHelper {
 
         /**
          * Check if:
-         * 	» it's a strategic cruiser and has sub systems
-         * 	» it's an Upwell Structure
+         *      it's a strategic cruiser and has sub systems
+         *      it's an Upwell Structure
          */
         if(\in_array($fitting['shipID'], $arrayStrategicCruiserIDs) && !empty($fittedSubSystems)) {
             /**
@@ -485,8 +485,8 @@ class FittingHelper {
                     $currentHighSlots += self::getHighSlotModifierCountForShipID($fittedSubSystems['subSystem_' . $i]);
                     $currenMidSlots += self::getMidSlotModifierCountForShipID($fittedSubSystems['subSystem_' . $i]);
                     $currentLowSlots += self::getLowSlotModifierCountForShipID($fittedSubSystems['subSystem_' . $i]);
-                } // END if(isset($fittedSubSystems['subSystem_' . $i]))
-            } // END for($i = 1; $i <= $maxSubSystems; $i++)
+                }
+            }
 
             $currentRigSlots = self::getRigSlotCountForShipID($fitting['shipID']);
             $currentSubSystems = 5;
@@ -495,7 +495,7 @@ class FittingHelper {
              * Processing Upwell Structures
              */
             $currentServiceSlots = 5;
-        } // END if(in_array($fitting['shipID'], $arrayStrategicCruiserIDs))
+        }
 
         return [
             'highSlots' => $currentHighSlots,
@@ -523,9 +523,11 @@ class FittingHelper {
             35832, // Astrahus
             35833, // Fortizar
             35834, // Keepstar
+
             35825, // Raitaru
             35826, // Azbel
             35827, // Sotiyo
+
             35835, // Athanor
             35836 // Tatara
         ];
@@ -547,8 +549,6 @@ class FittingHelper {
         return \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
     }
 
-// END public function getHighSlotCountForShipID($shipID)
-
     /**
      * Getting the count of mid slots of a given ship by its ID
      *
@@ -564,8 +564,6 @@ class FittingHelper {
 
         return \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
     }
-
-// END public function getMidSlotCountForShipID($shipID)
 
     /**
      * Getting the count of low slots of a given ship by its ID
@@ -583,8 +581,6 @@ class FittingHelper {
         return \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
     }
 
-// END public function getLowSlotCountForShipID($shipID)
-
     /**
      * Getting the amount of high slots modified by a subsystem
      *
@@ -600,8 +596,6 @@ class FittingHelper {
 
         return \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
     }
-
-// END public function getHighSlotModifierCountForShipID($subsystemID)
 
     /**
      * Getting the amount of mid slots modified by a subsystem
@@ -619,8 +613,6 @@ class FittingHelper {
         return \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
     }
 
-// END public function getMidSlotModifierCountForShipID($subsystemID)
-
     /**
      * Getting the amount of low slots modified by a subsystem
      *
@@ -637,8 +629,6 @@ class FittingHelper {
         return \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
     }
 
-// END public function getLowSlotModifierCountForShipID($subsystemID)
-
     /**
      * Getting the count of rig slots of a given ship by its ID
      *
@@ -647,15 +637,13 @@ class FittingHelper {
      */
     public static function getRigSlotCountForShipID($shipID) {
         $sql = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `value`
-				FROM `kb3_dgmtypeattributes`
-				JOIN `kb3_dgmattributetypes` ON `attributeName` = "rigSlots"
-				WHERE `kb3_dgmattributetypes`.`attributeID` = `kb3_dgmtypeattributes`.`attributeID`
-				AND `kb3_dgmtypeattributes`.`typeID` = %d', [$shipID]);
+                FROM `kb3_dgmtypeattributes`
+                JOIN `kb3_dgmattributetypes` ON `attributeName` = "rigSlots"
+                WHERE `kb3_dgmattributetypes`.`attributeID` = `kb3_dgmtypeattributes`.`attributeID`
+                AND `kb3_dgmtypeattributes`.`typeID` = %d', [$shipID]);
 
         return \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
     }
-
-// END public function getRigSlotCountForShipID($shipID)
 
     /**
      * Getting the ship image by ID
@@ -669,8 +657,6 @@ class FittingHelper {
 
         return $image;
     }
-
-// END public static function getShipImageById($itemID = null, $size = 512)
 
     /**
      * Gettng the doctrine menu for the sidebar
@@ -784,24 +770,27 @@ class FittingHelper {
             // skip term if it has children or is empty
             if($entity->parent) {
                 continue;
-            } // END if($entity->parent)
+            }
 
             $doctrineListHtml = '<li class="doctrine entity-' . $entity->slug . ' doctrine-id-' . $entity->term_id . '"><header class="entry-header"><h2 class="entry-title"><a class="doctrine-link-item" href="' . \get_term_link($entity->term_id) . '">' . $entity->name . '</a></h2></header></li>';
-
             $doctrineImage = null;
+
             if(isset($pluginOptions['template-image-settings']['show-doctrine-images-in-loop']) && $pluginOptions['template-image-settings']['show-doctrine-images-in-loop'] === 'yes') {
                 if(\function_exists('\z_taxonomy_image')) {
                     $doctrineImage .= '<a class="doctrine-link-item" href="' . \get_term_link($entity->term_id) . '"><figure class="fitting-helper-post-loop-thumbnail">';
+
                     if(\function_exists('\fly_get_attachment_image')) {
                         $doctrineImage .= \fly_get_attachment_image(\z_get_attachment_id_by_url(\z_taxonomy_image_url($entity->term_id)), 'fitting-helper-post-loop-thumbnail');
                     } else {
                         $doctrineImage .= \z_taxonomy_image($entity->term_id, 'fitting-helper-post-loop-thumbnail', null, false);
-                    } // END if(\function_exists('\fly_get_attachment_image'))
+                    }
+
                     $doctrineImage .= '</figure><header class="entry-header"><h2 class="entry-title">' . $entity->name . '</h2></header></a>';
-                } // END if(\function_exists('\z_taxonomy_image'))
+                }
 
                 $doctrineListHtml = '<li class="doctrine entity-' . $entity->slug . ' doctrine-id-' . $entity->term_id . '">' . $doctrineImage . '</li>';
-            } // END if(!empty($pluginOptions['template-image-settings']['show-doctrine-images-in-loop']))
+            }
+
             // If the entity has doctrines...
             if(isset($hierarchy[$entity->term_id])) {
                 $doctrines = \get_terms([
@@ -812,15 +801,17 @@ class FittingHelper {
                 ]);
 
                 $doctrineListHtml = '<li class="doctrine entity-' . $entity->slug . ' doctrine-id-' . $entity->term_id . ' has-children">' . $doctrineImage . '<header class="entry-header"><h2 class="entry-title"><a class="doctrine-link-item" href="' . \get_term_link($entity->term_id) . '">' . $entity->name . '</a></h2></header>';
+
                 if(isset($pluginOptions['template-image-settings']['show-doctrine-images-in-loop']) && $pluginOptions['template-image-settings']['show-doctrine-images-in-loop'] === 'yes') {
                     $doctrineListHtml = '<li class="doctrine entity-' . $entity->slug . ' doctrine-id-' . $entity->term_id . '">' . $doctrineImage;
-                } // END if(isset($pluginOptions['template-image-settings']['show-doctrine-images-in-loop']) && $pluginOptions['template-image-settings']['show-doctrine-images-in-loop'] === 'yes')
+                }
+
                 $doctrineListHtml .= '<div class="child-doctrine-list">';
 
                 foreach($doctrines as $doctrine) {
                     if($doctrine->parent && $doctrine->parent !== $entity->term_id) {
                         continue;
-                    } // END if($doctrine->parent && $doctrine->parent !== $entity->term_id)
+                    }
 
                     $wingListHtml = '<div class="doctrine sub-first-level doctrine entity-' . $entity->slug . ' doctrine-' . $doctrine->slug . ' doctrine-id-' . $doctrine->term_id . '"><a class="doctrine-link-item" href="' . \get_term_link($doctrine->term_id) . '">' . $doctrine->name . '</a></div>';
 
@@ -838,22 +829,22 @@ class FittingHelper {
                         if(isset($hierarchy[$doctrine->term_id])) {
                             foreach($wings as $wing) {
                                 $wingListHtml .= '<div class="doctrine entity-' . $entity->slug . ' doctrine-' . $doctrine->slug . ' doctrine-wing-' . $wing->slug . ' doctrine-id-' . $wing->term_id . '"><a class="doctrine-link-item" href="' . \get_term_link($wing->term_id) . '">' . $wing->name . '</a></div>';
-                            } // END foreach($wings as $wing)
-                        } // END if(isset($hierarchy[$doctrine->term_id]))
+                            }
+                        }
 
                         $wingListHtml .= '</div>';
                         $wingListHtml .= '</div>';
-                    } // END if(isset($hierarchy[$doctrine->term_id]))
+                    }
 
                     $doctrineListHtml .= $wingListHtml;
-                } // END foreach($doctrines as $doctrine)
+                }
 
                 $doctrineListHtml .= '</div>';
-            } // END if(isset($hierarchy[$entity->term_id]))
+            }
 
             $entityListHtml .= $doctrineListHtml;
             $entityListHtml .= '</li>';
-        } // END foreach($entities as $entity)
+        }
 
         $entityListHtml .= '</ul>';
         $entityListHtml .= '</div>';
@@ -869,8 +860,6 @@ class FittingHelper {
 
         return $entityListHtml;
     }
-
-// END public static function getContentMenu($taxonomy)
 
     /**
      * Get the search query for fittings search
