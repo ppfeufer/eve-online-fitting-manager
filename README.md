@@ -22,5 +22,7 @@ Make sure you set the page template to "Fittings", otherwise the plugin will not
 Than go to Settings -> Permalinks and hit the "Save Changes" button in order to make sure everything works just fine.
 Start managing your fittings under the "Fittings" Menu in your Dashboard.
 
-### Changelog
-see [CHANGELOG.md](CHANGELOG.md)
+### Additional Information
+- [License](LICENSE)
+- [CHANGELOG.md](CHANGELOG.md)
+- [Discord](https://discord.gg/YymuCZa)
