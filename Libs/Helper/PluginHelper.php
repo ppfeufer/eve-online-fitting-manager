@@ -70,7 +70,7 @@ class PluginHelper {
      *
      * @return string
      */
-    public static function getCurrentPluginDatabaseVersion() {
+    public static function getNewPluginDatabaseVersion() {
         return self::$databaseVersion;
     }
 
@@ -131,7 +131,7 @@ class PluginHelper {
         \update_option(self::getOptionFieldName(), $newOptions);
 
         // Update the DB Version
-        \update_option(self::getDatabaseVersionFieldName(), self::getCurrentPluginDatabaseVersion());
+        \update_option(self::getDatabaseVersionFieldName(), self::getNewPluginDatabaseVersion());
     }
 
     /**

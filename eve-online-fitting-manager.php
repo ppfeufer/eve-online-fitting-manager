@@ -48,7 +48,8 @@ class EveOnlineFittingManager {
      * Initialize the plugin
      */
     public function init() {
-        $this->checkDatabaseUpdate();
+        // Firing hooks
+        new Libs\WpHooks();
 
         // Loading CSS
         $cssLoader = new Libs\ResourceLoader\CssLoader;
@@ -57,11 +58,6 @@ class EveOnlineFittingManager {
         // Loading JavaScript
         $javascriptLoader = new Libs\ResourceLoader\JavascriptLoader;
         $javascriptLoader->init();
-
-        \add_action('init', [$this, 'setThumbnailsSizes']);
-        \add_action('pre_get_posts', [$this, 'customPageQueryVars']);
-
-        \add_filter('query_vars', [$this, 'addQueryVarsFilter']);
 
         new Libs\PostType;
         new Libs\Shortcodes;
@@ -97,71 +93,6 @@ class EveOnlineFittingManager {
 
             new Libs\GithubUpdater($githubConfig);
         }
-    }
-
-    /**
-     * Set thumbnail sizes
-     */
-    public function setThumbnailsSizes() {
-        /**
-         * Thumbnails used for the plugin
-         * Compatibilty with Fly Dynamic Image Resizer plugin
-         */
-        if(\function_exists('\fly_add_image_size')) {
-            \fly_add_image_size('header-image', 1680, 500, true);
-            \fly_add_image_size('fitting-helper-post-loop-thumbnail', 768, 432, true);
-        } else {
-            \add_image_size('header-image', 1680, 500, true);
-            \add_image_size('fitting-helper-post-loop-thumbnail', 768, 432, true);
-        }
-    }
-
-    /**
-     * Check if the plugin settings have to be updated
-     */
-    private function checkDatabaseUpdate() {
-        $currentPluginDatabaseVersion = Libs\Helper\PluginHelper::getCurrentPluginDatabaseVersion();
-        $pluginDatabaseVersion = Libs\Helper\PluginHelper::getPluginDatabaseVersion();
-
-        if($pluginDatabaseVersion !== $currentPluginDatabaseVersion) {
-            Libs\Helper\PluginHelper::updateDatabase();
-        }
-    }
-
-    /**
-     * Customized query vars for our search function
-     *
-     * @param \WP_Query $query
-     * @return \WP_Query
-     */
-    public function customPageQueryVars(\WP_Query $query) {
-        if(!\is_admin() && $query->is_main_query()) {
-            if(isset($query->tax_query->queries['0']['taxonomy']) && $query->tax_query->queries['0']['taxonomy'] === 'fitting-doctrines') {
-                $query->set('posts_per_page', 9999);
-                $query->set('orderby', 'title');
-                $query->set('order', 'ASC');
-            }
-
-            if(isset($query->tax_query->queries['0']['taxonomy']) && $query->tax_query->queries['0']['taxonomy'] === 'fitting-ships') {
-                $query->set('posts_per_page', 9999);
-                $query->set('orderby', 'title');
-                $query->set('order', 'ASC');
-            }
-        }
-
-        return $query;
-    }
-
-    /**
-     * Add our own seach key to the search query vars
-     *
-     * @param array $queryVars
-     * @return array
-     */
-    public function addQueryVarsFilter($queryVars) {
-        $queryVars[] = 'fitting_search';
-
-        return $queryVars;
     }
 
     /**
@@ -207,4 +138,4 @@ function initializePlugin() {
 }
 
 // Start the show
-\add_action('plugins_loaded', 'WordPress\Plugin\EveOnlineFittingManager\initializePlugin');
+initializePlugin();

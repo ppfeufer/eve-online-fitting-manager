@@ -39,7 +39,7 @@ class PostType {
     /**
      * Registering the custom post type
      */
-    public function customPostType() {
+    public static function customPostType() {
         $var_sSlug = self::getPosttypeSlug('fittings');
 
         $labelsDoctrine = [
@@ -217,7 +217,7 @@ class PostType {
     }
 
     /**
-     * Determine the type of teh edit page in backend
+     * Determine the type of the edit page in backend
      *
      * @global array $pagenow
      * @param string $newEdit
