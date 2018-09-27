@@ -102,6 +102,8 @@ class WpHooks {
      */
     public function initFilter() {
         \add_filter('plugin_row_meta', [$this, 'addPluginRowMeta'], 10, 2);
+        \add_filter('plugin_action_links_eve-online-fitting-manager/eve-online-fitting-manager.php', [$this, 'addPluginSettingsLink'], 10, 2 );
+        \add_filter('network_admin_plugin_action_links_eve-online-fitting-manager/eve-online-fitting-manager.php', [$this, 'addPluginSettingsLink'], 10, 2 );
         \add_filter('query_vars', [$this, 'addQueryVarsFilter']);
     }
 
@@ -123,6 +125,12 @@ class WpHooks {
         }
 
         return $links;
+    }
+
+    public function addPluginSettingsLink(array $linksArray) {
+        \array_unshift($linksArray, '<a href="' . \admin_url('options-general.php?page=eve-online-fittings-manager') . '">' . \__('Settings', 'General') . '</a>');
+
+        return $linksArray;
     }
 
     /**
