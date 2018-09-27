@@ -25,7 +25,7 @@ namespace WordPress\Plugin\EveOnlineFittingManager\Libs\Helper;
 /**
  * Helper Class for manipulating and/or checking strings
  */
-class StringHelper {
+class StringHelper extends \WordPress\Plugin\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton {
     /**
      * Make a string camelCase
      *
@@ -34,7 +34,7 @@ class StringHelper {
      * @param array $noStrip
      * @return string
      */
-    public static function camelCase($string, $ucFirst = false, $noStrip = []) {
+    public function camelCase($string, $ucFirst = false, $noStrip = []) {
         // First we make sure all is lower case
         $string = \strtolower($string);
 
@@ -51,5 +51,20 @@ class StringHelper {
         }
 
         return $string;
+    }
+
+    /**
+     * Correcting line breaks
+     *
+     * mac -> linux
+     * windows -> linux
+     *
+     * @param string $scanData
+     * @return string
+     */
+    public function fixLineBreaks($scanData) {
+        $cleanedScanData = \str_replace("\r", "\n", \str_replace("\r\n", "\n", $scanData)); // mac -> linux
+
+        return $cleanedScanData;
     }
 }

@@ -24,19 +24,6 @@ namespace WordPress\Plugin\EveOnlineFittingManager\Libs\Helper;
 
 class EftHelper {
     /**
-     * Fixing the line breaks of the EFT dump
-     *
-     * @param string $eftFitting EFT fitting dump
-     * @return string
-     */
-    public static function fixLineBreaks($eftFitting) {
-        $eftFitting = \str_replace("\r\n", "\n", $eftFitting); // windows -> linux
-        $eftFitting = \str_replace("\r", "\n", $eftFitting); // mac -> linux
-
-        return $eftFitting;
-    }
-
-    /**
      * Getting the ship class name from the EFT dump
      *
      * @param string $eftFitting EFT fitting dump
@@ -46,10 +33,7 @@ class EftHelper {
         $returnValue = null;
 
         if(!empty($eftFitting)) {
-            /**
-             * Zeilenumbrüche korrigieren
-             */
-            $fittingArray = \explode("\n", \trim(self::fixLineBreaks($eftFitting)));
+            $fittingArray = \explode("\n", \trim(StringHelper::getInstance()->fixLineBreaks($eftFitting)));
 
             $fittingArray['0'] = \str_replace('[', '', $fittingArray['0']);
             $fittingArray['0'] = \str_replace(']', '', $fittingArray['0']);
@@ -71,10 +55,7 @@ class EftHelper {
         $returnValue = null;
 
         if(!empty($eftFitting)) {
-            /**
-             * Zeilenumbrüche korrigieren
-             */
-            $fittingArray = \explode("\n", \trim(self::fixLineBreaks($eftFitting)));
+            $fittingArray = \explode("\n", \trim(StringHelper::getInstance()->fixLineBreaks($eftFitting)));
 
             $fittingArray['0'] = \str_replace('[', '', $fittingArray['0']);
             $fittingArray['0'] = \str_replace(']', '', $fittingArray['0']);
@@ -96,10 +77,7 @@ class EftHelper {
         $returnValue = null;
 
         if(!empty($eftFitting)) {
-            /**
-             * Zeilenumbrüche korrigieren
-             */
-            $fittingArray = \explode("\n", \trim(self::fixLineBreaks($eftFitting)));
+            $fittingArray = \explode("\n", \trim(StringHelper::getInstance()->fixLineBreaks($eftFitting)));
 
             $fittingArray['0'] = \str_replace('[', '', $fittingArray['0']);
             $fittingArray['0'] = \str_replace(']', '', $fittingArray['0']);
@@ -246,10 +224,7 @@ class EftHelper {
      * @return type
      */
     public static function getFittingArrayFromEftData($eftFitting) {
-        /**
-         * fix line breakings
-         */
-        $fittingArray = \explode("\n", \trim(self::fixLineBreaks($eftFitting)));
+        $fittingArray = \explode("\n", \trim(StringHelper::getInstance()->fixLineBreaks($eftFitting)));
 
         $fittingData = [];
         $fittingArray['0'] = \str_replace('[', '', $fittingArray['0']);
@@ -291,7 +266,7 @@ class EftHelper {
         $returnValue = null;
 
         if(!empty($eftFitting)) {
-            $fittingData = self::getFittingArrayFromEftData(\trim(self::fixLineBreaks($eftFitting)));
+            $fittingData = self::getFittingArrayFromEftData(\trim(StringHelper::getInstance()->fixLineBreaks($eftFitting)));
             $returnValue = FittingHelper::getShipDnaFromFittingData($fittingData);
         }
 
