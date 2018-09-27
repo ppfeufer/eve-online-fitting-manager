@@ -34,42 +34,48 @@ class MarketDataHelper extends \WordPress\Plugin\EveOnlineFittingManager\Libs\Si
      *
      * @var string API Url
      */
-    public $apiUrlEveCentral = 'https://api.eve-central.com/api/marketstat/json';
+    protected $apiUrlEveCentral = 'https://api.eve-central.com/api/marketstat/json';
 
     /**
      * EVE Marketer API Url
      *
      * @var string API Url
      */
-    public $apiUrlEveMarketer = 'https://api.evemarketer.com/ec/marketstat/json';
+    protected $apiUrlEveMarketer = 'https://api.evemarketer.com/ec/marketstat/json';
 
     /**
      * API Url
      *
      * @var string API Url to use
      */
-    public $apiUrl = null;
+    protected $apiUrl = null;
 
     /**
      * Market Region Limiter
      *
      * @var int Market Region to use
      */
-    public $marketRegion = 10000002; // The Forge
+    protected $marketRegion = 10000002; // The Forge
 
     /**
      * Market System Limiter
      *
      * @var int Market System to use
      */
-    public $marketSystem = 30000142; // Jita
+    protected $marketSystem = 30000142; // Jita
 
     /**
      * Plugin Settings
      *
      * @var array
      */
-    public $pluginSettings = null;
+    protected $pluginSettings = null;
+
+    /**
+     *
+     * @var RemoteHelper
+     */
+    protected $remoteHelper = null;
 
     /**
      * Constructor
@@ -78,6 +84,7 @@ class MarketDataHelper extends \WordPress\Plugin\EveOnlineFittingManager\Libs\Si
         parent::__construct();
 
         $this->pluginSettings = PluginHelper::getPluginSettings();
+        $this->remoteHelper = RemoteHelper::getInstance();
 
         $this->setMarketApi();
     }
@@ -125,7 +132,8 @@ class MarketDataHelper extends \WordPress\Plugin\EveOnlineFittingManager\Libs\Si
         $returnValue = CacheHelper::getInstance()->checkTransientCache($transientName);
 
         if($returnValue === false) {
-            $get = \wp_remote_get($this->apiUrl . $typeIdString);
+//            $get = \wp_remote_get($this->apiUrl . $typeIdString);
+            $get = $this->remoteHelper->getRemoteData($this->apiUrl . $typeIdString);
             $json = \wp_remote_retrieve_body($get);
 
             CacheHelper::getInstance()->setTransientCache($transientName, $json, 1);

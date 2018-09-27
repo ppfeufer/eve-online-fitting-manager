@@ -34,7 +34,7 @@ abstract class AbstractSingleton {
 
         if(!isset($instances[$calledClass])) {
             $instances[$calledClass] = new $calledClass();
-        } // END if(!isset($instances[$calledClass]))
+        }
 
         return $instances[$calledClass];
     }

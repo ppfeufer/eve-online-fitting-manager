@@ -29,7 +29,18 @@ require_once(ABSPATH . 'wp-admin/includes/class-wp-filesystem-base.php');
 require_once(ABSPATH . 'wp-admin/includes/class-wp-filesystem-direct.php');
 
 class CacheHelper extends \WordPress\Plugin\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton {
+    /**
+     * cacheDirectoryBase
+     *
+     * @var string
+     */
     private $cacheDirectoryBase;
+
+    /**
+     *
+     * @var RemoteHelper
+     */
+    protected $remoteHelper = null;
 
     /**
      * Constructor
@@ -38,6 +49,7 @@ class CacheHelper extends \WordPress\Plugin\EveOnlineFittingManager\Libs\Singlet
         parent::__construct();
 
         $this->cacheDirectoryBase = $this->getPluginCacheDir();
+        $this->remoteHelper = RemoteHelper::getInstance();
 
         $this->checkOrCreateCacheDirectories();
     }
@@ -156,7 +168,8 @@ class CacheHelper extends \WordPress\Plugin\EveOnlineFittingManager\Libs\Singlet
         // make sure its an image
         if($extension === 'gif' || $extension === 'jpg' || $extension === 'jpeg' || $extension === 'png') {
             // get the remote image
-            $get = \wp_remote_get($remoteImageUrl);
+//            $get = \wp_remote_get($remoteImageUrl);
+            $get = $this->remoteHelper->getRemoteData($remoteImageUrl);
             $imageToFetch = \wp_remote_retrieve_body($get);
 
             $wpFileSystem = new \WP_Filesystem_Direct(null);
