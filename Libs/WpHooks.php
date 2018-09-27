@@ -114,14 +114,14 @@ class WpHooks {
      * @param string $file
      * @return array
      */
-    public function addPluginRowMeta($links, $file) {
+    public function addPluginRowMeta(array $links, $file) {
         if(\strpos($file, 'eve-online-fitting-manager.php') !== false) {
-            $new_links = [
+            $newLinks = [
                 'issue_tracker' => '<a href="https://github.com/ppfeufer/eve-online-fitting-manager/issues" target="_blank">GitHub Issue Tracker</a>',
                 'support_discord' => '<a href="https://discord.gg/YymuCZa" target="_blank">Support Discord</a>'
             ];
 
-            $links = \array_merge($links, $new_links);
+            $links = \array_merge($links, $newLinks);
         }
 
         return $links;
@@ -173,7 +173,7 @@ class WpHooks {
      * @param array $queryVars
      * @return array
      */
-    public function addQueryVarsFilter($queryVars) {
+    public function addQueryVarsFilter(array $queryVars) {
         $queryVars[] = 'fitting_search';
 
         return $queryVars;
