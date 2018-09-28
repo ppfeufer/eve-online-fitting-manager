@@ -93,7 +93,6 @@ class PluginHelper {
             ],
             'template-detail-parts-settings' => [
                 'show-visual-fitting' => 'yes',
-                'show-osmium-link' => 'yes',
                 'show-ship-description' => 'yes',
                 'show-copy-eft' => 'yes',
                 'show-copy-permalink' => 'yes',

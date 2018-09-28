@@ -190,7 +190,6 @@ class PluginSettings {
                 'choices' => [
                     'show-visual-fitting' => \__('Show visual fitting', 'eve-online-fitting-manager'),
                     'show-ship-description' => \__('Show ship description', 'eve-online-fitting-manager'),
-                    'show-osmium-link' => \__('Show Osmium button', 'eve-online-fitting-manager'),
                     'show-copy-eft' => \__('Show "Copy EFT data to clipboard" button', 'eve-online-fitting-manager'),
                     'show-copy-permalink' => \__('Show "Copy permalink to clipboard" button', 'eve-online-fitting-manager'),
                     'show-market-data' => \__('Show "Estimated Prices" section', 'eve-online-fitting-manager'),

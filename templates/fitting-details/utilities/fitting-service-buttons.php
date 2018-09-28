@@ -7,13 +7,6 @@
      */
     $colsCount = null;
 
-    // Check for o.smium button
-    if(isset($pluginSettings['template-detail-parts-settings']['show-osmium-link']) && $pluginSettings['template-detail-parts-settings']['show-osmium-link'] === 'yes') {
-        if($isUpwellStructure === false) {
-            $colsCount++;
-        }
-    }
-
     // Check for copy EFT button
     if(isset($pluginSettings['template-detail-parts-settings']['show-copy-eft']) && $pluginSettings['template-detail-parts-settings']['show-copy-eft'] === 'yes') {
         $colsCount++;
@@ -29,18 +22,6 @@
     if(!is_null($columnsPerButton)) {
         $columnsPerButton = $columnsPerButton / $colsCount;
     }
-
-    /**
-     * Show the Osmium fitting link
-     */
-    if(isset($pluginSettings['template-detail-parts-settings']['show-osmium-link']) && $pluginSettings['template-detail-parts-settings']['show-osmium-link'] === 'yes') {
-        if($isUpwellStructure === false) {
-            \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\TemplateHelper::getTemplate('fitting-details/utilities/fitting-osmium', [
-                'fittingDna' => $fittingDna,
-                'columnsPerButton' => $columnsPerButton
-            ]);
-        } // END if(\WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\FittingHelper::isUpwellStructure($shipID) === false)
-    } // END if(isset($pluginSettings['template-detail-parts-settings']['show-osmium-link']) && $pluginSettings['template-detail-parts-settings']['show-osmium-link'] === 'yes')
 
     /**
      * Show copy eft data to clipboard button
