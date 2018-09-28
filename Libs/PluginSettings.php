@@ -158,7 +158,7 @@ class PluginSettings {
                 'type' => 'radio',
                 'title' => \__('Market Data API', 'eve-online-fitting-manager'),
                 'choices' => [
-                    'eve-central' => \__('EVE Central', 'eve-online-fitting-manager') . ' (<a href="https://eve-central.com/" target="_blank">https://eve-central.com/</a>)',
+//                    'eve-central' => \__('EVE Central', 'eve-online-fitting-manager') . ' (<a href="https://eve-central.com/" target="_blank">https://eve-central.com/</a>)',
                     'eve-marketer' => \__('EVE Marketer', 'eve-online-fitting-manager') . ' (<a href="https://evemarketer.com/" target="_blank">https://evemarketer.com/</a>)',
                 ],
             ]

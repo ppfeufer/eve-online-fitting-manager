@@ -48,7 +48,7 @@ class Shortcodes {
     public function shortcodeFittings($atts) {
         $args = \shortcode_atts([
             'list' => 'doctrines'
-            ], $atts);
+        ], $atts);
 
         return Helper\FittingHelper::getContentMenu('fitting-' . $args['list']);
     }

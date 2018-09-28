@@ -85,7 +85,7 @@ class PluginHelper {
             'edk-killboard-user' => '',
             'edk-killboard-name' => '',
             'edk-killboard-password' => '',
-            'market-data-api' => 'eve-central',
+            'market-data-api' => 'eve-marketer',
             'template-image-settings' => [
                 'show-ship-images-in-loop' => '',
                 'show-doctrine-images-in-loop' => '',

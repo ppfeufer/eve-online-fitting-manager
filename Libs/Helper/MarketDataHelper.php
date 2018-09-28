@@ -111,11 +111,11 @@ class MarketDataHelper extends \WordPress\Plugin\EveOnlineFittingManager\Libs\Si
                 break;
 
             /**
-             * Default: EVE Central
+             * Default: EVE Marketer
              * (If for whatever reason none is set in plugin settings)
              */
             default:
-                $this->apiUrl = $this->apiUrlEveCentral . $urlParameters;
+                $this->apiUrl = $this->apiUrlEveMarketer . $urlParameters;
                 break;
         }
     }
