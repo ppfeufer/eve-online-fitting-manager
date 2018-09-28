@@ -60,7 +60,7 @@ class ShiptypesWidget extends \WP_Widget {
 
         $controlOptions = [];
 
-        parent::__construct('fitting_manager_shiptypes_sidebar_widget', __('Fitting Manager Ship Types Widget', 'fitting-manager-shiptypes-sidebar-widget'), $widgetOptions, $controlOptions);
+        parent::__construct('fitting_manager_shiptypes_sidebar_widget', \__('Fitting Manager Ship Types Widget', 'fitting-manager-shiptypes-sidebar-widget'), $widgetOptions, $controlOptions);
     }
 
     /**

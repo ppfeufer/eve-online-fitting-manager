@@ -23,7 +23,6 @@ namespace WordPress\Plugin\EveOnlineFittingManager\Libs\Helper;
 \defined('ABSPATH') or die();
 
 class TemplateHelper {
-
     /**
      * Locate template.
      *

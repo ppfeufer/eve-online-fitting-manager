@@ -55,18 +55,18 @@ class MetaBoxes {
         if(PostType::isEditPage('edit') && $typenow === 'fitting') {
             if(\get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_ship_ID', true) !== null) {
                 $eftFitting = Helper\EftHelper::getEftImportFromFitting([
-                        'shipID' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_ship_ID', true),
-                        'fittingType' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_name', true),
-                        'highSlots' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_high_slots', true),
-                        'midSlots' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_mid_slots', true),
-                        'lowSlots' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_low_slots', true),
-                        'rigSlots' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_rig_slots', true),
-                        'subSystems' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_subsystems', true),
-                        'serviceSlots' => \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_upwellservices', true),
-                        'drones' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_drones', true),
-                        'charges' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_charges', true),
-                        'fuel' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_fuel', true),
-                        'implantsAndBooster' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_implants_and_booster', true),
+                    'shipID' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_ship_ID', true),
+                    'fittingType' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_name', true),
+                    'highSlots' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_high_slots', true),
+                    'midSlots' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_mid_slots', true),
+                    'lowSlots' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_low_slots', true),
+                    'rigSlots' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_rig_slots', true),
+                    'subSystems' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_subsystems', true),
+                    'serviceSlots' => \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_upwellservices', true),
+                    'drones' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_drones', true),
+                    'charges' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_charges', true),
+                    'fuel' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_fuel', true),
+                    'implantsAndBooster' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_implants_and_booster', true),
                 ]);
             }
         }

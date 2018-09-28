@@ -16,7 +16,7 @@
                 <a href="#fitting-description" aria-controls="fitting-description" role="tab" data-toggle="tab"><h4><?php echo \__('Information', 'eve-online-fitting-manager'); ?></h4></a>
             </li>
             <?php
-        } // END if(!empty(\trim($fittingDescription)))
+        }
 
         /**
          * Ship description
@@ -27,7 +27,7 @@
                 <a href="#ship-description" aria-controls="ship-description" role="tab" data-toggle="tab"><h4><?php echo \__('Description', 'eve-online-fitting-manager'); ?></h4></a>
             </li>
             <?php
-        } // END if(!empty($pluginSettings['template-detail-parts-settings']['show-ship-description']))
+        }
         ?>
     </ul>
 
@@ -47,7 +47,7 @@
                 <?php echo \wpautop($fittingDescription); ?>
             </div>
             <?php
-        } // END if(!empty(\trim($fittingDescription)))
+        }
 
         /**
          * Ship description
@@ -58,7 +58,7 @@
                 <?php echo WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\FittingHelper::getItemDescription($shipID); ?>
             </div>
             <?php
-        } // END if(!empty($pluginSettings['template-detail-parts-settings']['show-ship-description']))
+        }
         ?>
     </div>
 </div>

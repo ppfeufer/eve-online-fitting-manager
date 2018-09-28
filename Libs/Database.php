@@ -26,7 +26,18 @@ namespace WordPress\Plugin\EveOnlineFittingManager\Libs;
  * Registering the Killboard Database as its own instance of wpdb
  */
 class Database extends Singletons\AbstractSingleton {
-    private $pluginSettings = null;
+    /**
+     * Plugin settings
+     *
+     * @var array
+     */
+    protected $pluginSettings = null;
+
+    /**
+     * Database connector
+     *
+     * @var \wpdb
+     */
     public $db = null;
 
     /**

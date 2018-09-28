@@ -28,15 +28,21 @@ class ImageHelper extends \WordPress\Plugin\EveOnlineFittingManager\Libs\Singlet
      *
      * @var var
      */
-    public $imageserverUrl = null;
+    protected $imageserverUrl = null;
 
     /**
      * Array with possible end point on CCP's image server
      *
      * @var array
      */
-    public $imageserverEndpoints = null;
-    public $pluginSettings = null;
+    protected $imageserverEndpoints = null;
+
+    /**
+     * Plugin settings
+     *
+     * @var array
+     */
+    protected $pluginSettings = null;
 
     /**
      * The Construtor

@@ -60,7 +60,7 @@ class DoctrinesWidget extends \WP_Widget {
 
         $controlOptions = [];
 
-        parent::__construct('fitting_manager_doctrine_sidebar_widget', __('Fitting Manager Doctrine Widget', 'fitting-manager-doctrine-sidebar-widget'), $widgetOptions, $controlOptions);
+        parent::__construct('fitting_manager_doctrine_sidebar_widget', \__('Fitting Manager Doctrine Widget', 'fitting-manager-doctrine-sidebar-widget'), $widgetOptions, $controlOptions);
     }
 
     /**

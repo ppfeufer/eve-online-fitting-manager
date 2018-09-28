@@ -49,7 +49,7 @@ class MarketData {
         $fittingArray = Helper\EftHelper::getFittingArrayFromEftData($eftFitting);
         $marketPrices = Helper\MarketDataHelper::getInstance()->getMarketPricesFromFittingArray($fittingArray);
 
-        echo \json_encode($marketPrices);
+        \wp_send_json($marketPrices);
 
         // always exit this API function
         exit;

@@ -218,6 +218,7 @@ class SettingsApi {
 
                 if(!empty($nonce)) {
                     $callbackFunction = \filter_input(\INPUT_GET, 'callback');
+
                     if(function_exists($callbackFunction)) {
                         $message = \call_user_func($callbackFunction);
                         \update_option('rsa-message', $message);
@@ -925,7 +926,7 @@ class SettingsApi {
                     }
 
                     $i = 0;
-                    $pageFiltered = \filter_input(INPUT_GET, 'page');
+                    $pageFiltered = \filter_input(\INPUT_GET, 'page');
 
                     foreach($settings['tabs'] as $settingsId => $section) {
                         $sanitizedId = \sanitize_title($settingsId);

@@ -507,8 +507,6 @@ class FittingHelper {
         ];
     }
 
-// END public function getSlotLayoutFromFittingArray($fitting)
-
     private static function getStrategicCruiserIds() {
         return [
             29984, // Tengu
@@ -868,13 +866,6 @@ class FittingHelper {
      * @return string
      */
     public static function getFittingSearchQuery($escaped = true) {
-        /**
-         * Filters the contents of the search query variable.
-         *
-         * @since 2.3.0
-         *
-         * @param mixed $search Contents of the search query variable.
-         */
         $query = \apply_filters('get_fitting_search_query', \get_query_var('fitting_search'));
 
         if($escaped === true) {
@@ -910,6 +901,11 @@ class FittingHelper {
         return new \WP_Query($args);
     }
 
+    /**
+     * Getting a list of doctrines in whic hthe ship is used
+     *
+     * @return array
+     */
     public static function getShipUsedInDoctrine() {
         $terms = \wp_get_object_terms(\get_the_ID(), 'fitting-doctrines');
         $doctrines = null;

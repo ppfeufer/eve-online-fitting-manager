@@ -59,7 +59,7 @@ class SearchWidget extends \WP_Widget {
 
         $controlOptions = [];
 
-        parent::__construct('fitting_manager_search_sidebar_widget', __('Fitting Manager Search Widget', 'fitting-manager-search-sidebar-widget'), $widgetOptions, $controlOptions);
+        parent::__construct('fitting_manager_search_sidebar_widget', \__('Fitting Manager Search Widget', 'fitting-manager-search-sidebar-widget'), $widgetOptions, $controlOptions);
     }
 
     /**

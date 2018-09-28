@@ -29,25 +29,25 @@ if($resultMainDoctrine->have_posts()) {
 
         if(\count($subDoctrines) > 0) {
             echo '<header class="entry-header header-doctrine"><h2 class="entry-title header-subdoctrine">' . \__('Main Line Doctrine Ships', 'eve-online-fitting-manager') . '</h2></header>';
-        } // if(\count($subDoctrines) > 0)
+        }
 
         echo '<div class="gallery-row row">';
         echo '<ul class="bootstrap-post-loop-fittings bootstrap-post-loop-fittings-' . $uniqueID . ' clearfix">';
-    } // if(\get_post_type() === 'fitting')
+    }
 
     while($resultMainDoctrine->have_posts()) {
         $resultMainDoctrine->the_post();
 
         if(\get_post_type() === 'fitting') {
             echo '<li>';
-        } // if(\get_post_type() === 'fitting')
+        }
 
         \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\TemplateHelper::getTemplate('content-fitting');
 
         if(\get_post_type() === 'fitting') {
             echo '</li>';
-        } // if(\get_post_type() === 'fitting')
-    } // while($resultMainDoctrine->have_posts())
+        }
+    }
 
     \wp_reset_postdata();
 
@@ -63,8 +63,8 @@ if($resultMainDoctrine->have_posts()) {
                     });
                 });
                 </script>';
-    } // if(\get_post_type() === 'fitting')
-} // if($resultMainDoctrine->have_posts())
+    }
+}
 
 // Loop throgh the sub doctrines ...
 if(\count($subDoctrines) > 0) {
@@ -91,21 +91,21 @@ if(\count($subDoctrines) > 0) {
                 echo '<header class="entry-header header-doctrine"><h2 class="entry-title header-subdoctrine">' . $subDoctrine->name . '</h2></header>';
                 echo '<div class="gallery-row row">';
                 echo '<ul class="bootstrap-post-loop-fittings bootstrap-post-loop-fittings-' . $uniqueID . ' clearfix">';
-            } // if(\get_post_type() === 'fitting')
+            }
 
             while($resultSubDoctrine->have_posts()) {
                 $resultSubDoctrine->the_post();
 
                 if(\get_post_type() === 'fitting') {
                     echo '<li>';
-                } // if(\get_post_type() === 'fitting')
+                }
 
                 \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\TemplateHelper::getTemplate('content-fitting');
 
                 if(\get_post_type() === 'fitting') {
                     echo '</li>';
-                } // if(\get_post_type() === 'fitting')
-            } // while($resultSubDoctrine->have_posts())
+                }
+            }
 
             \wp_reset_postdata();
 
@@ -121,7 +121,7 @@ if(\count($subDoctrines) > 0) {
                             });
                         });
                         </script>';
-            } // if(\get_post_type() === 'fitting')
-        } // if($resultSubDoctrine->have_posts())
-    } // foreach($subDoctrines as $subDoctrine)
-} // if(\count($subDoctrines) > 0)
+            }
+        }
+    }
+}

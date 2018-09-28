@@ -168,7 +168,6 @@ class CacheHelper extends \WordPress\Plugin\EveOnlineFittingManager\Libs\Singlet
         // make sure its an image
         if($extension === 'gif' || $extension === 'jpg' || $extension === 'jpeg' || $extension === 'png') {
             // get the remote image
-//            $get = \wp_remote_get($remoteImageUrl);
             $get = $this->remoteHelper->getRemoteData($remoteImageUrl);
             $imageToFetch = \wp_remote_retrieve_body($get);
 

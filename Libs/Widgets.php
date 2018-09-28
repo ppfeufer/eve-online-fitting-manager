@@ -44,16 +44,14 @@ class Widgets {
      * Register our sidebar
      */
     public function registerSidebar() {
-        \register_sidebar(
-            [
-                'name' => \__('Fitting Manager Sidebar', 'eve-online-fitting-manager'),
-                'description' => \__('Sidebar to use with your Fitting Manager pages.', 'eve-online-fitting-manager'),
-                'id' => 'sidebar-fitting-manager',
-                'before_widget' => '<aside><div id="%1$s" class="widget %2$s">',
-                'after_widget' => "</div></aside>",
-                'before_title' => '<h4 class="widget-title">',
-                'after_title' => '</h4>',
-            ]
-        );
+        \register_sidebar([
+            'name' => \__('Fitting Manager Sidebar', 'eve-online-fitting-manager'),
+            'description' => \__('Sidebar to use with your Fitting Manager pages.', 'eve-online-fitting-manager'),
+            'id' => 'sidebar-fitting-manager',
+            'before_widget' => '<aside><div id="%1$s" class="widget %2$s">',
+            'after_widget' => "</div></aside>",
+            'before_title' => '<h4 class="widget-title">',
+            'after_title' => '</h4>',
+        ]);
     }
 }

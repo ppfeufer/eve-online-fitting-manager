@@ -21,7 +21,7 @@ $doctrineData = \get_queried_object();
                 // Show an optional category description
                 if(!empty($doctrineData->description)) {
                     echo \apply_filters('category_archive_meta', '<div class="category-archive-meta">' . \do_shortcode(\wpautop($doctrineData->description)) . '</div>');
-                } // END if(!empty($doctrine->description))
+                }
 
                 \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\TemplateHelper::getTemplate('archive/archive-loop', [
                     'taxonomy' => $taxonomy,
@@ -40,9 +40,10 @@ $doctrineData = \get_queried_object();
                 ?>
             </div><!--/.col -->
             <?php
-        } // END if(\WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\PluginHelper::hasSidebar('sidebar-fitting-manager'))
+        }
         ?>
     </div> <!--/.row -->
 </div><!-- container -->
 
-<?php \get_footer(); ?>
+<?php
+\get_footer();

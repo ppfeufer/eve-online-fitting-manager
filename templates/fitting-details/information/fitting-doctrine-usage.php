@@ -15,11 +15,13 @@ $usedInDoctrines = \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\Fitting
 
     if(!empty($usedInDoctrines) && !\is_wp_error($usedInDoctrines)) {
         $fittingUsedInHtml = '<ul class="fitting-used-in-doctrines">';
+
         foreach($usedInDoctrines as $doctrine) {
             $fittingUsedInHtml .= '<li>» <a href="' . \get_term_link($doctrine) . '">' . $doctrine->name . '</a></li>';
-        } // END foreach($usedInDoctrines as $doctrine)
+        }
+
         $fittingUsedInHtml .= '</ul>';
-    } // END if(!empty($usedInDoctrines) && !\is_wp_error($usedInDoctrines))
+    }
 
     echo $fittingUsedInHtml;
     ?>

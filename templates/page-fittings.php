@@ -25,7 +25,7 @@ get_header();
                                 ?>
                                 <h1><?php \the_title(); ?></h1>
                                 <?php
-                            } // END if(\is_front_page())
+                            }
                             ?>
                         </header>
                         <article class="post clearfix" id="post-<?php \the_ID(); ?>">
@@ -80,9 +80,10 @@ get_header();
                 ?>
             </div> <!--/.row -->
             <?php
-        } // END while(\have_posts())
-    } // END if(have_posts())
+        }
+    }
     ?>
 </div><!-- /.container -->
 
-<?php get_footer(); ?>
+<?php
+\get_footer();

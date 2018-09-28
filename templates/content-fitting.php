@@ -18,13 +18,13 @@ $pluginOptions = \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\PluginHel
                                 echo \fly_get_attachment_image(\get_post_thumbnail_id(), 'post-loop-thumbnail');
                             } else {
                                 \the_post_thumbnail('post-loop-thumbnail');
-                            } // END if(\function_exists('\fly_get_attachment_image'))
+                            }
                         } else {
                             // Load our dummy ...
                             ?>
                             <img width="705" height="395" src="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\PluginHelper::getPluginUri('images/fitting-dummy.jpg'); ?>" class="attachment-post-loop-thumbnail img-responsive" alt="<?php echo \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_ship_type', true); ?>">
                             <?php
-                        } // END if(\has_post_thumbnail())
+                        }
                         ?>
                     </figure>
 
@@ -52,7 +52,7 @@ $pluginOptions = \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\PluginHel
                     </h3>
                 </a>
                 <?php
-            } // END if(!empty($pluginOptions['template-image-settings']['show-ship-images-in-loop']))
+            }
             ?>
         </div>
     </section>

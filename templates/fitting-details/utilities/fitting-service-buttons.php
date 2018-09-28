@@ -32,7 +32,7 @@
             'isUpwellStructure' => $isUpwellStructure,
             'columnsPerButton' => $columnsPerButton
         ]);
-    } // END if(isset($pluginSettings['template-detail-parts-settings']['show-copy-eft']) && $pluginSettings['template-detail-parts-settings']['show-copy-eft'] === 'yes')
+    }
 
     /**
      * Show copy permalink to clipboard button
@@ -42,7 +42,7 @@
             'isUpwellStructure' => $isUpwellStructure,
             'columnsPerButton' => $columnsPerButton
         ]);
-    } // END if(isset($pluginSettings['template-detail-parts-settings']['show-copy-permalink']) && $pluginSettings['template-detail-parts-settings']['show-copy-permalink'] === 'yes')
+    }
     ?>
 </div>
 <div class="fitting-copy-result"></div>

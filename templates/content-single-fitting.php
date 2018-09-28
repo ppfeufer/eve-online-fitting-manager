@@ -21,19 +21,19 @@ $fittingDna = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_
 
 // Build EFT data
 $eftFitting = \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\EftHelper::getEftImportFromFitting([
-        'shipID' => $shipID,
-        'fittingType' => $fittingType,
-        'highSlots' => $highSlots,
-        'midSlots' => $midSlots,
-        'lowSlots' => $lowSlots,
-        'rigSlots' => $rigSlots,
-        'subSystems' => $subSystems,
-        'serviceSlots' => $serviceSlots,
-        'drones' => $drones,
-        'charges' => $charges,
-        'fuel' => $fuel,
-        'implantsAndBooster' => $implantsAndBooster
-    ]);
+    'shipID' => $shipID,
+    'fittingType' => $fittingType,
+    'highSlots' => $highSlots,
+    'midSlots' => $midSlots,
+    'lowSlots' => $lowSlots,
+    'rigSlots' => $rigSlots,
+    'subSystems' => $subSystems,
+    'serviceSlots' => $serviceSlots,
+    'drones' => $drones,
+    'charges' => $charges,
+    'fuel' => $fuel,
+    'implantsAndBooster' => $implantsAndBooster
+]);
 ?>
 
 <header class="entry-header">
@@ -75,7 +75,7 @@ $eftFitting = \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\EftHelper::g
                             'subSystems' => $subSystems,
                             'serviceSlots' => $serviceSlots
                         ]);
-                    } // END if(!isset($pluginSettings['template-detail-parts-settings']['show-visual-fitting']) && $pluginSettings['template-detail-parts-settings']['show-visual-fitting'] === 'yes')
+                    }
 
                     /**
                      * Show service buttons
@@ -94,14 +94,14 @@ $eftFitting = \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\EftHelper::g
                         \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\TemplateHelper::getTemplate('fitting-details/information/fitting-market-prices', [
                             'eftFitting' => $eftFitting
                         ]);
-                    } // END if(isset($pluginSettings['template-detail-parts-settings']['show-market-data']) && $pluginSettings['template-detail-parts-settings']['show-market-data'] === 'yes')
+                    }
 
                     /**
                      * Show doctrines that fitting is used in
                      */
                     if(isset($pluginSettings['template-detail-parts-settings']['show-doctrines']) && $pluginSettings['template-detail-parts-settings']['show-doctrines'] === 'yes') {
                         \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\TemplateHelper::getTemplate('fitting-details/information/fitting-doctrine-usage');
-                    } // END if(isset($pluginSettings['template-detail-parts-settings']['show-doctrines']) && $pluginSettings['template-detail-parts-settings']['show-doctrines'] === 'yes')
+                    }
                     ?>
                 </div>
 

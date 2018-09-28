@@ -18,6 +18,6 @@
         });
         </script>
         <?php
-    } // END if(function_exists('dynamic_sidebar'))
+    }
     ?>
 </section>

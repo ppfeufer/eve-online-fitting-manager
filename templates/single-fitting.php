@@ -13,8 +13,8 @@ defined('ABSPATH') or die();
                     while(\have_posts()) {
                         \the_post();
                         \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\TemplateHelper::getTemplate('content-single-fitting');
-                    } // END while(have_posts())
-                } // END if(have_posts())
+                    }
+                }
                 ?>
             </div> <!-- /.content -->
         </div> <!-- /.col-lg-9 /.col-md-9 /.col-sm-9 /.col-9 -->
@@ -27,9 +27,10 @@ defined('ABSPATH') or die();
                 ?>
             </div><!--/.col -->
             <?php
-        } // END if(\WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\PluginHelper::hasSidebar('sidebar-fitting-manager'))
+        }
         ?>
     </div> <!-- /.row -->
 </div> <!-- /.container -->
 
-<?php \get_footer(); ?>
+<?php
+\get_footer();

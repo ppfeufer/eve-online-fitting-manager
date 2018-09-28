@@ -179,8 +179,8 @@ class PostType {
      *
      * @since 1.0.0
      *
-     * @param	string	$template	Template file that is being loaded.
-     * @return	string				Template file that should be loaded.
+     * @param string $template Template file that is being loaded.
+     * @return string Template file that should be loaded.
      */
     public function templateLoader($template) {
         $templateFile = null;
@@ -191,13 +191,13 @@ class PostType {
             $templateFile = 'archive-fitting.php';
         } elseif(\is_archive() && \is_tax('fitting-ships')) {
             $templateFile = 'archive-ship.php';
-        } // END if(\is_singular('fitting'))
+        }
 
         if($templateFile !== null) {
             if(\file_exists(Helper\TemplateHelper::locateTemplate($templateFile))) {
                 $template = Helper\TemplateHelper::locateTemplate($templateFile);
-            } // END if(\file_exists(Helper\TemplateHelper::locateTemplate($file)))
-        } // END if($templateFile !== null)
+            }
+        }
 
         return $template;
     }

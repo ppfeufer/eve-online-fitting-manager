@@ -1,13 +1,13 @@
 <?php
 $fittingSlotLayout = \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\FittingHelper::getSlotLayoutFromFittingArray([
-        'shipID' => $shipID,
-        'highSlots' => $highSlots,
-        'midSlots' => $midSlots,
-        'lowSlots' => $lowSlots,
-        'rigSlots' => $rigSlots,
-        'subSystems' => $subSystems,
-        'serviceSlots' => $serviceSlots
-    ]);
+    'shipID' => $shipID,
+    'highSlots' => $highSlots,
+    'midSlots' => $midSlots,
+    'lowSlots' => $lowSlots,
+    'rigSlots' => $rigSlots,
+    'subSystems' => $subSystems,
+    'serviceSlots' => $serviceSlots
+]);
 
 $itemsHighSlots = null;
 if(!empty($highSlots)) {
@@ -100,6 +100,7 @@ if(!empty($serviceSlots)) {
     <?php
     if($itemsLowSlots !== null) {
         $lsCount = 1;
+
         foreach($itemsLowSlots as $lowSlotItemID) {
             if(!empty($lowSlotItemID)) {
                 ?>
@@ -123,6 +124,7 @@ if(!empty($serviceSlots)) {
     <?php
     if($itemsRigSlots !== null) {
         $rsCount = 1;
+
         foreach($itemsRigSlots as $rigSlotItemID) {
             if(!empty($rigSlotItemID)) {
                 ?>
@@ -146,6 +148,7 @@ if(!empty($serviceSlots)) {
         </div>
         <?php
         $ssCount = 1;
+
         foreach($itemsSubSystems as $subSystemItemID) {
             if(!empty($subSystemItemID)) {
                 ?>
@@ -169,6 +172,7 @@ if(!empty($serviceSlots)) {
         </div>
         <?php
         $ssCount = 1;
+
         foreach($itemsServiceSlots as $serviceSlotItemID) {
             if(!empty($serviceSlotItemID)) {
                 ?>
