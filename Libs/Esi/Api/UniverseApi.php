@@ -28,40 +28,47 @@ class UniverseApi extends \WordPress\Plugin\EveOnlineFittingManager\Libs\Esi\Swa
      * @var array ESI enpoints
      */
     protected $esiEndpoints = [
-        'universe_ids' => 'universe/ids/?datasource=tranquility',
-        'universe_types_typeID' => 'universe/types/{type_id}/?datasource=tranquility',
+        /**
+         * Get information of an item category
+         */
+        'universe_categories_categoryID' => 'universe/categories/{category_id}/?datasource=tranquility',
+
+        /**
+         * Get information on an item group
+         */
         'universe_groups_groupID' => 'universe/groups/{group_id}/?datasource=tranquility',
-        'universe_systems_systemID' => 'universe/systems/{system_id}/?datasource=tranquility',
-        'universe_constellations_constellationID' => 'universe/constellations/{constellation_id}/?datasource=tranquility',
-        'universe_regions_regionID' => 'universe/regions/{region_id}/?datasource=tranquility',
+
+        /**
+         * Resolve a set of names to IDs in the following categories:
+         * agents, alliances, characters, constellations, corporations factions,
+         * inventory_types, regions, stations, and systems.
+         *
+         * Only exact matches will be returned.
+         * All names searched for are cached for 12 hours
+         */
+        'universe_ids' => 'universe/ids/?datasource=tranquility',
+
+        /**
+         * Resolve a set of IDs to names and categories.
+         * Supported ID’s for resolving are:
+         * Characters, Corporations, Alliances, Stations,
+         * Solar Systems, Constellations, Regions, Types
+         */
+        'universe_names' => 'universe/names/?datasource=tranquility',
+
+        /**
+         * Get information on a type
+         */
+        'universe_types_typeID' => 'universe/types/{type_id}/?datasource=tranquility',
     ];
 
     /**
-     * Find type data by type ID
-     *
-     * @param int $typeID
-     * @return object
-     */
-    public function findTypeById($typeID) {
-        $this->setEsiMethod('get');
-        $this->setEsiRoute($this->esiEndpoints['universe_types_typeID']);
-        $this->setEsiRouteParameter([
-            '/{type_id}/' => $typeID
-        ]);
-        $this->setEsiVersion('v3');
-
-        $typeData = $this->callEsi();
-
-        return $typeData;
-    }
-
-    /**
-     * Find group data by group ID
+     * Get information on an item group
      *
      * @param int $groupID
      * @return object
      */
-    public function findGroupById($groupID) {
+    public function groupsGroupId($groupID) {
         $this->setEsiMethod('get');
         $this->setEsiRoute($this->esiEndpoints['universe_groups_groupID']);
         $this->setEsiRouteParameter([
@@ -75,69 +82,17 @@ class UniverseApi extends \WordPress\Plugin\EveOnlineFittingManager\Libs\Esi\Swa
     }
 
     /**
-     * Find system data by system ID
+     * Resolve a set of names to IDs in the following categories:
+     * agents, alliances, characters, constellations, corporations factions,
+     * inventory_types, regions, stations, and systems.
      *
-     * @param int $systemID
-     * @return object
-     */
-    public function findSystemById($systemID) {
-        $this->setEsiMethod('get');
-        $this->setEsiRoute($this->esiEndpoints['universe_systems_systemID']);
-        $this->setEsiRouteParameter([
-            '/{system_id}/' => $systemID
-        ]);
-        $this->setEsiVersion('v4');
-
-        $systemData = $this->callEsi();
-
-        return $systemData;
-    }
-
-    /**
-     * Find constellation data by constellation ID
-     *
-     * @param int $constellationID
-     * @return object
-     */
-    public function findConstellationById($constellationID) {
-        $this->setEsiMethod('get');
-        $this->setEsiRoute($constellationID, $this->esiEndpoints['universe_constellations_constellationID']);
-        $this->setEsiRouteParameter([
-            '/{constellation_id}/' => $constellationID
-        ]);
-        $this->setEsiVersion('v1');
-
-        $constellationData = $this->callEsi();
-
-        return $constellationData;
-    }
-
-    /**
-     * Find region data by region ID
-     *
-     * @param int $regionID
-     * @return object
-     */
-    public function findRegionById($regionID) {
-        $this->setEsiMethod('get');
-        $this->setEsiRoute($this->esiEndpoints['universe_regions_regionID']);
-        $this->setEsiRouteParameter([
-            '/{region_id}/' => $regionID
-        ]);
-        $this->setEsiVersion('v1');
-
-        $regionData = $this->callEsi();
-
-        return $regionData;
-    }
-
-    /**
-     * Get the ID of a name in EVE
+     * Only exact matches will be returned.
+     * All names searched for are cached for 12 hours
      *
      * @param array $names
      * @return object
      */
-    public function getIdFromName(array $names) {
+    public function universeIds(array $names) {
         $this->setEsiMethod('post');
         $this->setEsiPostParameter($names);
         $this->setEsiRoute($this->esiEndpoints['universe_ids']);
@@ -146,5 +101,24 @@ class UniverseApi extends \WordPress\Plugin\EveOnlineFittingManager\Libs\Esi\Swa
         $nameData = $this->callEsi();
 
         return $nameData;
+    }
+
+    /**
+     * Get information on a type
+     *
+     * @param int $typeID
+     * @return object
+     */
+    public function typesTypeId($typeID) {
+        $this->setEsiMethod('get');
+        $this->setEsiRoute($this->esiEndpoints['universe_types_typeID']);
+        $this->setEsiRouteParameter([
+            '/{type_id}/' => $typeID
+        ]);
+        $this->setEsiVersion('v3');
+
+        $typeData = $this->callEsi();
+
+        return $typeData;
     }
 }
