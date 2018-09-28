@@ -2,8 +2,15 @@
 
 ## [In Development](https://github.com/ppfeufer/eve-online-fitting-manager/tree/development)
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.13.4...HEAD)
+### Changed
+- EVE Central market API deactivated, since it's is still dead
+- EVE Marketer is now the default market API
+
 ### Fixed
 - Formatted doctrine description
+
+### Removed
+- Osmium is long dead, time to remove it. RIP Osmium, you will be missed.
 
 ## [v0.13.4](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.13.4) - 2018-05-09
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.13.3...v0.13.4)

@@ -50,7 +50,7 @@ class PluginSettings {
     }
 
     /**
-     * Getting the Settings for the PLugin Options Page
+     * Getting the Settings for the Plugin Options Page
      *
      * @return array The Settings for the Options Page
      */
