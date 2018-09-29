@@ -5,6 +5,7 @@
 ### Changed
 - EVE Central market API deactivated, since it's is still dead
 - EVE Marketer is now the default market API
+- Namespaces to match WordPress's fodler structure (Plugin » Plugins)
 
 ### Fixed
 - Formatted doctrine description
