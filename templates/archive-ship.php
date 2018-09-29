@@ -9,7 +9,7 @@ $doctrineData = \get_queried_object();
 
 <div class="container main template-archive-ship" data-doctrine="<?php echo $doctrineData->slug; ?>">
     <div class="main-content clearfix">
-        <div class="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\PluginHelper::getMainContentColClasses(); ?>">
+        <div class="<?php echo \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper::getMainContentColClasses(); ?>">
             <div class="content content-archive doctrine-list">
                 <header class="page-title">
                     <h2>
@@ -23,7 +23,7 @@ $doctrineData = \get_queried_object();
                     echo \apply_filters('category_archive_meta', '<div class="category-archive-meta">' . \do_shortcode(\wpautop($doctrineData->description)) . '</div>');
                 }
 
-                \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\TemplateHelper::getTemplate('archive/archive-loop', [
+                \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\TemplateHelper::getTemplate('archive/archive-loop', [
                     'taxonomy' => $taxonomy,
                     'doctrineData' => $doctrineData
                 ]);
@@ -32,11 +32,11 @@ $doctrineData = \get_queried_object();
         </div> <!-- /.col -->
 
         <?php
-        if(\WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\PluginHelper::hasSidebar('sidebar-fitting-manager')) {
+        if(\WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper::hasSidebar('sidebar-fitting-manager')) {
             ?>
             <div class="col-lg-3 col-md-3 col-sm-3 col-3 sidebar-wrapper">
                 <?php
-                \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\TemplateHelper::getTemplate('sidebar-fitting-manager');
+                \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\TemplateHelper::getTemplate('sidebar-fitting-manager');
                 ?>
             </div><!--/.col -->
             <?php

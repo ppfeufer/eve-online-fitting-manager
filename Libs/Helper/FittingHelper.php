@@ -17,7 +17,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-namespace WordPress\Plugin\EveOnlineFittingManager\Libs\Helper;
+namespace WordPress\Plugins\EveOnlineFittingManager\Libs\Helper;
 
 \defined('ABSPATH') or die();
 
@@ -134,8 +134,8 @@ class FittingHelper {
      * @return array
      */
     public static function getItemDescription($itemID) {
-        $sql = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `description` FROM `kb3_invtypes` WHERE `typeID` = %d', [$itemID]);
-        $description = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
+        $sql = \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `description` FROM `kb3_invtypes` WHERE `typeID` = %d', [$itemID]);
+        $description = \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
 
         return \wpautop($description);
     }
@@ -148,7 +148,7 @@ class FittingHelper {
      * @return boolean
      */
     public static function getItemDetailsByItemName($itemName, $itemCount = 1) {
-        $sql = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT
+        $sql = \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT
                 it.typeID AS itemID,
                 it.groupID AS groupID,
                 it.typeName AS itemName,
@@ -170,14 +170,14 @@ class FittingHelper {
             INNER JOIN kb3_item_types itt ON itt.itt_id = it.groupID
             WHERE it.typeName = %s
             AND itt.itt_id = it.groupID;', [$itemName]);
-        $itemData = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_results($sql, \OBJECT);
+        $itemData = \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_results($sql, \OBJECT);
 
         /**
          * If we don't have any result here, we might have an item that cannot be fitted.
          * So do another check without restricting to slots.
          */
         if(!$itemData) {
-            $sql = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT
+            $sql = \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT
                     `kb3_invtypes`.`typeID` AS `itemID`,
                     `kb3_invtypes`.`groupID` AS `groupID`,
                     `kb3_invtypes`.`typeName` AS `itemName`,
@@ -189,7 +189,7 @@ class FittingHelper {
                 WHERE `typeName` = %s
                 AND `kb3_item_types`.`itt_id` = `kb3_invtypes`.`groupID`
                 AND `kb3_item_locations`.`itl_flagID` = `kb3_item_types`.`itt_slot`;', [$itemName]);
-            $itemData = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_results($sql, \OBJECT);
+            $itemData = \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_results($sql, \OBJECT);
         } // END if(!$itemData)
 
         if($itemData) {
@@ -260,8 +260,8 @@ class FittingHelper {
      * @return boolean
      */
     public static function getItems($itemName) {
-        $sql = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `kb3_invtypes`.`typeName` AS `itemName` FROM `kb3_invtypes` WHERE `typeName` LIKE %s', ['%' . $itemName . '%']);
-        $itemData = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_results($sql, \OBJECT);
+        $sql = \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `kb3_invtypes`.`typeName` AS `itemName` FROM `kb3_invtypes` WHERE `typeName` LIKE %s', ['%' . $itemName . '%']);
+        $itemData = \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_results($sql, \OBJECT);
 
         if($itemData) {
             foreach($itemData as $item) {
@@ -284,8 +284,8 @@ class FittingHelper {
         $returnValue = null;
 
         if(!empty($itemName)) {
-            $sql = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `kb3_invtypes`.`typeID` AS `itemID` from `kb3_invtypes` WHERE `kb3_invtypes`.`typeName` = %s', [$itemName]);
-            $returnValue = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
+            $sql = \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `kb3_invtypes`.`typeID` AS `itemID` from `kb3_invtypes` WHERE `kb3_invtypes`.`typeName` = %s', [$itemName]);
+            $returnValue = \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
         }
 
         return $returnValue;
@@ -302,15 +302,15 @@ class FittingHelper {
             $itemNames = [];
 
             foreach($itemID as $id) {
-                $sql = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `kb3_invtypes`.`typeName` AS `itemName` from `kb3_invtypes` WHERE `kb3_invtypes`.`typeID` = %d', [$id]);
-                $itemNames[$id] = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
+                $sql = \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `kb3_invtypes`.`typeName` AS `itemName` from `kb3_invtypes` WHERE `kb3_invtypes`.`typeID` = %d', [$id]);
+                $itemNames[$id] = \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
             }
 
             return $itemNames;
         }
 
-        $sql = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `kb3_invtypes`.`typeName` AS `itemName` from `kb3_invtypes` WHERE `kb3_invtypes`.`typeID` = %d', [$itemID]);
-        $itemName = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
+        $sql = \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `kb3_invtypes`.`typeName` AS `itemName` from `kb3_invtypes` WHERE `kb3_invtypes`.`typeID` = %d', [$itemID]);
+        $itemName = \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
 
         return $itemName;
     }
@@ -538,13 +538,13 @@ class FittingHelper {
      * @return int
      */
     public static function getHighSlotCountForShipID($shipID) {
-        $sql = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `value`
+        $sql = \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `value`
             FROM `kb3_dgmtypeattributes`
             JOIN `kb3_dgmattributetypes` ON `attributeName` = "hiSlots"
             WHERE `kb3_dgmattributetypes`.`attributeID` = `kb3_dgmtypeattributes`.`attributeID`
             AND `kb3_dgmtypeattributes`.`typeID` = %d', [$shipID]);
 
-        return \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
+        return \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
     }
 
     /**
@@ -554,13 +554,13 @@ class FittingHelper {
      * @return int
      */
     public static function getMidSlotCountForShipID($shipID) {
-        $sql = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `value`
+        $sql = \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `value`
             FROM `kb3_dgmtypeattributes`
             JOIN `kb3_dgmattributetypes` ON `attributeName` = "medSlots"
             WHERE `kb3_dgmattributetypes`.`attributeID` = `kb3_dgmtypeattributes`.`attributeID`
             AND `kb3_dgmtypeattributes`.`typeID` = %d', [$shipID]);
 
-        return \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
+        return \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
     }
 
     /**
@@ -570,13 +570,13 @@ class FittingHelper {
      * @return int
      */
     public static function getLowSlotCountForShipID($shipID) {
-        $sql = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `value`
+        $sql = \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `value`
             FROM `kb3_dgmtypeattributes`
             JOIN `kb3_dgmattributetypes` ON `attributeName` = "lowSlots"
             WHERE `kb3_dgmattributetypes`.`attributeID` = `kb3_dgmtypeattributes`.`attributeID`
             AND `kb3_dgmtypeattributes`.`typeID` = %d', [$shipID]);
 
-        return \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
+        return \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
     }
 
     /**
@@ -586,13 +586,13 @@ class FittingHelper {
      * @return int
      */
     public static function getHighSlotModifierCountForShipID($subsystemID) {
-        $sql = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `value`
+        $sql = \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `value`
             FROM `kb3_dgmtypeattributes`
             JOIN `kb3_dgmattributetypes` ON `attributeName` = "hiSlotModifier"
             WHERE `kb3_dgmattributetypes`.`attributeID` = `kb3_dgmtypeattributes`.`attributeID`
             AND `kb3_dgmtypeattributes`.`typeID` = %d', [$subsystemID]);
 
-        return \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
+        return \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
     }
 
     /**
@@ -602,13 +602,13 @@ class FittingHelper {
      * @return int
      */
     public static function getMidSlotModifierCountForShipID($subsystemID) {
-        $sql = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `value`
+        $sql = \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `value`
             FROM `kb3_dgmtypeattributes`
             JOIN `kb3_dgmattributetypes` ON `attributeName` = "medSlotModifier"
             WHERE `kb3_dgmattributetypes`.`attributeID` = `kb3_dgmtypeattributes`.`attributeID`
             AND `kb3_dgmtypeattributes`.`typeID` = %d', [$subsystemID]);
 
-        return \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
+        return \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
     }
 
     /**
@@ -618,13 +618,13 @@ class FittingHelper {
      * @return int
      */
     public static function getLowSlotModifierCountForShipID($subsystemID) {
-        $sql = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `value`
+        $sql = \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `value`
             FROM `kb3_dgmtypeattributes`
             JOIN `kb3_dgmattributetypes` ON `attributeName` = "lowSlotModifier"
             WHERE `kb3_dgmattributetypes`.`attributeID` = `kb3_dgmtypeattributes`.`attributeID`
             AND `kb3_dgmtypeattributes`.`typeID` = %d', [$subsystemID]);
 
-        return \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
+        return \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
     }
 
     /**
@@ -634,13 +634,13 @@ class FittingHelper {
      * @return int
      */
     public static function getRigSlotCountForShipID($shipID) {
-        $sql = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `value`
+        $sql = \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `value`
                 FROM `kb3_dgmtypeattributes`
                 JOIN `kb3_dgmattributetypes` ON `attributeName` = "rigSlots"
                 WHERE `kb3_dgmattributetypes`.`attributeID` = `kb3_dgmtypeattributes`.`attributeID`
                 AND `kb3_dgmtypeattributes`.`typeID` = %d', [$shipID]);
 
-        return \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
+        return \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
     }
 
     /**
@@ -850,7 +850,7 @@ class FittingHelper {
         $entityListHtml .= '<script type="text/javascript">
                             jQuery(document).ready(function() {
                                 jQuery("ul.bootstrap-post-loop-fittings-' . $uniqueID . '").bootstrapGallery({
-                                    "classes" : "' . \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\PluginHelper::getLoopContentClasses() . '",
+                                    "classes" : "' . \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper::getLoopContentClasses() . '",
                                     "hasModal" : false
                                 });
                             });

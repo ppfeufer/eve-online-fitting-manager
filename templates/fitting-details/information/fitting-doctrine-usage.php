@@ -1,5 +1,5 @@
 <?php
-$usedInDoctrines = \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\FittingHelper::getShipUsedInDoctrine();
+$usedInDoctrines = \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\FittingHelper::getShipUsedInDoctrine();
 ?>
 
 <div class="fitting-used-in">

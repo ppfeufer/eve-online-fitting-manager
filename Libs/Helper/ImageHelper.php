@@ -18,11 +18,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-namespace WordPress\Plugin\EveOnlineFittingManager\Libs\Helper;
+namespace WordPress\Plugins\EveOnlineFittingManager\Libs\Helper;
 
 \defined('ABSPATH') or die();
 
-class ImageHelper extends \WordPress\Plugin\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton {
+class ImageHelper extends \WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton {
     /**
      * base URL to CCP's image server
      *

@@ -12,7 +12,7 @@
  * Domain Path: /l10n
  */
 
-namespace WordPress\Plugin\EveOnlineFittingManager;
+namespace WordPress\Plugins\EveOnlineFittingManager;
 
 const WP_GITHUB_FORCE_UPDATE = true;
 

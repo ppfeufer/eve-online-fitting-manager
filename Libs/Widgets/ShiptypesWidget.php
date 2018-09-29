@@ -18,7 +18,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-namespace WordPress\Plugin\EveOnlineFittingManager\Libs\Widgets;
+namespace WordPress\Plugins\EveOnlineFittingManager\Libs\Widgets;
 
 \defined('ABSPATH') or die();
 
@@ -84,7 +84,7 @@ class ShiptypesWidget extends \WP_Widget {
             echo $args['before_title'];
             echo \__('Ship Types', 'eve-online-fitting-manager');
             echo $args['after_title'];
-            echo \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\FittingHelper::getSidebarMenu('fitting-ships');
+            echo \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\FittingHelper::getSidebarMenu('fitting-ships');
         }
 
         echo $args['after_widget'];

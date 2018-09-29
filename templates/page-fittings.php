@@ -13,7 +13,7 @@ get_header();
             ?>
             <!--<div class="row main-content">-->
             <div class="main-content clearfix">
-                <div class="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\PluginHelper::getMainContentColClasses(); ?> content-wrapper">
+                <div class="<?php echo \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper::getMainContentColClasses(); ?> content-wrapper">
                     <div class="content content-inner content-full-width content-page doctrine-fittings">
                         <header>
                             <?php
@@ -31,7 +31,7 @@ get_header();
                         <article class="post clearfix" id="post-<?php \the_ID(); ?>">
                             <?php
                             if(!empty(\get_query_var('fitting_search'))) {
-                                $query = \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\FittingHelper::searchFittings();
+                                $query = \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\FittingHelper::searchFittings();
 
                                 if($query->have_posts()) {
                                     $uniqueID = \uniqid();
@@ -43,7 +43,7 @@ get_header();
                                         $query->the_post();
 
                                         echo '<li>';
-                                        \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\TemplateHelper::getTemplate('content-fitting');
+                                        \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\TemplateHelper::getTemplate('content-fitting');
                                         echo '</li>';
                                     }
 
@@ -53,7 +53,7 @@ get_header();
                                     echo '<script type="text/javascript">
                                             jQuery(document).ready(function() {
                                                 jQuery("ul.bootstrap-post-loop-fittings-' . $uniqueID . '").bootstrapGallery({
-                                                    "classes" : "' . \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\PluginHelper::getLoopContentClasses() . '",
+                                                    "classes" : "' . \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper::getLoopContentClasses() . '",
                                                     "hasModal" : false
                                                 });
                                             });
@@ -68,15 +68,15 @@ get_header();
                 </div> <!-- /.col -->
 
                 <?php
-                if(\WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\PluginHelper::hasSidebar('sidebar-fitting-manager')) {
+                if(\WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper::hasSidebar('sidebar-fitting-manager')) {
                     ?>
                     <div class="col-lg-3 col-md-3 col-sm-3 col-3 sidebar-wrapper">
                         <?php
-                        \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\TemplateHelper::getTemplate('sidebar-fitting-manager');
+                        \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\TemplateHelper::getTemplate('sidebar-fitting-manager');
                         ?>
                     </div><!--/.col -->
                     <?php
-                } // END if(\WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\PluginHelper::hasSidebar('sidebar-fitting-manager'))
+                } // END if(\WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper::hasSidebar('sidebar-fitting-manager'))
                 ?>
             </div> <!--/.row -->
             <?php

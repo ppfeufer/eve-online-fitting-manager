@@ -18,7 +18,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-namespace WordPress\Plugin\EveOnlineFittingManager\Libs;
+namespace WordPress\Plugins\EveOnlineFittingManager\Libs;
 
 \defined('ABSPATH') or die();
 
@@ -35,9 +35,9 @@ class Widgets {
      */
     public function init() {
         \add_action('init', [$this, 'registerSidebar'], 99);
-        \add_action('widgets_init', \create_function('', 'return register_widget("WordPress\Plugin\EveOnlineFittingManager\Libs\Widgets\DoctrinesWidget");'));
-        \add_action('widgets_init', \create_function('', 'return register_widget("WordPress\Plugin\EveOnlineFittingManager\Libs\Widgets\ShiptypesWidget");'));
-        \add_action('widgets_init', \create_function('', 'return register_widget("WordPress\Plugin\EveOnlineFittingManager\Libs\Widgets\SearchWidget");'));
+        \add_action('widgets_init', \create_function('', 'return register_widget("WordPress\Plugins\EveOnlineFittingManager\Libs\Widgets\DoctrinesWidget");'));
+        \add_action('widgets_init', \create_function('', 'return register_widget("WordPress\Plugins\EveOnlineFittingManager\Libs\Widgets\ShiptypesWidget");'));
+        \add_action('widgets_init', \create_function('', 'return register_widget("WordPress\Plugins\EveOnlineFittingManager\Libs\Widgets\SearchWidget");'));
     }
 
     /**

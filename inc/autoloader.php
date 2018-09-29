@@ -1,12 +1,12 @@
 <?php
 
-namespace WordPress\Plugin\EveOnlineFittingManager;
+namespace WordPress\Plugins\EveOnlineFittingManager;
 
-\spl_autoload_register('\WordPress\Plugin\EveOnlineFittingManager\autoload');
+\spl_autoload_register('\WordPress\Plugins\EveOnlineFittingManager\autoload');
 
 function autoload($className) {
     // If the specified $className does not include our namespace, duck out.
-    if(\strpos($className, 'WordPress\Plugin\EveOnlineFittingManager') === false) {
+    if(\strpos($className, 'WordPress\Plugins\EveOnlineFittingManager') === false) {
         return;
     }
 

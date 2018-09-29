@@ -42,7 +42,7 @@ if($resultMainDoctrine->have_posts()) {
             echo '<li>';
         }
 
-        \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\TemplateHelper::getTemplate('content-fitting');
+        \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\TemplateHelper::getTemplate('content-fitting');
 
         if(\get_post_type() === 'fitting') {
             echo '</li>';
@@ -58,7 +58,7 @@ if($resultMainDoctrine->have_posts()) {
         echo '<script type="text/javascript">
                 jQuery(document).ready(function() {
                     jQuery("ul.bootstrap-post-loop-fittings-' . $uniqueID . '").bootstrapGallery({
-                        "classes" : "' . \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\PluginHelper::getLoopContentClasses() . '",
+                        "classes" : "' . \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper::getLoopContentClasses() . '",
                         "hasModal" : false
                     });
                 });
@@ -100,7 +100,7 @@ if(\count($subDoctrines) > 0) {
                     echo '<li>';
                 }
 
-                \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\TemplateHelper::getTemplate('content-fitting');
+                \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\TemplateHelper::getTemplate('content-fitting');
 
                 if(\get_post_type() === 'fitting') {
                     echo '</li>';
@@ -116,7 +116,7 @@ if(\count($subDoctrines) > 0) {
                 echo '<script type="text/javascript">
                         jQuery(document).ready(function() {
                             jQuery("ul.bootstrap-post-loop-fittings-' . $uniqueID . '").bootstrapGallery({
-                                "classes" : "' . \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\PluginHelper::getLoopContentClasses() . '",
+                                "classes" : "' . \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper::getLoopContentClasses() . '",
                                 "hasModal" : false
                             });
                         });

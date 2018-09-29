@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-namespace WordPress\Plugin\EveOnlineFittingManager\Libs\Widgets;
+namespace WordPress\Plugins\EveOnlineFittingManager\Libs\Widgets;
 
 \defined('ABSPATH') or die();
 
@@ -83,10 +83,10 @@ class SearchWidget extends \WP_Widget {
         if($countDoctrineShips > 0) {
             ?>
             <div class="fitting-sidebar-search">
-                <form action="/<?php echo \WordPress\Plugin\EveOnlineFittingManager\Libs\PostType::getPosttypeSlug('fittings'); ?>/" method="GET" id="fitting_search" role="search">
+                <form action="/<?php echo \WordPress\Plugins\EveOnlineFittingManager\Libs\PostType::getPosttypeSlug('fittings'); ?>/" method="GET" id="fitting_search" role="search">
                     <div class="input-group">
                         <label class="sr-only" for="fitting_search"><?php echo \__('Search', 'eve-online-fitting-manager') ?></label>
-                        <input type="text" class="form-control" id="fitting_search" name="fitting_search" placeholder="<?php echo \__('Search Ship Type', 'eve-online-fitting-manager') ?>" value="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\FittingHelper::getFittingSearchQuery(true); ?>">
+                        <input type="text" class="form-control" id="fitting_search" name="fitting_search" placeholder="<?php echo \__('Search Ship Type', 'eve-online-fitting-manager') ?>" value="<?php echo \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\FittingHelper::getFittingSearchQuery(true); ?>">
                         <div class="input-group-btn">
                             <button type="submit" class="btn btn-default">
                                 <span class="glyphicon glyphicon-search"></span>

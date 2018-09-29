@@ -18,7 +18,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-namespace WordPress\Plugin\EveOnlineFittingManager\Libs;
+namespace WordPress\Plugins\EveOnlineFittingManager\Libs;
 
 \defined('ABSPATH') or die();
 
@@ -153,7 +153,7 @@ class GithubUpdater {
      * @return bool overrule or not
      */
     public function overruleTransients() {
-        return (\defined('\WordPress\Plugin\EveOnlineFittingManager\WP_GITHUB_FORCE_UPDATE') && \WordPress\Plugin\EveOnlineFittingManager\WP_GITHUB_FORCE_UPDATE);
+        return (\defined('\WordPress\Plugins\EveOnlineFittingManager\WP_GITHUB_FORCE_UPDATE') && \WordPress\Plugins\EveOnlineFittingManager\WP_GITHUB_FORCE_UPDATE);
     }
 
     /**

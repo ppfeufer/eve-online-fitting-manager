@@ -18,11 +18,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-namespace WordPress\Plugin\EveOnlineFittingManager\Libs\Helper;
+namespace WordPress\Plugins\EveOnlineFittingManager\Libs\Helper;
 
 \defined('ABSPATH') or die();
 
-class MarketDataHelper extends \WordPress\Plugin\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton {
+class MarketDataHelper extends \WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton {
     /**
      * Available Market APIs:
      *      EVE Marketer => https://api.evemarketer.com/ec/marketstat/json?typeid=3057,2364,3057&regionlimit=10000002&usesystem=30000142
@@ -147,7 +147,7 @@ class MarketDataHelper extends \WordPress\Plugin\EveOnlineFittingManager\Libs\Si
     /**
      * Getting the market prices for our fitting ...
      *
-     * @param array $fittingArray EFT fitting array from WordPress\Plugin\EveOnlineFittingManager\Helper\EftHelper::getFittingArrayFromEftData($eftFitting);
+     * @param array $fittingArray EFT fitting array from WordPress\Plugins\EveOnlineFittingManager\Helper\EftHelper::getFittingArrayFromEftData($eftFitting);
      * @return array Sell and Buy order prices from Jita
      */
     public function getMarketPricesFromFittingArray(array $fittingArray) {
