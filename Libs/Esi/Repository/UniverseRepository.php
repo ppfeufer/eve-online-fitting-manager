@@ -59,6 +59,23 @@ class UniverseRepository extends \WordPress\Plugins\EveOnlineFittingManager\Libs
         'universe_types_typeId' => 'universe/types/{type_id}/?datasource=tranquility',
     ];
 
+    public function universeAncestries() {
+        $returnData = null;
+
+        $this->setEsiMethod('get');
+        $this->setEsiRoute($this->esiEndpoints['universe_ancestries']);
+        $this->setEsiVersion('v1');
+
+        $ancestriesData = $this->callEsi();
+
+        if(!\is_null($ancestriesData)) {
+            $jsonMapper = new \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Mapper\JsonMapper;
+            $returnData = $jsonMapper->map(\json_decode($ancestriesData), new \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Model\Universe\UniverseConstellationsConstellationId);
+        }
+
+        return $returnData;
+    }
+
     /**
      * Get information on a constellation
      *
