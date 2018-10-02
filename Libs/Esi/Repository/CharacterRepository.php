@@ -41,8 +41,6 @@ class CharacterRepository extends \WordPress\Plugins\EveOnlineFittingManager\Lib
      * @return \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Model\Character\CharactersCharacterId
      */
     public function charactersCharacterId($characterID) {
-        $returnValue = null;
-
         $this->setEsiMethod('get');
         $this->setEsiRoute($this->esiEndpoints['characters_characterId']);
         $this->setEsiRouteParameter([
@@ -50,14 +48,7 @@ class CharacterRepository extends \WordPress\Plugins\EveOnlineFittingManager\Lib
         ]);
         $this->setEsiVersion('v4');
 
-        $characterData = $this->callEsi();
-
-        if(!\is_null($characterData)) {
-            $jsonMapper = new \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Mapper\JsonMapper;
-            $returnValue = $jsonMapper->map(\json_decode($characterData), new \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Model\Character\CharactersCharacterId);
-        }
-
-        return $returnValue;
+        return $this->map($this->callEsi(), new \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Model\Character\CharactersCharacterId);
     }
 
     /**
@@ -67,20 +58,11 @@ class CharacterRepository extends \WordPress\Plugins\EveOnlineFittingManager\Lib
      * @return array
      */
     public function charactersAffiliation($characterIds = []) {
-        $returnValue = null;
-
         $this->setEsiMethod('post');
         $this->setEsiPostParameter($characterIds);
         $this->setEsiRoute($this->esiEndpoints['characters_affiliation']);
         $this->setEsiVersion('v1');
 
-        $affiliationData = $this->callEsi();
-
-        if(!\is_null($affiliationData)) {
-            $jsonMapper = new \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Mapper\JsonMapper;
-            $returnValue = $jsonMapper->mapArray(\json_decode($affiliationData), [], '\\WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Model\Character\CharactersAffiliation');
-        }
-
-        return $returnValue;
+        return $this->mapArray($this->callEsi(), '\\WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Model\Character\CharactersAffiliation');
     }
 }

@@ -39,8 +39,6 @@ class KillmailsRepository extends \WordPress\Plugins\EveOnlineFittingManager\Lib
      * @return \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Model\Killmails\KillmailsKillmailId
      */
     public function killmailsKillmailIdKillmailHash($killmailID, $killmailHash) {
-        $returnData = null;
-
         $this->setEsiMethod('get');
         $this->setEsiRoute($this->esiEndpoints['killmails_killmailId_killmailHash']);
         $this->setEsiRouteParameter([
@@ -49,13 +47,6 @@ class KillmailsRepository extends \WordPress\Plugins\EveOnlineFittingManager\Lib
         ]);
         $this->setEsiVersion('v1');
 
-        $killmailData = $this->callEsi();
-
-        if(!\is_null($killmailData)) {
-            $jsonMapper = new \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Mapper\JsonMapper;
-            $returnData = $jsonMapper->map(\json_decode($killmailData), new \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Model\Killmails\KillmailsKillmailId);
-        }
-
-        return $returnData;
+        return $this->map($this->callEsi(), new \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Model\Killmails\KillmailsKillmailId);
     }
 }

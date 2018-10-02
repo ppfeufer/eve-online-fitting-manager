@@ -41,8 +41,6 @@ class CorporationRepository extends \WordPress\Plugins\EveOnlineFittingManager\L
      * @return \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Model\Corporation\CorporationsCorporationId
      */
     public function corporationsCorporationId($corporationID) {
-        $returnValue = null;
-
         $this->setEsiMethod('get');
         $this->setEsiRoute($this->esiEndpoints['corporations_corporationId']);
         $this->setEsiRouteParameter([
@@ -50,13 +48,6 @@ class CorporationRepository extends \WordPress\Plugins\EveOnlineFittingManager\L
         ]);
         $this->setEsiVersion('v4');
 
-        $corporationData = $this->callEsi();
-
-        if(!\is_null($corporationData)) {
-            $jsonMapper = new \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Mapper\JsonMapper;
-            $returnValue = $jsonMapper->map(\json_decode($corporationData), new \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Model\Corporation\CorporationsCorporationId);
-        }
-
-        return $returnValue;
+        return $this->map($this->callEsi(), new \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Model\Corporation\CorporationsCorporationId);
     }
 }

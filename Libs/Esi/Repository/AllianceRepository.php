@@ -41,8 +41,6 @@ class AllianceRepository extends \WordPress\Plugins\EveOnlineFittingManager\Libs
      * @return \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Model\Alliance\AlliancesAllianceId
      */
     public function alliancesAllianceId($allianceID) {
-        $returnValue = null;
-
         $this->setEsiMethod('get');
         $this->setEsiRoute($this->esiEndpoints['alliances_allianceId']);
         $this->setEsiRouteParameter([
@@ -50,13 +48,6 @@ class AllianceRepository extends \WordPress\Plugins\EveOnlineFittingManager\Libs
         ]);
         $this->setEsiVersion('v3');
 
-        $allianceData = $this->callEsi();
-
-        if(!\is_null($allianceData)) {
-            $jsonMapper = new \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Mapper\JsonMapper;
-            $returnValue = $jsonMapper->map(\json_decode($allianceData), new \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Model\Alliance\AlliancesAllianceId);
-        }
-
-        return $returnValue;
+        return $this->map($this->callEsi(), new \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Model\Alliance\AlliancesAllianceId);
     }
 }

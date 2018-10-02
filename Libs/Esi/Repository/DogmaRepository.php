@@ -56,8 +56,6 @@ class DogmaRepository extends \WordPress\Plugins\EveOnlineFittingManager\Libs\Es
      * @return \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Model\Dogma\DogmaAttributesAttributeId
      */
     public function dogmaAttributesAttributeId($attributeId) {
-        $returnValue = null;
-
         $this->setEsiMethod('get');
         $this->setEsiRoute($this->esiEndpoints['dogma_attributes_attributeId']);
         $this->setEsiRouteParameter([
@@ -65,13 +63,6 @@ class DogmaRepository extends \WordPress\Plugins\EveOnlineFittingManager\Libs\Es
         ]);
         $this->setEsiVersion('v1');
 
-        $dogmaAttributeData = $this->callEsi();
-
-        if(!\is_null($dogmaAttributeData)) {
-            $jsonMapper = new \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Mapper\JsonMapper;
-            $returnValue = $jsonMapper->map(\json_decode($dogmaAttributeData), new \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Model\Dogma\DogmaAttributesAttributeId);
-        }
-
-        return $returnValue;
+        return $this->map($this->callEsi(), new \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Model\Dogma\DogmaAttributesAttributeId);
     }
 }

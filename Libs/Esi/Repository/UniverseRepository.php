@@ -59,21 +59,34 @@ class UniverseRepository extends \WordPress\Plugins\EveOnlineFittingManager\Libs
         'universe_types_typeId' => 'universe/types/{type_id}/?datasource=tranquility',
     ];
 
+    /**
+     * Get all character ancestries
+     *
+     * @return array of \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Model\Universe\UniverseAncestries
+     */
     public function universeAncestries() {
-        $returnData = null;
-
         $this->setEsiMethod('get');
         $this->setEsiRoute($this->esiEndpoints['universe_ancestries']);
         $this->setEsiVersion('v1');
 
-        $ancestriesData = $this->callEsi();
+        return $this->mapArray($this->callEsi(), '\\WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Model\Universe\UniverseAncestries');
+    }
 
-        if(!\is_null($ancestriesData)) {
-            $jsonMapper = new \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Mapper\JsonMapper;
-            $returnData = $jsonMapper->map(\json_decode($ancestriesData), new \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Model\Universe\UniverseConstellationsConstellationId);
-        }
+    /**
+     * Get information on an asteroid belt
+     *
+     * @param int $asteroidBeltId
+     * @return \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Model\Universe\UniverseConstellationsConstellationId
+     */
+    public function universeAsteroidBeltsAsteroidBeltId($asteroidBeltId) {
+        $this->setEsiMethod('get');
+        $this->setEsiRoute($this->esiEndpoints['universe_asteroidBelts_asteroidBeltId']);
+        $this->setEsiRouteParameter([
+            '/{asteroid_belt_id}/' => $asteroidBeltId
+        ]);
+        $this->setEsiVersion('v1');
 
-        return $returnData;
+        return $this->map($this->callEsi(), new \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Model\Universe\UniverseConstellationsConstellationId);
     }
 
     /**
@@ -83,8 +96,6 @@ class UniverseRepository extends \WordPress\Plugins\EveOnlineFittingManager\Libs
      * @return \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Model\Universe\UniverseConstellationsConstellationId
      */
     public function universeConstellationsConstellationId($constellationId) {
-        $returnData = null;
-
         $this->setEsiMethod('get');
         $this->setEsiRoute($this->esiEndpoints['universe_constellations_constellationId']);
         $this->setEsiRouteParameter([
@@ -92,14 +103,7 @@ class UniverseRepository extends \WordPress\Plugins\EveOnlineFittingManager\Libs
         ]);
         $this->setEsiVersion('v1');
 
-        $constellationData = $this->callEsi();
-
-        if(!\is_null($constellationData)) {
-            $jsonMapper = new \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Mapper\JsonMapper;
-            $returnData = $jsonMapper->map(\json_decode($constellationData), new \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Model\Universe\UniverseConstellationsConstellationId);
-        }
-
-        return $returnData;
+        return $this->map($this->callEsi(), new \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Model\Universe\UniverseConstellationsConstellationId);
     }
 
     /**
@@ -109,8 +113,6 @@ class UniverseRepository extends \WordPress\Plugins\EveOnlineFittingManager\Libs
      * @return \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Model\Universe\UniverseGroupsGroupId
      */
     public function universeGroupsGroupId($groupId) {
-        $returnValue = null;
-
         $this->setEsiMethod('get');
         $this->setEsiRoute($this->esiEndpoints['universe_groups_groupId']);
         $this->setEsiRouteParameter([
@@ -118,14 +120,7 @@ class UniverseRepository extends \WordPress\Plugins\EveOnlineFittingManager\Libs
         ]);
         $this->setEsiVersion('v1');
 
-        $groupData = $this->callEsi();
-
-        if(!\is_null($groupData)) {
-            $jsonMapper = new \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Mapper\JsonMapper;
-            $returnValue = $jsonMapper->map(\json_decode($groupData), new \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Model\Universe\UniverseGroupsGroupId);
-        }
-
-        return $returnValue;
+        return $this->map($this->callEsi(), new \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Model\Universe\UniverseGroupsGroupId);
     }
 
     /**
@@ -140,21 +135,12 @@ class UniverseRepository extends \WordPress\Plugins\EveOnlineFittingManager\Libs
      * @return \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Model\Universe\UniverseIds
      */
     public function universeIds(array $names) {
-        $returnData = null;
-
         $this->setEsiMethod('post');
         $this->setEsiPostParameter($names);
         $this->setEsiRoute($this->esiEndpoints['universe_ids']);
         $this->setEsiVersion('v1');
 
-        $nameData = $this->callEsi();
-
-        if(!\is_null($nameData)) {
-            $jsonMapper = new \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Mapper\JsonMapper;
-            $returnData = $jsonMapper->map(\json_decode($nameData), new \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Model\Universe\UniverseIds);
-        }
-
-        return $returnData;
+        return $this->map($this->callEsi(), new \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Model\Universe\UniverseIds);
     }
 
     /**
@@ -164,8 +150,6 @@ class UniverseRepository extends \WordPress\Plugins\EveOnlineFittingManager\Libs
      * @return \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Model\Universe\UniverseRegionsRegionId
      */
     public function universeRegionsRegionId($regionId) {
-        $returnData = null;
-
         $this->setEsiMethod('get');
         $this->setEsiRoute($this->esiEndpoints['universe_regions_regionId']);
         $this->setEsiRouteParameter([
@@ -173,14 +157,7 @@ class UniverseRepository extends \WordPress\Plugins\EveOnlineFittingManager\Libs
         ]);
         $this->setEsiVersion('v1');
 
-        $regionData = $this->callEsi();
-
-        if(!\is_null($regionData)) {
-            $jsonMapper = new \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Mapper\JsonMapper;
-            $returnData = $jsonMapper->map(\json_decode($regionData), new \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Model\Universe\UniverseRegionsRegionId);
-        }
-
-        return $returnData;
+        return $this->map($this->callEsi(), new \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Model\Universe\UniverseRegionsRegionId);
     }
 
     /**
@@ -190,8 +167,6 @@ class UniverseRepository extends \WordPress\Plugins\EveOnlineFittingManager\Libs
      * @return \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Model\Universe\UniverseSystemsSystemId
      */
     public function universeSystemsSystemId($systemId) {
-        $returnData = null;
-
         $this->setEsiMethod('get');
         $this->setEsiRoute($this->esiEndpoints['universe_systems_systemId']);
         $this->setEsiRouteParameter([
@@ -199,14 +174,7 @@ class UniverseRepository extends \WordPress\Plugins\EveOnlineFittingManager\Libs
         ]);
         $this->setEsiVersion('v4');
 
-        $systemData = $this->callEsi();
-
-        if(!\is_null($systemData)) {
-            $jsonMapper = new \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Mapper\JsonMapper;
-            $returnData = $jsonMapper->map(\json_decode($systemData), new \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Model\Universe\UniverseSystemsSystemId);
-        }
-
-        return $returnData;
+        return $this->map($this->callEsi(), new \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Model\Universe\UniverseSystemsSystemId);
     }
 
     /**
@@ -216,8 +184,6 @@ class UniverseRepository extends \WordPress\Plugins\EveOnlineFittingManager\Libs
      * @return \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Model\Universe\UniverseTypesTypeId
      */
     public function universeTypesTypeId($typeId) {
-        $returnValue = null;
-
         $this->setEsiMethod('get');
         $this->setEsiRoute($this->esiEndpoints['universe_types_typeId']);
         $this->setEsiRouteParameter([
@@ -225,13 +191,6 @@ class UniverseRepository extends \WordPress\Plugins\EveOnlineFittingManager\Libs
         ]);
         $this->setEsiVersion('v3');
 
-        $typeData = $this->callEsi();
-
-        if(!\is_null($typeData)) {
-            $jsonMapper = new \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Mapper\JsonMapper;
-            $returnValue = $jsonMapper->map(\json_decode($typeData), new \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Model\Universe\UniverseTypesTypeId);
-        }
-
-        return $returnValue;
+        return $this->map($this->callEsi(), new \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Model\Universe\UniverseTypesTypeId);
     }
 }
