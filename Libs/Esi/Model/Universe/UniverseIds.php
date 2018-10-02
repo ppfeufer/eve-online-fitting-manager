@@ -126,7 +126,7 @@ class UniverseIds {
      */
     public function setAlliances(array $alliances) {
         $mapper = new \WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Mapper\JsonMapper;
-//
+
         $this->alliances = $mapper->mapArray($alliances, [], '\\WordPress\Plugins\EveOnlineFittingManager\Libs\Esi\Model\Universe\UniverseIds\Alliance');
     }
 
