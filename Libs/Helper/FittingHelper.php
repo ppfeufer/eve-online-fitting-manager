@@ -522,6 +522,12 @@ class FittingHelper {
             35833, // Fortizar
             35834, // Keepstar
 
+            47512, // 'Moreau' Fortizar
+            47513, // 'Draccous' Fortizar
+            47514, // 'Horizon' Fortizar
+            47515, // 'Marginis' Fortizar
+            47516, // 'Prometheus' Fortizar
+
             35825, // Raitaru
             35826, // Azbel
             35827, // Sotiyo
