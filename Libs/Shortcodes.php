@@ -25,20 +25,6 @@ use \WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton
 \defined('ABSPATH') or die();
 
 class Shortcodes extends AbstractSingleton {
-//    /**
-//     * Constructor
-//     */
-//    public function __construct() {
-//        $this->registerShortcodes();
-//    }
-//
-//    /**
-//     * register all shortcodes
-//     */
-//    public function registerShortcodes() {
-//        \add_shortcode('fittings', [$this, 'shortcodeFittings']);
-//    }
-
     /**
      * Shortcode for fitting navigation inside a page or post
      *

@@ -26,111 +26,6 @@ use \WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton
 
 class FittingHelper extends AbstractSingleton {
     /**
-     * Getting High Slot Item Names
-     *
-     * @param string $highSlots
-     * @return array
-     */
-//    public static function getHighSlotItemNames($highSlots) {
-//        $slots = \maybe_unserialize($highSlots);
-//        $arrayHighSlot = [
-//            'highSlot_1_itemName' => (!empty($slots['highSlot_1'])) ? self::getItemNameById($slots['highSlot_1']) : null,
-//            'highSlot_2_itemName' => (!empty($slots['highSlot_2'])) ? self::getItemNameById($slots['highSlot_2']) : null,
-//            'highSlot_3_itemName' => (!empty($slots['highSlot_3'])) ? self::getItemNameById($slots['highSlot_3']) : null,
-//            'highSlot_4_itemName' => (!empty($slots['highSlot_4'])) ? self::getItemNameById($slots['highSlot_4']) : null,
-//            'highSlot_5_itemName' => (!empty($slots['highSlot_5'])) ? self::getItemNameById($slots['highSlot_5']) : null,
-//            'highSlot_6_itemName' => (!empty($slots['highSlot_6'])) ? self::getItemNameById($slots['highSlot_6']) : null,
-//            'highSlot_7_itemName' => (!empty($slots['highSlot_7'])) ? self::getItemNameById($slots['highSlot_7']) : null,
-//            'highSlot_8_itemName' => (!empty($slots['highSlot_8'])) ? self::getItemNameById($slots['highSlot_8']) : null,
-//        ];
-//
-//        return $arrayHighSlot;
-//    }
-
-    /**
-     * Getting Mid Slot Item Names
-     *
-     * @param string $midSlots
-     * @return array
-     */
-//    public static function getMidSlotItemNames($midSlots) {
-//        $slots = \maybe_unserialize($midSlots);
-//
-//        $arrayMidSlot = [
-//            'midSlot_1_itemName' => (!empty($slots['midSlot_1'])) ? self::getItemNameById($slots['midSlot_1']) : null,
-//            'midSlot_2_itemName' => (!empty($slots['midSlot_2'])) ? self::getItemNameById($slots['midSlot_2']) : null,
-//            'midSlot_3_itemName' => (!empty($slots['midSlot_3'])) ? self::getItemNameById($slots['midSlot_3']) : null,
-//            'midSlot_4_itemName' => (!empty($slots['midSlot_4'])) ? self::getItemNameById($slots['midSlot_4']) : null,
-//            'midSlot_5_itemName' => (!empty($slots['midSlot_5'])) ? self::getItemNameById($slots['midSlot_5']) : null,
-//            'midSlot_6_itemName' => (!empty($slots['midSlot_6'])) ? self::getItemNameById($slots['midSlot_6']) : null,
-//            'midSlot_7_itemName' => (!empty($slots['midSlot_7'])) ? self::getItemNameById($slots['midSlot_7']) : null,
-//            'midSlot_8_itemName' => (!empty($slots['midSlot_8'])) ? self::getItemNameById($slots['midSlot_8']) : null,
-//        ];
-//
-//        return $arrayMidSlot;
-//    }
-
-    /**
-     * Getting Low Slot Item Names
-     *
-     * @param string $lowSlots
-     * @return srray
-     */
-//    public static function getLowSlotItemNames($lowSlots) {
-//        $slots = \maybe_unserialize($lowSlots);
-//
-//        $arrayLowSlot = [
-//            'lowSlot_1_itemName' => (!empty($slots['lowSlot_1'])) ? self::getItemNameById($slots['lowSlot_1']) : null,
-//            'lowSlot_2_itemName' => (!empty($slots['lowSlot_2'])) ? self::getItemNameById($slots['lowSlot_2']) : null,
-//            'lowSlot_3_itemName' => (!empty($slots['lowSlot_3'])) ? self::getItemNameById($slots['lowSlot_3']) : null,
-//            'lowSlot_4_itemName' => (!empty($slots['lowSlot_4'])) ? self::getItemNameById($slots['lowSlot_4']) : null,
-//            'lowSlot_5_itemName' => (!empty($slots['lowSlot_5'])) ? self::getItemNameById($slots['lowSlot_5']) : null,
-//            'lowSlot_6_itemName' => (!empty($slots['lowSlot_6'])) ? self::getItemNameById($slots['lowSlot_6']) : null,
-//            'lowSlot_7_itemName' => (!empty($slots['lowSlot_7'])) ? self::getItemNameById($slots['lowSlot_7']) : null,
-//            'lowSlot_8_itemName' => (!empty($slots['lowSlot_8'])) ? self::getItemNameById($slots['lowSlot_8']) : null,
-//        ];
-//
-//        return $arrayLowSlot;
-//    }
-
-    /**
-     * Getting Rog Slot Item Names
-     *
-     * @param string $rigSlots
-     * @return array
-     */
-//    public static function getRigSlotItemNames($rigSlots) {
-//        $rigs = \maybe_unserialize($rigSlots);
-//
-//        $arrayRigSlot = [
-//            'rigSlot_1_itemName' => (!empty($rigs['rigSlot_1'])) ? self::getItemNameById($rigs['rigSlot_1']) : null,
-//            'rigSlot_2_itemName' => (!empty($rigs['rigSlot_2'])) ? self::getItemNameById($rigs['rigSlot_2']) : null,
-//            'rigSlot_3_itemName' => (!empty($rigs['rigSlot_3'])) ? self::getItemNameById($rigs['rigSlot_3']) : null,
-//        ];
-//
-//        return $arrayRigSlot;
-//    }
-
-    /**
-     * Getting Subsystem Item Names
-     *
-     * @param string $subSystems
-     * @return array
-     */
-//    public static function getSubSystemItemNames($subSystems) {
-//        $sub = \maybe_unserialize($subSystems);
-//
-//        $arraySubSystems = [
-//            'subSystem_1_itemName' => (!empty($sub['subSystem_1'])) ? self::getItemNameById($sub['subSystem_1']) : null,
-//            'subSystem_2_itemName' => (!empty($sub['subSystem_2'])) ? self::getItemNameById($sub['subSystem_2']) : null,
-//            'subSystem_3_itemName' => (!empty($sub['subSystem_3'])) ? self::getItemNameById($sub['subSystem_3']) : null,
-//            'subSystem_4_itemName' => (!empty($sub['subSystem_4'])) ? self::getItemNameById($sub['subSystem_4']) : null,
-//        ];
-//
-//        return $arraySubSystems;
-//    }
-
-    /**
      * Getting Item Description
      *
      * @param string $itemID
@@ -257,27 +152,6 @@ class FittingHelper extends AbstractSingleton {
     }
 
     /**
-     * Getting Items Data
-     *
-     * @param string $itemName
-     * @return boolean
-     */
-//    public static function getItems($itemName) {
-//        $sql = \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `kb3_invtypes`.`typeName` AS `itemName` FROM `kb3_invtypes` WHERE `typeName` LIKE %s', ['%' . $itemName . '%']);
-//        $itemData = \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_results($sql, \OBJECT);
-//
-//        if($itemData) {
-//            foreach($itemData as $item) {
-//                $items[] = $item['itemName'];
-//            }
-//
-//            return $items;
-//        }
-//
-//        return false;
-//    }
-
-    /**
      * Getting an item ID ny its item name
      *
      * @param string $itemName
@@ -317,12 +191,6 @@ class FittingHelper extends AbstractSingleton {
 
         return $itemName;
     }
-
-//    public static function getDescriptionItemDetailsByItemName($itemName) {
-//        $itemDetails = $this->getItemDetailsByItemName($itemName);
-//
-//        return $itemDetails;
-//    }
 
     /**
      * Getting a fitting DNA from its fitting data
