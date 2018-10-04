@@ -19,27 +19,21 @@
 
 namespace WordPress\Plugins\EveOnlineFittingManager\Libs;
 
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\TemplateHelper;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
+
 \defined('ABSPATH') or die();
 
 /**
  * Managing the custom post type
  */
-class PostType {
-    /**
-     * Constructor
-     */
-    public function __construct() {
-        \add_action('init', [$this, 'customPostType']);
-
-        \add_filter('template_include', [$this, 'templateLoader']);
-        \add_filter('page_template', [$this, 'registerPageTemplate']);
-    }
-
+class PostType extends AbstractSingleton {
     /**
      * Registering the custom post type
      */
-    public static function customPostType() {
-        $var_sSlug = self::getPosttypeSlug('fittings');
+    public function customPostType() {
+        $var_sSlug = $this->getPosttypeSlug('fittings');
 
         $labelsDoctrine = [
             'name' => \__('Doctrines', 'eve-online-fitting-manager'),
@@ -141,7 +135,7 @@ class PostType {
      *
      * @param string $postType
      */
-    public static function getPosttypeSlug($postType) {
+    public function getPosttypeSlug($postType) {
         global $wpdb;
 
         $returnValue = $postType;
@@ -193,8 +187,8 @@ class PostType {
         }
 
         if($templateFile !== null) {
-            if(\file_exists(Helper\TemplateHelper::locateTemplate($templateFile))) {
-                $template = Helper\TemplateHelper::locateTemplate($templateFile);
+            if(\file_exists(TemplateHelper::getInstance()->locateTemplate($templateFile))) {
+                $template = TemplateHelper::getInstance()->locateTemplate($templateFile);
             }
         }
 
@@ -208,8 +202,8 @@ class PostType {
      * @return string
      */
     public function registerPageTemplate($pageTemplate) {
-        if(\is_page(self::getPosttypeSlug('fittings'))) {
-            $pageTemplate = Helper\PluginHelper::getPluginPath('templates/page-fittings.php');
+        if(\is_page($this->getPosttypeSlug('fittings'))) {
+            $pageTemplate = PluginHelper::getInstance()->getPluginPath('templates/page-fittings.php');
         }
 
         return $pageTemplate;
@@ -222,7 +216,7 @@ class PostType {
      * @param string $newEdit
      * @return boolean
      */
-    public static function isEditPage($newEdit = null) {
+    public function isEditPage($newEdit = null) {
         global $pagenow;
 
         //make sure we are on the backend

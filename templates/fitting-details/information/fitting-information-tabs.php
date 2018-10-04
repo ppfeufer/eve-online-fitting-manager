@@ -17,6 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\FittingHelper;
+
 ?>
 <div>
     <!-- Nav tabs -->
@@ -75,7 +77,7 @@
         if(isset($pluginSettings['template-detail-parts-settings']['show-ship-description']) && $pluginSettings['template-detail-parts-settings']['show-ship-description'] === 'yes') {
             ?>
             <div role="tabpanel" class="tab-pane ship-description" id="ship-description">
-                <?php echo WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\FittingHelper::getItemDescription($shipID); ?>
+                <?php echo FittingHelper::getInstance()->getItemDescription($shipID); ?>
             </div>
             <?php
         }

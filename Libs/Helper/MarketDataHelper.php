@@ -19,9 +19,11 @@
 
 namespace WordPress\Plugins\EveOnlineFittingManager\Libs\Helper;
 
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
+
 \defined('ABSPATH') or die();
 
-class MarketDataHelper extends \WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton {
+class MarketDataHelper extends AbstractSingleton {
     /**
      * Available Market APIs:
      *      EVE Marketer => https://api.evemarketer.com/ec/marketstat/json?typeid=3057,2364,3057&regionlimit=10000002&usesystem=30000142
@@ -82,7 +84,7 @@ class MarketDataHelper extends \WordPress\Plugins\EveOnlineFittingManager\Libs\S
     protected function __construct() {
         parent::__construct();
 
-        $this->pluginSettings = PluginHelper::getPluginSettings();
+        $this->pluginSettings = PluginHelper::getInstance()->getPluginSettings();
         $this->remoteHelper = RemoteHelper::getInstance();
 
         $this->setMarketApi();

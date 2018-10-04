@@ -19,12 +19,16 @@
 
 namespace WordPress\Plugins\EveOnlineFittingManager\Libs\ResourceLoader;
 
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Interfaces\AssetsInterface;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\PostType;
+
 \defined('ABSPATH') or die();
 
 /**
  * CSS Loader
  */
-class CssLoader implements \WordPress\Plugins\EveOnlineFittingManager\Libs\Interfaces\AssetsInterface {
+class CssLoader implements AssetsInterface {
     /**
      * Initialize the loader
      */
@@ -43,9 +47,9 @@ class CssLoader implements \WordPress\Plugins\EveOnlineFittingManager\Libs\Inter
             /**
              * load only when needed
              */
-            if(\is_page(\WordPress\Plugins\EveOnlineFittingManager\Libs\PostType::getPosttypeSlug('fittings')) || \get_post_type() === 'fitting') {
-                \wp_enqueue_style('bootstrap', \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper::getPluginUri('bootstrap/css/bootstrap.min.css'));
-                \wp_enqueue_style('eve-online-fitting-manager', \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper::getPluginUri('css/eve-online-fitting-manager.min.css'));
+            if(\is_page(PostType::getInstance()->getPosttypeSlug('fittings')) || \get_post_type() === 'fitting') {
+                \wp_enqueue_style('bootstrap', PluginHelper::getInstance()->getPluginUri('bootstrap/css/bootstrap.min.css'));
+                \wp_enqueue_style('eve-online-fitting-manager', PluginHelper::getInstance()->getPluginUri('css/eve-online-fitting-manager.min.css'));
             }
         }
     }

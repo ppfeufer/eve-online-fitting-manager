@@ -19,6 +19,9 @@
 
 namespace WordPress\Plugins\EveOnlineFittingManager\Libs;
 
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\EftHelper;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\FittingHelper;
+
 \defined('ABSPATH') or die();
 
 /**
@@ -52,9 +55,9 @@ class MetaBoxes {
 
         $eftFitting = null;
 
-        if(PostType::isEditPage('edit') && $typenow === 'fitting') {
+        if(PostType::getInstance()->isEditPage('edit') && $typenow === 'fitting') {
             if(\get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_ship_ID', true) !== null) {
-                $eftFitting = Helper\EftHelper::getEftImportFromFitting([
+                $eftFitting = EftHelper::getInstance()->getEftImportFromFitting([
                     'shipID' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_ship_ID', true),
                     'fittingType' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_name', true),
                     'highSlots' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_high_slots', true),
@@ -91,7 +94,7 @@ class MetaBoxes {
         $isIdea = null;
         $isUnderDiscussion = null;
 
-        if(PostType::isEditPage('edit') && $typenow === 'fitting') {
+        if(PostType::getInstance()->isEditPage('edit') && $typenow === 'fitting') {
             $isConcept = \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_is_concept', true);
             $isIdea = \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_is_idea', true);
             $isUnderDiscussion = \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_is_under_discussion', true);
@@ -136,12 +139,12 @@ class MetaBoxes {
         // EFT Fitting
         $eftFitting = \filter_input(\INPUT_POST, 'eve-online-fitting-manager_eft-import');
 
-        $shipType = Helper\EftHelper::getShipType($eftFitting);
-        $shipName = Helper\EftHelper::getFittingName($eftFitting);
-        $shipID = Helper\FittingHelper::getItemIdByName($shipType);
+        $shipType = EftHelper::getInstance()->getShipType($eftFitting);
+        $shipName = EftHelper::getInstance()->getFittingName($eftFitting);
+        $shipID = FittingHelper::getInstance()->getItemIdByName($shipType);
 
-        $fittingSlotData = Helper\EftHelper::getSlotDataFromEftData($eftFitting);
-        $fittingDna = Helper\EftHelper::getShipDnaFromEftData($eftFitting);
+        $fittingSlotData = EftHelper::getInstance()->getSlotDataFromEftData($eftFitting);
+        $fittingDna = EftHelper::getInstance()->getShipDnaFromEftData($eftFitting);
 
         \update_post_meta($postID, 'eve-online-fitting-manager_ship_type', (!empty($shipType)) ? \maybe_serialize($shipType) : null);
         \update_post_meta($postID, 'eve-online-fitting-manager_fitting_name', (!empty($shipName)) ? \maybe_serialize($shipName) : null);

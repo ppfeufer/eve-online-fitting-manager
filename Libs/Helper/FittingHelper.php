@@ -19,30 +19,33 @@
 
 namespace WordPress\Plugins\EveOnlineFittingManager\Libs\Helper;
 
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Database;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
+
 \defined('ABSPATH') or die();
 
-class FittingHelper {
+class FittingHelper extends AbstractSingleton {
     /**
      * Getting High Slot Item Names
      *
      * @param string $highSlots
      * @return array
      */
-    public static function getHighSlotItemNames($highSlots) {
-        $slots = \maybe_unserialize($highSlots);
-        $arrayHighSlot = [
-            'highSlot_1_itemName' => (!empty($slots['highSlot_1'])) ? self::getItemNameById($slots['highSlot_1']) : null,
-            'highSlot_2_itemName' => (!empty($slots['highSlot_2'])) ? self::getItemNameById($slots['highSlot_2']) : null,
-            'highSlot_3_itemName' => (!empty($slots['highSlot_3'])) ? self::getItemNameById($slots['highSlot_3']) : null,
-            'highSlot_4_itemName' => (!empty($slots['highSlot_4'])) ? self::getItemNameById($slots['highSlot_4']) : null,
-            'highSlot_5_itemName' => (!empty($slots['highSlot_5'])) ? self::getItemNameById($slots['highSlot_5']) : null,
-            'highSlot_6_itemName' => (!empty($slots['highSlot_6'])) ? self::getItemNameById($slots['highSlot_6']) : null,
-            'highSlot_7_itemName' => (!empty($slots['highSlot_7'])) ? self::getItemNameById($slots['highSlot_7']) : null,
-            'highSlot_8_itemName' => (!empty($slots['highSlot_8'])) ? self::getItemNameById($slots['highSlot_8']) : null,
-        ];
-
-        return $arrayHighSlot;
-    }
+//    public static function getHighSlotItemNames($highSlots) {
+//        $slots = \maybe_unserialize($highSlots);
+//        $arrayHighSlot = [
+//            'highSlot_1_itemName' => (!empty($slots['highSlot_1'])) ? self::getItemNameById($slots['highSlot_1']) : null,
+//            'highSlot_2_itemName' => (!empty($slots['highSlot_2'])) ? self::getItemNameById($slots['highSlot_2']) : null,
+//            'highSlot_3_itemName' => (!empty($slots['highSlot_3'])) ? self::getItemNameById($slots['highSlot_3']) : null,
+//            'highSlot_4_itemName' => (!empty($slots['highSlot_4'])) ? self::getItemNameById($slots['highSlot_4']) : null,
+//            'highSlot_5_itemName' => (!empty($slots['highSlot_5'])) ? self::getItemNameById($slots['highSlot_5']) : null,
+//            'highSlot_6_itemName' => (!empty($slots['highSlot_6'])) ? self::getItemNameById($slots['highSlot_6']) : null,
+//            'highSlot_7_itemName' => (!empty($slots['highSlot_7'])) ? self::getItemNameById($slots['highSlot_7']) : null,
+//            'highSlot_8_itemName' => (!empty($slots['highSlot_8'])) ? self::getItemNameById($slots['highSlot_8']) : null,
+//        ];
+//
+//        return $arrayHighSlot;
+//    }
 
     /**
      * Getting Mid Slot Item Names
@@ -50,22 +53,22 @@ class FittingHelper {
      * @param string $midSlots
      * @return array
      */
-    public static function getMidSlotItemNames($midSlots) {
-        $slots = \maybe_unserialize($midSlots);
-
-        $arrayMidSlot = [
-            'midSlot_1_itemName' => (!empty($slots['midSlot_1'])) ? self::getItemNameById($slots['midSlot_1']) : null,
-            'midSlot_2_itemName' => (!empty($slots['midSlot_2'])) ? self::getItemNameById($slots['midSlot_2']) : null,
-            'midSlot_3_itemName' => (!empty($slots['midSlot_3'])) ? self::getItemNameById($slots['midSlot_3']) : null,
-            'midSlot_4_itemName' => (!empty($slots['midSlot_4'])) ? self::getItemNameById($slots['midSlot_4']) : null,
-            'midSlot_5_itemName' => (!empty($slots['midSlot_5'])) ? self::getItemNameById($slots['midSlot_5']) : null,
-            'midSlot_6_itemName' => (!empty($slots['midSlot_6'])) ? self::getItemNameById($slots['midSlot_6']) : null,
-            'midSlot_7_itemName' => (!empty($slots['midSlot_7'])) ? self::getItemNameById($slots['midSlot_7']) : null,
-            'midSlot_8_itemName' => (!empty($slots['midSlot_8'])) ? self::getItemNameById($slots['midSlot_8']) : null,
-        ];
-
-        return $arrayMidSlot;
-    }
+//    public static function getMidSlotItemNames($midSlots) {
+//        $slots = \maybe_unserialize($midSlots);
+//
+//        $arrayMidSlot = [
+//            'midSlot_1_itemName' => (!empty($slots['midSlot_1'])) ? self::getItemNameById($slots['midSlot_1']) : null,
+//            'midSlot_2_itemName' => (!empty($slots['midSlot_2'])) ? self::getItemNameById($slots['midSlot_2']) : null,
+//            'midSlot_3_itemName' => (!empty($slots['midSlot_3'])) ? self::getItemNameById($slots['midSlot_3']) : null,
+//            'midSlot_4_itemName' => (!empty($slots['midSlot_4'])) ? self::getItemNameById($slots['midSlot_4']) : null,
+//            'midSlot_5_itemName' => (!empty($slots['midSlot_5'])) ? self::getItemNameById($slots['midSlot_5']) : null,
+//            'midSlot_6_itemName' => (!empty($slots['midSlot_6'])) ? self::getItemNameById($slots['midSlot_6']) : null,
+//            'midSlot_7_itemName' => (!empty($slots['midSlot_7'])) ? self::getItemNameById($slots['midSlot_7']) : null,
+//            'midSlot_8_itemName' => (!empty($slots['midSlot_8'])) ? self::getItemNameById($slots['midSlot_8']) : null,
+//        ];
+//
+//        return $arrayMidSlot;
+//    }
 
     /**
      * Getting Low Slot Item Names
@@ -73,22 +76,22 @@ class FittingHelper {
      * @param string $lowSlots
      * @return srray
      */
-    public static function getLowSlotItemNames($lowSlots) {
-        $slots = \maybe_unserialize($lowSlots);
-
-        $arrayLowSlot = [
-            'lowSlot_1_itemName' => (!empty($slots['lowSlot_1'])) ? self::getItemNameById($slots['lowSlot_1']) : null,
-            'lowSlot_2_itemName' => (!empty($slots['lowSlot_2'])) ? self::getItemNameById($slots['lowSlot_2']) : null,
-            'lowSlot_3_itemName' => (!empty($slots['lowSlot_3'])) ? self::getItemNameById($slots['lowSlot_3']) : null,
-            'lowSlot_4_itemName' => (!empty($slots['lowSlot_4'])) ? self::getItemNameById($slots['lowSlot_4']) : null,
-            'lowSlot_5_itemName' => (!empty($slots['lowSlot_5'])) ? self::getItemNameById($slots['lowSlot_5']) : null,
-            'lowSlot_6_itemName' => (!empty($slots['lowSlot_6'])) ? self::getItemNameById($slots['lowSlot_6']) : null,
-            'lowSlot_7_itemName' => (!empty($slots['lowSlot_7'])) ? self::getItemNameById($slots['lowSlot_7']) : null,
-            'lowSlot_8_itemName' => (!empty($slots['lowSlot_8'])) ? self::getItemNameById($slots['lowSlot_8']) : null,
-        ];
-
-        return $arrayLowSlot;
-    }
+//    public static function getLowSlotItemNames($lowSlots) {
+//        $slots = \maybe_unserialize($lowSlots);
+//
+//        $arrayLowSlot = [
+//            'lowSlot_1_itemName' => (!empty($slots['lowSlot_1'])) ? self::getItemNameById($slots['lowSlot_1']) : null,
+//            'lowSlot_2_itemName' => (!empty($slots['lowSlot_2'])) ? self::getItemNameById($slots['lowSlot_2']) : null,
+//            'lowSlot_3_itemName' => (!empty($slots['lowSlot_3'])) ? self::getItemNameById($slots['lowSlot_3']) : null,
+//            'lowSlot_4_itemName' => (!empty($slots['lowSlot_4'])) ? self::getItemNameById($slots['lowSlot_4']) : null,
+//            'lowSlot_5_itemName' => (!empty($slots['lowSlot_5'])) ? self::getItemNameById($slots['lowSlot_5']) : null,
+//            'lowSlot_6_itemName' => (!empty($slots['lowSlot_6'])) ? self::getItemNameById($slots['lowSlot_6']) : null,
+//            'lowSlot_7_itemName' => (!empty($slots['lowSlot_7'])) ? self::getItemNameById($slots['lowSlot_7']) : null,
+//            'lowSlot_8_itemName' => (!empty($slots['lowSlot_8'])) ? self::getItemNameById($slots['lowSlot_8']) : null,
+//        ];
+//
+//        return $arrayLowSlot;
+//    }
 
     /**
      * Getting Rog Slot Item Names
@@ -96,17 +99,17 @@ class FittingHelper {
      * @param string $rigSlots
      * @return array
      */
-    public static function getRigSlotItemNames($rigSlots) {
-        $rigs = \maybe_unserialize($rigSlots);
-
-        $arrayRigSlot = [
-            'rigSlot_1_itemName' => (!empty($rigs['rigSlot_1'])) ? self::getItemNameById($rigs['rigSlot_1']) : null,
-            'rigSlot_2_itemName' => (!empty($rigs['rigSlot_2'])) ? self::getItemNameById($rigs['rigSlot_2']) : null,
-            'rigSlot_3_itemName' => (!empty($rigs['rigSlot_3'])) ? self::getItemNameById($rigs['rigSlot_3']) : null,
-        ];
-
-        return $arrayRigSlot;
-    }
+//    public static function getRigSlotItemNames($rigSlots) {
+//        $rigs = \maybe_unserialize($rigSlots);
+//
+//        $arrayRigSlot = [
+//            'rigSlot_1_itemName' => (!empty($rigs['rigSlot_1'])) ? self::getItemNameById($rigs['rigSlot_1']) : null,
+//            'rigSlot_2_itemName' => (!empty($rigs['rigSlot_2'])) ? self::getItemNameById($rigs['rigSlot_2']) : null,
+//            'rigSlot_3_itemName' => (!empty($rigs['rigSlot_3'])) ? self::getItemNameById($rigs['rigSlot_3']) : null,
+//        ];
+//
+//        return $arrayRigSlot;
+//    }
 
     /**
      * Getting Subsystem Item Names
@@ -114,18 +117,18 @@ class FittingHelper {
      * @param string $subSystems
      * @return array
      */
-    public static function getSubSystemItemNames($subSystems) {
-        $sub = \maybe_unserialize($subSystems);
-
-        $arraySubSystems = [
-            'subSystem_1_itemName' => (!empty($sub['subSystem_1'])) ? self::getItemNameById($sub['subSystem_1']) : null,
-            'subSystem_2_itemName' => (!empty($sub['subSystem_2'])) ? self::getItemNameById($sub['subSystem_2']) : null,
-            'subSystem_3_itemName' => (!empty($sub['subSystem_3'])) ? self::getItemNameById($sub['subSystem_3']) : null,
-            'subSystem_4_itemName' => (!empty($sub['subSystem_4'])) ? self::getItemNameById($sub['subSystem_4']) : null,
-        ];
-
-        return $arraySubSystems;
-    }
+//    public static function getSubSystemItemNames($subSystems) {
+//        $sub = \maybe_unserialize($subSystems);
+//
+//        $arraySubSystems = [
+//            'subSystem_1_itemName' => (!empty($sub['subSystem_1'])) ? self::getItemNameById($sub['subSystem_1']) : null,
+//            'subSystem_2_itemName' => (!empty($sub['subSystem_2'])) ? self::getItemNameById($sub['subSystem_2']) : null,
+//            'subSystem_3_itemName' => (!empty($sub['subSystem_3'])) ? self::getItemNameById($sub['subSystem_3']) : null,
+//            'subSystem_4_itemName' => (!empty($sub['subSystem_4'])) ? self::getItemNameById($sub['subSystem_4']) : null,
+//        ];
+//
+//        return $arraySubSystems;
+//    }
 
     /**
      * Getting Item Description
@@ -133,9 +136,9 @@ class FittingHelper {
      * @param string $itemID
      * @return array
      */
-    public static function getItemDescription($itemID) {
-        $sql = \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `description` FROM `kb3_invtypes` WHERE `typeID` = %d', [$itemID]);
-        $description = \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
+    public function getItemDescription($itemID) {
+        $sql = Database::getInstance()->db->prepare('SELECT `description` FROM `kb3_invtypes` WHERE `typeID` = %d', [$itemID]);
+        $description = Database::getInstance()->db->get_var($sql);
 
         return \wpautop($description);
     }
@@ -147,8 +150,8 @@ class FittingHelper {
      * @param int $itemCount
      * @return boolean
      */
-    public static function getItemDetailsByItemName($itemName, $itemCount = 1) {
-        $sql = \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT
+    public function getItemDetailsByItemName($itemName, $itemCount = 1) {
+        $sql = Database::getInstance()->db->prepare('SELECT
                 it.typeID AS itemID,
                 it.groupID AS groupID,
                 it.typeName AS itemName,
@@ -170,14 +173,14 @@ class FittingHelper {
             INNER JOIN kb3_item_types itt ON itt.itt_id = it.groupID
             WHERE it.typeName = %s
             AND itt.itt_id = it.groupID;', [$itemName]);
-        $itemData = \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_results($sql, \OBJECT);
+        $itemData = Database::getInstance()->db->get_results($sql, \OBJECT);
 
         /**
          * If we don't have any result here, we might have an item that cannot be fitted.
          * So do another check without restricting to slots.
          */
         if(!$itemData) {
-            $sql = \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT
+            $sql = Database::getInstance()->db->prepare('SELECT
                     `kb3_invtypes`.`typeID` AS `itemID`,
                     `kb3_invtypes`.`groupID` AS `groupID`,
                     `kb3_invtypes`.`typeName` AS `itemName`,
@@ -189,7 +192,7 @@ class FittingHelper {
                 WHERE `typeName` = %s
                 AND `kb3_item_types`.`itt_id` = `kb3_invtypes`.`groupID`
                 AND `kb3_item_locations`.`itl_flagID` = `kb3_item_types`.`itt_slot`;', [$itemName]);
-            $itemData = \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_results($sql, \OBJECT);
+            $itemData = Database::getInstance()->db->get_results($sql, \OBJECT);
         } // END if(!$itemData)
 
         if($itemData) {
@@ -259,20 +262,20 @@ class FittingHelper {
      * @param string $itemName
      * @return boolean
      */
-    public static function getItems($itemName) {
-        $sql = \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `kb3_invtypes`.`typeName` AS `itemName` FROM `kb3_invtypes` WHERE `typeName` LIKE %s', ['%' . $itemName . '%']);
-        $itemData = \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_results($sql, \OBJECT);
-
-        if($itemData) {
-            foreach($itemData as $item) {
-                $items[] = $item['itemName'];
-            }
-
-            return $items;
-        }
-
-        return false;
-    }
+//    public static function getItems($itemName) {
+//        $sql = \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `kb3_invtypes`.`typeName` AS `itemName` FROM `kb3_invtypes` WHERE `typeName` LIKE %s', ['%' . $itemName . '%']);
+//        $itemData = \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_results($sql, \OBJECT);
+//
+//        if($itemData) {
+//            foreach($itemData as $item) {
+//                $items[] = $item['itemName'];
+//            }
+//
+//            return $items;
+//        }
+//
+//        return false;
+//    }
 
     /**
      * Getting an item ID ny its item name
@@ -280,12 +283,12 @@ class FittingHelper {
      * @param string $itemName
      * @return type
      */
-    public static function getItemIdByName($itemName) {
+    public function getItemIdByName($itemName) {
         $returnValue = null;
 
         if(!empty($itemName)) {
-            $sql = \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `kb3_invtypes`.`typeID` AS `itemID` from `kb3_invtypes` WHERE `kb3_invtypes`.`typeName` = %s', [$itemName]);
-            $returnValue = \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
+            $sql = Database::getInstance()->db->prepare('SELECT `kb3_invtypes`.`typeID` AS `itemID` from `kb3_invtypes` WHERE `kb3_invtypes`.`typeName` = %s', [$itemName]);
+            $returnValue = Database::getInstance()->db->get_var($sql);
         }
 
         return $returnValue;
@@ -297,29 +300,29 @@ class FittingHelper {
      * @param int $itemID
      * @return type
      */
-    public static function getItemNameById($itemID) {
+    public function getItemNameById($itemID) {
         if(\is_array($itemID)) {
             $itemNames = [];
 
             foreach($itemID as $id) {
-                $sql = \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `kb3_invtypes`.`typeName` AS `itemName` from `kb3_invtypes` WHERE `kb3_invtypes`.`typeID` = %d', [$id]);
-                $itemNames[$id] = \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
+                $sql = Database::getInstance()->db->prepare('SELECT `kb3_invtypes`.`typeName` AS `itemName` from `kb3_invtypes` WHERE `kb3_invtypes`.`typeID` = %d', [$id]);
+                $itemNames[$id] = Database::getInstance()->db->get_var($sql);
             }
 
             return $itemNames;
         }
 
-        $sql = \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `kb3_invtypes`.`typeName` AS `itemName` from `kb3_invtypes` WHERE `kb3_invtypes`.`typeID` = %d', [$itemID]);
-        $itemName = \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
+        $sql = Database::getInstance()->db->prepare('SELECT `kb3_invtypes`.`typeName` AS `itemName` from `kb3_invtypes` WHERE `kb3_invtypes`.`typeID` = %d', [$itemID]);
+        $itemName = Database::getInstance()->db->get_var($sql);
 
         return $itemName;
     }
 
-    public static function getDescriptionItemDetailsByItemName($itemName) {
-        $itemDetails = self::getItemDetailsByItemName($itemName);
-
-        return $itemDetails;
-    }
+//    public static function getDescriptionItemDetailsByItemName($itemName) {
+//        $itemDetails = $this->getItemDetailsByItemName($itemName);
+//
+//        return $itemDetails;
+//    }
 
     /**
      * Getting a fitting DNA from its fitting data
@@ -327,7 +330,7 @@ class FittingHelper {
      * @param object $fittingData
      * @return string
      */
-    public static function getShipDnaFromFittingData($fittingData) {
+    public function getShipDnaFromFittingData($fittingData) {
         $highSlots = [];
         $midSlots = [];
         $lowSlots = [];
@@ -454,19 +457,19 @@ class FittingHelper {
      * @param array $fitting
      * @return type
      */
-    public static function getSlotLayoutFromFittingArray($fitting) {
-        $currentHighSlots = self::getHighSlotCountForShipID($fitting['shipID']);
-        $currenMidSlots = self::getMidSlotCountForShipID($fitting['shipID']);
-        $currentLowSlots = self::getLowSlotCountForShipID($fitting['shipID']);
-        $currentRigSlots = self::getRigSlotCountForShipID($fitting['shipID']);
+    public function getSlotLayoutFromFittingArray($fitting) {
+        $currentHighSlots = $this->getHighSlotCountForShipID($fitting['shipID']);
+        $currenMidSlots = $this->getMidSlotCountForShipID($fitting['shipID']);
+        $currentLowSlots = $this->getLowSlotCountForShipID($fitting['shipID']);
+        $currentRigSlots = $this->getRigSlotCountForShipID($fitting['shipID']);
         $currentSubSystems = 0;
         $currentServiceSlots = 0;
 
         $fittedSubSystems = \maybe_unserialize($fitting['subSystems']);
         $fittedServiceSlots = \maybe_unserialize($fitting['serviceSlots']);
 
-        $arrayStrategicCruiserIDs = self::getStrategicCruiserIds();
-        $arrayUpwellStructureIDs = self::getUpwellStructureIds();
+        $arrayStrategicCruiserIDs = $this->getStrategicCruiserIds();
+        $arrayUpwellStructureIDs = $this->getUpwellStructureIds();
 
         /**
          * Check if:
@@ -482,13 +485,13 @@ class FittingHelper {
 
             for($i = 1; $i <= $maxSubSystems; $i++) {
                 if(isset($fittedSubSystems['subSystem_' . $i])) {
-                    $currentHighSlots += self::getHighSlotModifierCountForShipID($fittedSubSystems['subSystem_' . $i]);
-                    $currenMidSlots += self::getMidSlotModifierCountForShipID($fittedSubSystems['subSystem_' . $i]);
-                    $currentLowSlots += self::getLowSlotModifierCountForShipID($fittedSubSystems['subSystem_' . $i]);
+                    $currentHighSlots += $this->getHighSlotModifierCountForShipID($fittedSubSystems['subSystem_' . $i]);
+                    $currenMidSlots += $this->getMidSlotModifierCountForShipID($fittedSubSystems['subSystem_' . $i]);
+                    $currentLowSlots += $this->getLowSlotModifierCountForShipID($fittedSubSystems['subSystem_' . $i]);
                 }
             }
 
-            $currentRigSlots = self::getRigSlotCountForShipID($fitting['shipID']);
+            $currentRigSlots = $this->getRigSlotCountForShipID($fitting['shipID']);
             $currentSubSystems = 5;
         } elseif(\in_array($fitting['shipID'], $arrayUpwellStructureIDs) && !empty($fittedServiceSlots)) {
             /**
@@ -507,7 +510,7 @@ class FittingHelper {
         ];
     }
 
-    private static function getStrategicCruiserIds() {
+    private function getStrategicCruiserIds() {
         return [
             29984, // Tengu
             29986, // Legion
@@ -516,7 +519,7 @@ class FittingHelper {
         ];
     }
 
-    private static function getUpwellStructureIds() {
+    private function getUpwellStructureIds() {
         return [
             35832, // Astrahus
             35833, // Fortizar
@@ -543,14 +546,14 @@ class FittingHelper {
      * @param int $shipID
      * @return int
      */
-    public static function getHighSlotCountForShipID($shipID) {
-        $sql = \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `value`
+    public function getHighSlotCountForShipID($shipID) {
+        $sql = Database::getInstance()->db->prepare('SELECT `value`
             FROM `kb3_dgmtypeattributes`
             JOIN `kb3_dgmattributetypes` ON `attributeName` = "hiSlots"
             WHERE `kb3_dgmattributetypes`.`attributeID` = `kb3_dgmtypeattributes`.`attributeID`
             AND `kb3_dgmtypeattributes`.`typeID` = %d', [$shipID]);
 
-        return \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
+        return Database::getInstance()->db->get_var($sql);
     }
 
     /**
@@ -559,14 +562,14 @@ class FittingHelper {
      * @param int $shipID
      * @return int
      */
-    public static function getMidSlotCountForShipID($shipID) {
-        $sql = \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `value`
+    public function getMidSlotCountForShipID($shipID) {
+        $sql = Database::getInstance()->db->prepare('SELECT `value`
             FROM `kb3_dgmtypeattributes`
             JOIN `kb3_dgmattributetypes` ON `attributeName` = "medSlots"
             WHERE `kb3_dgmattributetypes`.`attributeID` = `kb3_dgmtypeattributes`.`attributeID`
             AND `kb3_dgmtypeattributes`.`typeID` = %d', [$shipID]);
 
-        return \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
+        return Database::getInstance()->db->get_var($sql);
     }
 
     /**
@@ -575,14 +578,14 @@ class FittingHelper {
      * @param int $shipID
      * @return int
      */
-    public static function getLowSlotCountForShipID($shipID) {
-        $sql = \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `value`
+    public function getLowSlotCountForShipID($shipID) {
+        $sql = Database::getInstance()->db->prepare('SELECT `value`
             FROM `kb3_dgmtypeattributes`
             JOIN `kb3_dgmattributetypes` ON `attributeName` = "lowSlots"
             WHERE `kb3_dgmattributetypes`.`attributeID` = `kb3_dgmtypeattributes`.`attributeID`
             AND `kb3_dgmtypeattributes`.`typeID` = %d', [$shipID]);
 
-        return \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
+        return Database::getInstance()->db->get_var($sql);
     }
 
     /**
@@ -591,14 +594,14 @@ class FittingHelper {
      * @param int $subsystemID
      * @return int
      */
-    public static function getHighSlotModifierCountForShipID($subsystemID) {
-        $sql = \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `value`
+    public function getHighSlotModifierCountForShipID($subsystemID) {
+        $sql = Database::getInstance()->db->prepare('SELECT `value`
             FROM `kb3_dgmtypeattributes`
             JOIN `kb3_dgmattributetypes` ON `attributeName` = "hiSlotModifier"
             WHERE `kb3_dgmattributetypes`.`attributeID` = `kb3_dgmtypeattributes`.`attributeID`
             AND `kb3_dgmtypeattributes`.`typeID` = %d', [$subsystemID]);
 
-        return \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
+        return Database::getInstance()->db->get_var($sql);
     }
 
     /**
@@ -607,14 +610,14 @@ class FittingHelper {
      * @param int $subsystemID
      * @return int
      */
-    public static function getMidSlotModifierCountForShipID($subsystemID) {
-        $sql = \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `value`
+    public function getMidSlotModifierCountForShipID($subsystemID) {
+        $sql = Database::getInstance()->db->prepare('SELECT `value`
             FROM `kb3_dgmtypeattributes`
             JOIN `kb3_dgmattributetypes` ON `attributeName` = "medSlotModifier"
             WHERE `kb3_dgmattributetypes`.`attributeID` = `kb3_dgmtypeattributes`.`attributeID`
             AND `kb3_dgmtypeattributes`.`typeID` = %d', [$subsystemID]);
 
-        return \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
+        return Database::getInstance()->db->get_var($sql);
     }
 
     /**
@@ -623,14 +626,14 @@ class FittingHelper {
      * @param int $subsystemID
      * @return int
      */
-    public static function getLowSlotModifierCountForShipID($subsystemID) {
-        $sql = \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `value`
+    public function getLowSlotModifierCountForShipID($subsystemID) {
+        $sql = Database::getInstance()->db->prepare('SELECT `value`
             FROM `kb3_dgmtypeattributes`
             JOIN `kb3_dgmattributetypes` ON `attributeName` = "lowSlotModifier"
             WHERE `kb3_dgmattributetypes`.`attributeID` = `kb3_dgmtypeattributes`.`attributeID`
             AND `kb3_dgmtypeattributes`.`typeID` = %d', [$subsystemID]);
 
-        return \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
+        return Database::getInstance()->db->get_var($sql);
     }
 
     /**
@@ -639,14 +642,14 @@ class FittingHelper {
      * @param int $shipID
      * @return int
      */
-    public static function getRigSlotCountForShipID($shipID) {
-        $sql = \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `value`
+    public function getRigSlotCountForShipID($shipID) {
+        $sql = Database::getInstance()->db->prepare('SELECT `value`
                 FROM `kb3_dgmtypeattributes`
                 JOIN `kb3_dgmattributetypes` ON `attributeName` = "rigSlots"
                 WHERE `kb3_dgmattributetypes`.`attributeID` = `kb3_dgmtypeattributes`.`attributeID`
                 AND `kb3_dgmtypeattributes`.`typeID` = %d', [$shipID]);
 
-        return \WordPress\Plugins\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
+        return Database::getInstance()->db->get_var($sql);
     }
 
     /**
@@ -656,7 +659,7 @@ class FittingHelper {
      * @param type $size
      * @return type
      */
-    public static function getShipImageById($itemID = null, $size = 512) {
+    public function getShipImageById($itemID = null, $size = 512) {
         $image = ImageHelper::getInstance()->getLocalCacheImageUriForRemoteImage('ship', ImageHelper::getInstance()->getImageServerUrl('inventory') . $itemID . '_' . $size . '.png');
 
         return $image;
@@ -668,7 +671,7 @@ class FittingHelper {
      * @param string $taxonomy
      * @return string
      */
-    public static function getSidebarMenu($taxonomy) {
+    public function getSidebarMenu($taxonomy) {
         $entityListHtml = '<ul class="sidebar-doctrine-list doctrine-list menu-' . $taxonomy . '">';
 
         // get all taxonomy terms
@@ -752,8 +755,8 @@ class FittingHelper {
      * @param string $taxonomy
      * @return string
      */
-    public static function getContentMenu($taxonomy) {
-        $pluginOptions = PluginHelper::getPluginSettings();
+    public function getContentMenu($taxonomy) {
+        $pluginOptions = PluginHelper::getInstance()->getPluginSettings();
         $uniqueID = \uniqid();
 
         $entityListHtml = '<div class="gallery-row row">';
@@ -856,7 +859,7 @@ class FittingHelper {
         $entityListHtml .= '<script type="text/javascript">
                             jQuery(document).ready(function() {
                                 jQuery("ul.bootstrap-post-loop-fittings-' . $uniqueID . '").bootstrapGallery({
-                                    "classes" : "' . \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper::getLoopContentClasses() . '",
+                                    "classes" : "' . \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper::getInstance()->getLoopContentClasses() . '",
                                     "hasModal" : false
                                 });
                             });
@@ -871,7 +874,7 @@ class FittingHelper {
      * @param boolean $escaped wether the query should be escaped or not
      * @return string
      */
-    public static function getFittingSearchQuery($escaped = true) {
+    public function getFittingSearchQuery($escaped = true) {
         $query = \apply_filters('get_fitting_search_query', \get_query_var('fitting_search'));
 
         if($escaped === true) {
@@ -881,22 +884,22 @@ class FittingHelper {
         return $query;
     }
 
-    public static function searchFittings() {
+    public function searchFittings() {
         $args = [
             'post_type' => 'fitting',
             'posts_per_page' => -1,
-            '_meta_or_title' => self::getFittingSearchQuery(),
+            '_meta_or_title' => $this->getFittingSearchQuery(),
             'compare' => 'LIKE',
             'meta_query' => [
                 'relation' => 'OR',
                 [
                     'key' => 'eve-online-fitting-manager_ship_type',
-                    'value' => self::getFittingSearchQuery(),
+                    'value' => $this->getFittingSearchQuery(),
                     'compare' => 'LIKE'
                 ],
                 [
                     'key' => 'eve-online-fitting-manager_fitting_name',
-                    'value' => self::getFittingSearchQuery(),
+                    'value' => $this->getFittingSearchQuery(),
                     'compare' => 'LIKE'
                 ]
             ],
@@ -912,7 +915,7 @@ class FittingHelper {
      *
      * @return array
      */
-    public static function getShipUsedInDoctrine() {
+    public function getShipUsedInDoctrine() {
         $terms = \wp_get_object_terms(\get_the_ID(), 'fitting-doctrines');
         $doctrines = null;
 
@@ -933,7 +936,7 @@ class FittingHelper {
      * @param type $shipID
      * @return boolean
      */
-    public static function isUpwellStructure($shipID) {
-        return \in_array($shipID, self::getUpwellStructureIds());
+    public function isUpwellStructure($shipID) {
+        return \in_array($shipID, $this->getUpwellStructureIds());
     }
 }

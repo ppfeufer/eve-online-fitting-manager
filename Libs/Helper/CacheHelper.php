@@ -19,15 +19,18 @@
 
 namespace WordPress\Plugins\EveOnlineFittingManager\Libs\Helper;
 
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\RemoteHelper;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
+
 \defined('ABSPATH') or die();
 
 /**
  * WP Filesystem API
  */
-require_once(ABSPATH . 'wp-admin/includes/class-wp-filesystem-base.php');
-require_once(ABSPATH . 'wp-admin/includes/class-wp-filesystem-direct.php');
+require_once(\ABSPATH . 'wp-admin/includes/class-wp-filesystem-base.php');
+require_once(\ABSPATH . 'wp-admin/includes/class-wp-filesystem-direct.php');
 
-class CacheHelper extends \WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton {
+class CacheHelper extends AbstractSingleton {
     /**
      * cacheDirectoryBase
      *

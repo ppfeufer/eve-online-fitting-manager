@@ -19,9 +19,12 @@
 
 namespace WordPress\Plugins\EveOnlineFittingManager\Libs\Widgets;
 
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\FittingHelper;
+use \WP_Widget;
+
 \defined('ABSPATH') or die();
 
-class DoctrinesWidget extends \WP_Widget {
+class DoctrinesWidget extends WP_Widget {
     /**
      * Root ID for all widgets of this type.
      *
@@ -83,7 +86,7 @@ class DoctrinesWidget extends \WP_Widget {
             echo $args['before_title'];
             echo \__('Doctrines', 'eve-online-fitting-manager');
             echo $args['after_title'];
-            echo \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\FittingHelper::getSidebarMenu('fitting-doctrines');
+            echo FittingHelper::getInstance()->getSidebarMenu('fitting-doctrines');
         }
 
         echo $args['after_widget'];

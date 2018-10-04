@@ -17,6 +17,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\TemplateHelper;
+
 defined('ABSPATH') or die();
 
 \get_header();
@@ -30,18 +33,18 @@ defined('ABSPATH') or die();
                 if(\have_posts()) {
                     while(\have_posts()) {
                         \the_post();
-                        \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\TemplateHelper::getTemplate('content-single-fitting');
+                        TemplateHelper::getInstance()->getTemplate('content-single-fitting');
                     }
                 }
                 ?>
             </div> <!-- /.content -->
         </div> <!-- /.col-lg-9 /.col-md-9 /.col-sm-9 /.col-9 -->
         <?php
-        if(\WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper::hasSidebar('sidebar-fitting-manager')) {
+        if(PluginHelper::getInstance()->hasSidebar('sidebar-fitting-manager')) {
             ?>
             <div class="col-lg-3 col-md-3 col-sm-3 col-3 sidebar-wrapper">
                 <?php
-                \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\TemplateHelper::getTemplate('sidebar-fitting-manager');
+                TemplateHelper::getInstance()->getTemplate('sidebar-fitting-manager');
                 ?>
             </div><!--/.col -->
             <?php

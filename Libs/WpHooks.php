@@ -19,6 +19,9 @@
 
 namespace WordPress\Plugins\EveOnlineFittingManager\Libs;
 
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper;
+use \WP_Query;
+
 \defined('ABSPATH') or die();
 
 class WpHooks {
@@ -49,9 +52,9 @@ class WpHooks {
      * @param array $parameter array with parameters
      */
     public function __construct() {
-        $this->pluginFile = Helper\PluginHelper::getPluginPath('eve-online-fitting-manager.php');
-        $this->newDatabaseVersion = Helper\PluginHelper::getNewPluginDatabaseVersion();
-        $this->currentDatabaseVersion = Helper\PluginHelper::getPluginDatabaseVersion();
+        $this->pluginFile = PluginHelper::getInstance()->getPluginPath('eve-online-fitting-manager.php');
+        $this->newDatabaseVersion = PluginHelper::getInstance()->getNewPluginDatabaseVersion();
+        $this->currentDatabaseVersion = PluginHelper::getInstance()->getPluginDatabaseVersion();
 
         $this->init();
     }
@@ -63,6 +66,7 @@ class WpHooks {
         $this->initHooks();
         $this->initActions();
         $this->initFilter();
+        $this->initShortcodes();
     }
 
     /**
@@ -95,6 +99,23 @@ class WpHooks {
          * Adding our own thumbnail sizes
          */
         \add_action('init', [$this, 'setThumbnailsSizes']);
+
+        /**
+         * Adding our custom post type
+         */
+        \add_action('init', [PostType::getInstance(), 'customPostType']);
+
+        /**
+         * Registering our widgets
+         */
+        \add_action('init', [Widgets::getInstance(), 'registerSidebar'], 99);
+        \add_action('widgets_init', [Widgets::getInstance(), 'registerWidgets']);
+
+        /**
+         * Market Data API
+         */
+        \add_action('wp_ajax_nopriv_get-eve-fitting-market-data', [MarketData::getInstance(), 'ajaxGetFittingMarketData']);
+        \add_action('wp_ajax_get-eve-fitting-market-data', [MarketData::getInstance(), 'ajaxGetFittingMarketData']);
     }
 
     /**
@@ -105,6 +126,13 @@ class WpHooks {
         \add_filter('plugin_action_links_eve-online-fitting-manager/eve-online-fitting-manager.php', [$this, 'addPluginSettingsLink'], 10, 2 );
         \add_filter('network_admin_plugin_action_links_eve-online-fitting-manager/eve-online-fitting-manager.php', [$this, 'addPluginSettingsLink'], 10, 2 );
         \add_filter('query_vars', [$this, 'addQueryVarsFilter']);
+
+        \add_filter('template_include', [PostType::getInstance(), 'templateLoader']);
+        \add_filter('page_template', [PostType::getInstance(), 'registerPageTemplate']);
+    }
+
+    public function initShortcodes() {
+        \add_shortcode('fittings', [Shortcodes::getInstance(), 'shortcodeFittings']);
     }
 
     /**
@@ -139,17 +167,17 @@ class WpHooks {
      */
     public function checkDatabaseForUpdates() {
         if($this->currentDatabaseVersion !== $this->newDatabaseVersion) {
-            Helper\PluginHelper::updateDatabase();
+            PluginHelper::getInstance()->updateDatabase();
         }
     }
 
     /**
      * Customized query vars for our search function
      *
-     * @param \WP_Query $query
-     * @return \WP_Query
+     * @param WP_Query $query
+     * @return WP_Query
      */
-    public function customPageQueryVars(\WP_Query $query) {
+    public function customPageQueryVars(WP_Query $query) {
         if(!\is_admin() && $query->is_main_query()) {
             if(isset($query->tax_query->queries['0']['taxonomy']) && $query->tax_query->queries['0']['taxonomy'] === 'fitting-doctrines') {
                 $query->set('posts_per_page', 9999);
@@ -201,7 +229,7 @@ class WpHooks {
      * Fired on: register_activation_hook
      */
     public function flushRewriteRulesOnActivation() {
-        PostType::customPostType();
+        PostType::getInstance()->customPostType();
 
         \flush_rewrite_rules();
     }

@@ -19,9 +19,11 @@
 
 namespace WordPress\Plugins\EveOnlineFittingManager\Libs\Helper;
 
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
+
 \defined('ABSPATH') or die();
 
-class ImageHelper extends \WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton {
+class ImageHelper extends AbstractSingleton {
     /**
      * base URL to CCP's image server
      *
@@ -51,7 +53,7 @@ class ImageHelper extends \WordPress\Plugins\EveOnlineFittingManager\Libs\Single
 
         $this->imageserverUrl = 'https://image.eveonline.com/';
         $this->imageserverEndpoints = $this->getImageserverEndpoints();
-        $this->pluginSettings = PluginHelper::getPluginSettings(true);
+        $this->pluginSettings = PluginHelper::getInstance()->getPluginSettings(true);
     }
 
     /**
@@ -69,10 +71,10 @@ class ImageHelper extends \WordPress\Plugins\EveOnlineFittingManager\Libs\Single
     }
 
     /**
-     * Getting the EVE API Url
+     * Getting the EVE Imageserver Url
      *
      * @param string $type
-     * @return string The EVE API Url
+     * @return string
      */
     public function getImageServerUrl($type = null) {
         $endpoint = '';

@@ -17,6 +17,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\TemplateHelper;
+
 $subDoctrines = \get_terms([
     'taxonomy' => $taxonomy,
     'orderby' => 'name',
@@ -59,7 +62,7 @@ if($resultMainDoctrine->have_posts()) {
             echo '<li>';
         }
 
-        \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\TemplateHelper::getTemplate('content-fitting');
+        TemplateHelper::getInstance()->getTemplate('content-fitting');
 
         if(\get_post_type() === 'fitting') {
             echo '</li>';
@@ -75,7 +78,7 @@ if($resultMainDoctrine->have_posts()) {
         echo '<script type="text/javascript">
                 jQuery(document).ready(function() {
                     jQuery("ul.bootstrap-post-loop-fittings-' . $uniqueID . '").bootstrapGallery({
-                        "classes" : "' . \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper::getLoopContentClasses() . '",
+                        "classes" : "' . PluginHelper::getInstance()->getLoopContentClasses() . '",
                         "hasModal" : false
                     });
                 });
@@ -117,7 +120,7 @@ if(\count($subDoctrines) > 0) {
                     echo '<li>';
                 }
 
-                \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\TemplateHelper::getTemplate('content-fitting');
+                TemplateHelper::getInstance()->getTemplate('content-fitting');
 
                 if(\get_post_type() === 'fitting') {
                     echo '</li>';
@@ -133,7 +136,7 @@ if(\count($subDoctrines) > 0) {
                 echo '<script type="text/javascript">
                         jQuery(document).ready(function() {
                             jQuery("ul.bootstrap-post-loop-fittings-' . $uniqueID . '").bootstrapGallery({
-                                "classes" : "' . \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper::getLoopContentClasses() . '",
+                                "classes" : "' . PluginHelper::getInstance()->getLoopContentClasses() . '",
                                 "hasModal" : false
                             });
                         });

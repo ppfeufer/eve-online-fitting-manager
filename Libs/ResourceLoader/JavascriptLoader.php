@@ -19,12 +19,16 @@
 
 namespace WordPress\Plugins\EveOnlineFittingManager\Libs\ResourceLoader;
 
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Interfaces\AssetsInterface;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\PostType;
+
 \defined('ABSPATH') or die();
 
 /**
  * JavaScript Loader
  */
-class JavascriptLoader implements \WordPress\Plugins\EveOnlineFittingManager\Libs\Interfaces\AssetsInterface {
+class JavascriptLoader implements AssetsInterface {
     /**
      * Initialize the loader
      */
@@ -40,12 +44,12 @@ class JavascriptLoader implements \WordPress\Plugins\EveOnlineFittingManager\Lib
          * Only in Frontend
          */
         if(!\is_admin()) {
-            if(\is_page(\WordPress\Plugins\EveOnlineFittingManager\Libs\PostType::getPosttypeSlug('fittings')) || \get_post_type() === 'fitting') {
-                \wp_enqueue_script('bootstrap-js', \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper::getPluginUri('bootstrap/js/bootstrap.min.js'), ['jquery'], '', true);
-                \wp_enqueue_script('bootstrap-toolkit-js', \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper::getPluginUri('bootstrap/bootstrap-toolkit/bootstrap-toolkit.min.js'), ['jquery', 'bootstrap-js'], '', true);
-                \wp_enqueue_script('bootstrap-gallery-js', \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper::getPluginUri('js/jquery.bootstrap-gallery.min.js'), ['jquery', 'bootstrap-js'], '', true);
-                \wp_enqueue_script('copy-to-clipboard-js', \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper::getPluginUri('js/copy-to-clipboard.min.js'), ['jquery'], '', true);
-                \wp_enqueue_script('eve-online-fitting-manager-js', \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper::getPluginUri('js/eve-online-fitting-manager.min.js'), ['jquery'], '', true);
+            if(\is_page(PostType::getInstance()->getPosttypeSlug('fittings')) || \get_post_type() === 'fitting') {
+                \wp_enqueue_script('bootstrap-js', PluginHelper::getInstance()->getPluginUri('bootstrap/js/bootstrap.min.js'), ['jquery'], '', true);
+                \wp_enqueue_script('bootstrap-toolkit-js', PluginHelper::getInstance()->getPluginUri('bootstrap/bootstrap-toolkit/bootstrap-toolkit.min.js'), ['jquery', 'bootstrap-js'], '', true);
+                \wp_enqueue_script('bootstrap-gallery-js', PluginHelper::getInstance()->getPluginUri('js/jquery.bootstrap-gallery.min.js'), ['jquery', 'bootstrap-js'], '', true);
+                \wp_enqueue_script('copy-to-clipboard-js', PluginHelper::getInstance()->getPluginUri('js/copy-to-clipboard.min.js'), ['jquery'], '', true);
+                \wp_enqueue_script('eve-online-fitting-manager-js', PluginHelper::getInstance()->getPluginUri('js/eve-online-fitting-manager.min.js'), ['jquery'], '', true);
                 \wp_localize_script('eve-online-fitting-manager-js', 'fittingManagerL10n', $this->getJavaScriptTranslations());
             }
         }
@@ -74,7 +78,7 @@ class JavascriptLoader implements \WordPress\Plugins\EveOnlineFittingManager\Lib
             ],
             'ajax' => [
                 'url' => \admin_url('admin-ajax.php'),
-                'loaderImage' => \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper::getPluginUri('images/loader-sprite.gif')
+                'loaderImage' => PluginHelper::getInstance()->getPluginUri('images/loader-sprite.gif')
             ]
         ];
     }

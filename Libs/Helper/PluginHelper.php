@@ -19,12 +19,14 @@
 
 namespace WordPress\Plugins\EveOnlineFittingManager\Libs\Helper;
 
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
+
 \defined('ABSPATH') or die();
 
-class PluginHelper {
-    public static $optionName = 'eve-online-fitting-manager-options';
-    public static $dbVersionFieldName = 'eve-online-fitting-manager-database-version';
-    public static $databaseVersion = '20180329';
+class PluginHelper extends AbstractSingleton {
+    protected $optionName = 'eve-online-fitting-manager-options';
+    protected $dbVersionFieldName = 'eve-online-fitting-manager-database-version';
+    protected $databaseVersion = '20180329';
 
     /**
      * Getting the Plugin Path
@@ -32,7 +34,7 @@ class PluginHelper {
      * @param string $file
      * @return string
      */
-    public static function getPluginPath($file = '') {
+    public function getPluginPath($file = '') {
         return \WP_PLUGIN_DIR . '/eve-online-fitting-manager/' . $file;
     }
 
@@ -42,7 +44,7 @@ class PluginHelper {
      * @param string $file
      * @return string
      */
-    public static function getPluginUri($file = '') {
+    public function getPluginUri($file = '') {
         return \WP_PLUGIN_URL . '/eve-online-fitting-manager/' . $file;
     }
 
@@ -51,8 +53,8 @@ class PluginHelper {
      *
      * @return string
      */
-    public static function getOptionFieldName() {
-        return self::$optionName;
+    public function getOptionFieldName() {
+        return $this->optionName;
     }
 
     /**
@@ -60,8 +62,8 @@ class PluginHelper {
      *
      * @return string
      */
-    public static function getDatabaseVersionFieldName() {
-        return self::$dbVersionFieldName;
+    public function getDatabaseVersionFieldName() {
+        return $this->dbVersionFieldName;
     }
 
     /**
@@ -69,8 +71,8 @@ class PluginHelper {
      *
      * @return string
      */
-    public static function getNewPluginDatabaseVersion() {
-        return self::$databaseVersion;
+    public function getNewPluginDatabaseVersion() {
+        return $this->databaseVersion;
     }
 
     /**
@@ -78,7 +80,7 @@ class PluginHelper {
      *
      * @return array
      */
-    public static function getPluginDefaultSettings() {
+    public function getPluginDefaultSettings() {
         $defaultSettings = [
             'edk-killboard-host' => '',
             'edk-killboard-user' => '',
@@ -108,16 +110,16 @@ class PluginHelper {
      *
      * @return string
      */
-    public static function getPluginDatabaseVersion() {
-        return \get_option(self::getDatabaseVersionFieldName());
+    public function getPluginDatabaseVersion() {
+        return \get_option($this->getDatabaseVersionFieldName());
     }
 
     /**
      * Update the plugin default settings if needed
      */
-    public static function updateDatabase() {
-        $defaultSettings = self::getPluginDefaultSettings();
-        $pluginSettings = self::getPluginSettings(false);
+    public function updateDatabase() {
+        $defaultSettings = $this->getPluginDefaultSettings();
+        $pluginSettings = $this->getPluginSettings(false);
 
         if(\is_array($pluginSettings)) {
             $newOptions = \array_merge($defaultSettings, $pluginSettings);
@@ -126,10 +128,10 @@ class PluginHelper {
         }
 
         // Update the options
-        \update_option(self::getOptionFieldName(), $newOptions);
+        \update_option($this->getOptionFieldName(), $newOptions);
 
         // Update the DB Version
-        \update_option(self::getDatabaseVersionFieldName(), self::getNewPluginDatabaseVersion());
+        \update_option($this->getDatabaseVersionFieldName(), $this->getNewPluginDatabaseVersion());
     }
 
     /**
@@ -138,11 +140,11 @@ class PluginHelper {
      * @param boolean $merged Merge with default settings (true/false)
      * @return array
      */
-    public static function getPluginSettings($merged = true) {
+    public function getPluginSettings($merged = true) {
         if($merged === true) {
-            $pluginSettings = \get_option(self::getOptionFieldName(), self::getPluginDefaultSettings());
+            $pluginSettings = \get_option($this->getOptionFieldName(), $this->getPluginDefaultSettings());
         } else {
-            $pluginSettings = \get_option(self::getOptionFieldName());
+            $pluginSettings = \get_option($this->getOptionFieldName());
         }
 
         return $pluginSettings;
@@ -154,15 +156,15 @@ class PluginHelper {
      * @param type $plugin
      * @return boolean
      */
-    public static function checkPluginDependencies($plugin) {
-        $returnValue = false;
-
-        if(\class_exists($plugin)) {
-            $returnValue = true;
-        }
-
-        return $returnValue;
-    }
+//    public static function checkPluginDependencies($plugin) {
+//        $returnValue = false;
+//
+//        if(\class_exists($plugin)) {
+//            $returnValue = true;
+//        }
+//
+//        return $returnValue;
+//    }
 
     /**
      * Alias for is_active_sidebar()
@@ -171,14 +173,14 @@ class PluginHelper {
      * @return boolean
      * @uses is_active_sidebar() Whether a sidebar is in use.
      */
-    public static function hasSidebar($sidebarPosition) {
+    public function hasSidebar($sidebarPosition) {
         return \is_active_sidebar($sidebarPosition);
     }
 
-    public static function getMainContentColClasses($echo = false) {
+    public function getMainContentColClasses($echo = false) {
         $contentColClass = 'col-lg-12 col-md-12 col-sm-12 col-12';
 
-        if(self::hasSidebar('sidebar-fitting-manager')) {
+        if($this->hasSidebar('sidebar-fitting-manager')) {
             $contentColClass = 'col-lg-9 col-md-9 col-sm-9 col-9';
         } else {
             $contentColClass = 'col-lg-12 col-md-12 col-sm-12 col-12';
@@ -191,10 +193,10 @@ class PluginHelper {
         }
     }
 
-    public static function getLoopContentClasses($echo = false) {
+    public function getLoopContentClasses($echo = false) {
         $contentColClass = 'col-lg-3 col-md-4 col-sm-6 col-xs-12';
 
-        if(self::hasSidebar('sidebar-fitting-manager')) {
+        if($this->hasSidebar('sidebar-fitting-manager')) {
             $contentColClass = 'col-lg-4 col-md-6 col-sm-12 col-xs-12';
         } else {
             $contentColClass = 'col-lg-3 col-md-4 col-sm-6 col-xs-12';

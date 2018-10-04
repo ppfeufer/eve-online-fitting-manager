@@ -19,26 +19,11 @@
 
 namespace WordPress\Plugins\EveOnlineFittingManager\Libs;
 
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
+
 \defined('ABSPATH') or die();
 
-class Widgets {
-    /**
-     * Constructor
-     */
-    public function __construct() {
-        ;
-    }
-
-    /**
-     * Initialize the show
-     */
-    public function init() {
-        \add_action('init', [$this, 'registerSidebar'], 99);
-        \add_action('widgets_init', \create_function('', 'return register_widget("WordPress\Plugins\EveOnlineFittingManager\Libs\Widgets\DoctrinesWidget");'));
-        \add_action('widgets_init', \create_function('', 'return register_widget("WordPress\Plugins\EveOnlineFittingManager\Libs\Widgets\ShiptypesWidget");'));
-        \add_action('widgets_init', \create_function('', 'return register_widget("WordPress\Plugins\EveOnlineFittingManager\Libs\Widgets\SearchWidget");'));
-    }
-
+class Widgets extends AbstractSingleton {
     /**
      * Register our sidebar
      */
@@ -52,5 +37,14 @@ class Widgets {
             'before_title' => '<h4 class="widget-title">',
             'after_title' => '</h4>',
         ]);
+    }
+
+    /**
+     * Registering our widgets
+     */
+    public function registerWidgets() {
+        \register_widget('\\WordPress\Plugins\EveOnlineFittingManager\Libs\Widgets\DoctrinesWidget');
+        \register_widget('\\WordPress\Plugins\EveOnlineFittingManager\Libs\Widgets\ShiptypesWidget');
+        \register_widget('\\WordPress\Plugins\EveOnlineFittingManager\Libs\Widgets\SearchWidget');
     }
 }

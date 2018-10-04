@@ -31,6 +31,14 @@
 
 namespace WordPress\Plugins\EveOnlineFittingManager;
 
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\GithubUpdater;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\MetaBoxes;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\PluginSettings;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\ResourceLoader\CssLoader;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\ResourceLoader\JavascriptLoader;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\TemplateLoader;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\WpHooks;
+
 const WP_GITHUB_FORCE_UPDATE = true;
 
 \defined('ABSPATH') or die();
@@ -66,30 +74,23 @@ class EveOnlineFittingManager {
      */
     public function init() {
         // Firing hooks
-        new Libs\WpHooks();
+        new WpHooks();
 
         // Loading CSS
-        $cssLoader = new Libs\ResourceLoader\CssLoader;
+        $cssLoader = new CssLoader;
         $cssLoader->init();
 
         // Loading JavaScript
-        $javascriptLoader = new Libs\ResourceLoader\JavascriptLoader;
+        $javascriptLoader = new JavascriptLoader;
         $javascriptLoader->init();
-
-        new Libs\PostType;
-        new Libs\Shortcodes;
-        new Libs\MarketData;
-
-        $widgets = new Libs\Widgets;
-        $widgets->init();
 
         /**
          * start backend only libs
          */
         if(\is_admin()) {
-            new Libs\PluginSettings;
-            new Libs\MetaBoxes;
-            new Libs\TemplateLoader;
+            new PluginSettings;
+            new MetaBoxes;
+            new TemplateLoader;
 
             /**
              * Check Github for updates
@@ -108,7 +109,7 @@ class EveOnlineFittingManager {
                 'access_token' => '',
             ];
 
-            new Libs\GithubUpdater($githubConfig);
+            new GithubUpdater($githubConfig);
         }
     }
 

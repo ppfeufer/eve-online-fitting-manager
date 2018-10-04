@@ -17,7 +17,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-$usedInDoctrines = \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\FittingHelper::getShipUsedInDoctrine();
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\FittingHelper;
+
+$usedInDoctrines = FittingHelper::getInstance()->getShipUsedInDoctrine();
 ?>
 
 <div class="fitting-used-in">

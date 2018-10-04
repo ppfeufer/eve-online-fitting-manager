@@ -19,9 +19,11 @@
 
 namespace WordPress\Plugins\EveOnlineFittingManager\Libs\Helper;
 
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
+
 \defined('ABSPATH') or die();
 
-class TemplateHelper {
+class TemplateHelper extends AbstractSingleton {
     /**
      * Locate template.
      *
@@ -38,7 +40,7 @@ class TemplateHelper {
      * @param string $default_path Default path to template files.
      * @return string Path to the template file.
      */
-    public static function locateTemplate($template_name, $template_path = '', $default_path = '') {
+    public function locateTemplate($template_name, $template_path = '', $default_path = '') {
         // Set variable to search in templates folder of theme.
         if(!$template_path) {
             $template_path = 'templates/';
@@ -51,7 +53,7 @@ class TemplateHelper {
 
         // Set default plugin templates path.
         if(!$default_path) {
-            $default_path = PluginHelper::getPluginPath('templates/'); // Path to the template folder
+            $default_path = PluginHelper::getInstance()->getPluginPath('templates/'); // Path to the template folder
         }
 
         // Search template file in theme folder.
@@ -82,7 +84,7 @@ class TemplateHelper {
      * @param string $tempate_path Path to templates.
      * @param string $default_path Default path to template files.
      */
-    public static function getTemplate($template_name, $args = [], $tempate_path = '', $default_path = '') {
+    public function getTemplate($template_name, $args = [], $tempate_path = '', $default_path = '') {
         if(\is_array($args) && isset($args)) {
             \extract($args);
         }
@@ -92,7 +94,7 @@ class TemplateHelper {
             $template_name .= '.php';
         }
 
-        $template_file = self::locateTemplate($template_name, $tempate_path, $default_path);
+        $template_file = $this->locateTemplate($template_name, $tempate_path, $default_path);
 
         if(!\file_exists($template_file)) {
             \_doing_it_wrong(__FUNCTION__, \sprintf('<code>%s</code> does not exist.', $template_file), '1.0.0');

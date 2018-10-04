@@ -19,12 +19,15 @@
 
 namespace WordPress\Plugins\EveOnlineFittingManager\Libs;
 
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
+
 \defined('ABSPATH') or die();
 
 /**
  * Registering the Killboard Database as its own instance of wpdb
  */
-class Database extends Singletons\AbstractSingleton {
+class Database extends AbstractSingleton {
     /**
      * Plugin settings
      *
@@ -45,7 +48,7 @@ class Database extends Singletons\AbstractSingleton {
     protected function __construct() {
         parent::__construct();
 
-        $this->pluginSettings = \get_option(Helper\PluginHelper::getOptionFieldName(), Helper\PluginHelper::getPluginDefaultSettings());
+        $this->pluginSettings = \get_option(PluginHelper::getInstance()->getOptionFieldName(), PluginHelper::getInstance()->getPluginDefaultSettings());
 
         $this->db = $this->initiateKillboardDatabase();
     }

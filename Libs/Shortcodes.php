@@ -19,22 +19,25 @@
 
 namespace WordPress\Plugins\EveOnlineFittingManager\Libs;
 
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\FittingHelper;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
+
 \defined('ABSPATH') or die();
 
-class Shortcodes {
-    /**
-     * Constructor
-     */
-    public function __construct() {
-        $this->registerShortcodes();
-    }
-
-    /**
-     * register all shortcodes
-     */
-    public function registerShortcodes() {
-        \add_shortcode('fittings', [$this, 'shortcodeFittings']);
-    }
+class Shortcodes extends AbstractSingleton {
+//    /**
+//     * Constructor
+//     */
+//    public function __construct() {
+//        $this->registerShortcodes();
+//    }
+//
+//    /**
+//     * register all shortcodes
+//     */
+//    public function registerShortcodes() {
+//        \add_shortcode('fittings', [$this, 'shortcodeFittings']);
+//    }
 
     /**
      * Shortcode for fitting navigation inside a page or post
@@ -49,6 +52,6 @@ class Shortcodes {
             'list' => 'doctrines'
         ], $atts);
 
-        return Helper\FittingHelper::getContentMenu('fitting-' . $args['list']);
+        return FittingHelper::getInstance()->getContentMenu('fitting-' . $args['list']);
     }
 }

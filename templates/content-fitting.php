@@ -17,9 +17,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\FittingHelper;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper;
+
 defined('ABSPATH') or die();
 
-$pluginOptions = \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper::getPluginSettings();
+$pluginOptions = PluginHelper::getInstance()->getPluginSettings();
 ?>
 
 <article id="post-<?php \the_ID(); ?>" <?php \post_class('clearfix content-single template-content-fitting'); ?>>
@@ -40,7 +43,7 @@ $pluginOptions = \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHe
                         } else {
                             // Load our dummy ...
                             ?>
-                            <img width="705" height="395" src="<?php echo \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper::getPluginUri('images/fitting-dummy.jpg'); ?>" class="attachment-post-loop-thumbnail img-responsive" alt="<?php echo \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_ship_type', true); ?>">
+                            <img width="705" height="395" src="<?php echo PluginHelper::getInstance()->getPluginUri('images/fitting-dummy.jpg'); ?>" class="attachment-post-loop-thumbnail img-responsive" alt="<?php echo \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_ship_type', true); ?>">
                             <?php
                         }
                         ?>
@@ -60,7 +63,7 @@ $pluginOptions = \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHe
                     <h3 class="doctrine-shipfitting-header">
                         <span class="doctrine-shipfitting-header-wrapper">
                             <span class="doctrine-shipfitting-header-ship-image">
-                                <img src="<?php echo \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\FittingHelper::getShipImageById(\get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_ship_ID', true), 64); ?>">
+                                <img src="<?php echo FittingHelper::getInstance()->getShipImageById(\get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_ship_ID', true), 64); ?>">
                             </span>
                             <span class="doctrine-shipfitting-header-fitting-name">
                                 <?php echo \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_ship_type', true); ?><br>
