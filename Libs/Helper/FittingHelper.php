@@ -528,7 +528,7 @@ class FittingHelper extends AbstractSingleton {
      * @return type
      */
     public function getShipImageById($itemID = null, $size = 512) {
-        $image = ImageHelper::getInstance()->getLocalCacheImageUriForRemoteImage('ship', ImageHelper::getInstance()->getImageServerUrl('inventory') . $itemID . '_' . $size . '.png');
+        $image = ImageHelper::getInstance()->getImageServerUrl('inventory') . $itemID . '_' . $size . '.png';
 
         return $image;
     }
