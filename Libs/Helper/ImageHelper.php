@@ -29,7 +29,7 @@ class ImageHelper extends AbstractSingleton {
      *
      * @var var
      */
-    protected $imageserverUrl = 'https://image.eveonline.com/';
+    protected $imageserverUrl = 'https://imageserver.eveonline.com/';
 
     /**
      * Array with possible end point on CCP's image server
