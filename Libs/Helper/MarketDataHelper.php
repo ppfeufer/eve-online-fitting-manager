@@ -27,15 +27,7 @@ class MarketDataHelper extends AbstractSingleton {
     /**
      * Available Market APIs:
      *      EVE Marketer => https://api.evemarketer.com/ec/marketstat/json?typeid=3057,2364,3057&regionlimit=10000002&usesystem=30000142
-     *      EVE Central => https://api.eve-central.com/api/marketstat/json?typeid=3057,2364,3057&regionlimit=10000002&usesystem=30000142
      */
-
-    /**
-     * EVE Central API Url
-     *
-     * @var string API Url
-     */
-    protected $apiUrlEveCentral = 'https://api.eve-central.com/api/marketstat/json';
 
     /**
      * EVE Marketer API Url
@@ -98,13 +90,6 @@ class MarketDataHelper extends AbstractSingleton {
 
         switch($this->pluginSettings['market-data-api']) {
             /**
-             * EVE Central
-             */
-            case 'eve-central':
-                $this->apiUrl = $this->apiUrlEveCentral . $urlParameters;
-                break;
-
-            /**
              * EVE Marketer
              */
             case 'eve-marketer':
@@ -133,7 +118,6 @@ class MarketDataHelper extends AbstractSingleton {
         $returnValue = CacheHelper::getInstance()->checkTransientCache($transientName);
 
         if($returnValue === false) {
-//            $get = \wp_remote_get($this->apiUrl . $typeIdString);
             $get = $this->remoteHelper->getRemoteData($this->apiUrl . $typeIdString);
             $json = \wp_remote_retrieve_body($get);
 

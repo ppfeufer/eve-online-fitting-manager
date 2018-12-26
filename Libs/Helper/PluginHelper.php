@@ -82,10 +82,6 @@ class PluginHelper extends AbstractSingleton {
      */
     public function getPluginDefaultSettings() {
         $defaultSettings = [
-//            'edk-killboard-host' => '',
-//            'edk-killboard-user' => '',
-//            'edk-killboard-name' => '',
-//            'edk-killboard-password' => '',
             'market-data-api' => 'eve-marketer',
             'template-image-settings' => [
                 'show-ship-images-in-loop' => '',

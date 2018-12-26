@@ -65,7 +65,6 @@ class PluginSettings {
                 /**
                  * killboard settings tab
                  */
-//                'general-settings' => $this->getKillboardSettings(),
                 'marketdata-settings' => $this->getMarketDataSettings(),
                 'template-settings' => $this->getTemplateSettings()
             ]
@@ -73,21 +72,6 @@ class PluginSettings {
 
         return $pluginOptionsPage;
     }
-
-    /**
-     * Getting the Killboard Databse Settings
-     *
-     * @return array The Killboard Database Setting
-     */
-//    private function getKillboardSettings() {
-//        $settings = [
-//            'tab_title' => \__('Killboard Settings', 'eve-online-fitting-manager'),
-//            'tab_description' => \__('You need to have a connection to a EDK killboard database in order to use this plugin. The database is needed to gather all the ship and item information.', 'eve-online-fitting-manager'),
-//            'fields' => $this->getKillboardSettingsFields()
-//        ];
-//
-//        return $settings;
-//    }
 
     /**
      * Getting the Killboard Databse Settings
@@ -118,37 +102,6 @@ class PluginSettings {
     }
 
     /**
-     * Get the settings fields for the Killboard settings
-     * @return array Settings fields for the Killboard settings
-     */
-//    private function getKillboardSettingsFields() {
-//        $settingsFields = [
-//            '' => [
-//                'type' => 'info',
-//            ],
-//            'edk-killboard-host' => [
-//                'type' => 'text',
-//                'title' => \__('DB Host', 'eve-online-fitting-manager'),
-//                'default' => 'localhost'
-//            ],
-//            'edk-killboard-name' => [
-//                'type' => 'text',
-//                'title' => \__('DB Name', 'eve-online-fitting-manager'),
-//            ],
-//            'edk-killboard-user' => [
-//                'type' => 'text',
-//                'title' => \__('DB User', 'eve-online-fitting-manager'),
-//            ],
-//            'edk-killboard-password' => [
-//                'type' => 'password',
-//                'title' => \__('DB Password', 'eve-online-fitting-manager'),
-//            ]
-//        ];
-//
-//        return $settingsFields;
-//    }
-
-    /**
      * get the settings fields for the template related settings
      *
      * @return array Settings fields for the template related settings
@@ -159,7 +112,6 @@ class PluginSettings {
                 'type' => 'radio',
                 'title' => \__('Market Data API', 'eve-online-fitting-manager'),
                 'choices' => [
-//                    'eve-central' => \__('EVE Central', 'eve-online-fitting-manager') . ' (<a href="https://eve-central.com/" target="_blank">https://eve-central.com/</a>)',
                     'eve-marketer' => \__('EVE Marketer', 'eve-online-fitting-manager') . ' (<a href="https://evemarketer.com/" target="_blank">https://evemarketer.com/</a>)',
                 ],
             ]
