@@ -67,15 +67,18 @@ if(!empty($serviceSlots)) {
         <img alt="" src="<?php echo PluginHelper::getInstance()->getPluginUri('images/fitting-ring/eve-fitting-ring.png'); ?>" class="fittingRingImage">
     </div>
 
-    <!--
-    // High Slots
-    -->
-    <div class="highSlots">
-        <img alt="" src="<?php echo PluginHelper::getInstance()->getPluginUri('images/fitting-ring/' . $fittingSlotLayout['highSlots'] . 'h.png'); ?>">
-    </div>
     <?php
     if($itemsHighSlots !== null) {
+        ?>
+        <!--
+        // High Slots
+        -->
+        <div class="highSlots">
+            <img alt="" src="<?php echo PluginHelper::getInstance()->getPluginUri('images/fitting-ring/' . $fittingSlotLayout['highSlots'] . 'h.png'); ?>">
+        </div>
+        <?php
         $hsCount = 1;
+
         foreach($itemsHighSlots as $highSlotItemID) {
             if(!empty($highSlotItemID)) {
                 ?>
@@ -88,17 +91,18 @@ if(!empty($serviceSlots)) {
             $hsCount++;
         }
     }
-    ?>
 
-    <!--
-    // Mid Slots
-    -->
-    <div class="midSlots">
-        <img alt="" src="<?php echo PluginHelper::getInstance()->getPluginUri('images/fitting-ring/' . $fittingSlotLayout['midSlots'] . 'm.png'); ?>">
-    </div>
-    <?php
     if($itemsMidSlots !== null) {
+        ?>
+        <!--
+        // Mid Slots
+        -->
+        <div class="midSlots">
+            <img alt="" src="<?php echo PluginHelper::getInstance()->getPluginUri('images/fitting-ring/' . $fittingSlotLayout['midSlots'] . 'm.png'); ?>">
+        </div>
+        <?php
         $msCount = 1;
+        
         foreach($itemsMidSlots as $midSlotItemID) {
             if(!empty($midSlotItemID)) {
                 ?>
@@ -111,16 +115,16 @@ if(!empty($serviceSlots)) {
             $msCount++;
         }
     }
-    ?>
 
-    <!--
-    // Low Slots
-    -->
-    <div class="lowSlots">
-        <img style="border: 0px;" alt="" src="<?php echo PluginHelper::getInstance()->getPluginUri('images/fitting-ring/' . $fittingSlotLayout['lowSlots'] . 'l.png'); ?>">
-    </div>
-    <?php
     if($itemsLowSlots !== null) {
+        ?>
+        <!--
+        // Low Slots
+        -->
+        <div class="lowSlots">
+            <img style="border: 0px;" alt="" src="<?php echo PluginHelper::getInstance()->getPluginUri('images/fitting-ring/' . $fittingSlotLayout['lowSlots'] . 'l.png'); ?>">
+        </div>
+        <?php
         $lsCount = 1;
 
         foreach($itemsLowSlots as $lowSlotItemID) {
@@ -135,16 +139,16 @@ if(!empty($serviceSlots)) {
             $lsCount++;
         }
     }
-    ?>
 
-    <!--
-    // Rig Slots
-    -->
-    <div class="rigSlots">
-        <img style="border: 0px;" alt="" src="<?php echo PluginHelper::getInstance()->getPluginUri('images/fitting-ring/' . $fittingSlotLayout['rigSlots'] . 'r.png'); ?>">
-    </div>
-    <?php
     if($itemsRigSlots !== null) {
+        ?>
+        <!--
+        // Rig Slots
+        -->
+        <div class="rigSlots">
+            <img style="border: 0px;" alt="" src="<?php echo PluginHelper::getInstance()->getPluginUri('images/fitting-ring/' . $fittingSlotLayout['rigSlots'] . 'r.png'); ?>">
+        </div>
+        <?php
         $rsCount = 1;
 
         foreach($itemsRigSlots as $rigSlotItemID) {
