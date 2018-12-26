@@ -19,7 +19,7 @@
 
 namespace WordPress\Plugins\EveOnlineFittingManager\Libs\Helper;
 
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
+use WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
 
 \defined('ABSPATH') or die();
 
@@ -82,15 +82,14 @@ class PluginHelper extends AbstractSingleton {
      */
     public function getPluginDefaultSettings() {
         $defaultSettings = [
-            'edk-killboard-host' => '',
-            'edk-killboard-user' => '',
-            'edk-killboard-name' => '',
-            'edk-killboard-password' => '',
+//            'edk-killboard-host' => '',
+//            'edk-killboard-user' => '',
+//            'edk-killboard-name' => '',
+//            'edk-killboard-password' => '',
             'market-data-api' => 'eve-marketer',
             'template-image-settings' => [
                 'show-ship-images-in-loop' => '',
                 'show-doctrine-images-in-loop' => '',
-                'use-image-cache' => ''
             ],
             'template-detail-parts-settings' => [
                 'show-visual-fitting' => 'yes',
@@ -149,22 +148,6 @@ class PluginHelper extends AbstractSingleton {
 
         return $pluginSettings;
     }
-
-    /**
-     * checking for other plugins we might be able to use
-     *
-     * @param type $plugin
-     * @return boolean
-     */
-//    public static function checkPluginDependencies($plugin) {
-//        $returnValue = false;
-//
-//        if(\class_exists($plugin)) {
-//            $returnValue = true;
-//        }
-//
-//        return $returnValue;
-//    }
 
     /**
      * Alias for is_active_sidebar()

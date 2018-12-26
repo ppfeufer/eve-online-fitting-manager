@@ -19,8 +19,9 @@
 
 namespace WordPress\Plugins\EveOnlineFittingManager\Libs;
 
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper;
-use \WP_Query;
+use WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper;
+use WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\UpdateHelper;
+use WP_Query;
 
 \defined('ABSPATH') or die();
 
@@ -74,6 +75,8 @@ class WpHooks {
      */
     public function initHooks() {
         \register_activation_hook($this->pluginFile, [$this, 'checkDatabaseForUpdates']);
+        \register_activation_hook($this->pluginFile, [UpdateHelper::getInstance(), 'checkDatabaseForUpdates']);
+        \register_activation_hook($this->pluginFile, [UpdateHelper::getInstance(), 'checkEsiClientForUpdates']);
         \register_activation_hook($this->pluginFile, [$this, 'flushRewriteRulesOnActivation']);
 
         \register_deactivation_hook($this->pluginFile, [$this, 'flushRewriteRulesOnDeactivation']);
@@ -89,6 +92,8 @@ class WpHooks {
          * thx wordpress for removing update hooks ...
          */
         \add_action('plugins_loaded', [$this, 'checkDatabaseForUpdates']);
+        \add_action('plugins_loaded', [UpdateHelper::getInstance(), 'checkDatabaseForUpdates']);
+        \add_action('plugins_loaded', [UpdateHelper::getInstance(), 'checkEsiClientForUpdates']);
 
         /**
          * Adding some query vars for the fitting search
@@ -216,11 +221,9 @@ class WpHooks {
          * Compatibilty with Fly Dynamic Image Resizer plugin
          */
         if(\function_exists('\fly_add_image_size')) {
-            \fly_add_image_size('header-image', 1680, 500, true);
-            \fly_add_image_size('fitting-helper-post-loop-thumbnail', 768, 432, true);
+            \fly_add_image_size('fitting-manager-post-loop-thumbnail', 768, 432, true);
         } else {
-            \add_image_size('header-image', 1680, 500, true);
-            \add_image_size('fitting-helper-post-loop-thumbnail', 768, 432, true);
+            \add_image_size('fitting-manager-post-loop-thumbnail', 768, 432, true);
         }
     }
 

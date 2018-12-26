@@ -138,11 +138,9 @@ class MetaBoxes {
 
         // EFT Fitting
         $eftFitting = \filter_input(\INPUT_POST, 'eve-online-fitting-manager_eft-import');
-
         $shipType = EftHelper::getInstance()->getShipType($eftFitting);
         $shipName = EftHelper::getInstance()->getFittingName($eftFitting);
-        $shipID = FittingHelper::getInstance()->getItemIdByName($shipType);
-
+        $shipID = FittingHelper::getInstance()->getItemIdByName($shipType, 'inventoryTypes');
         $fittingSlotData = EftHelper::getInstance()->getSlotDataFromEftData($eftFitting);
         $fittingDna = EftHelper::getInstance()->getShipDnaFromEftData($eftFitting);
 

@@ -32,18 +32,18 @@ $pluginOptions = PluginHelper::getInstance()->getPluginSettings();
             if(isset($pluginOptions['template-image-settings']['show-ship-images-in-loop']) && $pluginOptions['template-image-settings']['show-ship-images-in-loop'] === 'yes') {
                 ?>
                 <a class="fitting-list-item" href="<?php \the_permalink(); ?>" title="<?php \the_title_attribute('echo=0'); ?>">
-                    <figure class="post-loop-thumbnail">
+                    <figure class="fitting-manager-post-loop-thumbnail">
                         <?php
                         if(\has_post_thumbnail()) {
                             if(\function_exists('\fly_get_attachment_image')) {
-                                echo \fly_get_attachment_image(\get_post_thumbnail_id(), 'post-loop-thumbnail');
+                                echo \fly_get_attachment_image(\get_post_thumbnail_id(), 'fitting-manager-post-loop-thumbnail');
                             } else {
-                                \the_post_thumbnail('post-loop-thumbnail');
+                                \the_post_thumbnail('fitting-manager-post-loop-thumbnail');
                             }
                         } else {
                             // Load our dummy ...
                             ?>
-                            <img width="705" height="395" src="<?php echo PluginHelper::getInstance()->getPluginUri('images/fitting-dummy.jpg'); ?>" class="attachment-post-loop-thumbnail img-responsive" alt="<?php echo \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_ship_type', true); ?>">
+                            <img width="705" height="395" src="<?php echo PluginHelper::getInstance()->getPluginUri('images/fitting-dummy.jpg'); ?>" class="attachment-fitting-manager-post-loop-thumbnail img-responsive" alt="<?php echo \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_ship_type', true); ?>">
                             <?php
                         }
                         ?>

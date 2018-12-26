@@ -2,10 +2,12 @@
 
 ## [In Development](https://github.com/ppfeufer/eve-online-fitting-manager/tree/development)
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.13.4...HEAD)
+This is a complete rewrite to utilize ESI, so there is no longer a need for a local EDK installation in order to get this plugin to work. Before you update, it is recommended that you backup your fittings you have already.
+
 ### Changed
 - EVE Central market API deactivated, since it's is still dead
 - EVE Marketer is now the default market API
-- Namespaces to match WordPress's fodler structure (Plugin » Plugins)
+- Namespaces to match WordPress's folder structure (Plugin » Plugins)
 - Updated image server URL
 
 ### Fixed
@@ -13,6 +15,7 @@
 
 ### Removed
 - Osmium is long dead, time to remove it. RIP Osmium, you will be missed.
+- Image cache, to much hassle, let's just use CCP's image server instead
 
 ## [v0.13.4](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.13.4) - 2018-05-09
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.13.3...v0.13.4)

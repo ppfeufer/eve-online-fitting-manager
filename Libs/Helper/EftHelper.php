@@ -49,7 +49,7 @@ class EftHelper extends AbstractSingleton {
     }
 
     /**
-     * Getting the fitting name from teh EFT dump
+     * Getting the fitting name from the EFT dump
      *
      * @param string $eftFitting EFT fitting dump
      * @return string The fitting name

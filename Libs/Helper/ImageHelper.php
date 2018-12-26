@@ -39,13 +39,6 @@ class ImageHelper extends AbstractSingleton {
     protected $imageserverEndpoints = null;
 
     /**
-     * Plugin settings
-     *
-     * @var array
-     */
-//    protected $pluginSettings = null;
-
-    /**
      * The Construtor
      */
     protected function __construct() {
@@ -59,8 +52,6 @@ class ImageHelper extends AbstractSingleton {
             'ship' => 'Render/',
             'inventory' => 'InventoryType/' // all the other stuff
         ];
-
-        $this->pluginSettings = PluginHelper::getInstance()->getPluginSettings(true);
     }
 
     /**
@@ -85,39 +76,4 @@ class ImageHelper extends AbstractSingleton {
 
         return $this->imageserverUrl . $endpoint;
     }
-
-    /**
-     * Getting the cached URL for a remote image
-     *
-     * @param string $cacheType The subdirectory in the image cache filesystem
-     * @param string $remoteImageUrl The URL for the remote image
-     * @return string The cached Image URL
-     */
-//    public function getLocalCacheImageUriForRemoteImage($cacheType = null, $remoteImageUrl = null) {
-//        $returnValue = $remoteImageUrl;
-//
-//        // Check if we should use image cache first
-//        if(isset($this->pluginSettings['template-image-settings']['use-image-cache']) && $this->pluginSettings['template-image-settings']['use-image-cache'] === 'yes') {
-//            $explodedImageUrl = \explode('/', $remoteImageUrl);
-//            $imageFilename = \end($explodedImageUrl);
-//            $cachedImage = CacheHelper::getInstance()->getImageCacheUri() . $cacheType . '/' . $imageFilename;
-//
-//            // if we don't have the image cached already
-//            if(CacheHelper::getInstance()->checkCachedImage($cacheType, $imageFilename) === false) {
-//                /**
-//                 * Check if the content dir is writable and cache the image.
-//                 * Otherwise set the remote image as return value.
-//                 */
-//                if(\is_dir(CacheHelper::getInstance()->getImageCacheDir() . $cacheType) && \is_writable(CacheHelper::getInstance()->getImageCacheDir() . $cacheType)) {
-//                    if(CacheHelper::getInstance()->cacheRemoteImageFile($cacheType, $remoteImageUrl) === true) {
-//                        $returnValue = $cachedImage;
-//                    }
-//                }
-//            } else {
-//                $returnValue = $cachedImage;
-//            }
-//        }
-//
-//        return $returnValue;
-//    }
 }

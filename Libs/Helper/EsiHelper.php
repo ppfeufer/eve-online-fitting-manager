@@ -24,14 +24,12 @@
  */
 namespace WordPress\Plugins\EveOnlineFittingManager\Libs\Helper;
 
-use \WordPress\EsiClient\Model\Universe\UniverseGroupsGroupId;
-use \WordPress\EsiClient\Model\Universe\UniverseIds;
-use \WordPress\EsiClient\Model\Universe\UniverseTypesTypeId;
-use \WordPress\EsiClient\Repository\AllianceRepository;
-use \WordPress\EsiClient\Repository\CharacterRepository;
-use \WordPress\EsiClient\Repository\CorporationRepository;
-use \WordPress\EsiClient\Repository\UniverseRepository;
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
+use WordPress\EsiClient\Model\Universe\UniverseGroupsGroupId;
+use WordPress\EsiClient\Model\Universe\UniverseIds;
+use WordPress\EsiClient\Model\Universe\UniverseTypesTypeId;
+use WordPress\EsiClient\Repository\DogmaRepository;
+use WordPress\EsiClient\Repository\UniverseRepository;
+use WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
 
 \defined('ABSPATH') or die();
 
@@ -53,14 +51,14 @@ class EsiHelper extends AbstractSingleton {
     /**
      * Plugin Helper
      *
-     * @var \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\ImageHelper
+     * @var ImageHelper
      */
     private $imageHelper = null;
 
     /**
      * Plugin Helper
      *
-     * @var \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper
+     * @var PluginHelper
      */
     private $pluginHelper = null;
 
@@ -72,46 +70,18 @@ class EsiHelper extends AbstractSingleton {
     private $pluginSettings = null;
 
     /**
-     * Cache Helper
-     *
-     * @var \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\CacheHelper
-     */
-    private $cacheHelper = null;
-
-    /**
      * Remote Helper
      *
-     * @var \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\RemoteHelper
+     * @var RemoteHelper
      */
     private $remoteHelper = null;
 
     /**
      * Database Helper
      *
-     * @var \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\DatabaseHelper
+     * @var DatabaseHelper
      */
     private $databaseHelper = null;
-
-    /**
-     * ESI Character API
-     *
-     * @var CharacterRepository
-     */
-    private $characterApi = null;
-
-    /**
-     * ESI Corporation API
-     *
-     * @var CorporationRepository
-     */
-    private $corporationApi = null;
-
-    /**
-     * ESI Alliance API
-     *
-     * @var AllianceRepository
-     */
-    private $allianceApi = null;
 
     /**
      * ESI Universe API
@@ -121,120 +91,143 @@ class EsiHelper extends AbstractSingleton {
     private $universeApi = null;
 
     /**
+     * ESI Universe API
+     *
+     * @var DogmaRepository
+     */
+    private $dogmaApi = null;
+
+    /**
      * The Constructor
      */
     protected function __construct() {
         parent::__construct();
 
-        if(!$this->pluginHelper instanceof \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper) {
+        if(!$this->pluginHelper instanceof PluginHelper) {
             $this->pluginHelper = PluginHelper::getInstance();
             $this->pluginSettings = $this->pluginHelper->getPluginSettings();
         }
 
-        if(!$this->imageHelper instanceof \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\ImageHelper) {
+        if(!$this->imageHelper instanceof ImageHelper) {
             $this->imageHelper = ImageHelper::getInstance();
             $this->imageserverEndpoints = $this->imageHelper->getImageserverEndpoints();
             $this->imageserverUrl = $this->imageHelper->getImageServerUrl();
         }
 
         $this->databaseHelper = DatabaseHelper::getInstance();
-        $this->cacheHelper = CacheHelper::getInstance();
         $this->remoteHelper = RemoteHelper::getInstance();
 
         /**
          * ESI API Client
          */
-        $this->characterApi = new CharacterRepository;
-        $this->corporationApi = new CorporationRepository;
-        $this->allianceApi = new AllianceRepository;
         $this->universeApi = new UniverseRepository;
+        $this->dogmaApi = new DogmaRepository;
     }
 
     /**
      * Getting all the needed ship information from the ESI
      *
-     * @param int $shipId
+     * @param int $itemId
      * @return array
      */
-    public function getShipData($shipId) {
-        $returnData = null;
+    public function getItemDataByItemId($itemId) {
+        $returnData = [
+            'itemTypeInformation' => null,
+            'itemGroupInformation' => null,
+            'itemCategoryInformation' => null
+        ];
 
-        /* @var $shipClassData UniverseTypesTypeId */
-        $shipClassData = $this->getShipClassDataFromShipId($shipId);
+        /* @var $itemTypeInformation UniverseTypesTypeId */
+        $itemTypeInformation = $this->getItemTypeInformation($itemId);
 
-        $shipTypeData = null;
+        $itemGroupInformation = null;
+        $itemCategoryInformation = null;
 
-        if(!\is_null($shipClassData->getGroupId())) {
-            /* @var $shipTypeData UniverseGroupsGroupId */
-            $shipTypeData = $this->getShipTypeDataFromShipClass($shipClassData);
-        }
+        if(!\is_null($itemTypeInformation)) {
+            $returnData['itemTypeInformation'] = $itemTypeInformation;
 
-        if(!\is_null($shipClassData) && !\is_null($shipTypeData)) {
-            $returnData = [
-                'shipData' => $shipClassData,
-                'shipTypeData' => $shipTypeData
-            ];
+            /* @var $itemGroupInformation UniverseGroupsGroupId */
+            $itemGroupInformation = $this->getItemGroupInformation($itemTypeInformation->getGroupId());
+
+            if(!\is_null($itemGroupInformation)) {
+                $returnData['itemGroupInformation'] = $itemGroupInformation;
+
+                $itemCategoryInformation = $this->getItemCategoryInformation($itemGroupInformation->getCategoryId());
+
+                $returnData['itemCategoryInformation'] = $itemCategoryInformation;
+            }
         }
 
         return $returnData;
     }
 
     /**
-     * Getting ship class data by ship id
+     * Gettingitem data
      *
-     * @param int $shipId
+     * @param int $itemId
      * @return UniverseTypesTypeId
      */
-    public function getShipClassDataFromShipId($shipId) {
-        /* @var $shipClassData UniverseTypesTypeId */
-        $shipClassData = $this->databaseHelper->getCachedEsiDataFromDb('universe/types/' . $shipId);
+    public function getItemTypeInformation(int $itemId) {
+        /* @var $itemTypeInformation UniverseTypesTypeId */
+        $itemTypeInformation = $this->databaseHelper->getCachedEsiDataFromDb('universe/types/' . $itemId);
 
-        if(\is_null($shipClassData)) {
-            $shipClassData = $this->universeApi->universeTypesTypeId($shipId);
+        if(\is_null($itemTypeInformation)) {
+            $itemTypeInformation = $this->universeApi->universeTypesTypeId($itemId);
 
             $this->databaseHelper->writeEsiCacheDataToDb([
-                'universe/types/' . $shipId,
-                \maybe_serialize($shipClassData),
+                'universe/types/' . $itemId,
+                \maybe_serialize($itemTypeInformation),
                 \strtotime('+1 week')
             ]);
         }
 
-        return $shipClassData;
+        return $itemTypeInformation;
     }
 
     /**
-     * Get ship type data by ship class
+     * Get item group data
      *
-     * @param UniverseTypesTypeId $shipData
+     * @param int $groupId
      * @return UniverseGroupsGroupId
      */
-    public function getShipTypeDataFromShipClass(UniverseTypesTypeId $shipData) {
-        /* @var $shipTypeData UniverseGroupsGroupId */
-        $shipTypeData = $this->databaseHelper->getCachedEsiDataFromDb('universe/groups/' . $shipData->getGroupId());
+    public function getItemGroupInformation(int $groupId) {
+        /* @var $groupData UniverseGroupsGroupId */
+        $groupData = $this->databaseHelper->getCachedEsiDataFromDb('universe/groups/' . $groupId);
 
-        if(\is_null($shipTypeData)) {
-            $shipTypeData = $this->universeApi->universeGroupsGroupId($shipData->getGroupId());
+        if(\is_null($groupData)) {
+            $groupData = $this->universeApi->universeGroupsGroupId($groupId);
 
             $this->databaseHelper->writeEsiCacheDataToDb([
-                'universe/groups/' . $shipData->getGroupId(),
-                \maybe_serialize($shipTypeData),
+                'universe/groups/' . $groupId,
+                \maybe_serialize($groupData),
                 \strtotime('+1 week')
             ]);
         }
 
-        return $shipTypeData;
+        return $groupData;
     }
 
     /**
-     * Get the affiliation for a set of characterIDs
+     * Get item category data
      *
-     * @param array $characterIds
-     * @return array
+     * @param int $categoryId
+     * @return Universe
      */
-    public function getCharacterAffiliation(array $characterIds) {
-        $characterAffiliationData = $this->characterApi->charactersAffiliation(\array_values($characterIds));
+    public function getItemCategoryInformation(int $categoryId) {
+        /* @var $categoryData UniverseGroupsGroupId */
+        $categoryData = $this->databaseHelper->getCachedEsiDataFromDb('universe/categories/' . $categoryId);
 
-        return $characterAffiliationData;
+        if(\is_null($categoryData)) {
+            $categoryData = $this->universeApi->universeCategoriesCategoryId($categoryId);
+
+            $this->databaseHelper->writeEsiCacheDataToDb([
+                'universe/categories/' . $categoryId,
+                \maybe_serialize($categoryData),
+                \strtotime('+1 week')
+            ]);
+        }
+
+        return $categoryData;
     }
 
     /**
@@ -295,124 +288,21 @@ class EsiHelper extends AbstractSingleton {
         return $returnData;
     }
 
-    /**
-     * Get corporation data by ID
-     *
-     * @param string $corporationId
-     * @return object
-     */
-    public function getCorporationData($corporationId) {
-        $corporationData = $this->databaseHelper->getCachedEsiDataFromDb('corporations/' . $corporationId);
+    public function getDogmaAttribute(int $dogmaAttributeId) {
+        $dogmaAttributeData = $this->databaseHelper->getCachedEsiDataFromDb('dogma/attributes/' . $dogmaAttributeId);
 
-        if(\is_null($corporationData)) {
-            $corporationData = $this->corporationApi->corporationsCorporationId($corporationId);
+        if(\is_null($dogmaAttributeData)) {
+            $dogmaAttributeData = $this->dogmaApi->dogmaAttributesAttributeId($dogmaAttributeId);
 
-            if(!\is_null($corporationData)) {
+            if(!\is_null($dogmaAttributeData)) {
                 $this->databaseHelper->writeEsiCacheDataToDb([
-                    'corporations/' . $corporationId,
-                    \maybe_serialize($corporationData),
+                    'dogma/attributes/' . $dogmaAttributeId,
+                    \maybe_serialize($dogmaAttributeData),
                     \strtotime('+1 week')
                 ]);
             }
         }
 
-        return $corporationData;
-    }
-
-    /**
-     * Get alliance data by ID
-     *
-     * @global object $wpdb
-     * @param string $allianceId
-     * @return object
-     */
-    public function getAllianceData($allianceId) {
-        $allianceData = $this->databaseHelper->getCachedEsiDataFromDb('alliances/' . $allianceId);
-
-        if(\is_null($allianceData)) {
-            $allianceData = $this->allianceApi->alliancesAllianceId($allianceId);
-
-            if(!\is_null($allianceData)) {
-                $this->databaseHelper->writeEsiCacheDataToDb([
-                    'alliances/' . $allianceId,
-                    \maybe_serialize($allianceData),
-                    \strtotime('+1 week')
-                ]);
-            }
-        }
-
-        return $allianceData;
-    }
-
-    /**
-     * Getting all the needed system information from the ESI
-     *
-     * @param int $systemId
-     * @return array
-     */
-    public function getSystemData($systemId) {
-        $systemData = $this->databaseHelper->getCachedEsiDataFromDb('universe/systems/' . $systemId);
-
-        if(\is_null($systemData)) {
-            $systemData = $this->universeApi->universeSystemsSystemId($systemId);
-
-            if(!\is_null($systemData)) {
-                $this->databaseHelper->writeEsiCacheDataToDb([
-                    'universe/systems/' . $systemId,
-                    \maybe_serialize($systemData),
-                    \strtotime('+10 years')
-                ]);
-            }
-        }
-
-        return $systemData;
-    }
-
-    /**
-     * Getting all the needed constellation information from the ESI
-     *
-     * @param int $constellationId
-     * @return array
-     */
-    public function getConstellationData($constellationId) {
-        $constellationData = $this->databaseHelper->getCachedEsiDataFromDb('universe/constellations/' . $constellationId);
-
-        if(\is_null($constellationData)) {
-            $constellationData = $this->universeApi->universeConstellationsConstellationId($constellationId);
-
-            if(!\is_null($constellationData)) {
-                $this->databaseHelper->writeEsiCacheDataToDb([
-                    'universe/constellations/' . $constellationId,
-                    \maybe_serialize($constellationData),
-                    \strtotime('+10 years')
-                ]);
-            }
-        }
-
-        return $constellationData;
-    }
-
-    /**
-     * Getting all the needed constellation information from the ESI
-     *
-     * @param int $regionId
-     * @return array
-     */
-    public function getRegionData($regionId) {
-        $regionData = $this->databaseHelper->getCachedEsiDataFromDb('universe/regions/' . $regionId);
-
-        if(\is_null($regionData)) {
-            $regionData = $this->universeApi->universeRegionsRegionId($regionId);
-
-            if(!\is_null($regionData)) {
-                $this->databaseHelper->writeEsiCacheDataToDb([
-                    'universe/regions/' . $regionId,
-                    \maybe_serialize($regionData),
-                    \strtotime('+10 years')
-                ]);
-            }
-        }
-
-        return $regionData;
+        return $dogmaAttributeData;
     }
 }
