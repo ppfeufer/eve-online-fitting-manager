@@ -26,7 +26,7 @@ use WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
 class PluginHelper extends AbstractSingleton {
     protected $optionName = 'eve-online-fitting-manager-options';
     protected $dbVersionFieldName = 'eve-online-fitting-manager-database-version';
-    protected $databaseVersion = '20180329';
+    protected $databaseVersion = '20181226';
 
     /**
      * Getting the Plugin Path
