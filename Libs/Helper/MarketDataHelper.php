@@ -118,12 +118,11 @@ class MarketDataHelper extends AbstractSingleton {
         $returnValue = CacheHelper::getInstance()->checkTransientCache($transientName);
 
         if($returnValue === false) {
-            $get = $this->remoteHelper->getRemoteData($this->apiUrl . $typeIdString);
-            $json = \wp_remote_retrieve_body($get);
+            $marketData = $this->remoteHelper->getRemoteData($this->apiUrl . $typeIdString);
 
-            CacheHelper::getInstance()->setTransientCache($transientName, $json, 1);
+            CacheHelper::getInstance()->setTransientCache($transientName, \json_encode($marketData), 1);
 
-            $returnValue = $json;
+            $returnValue = \json_encode($marketData);
         }
 
         return $returnValue;
@@ -137,8 +136,8 @@ class MarketDataHelper extends AbstractSingleton {
      */
     public function getMarketPricesFromFittingArray(array $fittingArray) {
         $returnValue = false;
-        $jitaBuyPrice = 0;
-        $jitaSellPrice = 0;
+        $jitaBuyPrice = [];
+        $jitaSellPrice = [];
 
         // Ship price
         $ship = [
@@ -149,6 +148,7 @@ class MarketDataHelper extends AbstractSingleton {
         unset($fittingArray['0']);
 
         $marketJsonShip = $this->getMarketDataJson($ship);
+
         if($marketJsonShip !== false) {
             $marketArrayShip = \json_decode($marketJsonShip);
 
