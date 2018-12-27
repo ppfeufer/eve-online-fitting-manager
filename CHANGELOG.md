@@ -1,8 +1,14 @@
 # Change Log
 
 ## [In Development](https://github.com/ppfeufer/eve-online-fitting-manager/tree/development)
-[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.13.4...HEAD)
+[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.14.0...HEAD)
+- in development
+
+## [v0.14.0](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.14.0) - 2018-12-27
+[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.13.4...v0.14.0)
+
 This is a complete rewrite to utilize ESI, so there is no longer a need for a local EDK installation in order to get this plugin to work. Before you update, it is recommended that you backup your fittings you have already.
+
 ### Added
 - ESI Client
 - Database cache table for market, so we don't pollute the wp_options table to much
