@@ -1,12 +1,12 @@
 <?php
 
-/**
- * Copyright (C) 2017 Rounon Dax
+/*
+ * Copyright (C) 2017 ppfeufer
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -14,42 +14,29 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace WordPress\Plugin\EveOnlineFittingManager\Libs\Helper;
+namespace WordPress\Plugins\EveOnlineFittingManager\Libs\Helper;
+
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\FittingHelper;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\StringHelper;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
 
 \defined('ABSPATH') or die();
 
-class EftHelper {
-    /**
-     * Fixing the line breaks of the EFT dump
-     *
-     * @param string $eftFitting EFT fitting dump
-     * @return string
-     */
-    public static function fixLineBreaks($eftFitting) {
-        $eftFitting = \str_replace("\r\n", "\n", $eftFitting); // windows -> linux
-        $eftFitting = \str_replace("\r", "\n", $eftFitting); // mac -> linux
-
-        return $eftFitting;
-    }
-
+class EftHelper extends AbstractSingleton {
     /**
      * Getting the ship class name from the EFT dump
      *
      * @param string $eftFitting EFT fitting dump
      * @return string The ship class name
      */
-    public static function getShipType($eftFitting) {
+    public function getShipType($eftFitting) {
         $returnValue = null;
 
         if(!empty($eftFitting)) {
-            /**
-             * Zeilenumbrüche korrigieren
-             */
-            $fittingArray = \explode("\n", \trim(self::fixLineBreaks($eftFitting)));
+            $fittingArray = \explode("\n", \trim(StringHelper::getInstance()->fixLineBreaks($eftFitting)));
 
             $fittingArray['0'] = \str_replace('[', '', $fittingArray['0']);
             $fittingArray['0'] = \str_replace(']', '', $fittingArray['0']);
@@ -62,19 +49,16 @@ class EftHelper {
     }
 
     /**
-     * Getting the fitting name from teh EFT dump
+     * Getting the fitting name from the EFT dump
      *
      * @param string $eftFitting EFT fitting dump
      * @return string The fitting name
      */
-    public static function getFittingName($eftFitting) {
+    public function getFittingName($eftFitting) {
         $returnValue = null;
 
         if(!empty($eftFitting)) {
-            /**
-             * Zeilenumbrüche korrigieren
-             */
-            $fittingArray = \explode("\n", \trim(self::fixLineBreaks($eftFitting)));
+            $fittingArray = \explode("\n", \trim(StringHelper::getInstance()->fixLineBreaks($eftFitting)));
 
             $fittingArray['0'] = \str_replace('[', '', $fittingArray['0']);
             $fittingArray['0'] = \str_replace(']', '', $fittingArray['0']);
@@ -92,14 +76,11 @@ class EftHelper {
      * @param string $eftFitting
      * @return multitype:multitype:NULL unknown  multitype:multitype:unknown   multitype:NULL Ambigous <>
      */
-    public static function getSlotDataFromEftData($eftFitting) {
+    public function getSlotDataFromEftData($eftFitting) {
         $returnValue = null;
 
         if(!empty($eftFitting)) {
-            /**
-             * Zeilenumbrüche korrigieren
-             */
-            $fittingArray = \explode("\n", \trim(self::fixLineBreaks($eftFitting)));
+            $fittingArray = \explode("\n", \trim(StringHelper::getInstance()->fixLineBreaks($eftFitting)));
 
             $fittingArray['0'] = \str_replace('[', '', $fittingArray['0']);
             $fittingArray['0'] = \str_replace(']', '', $fittingArray['0']);
@@ -143,7 +124,7 @@ class EftHelper {
                             $line = \trim(\str_replace(\trim($matches['0']), '', $line));
                         }
 
-                        $itemDetail = FittingHelper::getItemDetailsByItemName($line, $itemCount);
+                        $itemDetail = FittingHelper::getInstance()->getItemDetailsByItemName($line, $itemCount);
 
                         switch($itemDetail->slotName) {
                             case 'HiSlot':
@@ -245,11 +226,8 @@ class EftHelper {
      * @param string $eftFitting
      * @return type
      */
-    public static function getFittingArrayFromEftData($eftFitting) {
-        /**
-         * fix line breakings
-         */
-        $fittingArray = \explode("\n", \trim(self::fixLineBreaks($eftFitting)));
+    public function getFittingArrayFromEftData($eftFitting) {
+        $fittingArray = \explode("\n", \trim(StringHelper::getInstance()->fixLineBreaks($eftFitting)));
 
         $fittingData = [];
         $fittingArray['0'] = \str_replace('[', '', $fittingArray['0']);
@@ -273,7 +251,7 @@ class EftHelper {
                         $line = \trim(\str_replace(\trim($matches['0']), '', $line));
                     } // END if(preg_match('/ x[0-9]*/', $line, $matches))
 
-                    $fittingData[] = FittingHelper::getItemDetailsByItemName($line, $itemCount);
+                    $fittingData[] = FittingHelper::getInstance()->getItemDetailsByItemName($line, $itemCount);
                 }
             }
         }
@@ -287,12 +265,12 @@ class EftHelper {
      * @param type $eftFitting
      * @return type
      */
-    public static function getShipDnaFromEftData($eftFitting) {
+    public function getShipDnaFromEftData($eftFitting) {
         $returnValue = null;
 
         if(!empty($eftFitting)) {
-            $fittingData = self::getFittingArrayFromEftData(\trim(self::fixLineBreaks($eftFitting)));
-            $returnValue = FittingHelper::getShipDnaFromFittingData($fittingData);
+            $fittingData = $this->getFittingArrayFromEftData(\trim(StringHelper::getInstance()->fixLineBreaks($eftFitting)));
+            $returnValue = FittingHelper::getInstance()->getShipDnaFromFittingData($fittingData);
         }
 
         return $returnValue;
@@ -305,7 +283,7 @@ class EftHelper {
      * @param type $withShipDna
      * @return string
      */
-    public static function getEftImportFromFitting($fitting, $withShipDna = false) {
+    public function getEftImportFromFitting($fitting, $withShipDna = false) {
         $arrayHighSlots = \maybe_unserialize($fitting['highSlots']);
         $arrayMidSlots = \maybe_unserialize($fitting['midSlots']);
         $arrayLowSlots = \maybe_unserialize($fitting['lowSlots']);
@@ -318,7 +296,7 @@ class EftHelper {
         $arrayImplantsAndBooster = \maybe_unserialize($fitting['implantsAndBooster']);
 
         $eftImport = '';
-        $eftImport .= '[' . FittingHelper::getItemNameById($fitting['shipID']) . ', ' . \trim($fitting['fittingType']) . ']' . "\n";
+        $eftImport .= '[' . FittingHelper::getInstance()->getItemNameById($fitting['shipID']) . ', ' . \trim($fitting['fittingType']) . ']' . "\n";
 
         /**
          * Low Slots
@@ -326,7 +304,7 @@ class EftHelper {
         if(\is_array($arrayLowSlots)) {
             foreach($arrayLowSlots as $lowSlot) {
                 if($lowSlot !== false) {
-                    $eftImport .= FittingHelper::getItemNameById($lowSlot) . "\n";
+                    $eftImport .= FittingHelper::getInstance()->getItemNameById($lowSlot) . "\n";
                 }
             }
         }
@@ -339,7 +317,7 @@ class EftHelper {
 
             foreach($arrayMidSlots as $midSlot) {
                 if($midSlot !== false) {
-                    $eftImport .= FittingHelper::getItemNameById($midSlot) . "\n";
+                    $eftImport .= FittingHelper::getInstance()->getItemNameById($midSlot) . "\n";
                 }
             }
         }
@@ -352,7 +330,7 @@ class EftHelper {
 
             foreach($arrayHighSlots as $highSlot) {
                 if($highSlot !== false) {
-                    $eftImport .= FittingHelper::getItemNameById($highSlot) . "\n";
+                    $eftImport .= FittingHelper::getInstance()->getItemNameById($highSlot) . "\n";
                 }
             }
         }
@@ -365,7 +343,7 @@ class EftHelper {
 
             foreach($arrayRigSlots as $rigSlot) {
                 if($rigSlot !== false) {
-                    $eftImport .= FittingHelper::getItemNameById($rigSlot) . "\n";
+                    $eftImport .= FittingHelper::getInstance()->getItemNameById($rigSlot) . "\n";
                 }
             }
         }
@@ -378,7 +356,7 @@ class EftHelper {
 
             foreach($arraySubSystems as $subSystem) {
                 if($subSystem !== false) {
-                    $eftImport .= FittingHelper::getItemNameById($subSystem) . "\n";
+                    $eftImport .= FittingHelper::getInstance()->getItemNameById($subSystem) . "\n";
                 }
             }
         }
@@ -391,7 +369,7 @@ class EftHelper {
 
             foreach($arrayServiceSlots as $serviceSlot) {
                 if($serviceSlot !== false) {
-                    $eftImport .= FittingHelper::getItemNameById($serviceSlot) . "\n";
+                    $eftImport .= FittingHelper::getInstance()->getItemNameById($serviceSlot) . "\n";
                 }
             }
         }
@@ -404,7 +382,7 @@ class EftHelper {
 
             foreach($arrayDrones as $drone) {
                 if($drone !== false) {
-                    $eftImport .= FittingHelper::getItemNameById($drone['itemID']) . ' x' . $drone['itemCount'] . "\n";
+                    $eftImport .= FittingHelper::getInstance()->getItemNameById($drone['itemID']) . ' x' . $drone['itemCount'] . "\n";
                 }
             }
         }
@@ -417,7 +395,7 @@ class EftHelper {
 
             foreach($arrayCharges as $charge) {
                 if($charge !== false) {
-                    $eftImport .= FittingHelper::getItemNameById($charge['itemID']) . ' x' . $charge['itemCount'] . "\n";
+                    $eftImport .= FittingHelper::getInstance()->getItemNameById($charge['itemID']) . ' x' . $charge['itemCount'] . "\n";
                 }
             }
         }
@@ -430,7 +408,7 @@ class EftHelper {
 
             foreach($arrayFuel as $fuel) {
                 if($fuel !== false) {
-                    $eftImport .= FittingHelper::getItemNameById($fuel['itemID']) . ' x' . $fuel['itemCount'] . "\n";
+                    $eftImport .= FittingHelper::getInstance()->getItemNameById($fuel['itemID']) . ' x' . $fuel['itemCount'] . "\n";
                 }
             }
         }
@@ -443,7 +421,7 @@ class EftHelper {
 
             foreach($arrayImplantsAndBooster as $item) {
                 if($item !== false) {
-                    $eftImport .= FittingHelper::getItemNameById($item['itemID']) . ' x' . $item['itemCount'] . "\n";
+                    $eftImport .= FittingHelper::getInstance()->getItemNameById($item['itemID']) . ' x' . $item['itemCount'] . "\n";
                 }
             }
         }

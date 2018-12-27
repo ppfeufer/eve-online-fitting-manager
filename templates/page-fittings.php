@@ -1,8 +1,31 @@
 <?php
+
 /**
  * Template Name: Fittings
  */
-get_header();
+
+/*
+ * Copyright (C) 2017 ppfeufer
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\FittingHelper;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\TemplateHelper;
+
+\get_header();
 ?>
 
 <div class="container main template-page-fittings">
@@ -13,7 +36,7 @@ get_header();
             ?>
             <!--<div class="row main-content">-->
             <div class="main-content clearfix">
-                <div class="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\PluginHelper::getMainContentColClasses(); ?> content-wrapper">
+                <div class="<?php echo PluginHelper::getInstance()->getMainContentColClasses(); ?> content-wrapper">
                     <div class="content content-inner content-full-width content-page doctrine-fittings">
                         <header>
                             <?php
@@ -25,13 +48,13 @@ get_header();
                                 ?>
                                 <h1><?php \the_title(); ?></h1>
                                 <?php
-                            } // END if(\is_front_page())
+                            }
                             ?>
                         </header>
                         <article class="post clearfix" id="post-<?php \the_ID(); ?>">
                             <?php
                             if(!empty(\get_query_var('fitting_search'))) {
-                                $query = \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\FittingHelper::searchFittings();
+                                $query = FittingHelper::getInstance()->searchFittings();
 
                                 if($query->have_posts()) {
                                     $uniqueID = \uniqid();
@@ -43,7 +66,7 @@ get_header();
                                         $query->the_post();
 
                                         echo '<li>';
-                                        \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\TemplateHelper::getTemplate('content-fitting');
+                                        TemplateHelper::getInstance()->getTemplate('content-fitting');
                                         echo '</li>';
                                     }
 
@@ -53,7 +76,7 @@ get_header();
                                     echo '<script type="text/javascript">
                                             jQuery(document).ready(function() {
                                                 jQuery("ul.bootstrap-post-loop-fittings-' . $uniqueID . '").bootstrapGallery({
-                                                    "classes" : "' . \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\PluginHelper::getLoopContentClasses() . '",
+                                                    "classes" : "' . PluginHelper::getInstance()->getLoopContentClasses() . '",
                                                     "hasModal" : false
                                                 });
                                             });
@@ -68,21 +91,22 @@ get_header();
                 </div> <!-- /.col -->
 
                 <?php
-                if(\WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\PluginHelper::hasSidebar('sidebar-fitting-manager')) {
+                if(PluginHelper::getInstance()->hasSidebar('sidebar-fitting-manager')) {
                     ?>
                     <div class="col-lg-3 col-md-3 col-sm-3 col-3 sidebar-wrapper">
                         <?php
-                        \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\TemplateHelper::getTemplate('sidebar-fitting-manager');
+                        TemplateHelper::getInstance()->getTemplate('sidebar-fitting-manager');
                         ?>
                     </div><!--/.col -->
                     <?php
-                } // END if(\WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\PluginHelper::hasSidebar('sidebar-fitting-manager'))
+                } // END if(\WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper::hasSidebar('sidebar-fitting-manager'))
                 ?>
             </div> <!--/.row -->
             <?php
-        } // END while(\have_posts())
-    } // END if(have_posts())
+        }
+    }
     ?>
 </div><!-- /.container -->
 
-<?php get_footer(); ?>
+<?php
+\get_footer();

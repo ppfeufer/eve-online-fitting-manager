@@ -1,12 +1,12 @@
 <?php
 
-/**
- * Copyright (C) 2017 Rounon Dax
+/*
+ * Copyright (C) 2017 ppfeufer
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -14,18 +14,21 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace WordPress\Plugin\EveOnlineFittingManager\Libs\ResourceLoader;
+namespace WordPress\Plugins\EveOnlineFittingManager\Libs\ResourceLoader;
+
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Interfaces\AssetsInterface;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\PostType;
 
 \defined('ABSPATH') or die();
 
 /**
  * JavaScript Loader
  */
-class JavascriptLoader implements \WordPress\Plugin\EveOnlineFittingManager\Libs\Interfaces\AssetsInterface {
+class JavascriptLoader implements AssetsInterface {
     /**
      * Initialize the loader
      */
@@ -41,12 +44,12 @@ class JavascriptLoader implements \WordPress\Plugin\EveOnlineFittingManager\Libs
          * Only in Frontend
          */
         if(!\is_admin()) {
-            if(\is_page(\WordPress\Plugin\EveOnlineFittingManager\Libs\PostType::getPosttypeSlug('fittings')) || \get_post_type() === 'fitting') {
-                \wp_enqueue_script('bootstrap-js', \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\PluginHelper::getPluginUri('bootstrap/js/bootstrap.min.js'), ['jquery'], '', true);
-                \wp_enqueue_script('bootstrap-toolkit-js', \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\PluginHelper::getPluginUri('bootstrap/bootstrap-toolkit/bootstrap-toolkit.min.js'), ['jquery', 'bootstrap-js'], '', true);
-                \wp_enqueue_script('bootstrap-gallery-js', \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\PluginHelper::getPluginUri('js/jquery.bootstrap-gallery.min.js'), ['jquery', 'bootstrap-js'], '', true);
-                \wp_enqueue_script('copy-to-clipboard-js', \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\PluginHelper::getPluginUri('js/copy-to-clipboard.min.js'), ['jquery'], '', true);
-                \wp_enqueue_script('eve-online-fitting-manager-js', \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\PluginHelper::getPluginUri('js/eve-online-fitting-manager.min.js'), ['jquery'], '', true);
+            if(\is_page(PostType::getInstance()->getPosttypeSlug('fittings')) || \get_post_type() === 'fitting') {
+                \wp_enqueue_script('bootstrap-js', PluginHelper::getInstance()->getPluginUri('bootstrap/js/bootstrap.min.js'), ['jquery'], '', true);
+                \wp_enqueue_script('bootstrap-toolkit-js', PluginHelper::getInstance()->getPluginUri('bootstrap/bootstrap-toolkit/bootstrap-toolkit.min.js'), ['jquery', 'bootstrap-js'], '', true);
+                \wp_enqueue_script('bootstrap-gallery-js', PluginHelper::getInstance()->getPluginUri('js/jquery.bootstrap-gallery.min.js'), ['jquery', 'bootstrap-js'], '', true);
+                \wp_enqueue_script('copy-to-clipboard-js', PluginHelper::getInstance()->getPluginUri('js/copy-to-clipboard.min.js'), ['jquery'], '', true);
+                \wp_enqueue_script('eve-online-fitting-manager-js', PluginHelper::getInstance()->getPluginUri('js/eve-online-fitting-manager.min.js'), ['jquery'], '', true);
                 \wp_localize_script('eve-online-fitting-manager-js', 'fittingManagerL10n', $this->getJavaScriptTranslations());
             }
         }
@@ -75,7 +78,7 @@ class JavascriptLoader implements \WordPress\Plugin\EveOnlineFittingManager\Libs
             ],
             'ajax' => [
                 'url' => \admin_url('admin-ajax.php'),
-                'loaderImage' => \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\PluginHelper::getPluginUri('images/loader-sprite.gif')
+                'loaderImage' => PluginHelper::getInstance()->getPluginUri('images/loader-sprite.gif')
             ]
         ];
     }

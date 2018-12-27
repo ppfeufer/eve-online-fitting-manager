@@ -1,8 +1,31 @@
 <?php
+
+/*
+ * Copyright (C) 2017 ppfeufer
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\EftHelper;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\FittingHelper;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\TemplateHelper;
+
 defined('ABSPATH') or die();
 
 // Plugin Settings
-$pluginSettings = \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\PluginHelper::getPluginSettings();
+$pluginSettings = PluginHelper::getInstance()->getPluginSettings();
 
 // Information to build the EFT data structure
 $shipID = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_ship_ID', true);
@@ -20,25 +43,25 @@ $implantsAndBooster = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_
 $fittingDna = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_dna', true);
 
 // Build EFT data
-$eftFitting = \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\EftHelper::getEftImportFromFitting([
-        'shipID' => $shipID,
-        'fittingType' => $fittingType,
-        'highSlots' => $highSlots,
-        'midSlots' => $midSlots,
-        'lowSlots' => $lowSlots,
-        'rigSlots' => $rigSlots,
-        'subSystems' => $subSystems,
-        'serviceSlots' => $serviceSlots,
-        'drones' => $drones,
-        'charges' => $charges,
-        'fuel' => $fuel,
-        'implantsAndBooster' => $implantsAndBooster
-    ]);
+$eftFitting = EftHelper::getInstance()->getEftImportFromFitting([
+    'shipID' => $shipID,
+    'fittingType' => $fittingType,
+    'highSlots' => $highSlots,
+    'midSlots' => $midSlots,
+    'lowSlots' => $lowSlots,
+    'rigSlots' => $rigSlots,
+    'subSystems' => $subSystems,
+    'serviceSlots' => $serviceSlots,
+    'drones' => $drones,
+    'charges' => $charges,
+    'fuel' => $fuel,
+    'implantsAndBooster' => $implantsAndBooster
+]);
 ?>
 
 <header class="entry-header">
     <h1 class="entry-title">
-        <img src="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\FittingHelper::getShipImageById(\get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_ship_ID', true), 64); ?>">
+        <img src="<?php echo FittingHelper::getInstance()->getShipImageById(\get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_ship_ID', true), 64); ?>">
         <?php \the_title(); ?>
     </h1>
 
@@ -56,7 +79,7 @@ $eftFitting = \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\EftHelper::g
             /**
              * Show doctrines tha fitting is used in
              */
-            \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\TemplateHelper::getTemplate('fitting-details/information/fitting-marker');
+            TemplateHelper::getInstance()->getTemplate('fitting-details/information/fitting-marker');
             ?>
 
             <div class="row">
@@ -66,7 +89,7 @@ $eftFitting = \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\EftHelper::g
                      * Show visual fitting
                      */
                     if(isset($pluginSettings['template-detail-parts-settings']['show-visual-fitting']) && $pluginSettings['template-detail-parts-settings']['show-visual-fitting'] === 'yes') {
-                        \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\TemplateHelper::getTemplate('fitting-details/visualization/fitting-ring', [
+                        TemplateHelper::getInstance()->getTemplate('fitting-details/visualization/fitting-ring', [
                             'shipID' => $shipID,
                             'highSlots' => $highSlots,
                             'midSlots' => $midSlots,
@@ -75,12 +98,12 @@ $eftFitting = \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\EftHelper::g
                             'subSystems' => $subSystems,
                             'serviceSlots' => $serviceSlots
                         ]);
-                    } // END if(!isset($pluginSettings['template-detail-parts-settings']['show-visual-fitting']) && $pluginSettings['template-detail-parts-settings']['show-visual-fitting'] === 'yes')
+                    }
 
                     /**
                      * Show service buttons
                      */
-                    \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\TemplateHelper::getTemplate('fitting-details/utilities/fitting-service-buttons', [
+                    TemplateHelper::getInstance()->getTemplate('fitting-details/utilities/fitting-service-buttons', [
                         'shipID' => $shipID,
                         'fittingDna' => $fittingDna,
                         'eftFitting' => $eftFitting,
@@ -91,17 +114,17 @@ $eftFitting = \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\EftHelper::g
                      * Show market prices
                      */
                     if(isset($pluginSettings['template-detail-parts-settings']['show-market-data']) && $pluginSettings['template-detail-parts-settings']['show-market-data'] === 'yes') {
-                        \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\TemplateHelper::getTemplate('fitting-details/information/fitting-market-prices', [
+                        TemplateHelper::getInstance()->getTemplate('fitting-details/information/fitting-market-prices', [
                             'eftFitting' => $eftFitting
                         ]);
-                    } // END if(isset($pluginSettings['template-detail-parts-settings']['show-market-data']) && $pluginSettings['template-detail-parts-settings']['show-market-data'] === 'yes')
+                    }
 
                     /**
                      * Show doctrines that fitting is used in
                      */
                     if(isset($pluginSettings['template-detail-parts-settings']['show-doctrines']) && $pluginSettings['template-detail-parts-settings']['show-doctrines'] === 'yes') {
-                        \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\TemplateHelper::getTemplate('fitting-details/information/fitting-doctrine-usage');
-                    } // END if(isset($pluginSettings['template-detail-parts-settings']['show-doctrines']) && $pluginSettings['template-detail-parts-settings']['show-doctrines'] === 'yes')
+                        TemplateHelper::getInstance()->getTemplate('fitting-details/information/fitting-doctrine-usage');
+                    }
                     ?>
                 </div>
 
@@ -110,7 +133,7 @@ $eftFitting = \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\EftHelper::g
                     /**
                      * Show information tabs
                      */
-                    \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\TemplateHelper::getTemplate('fitting-details/information/fitting-information-tabs', [
+                    TemplateHelper::getInstance()->getTemplate('fitting-details/information/fitting-information-tabs', [
                         'pluginSettings' => $pluginSettings,
                         'eftFitting' => $eftFitting,
                         'shipID' => $shipID

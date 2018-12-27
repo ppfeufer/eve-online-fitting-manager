@@ -1,12 +1,12 @@
 <?php
 
-/**
- * Copyright (C) 2017 Rounon Dax
+/*
+ * Copyright (C) 2017 ppfeufer
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -14,11 +14,13 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace WordPress\Plugin\EveOnlineFittingManager\Libs;
+namespace WordPress\Plugins\EveOnlineFittingManager\Libs;
+
+use WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper;
+use WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\UpdateHelper;
 
 \defined('ABSPATH') or die();
 
@@ -34,7 +36,7 @@ class PluginSettings {
      */
     public function __construct() {
         $this->settingsFilter = 'register_eve_online_fittings_manager_settings';
-        $this->defaultOptions = Helper\PluginHelper::getPluginDefaultSettings();
+        $this->defaultOptions = PluginHelper::getInstance()->getPluginDefaultSettings();
 
         $this->fireSettingsApi();
     }
@@ -50,7 +52,7 @@ class PluginSettings {
     }
 
     /**
-     * Getting the Settings for the PLugin Options Page
+     * Getting the Settings for the Plugin Options Page
      *
      * @return array The Settings for the Options Page
      */
@@ -59,33 +61,17 @@ class PluginSettings {
             'type' => 'plugin',
             'menu_title' => \__('EVE Online Fittings Manager', 'eve-online-fitting-manager'),
             'page_title' => \__('EVE Online Fittings Manager', 'eve-online-fitting-manager'),
-            'option_name' => Helper\PluginHelper::getOptionFieldName(), // Your settings name. With this name your settings are saved in the database.
+            'option_name' => UpdateHelper::getInstance()->getOptionFieldName(), // Your settings name. With this name your settings are saved in the database.
             'tabs' => [
                 /**
                  * killboard settings tab
                  */
-                'general-settings' => $this->getKillboardSettings(),
                 'marketdata-settings' => $this->getMarketDataSettings(),
                 'template-settings' => $this->getTemplateSettings()
             ]
         ];
 
         return $pluginOptionsPage;
-    }
-
-    /**
-     * Getting the Killboard Databse Settings
-     *
-     * @return array The Killboard Database Setting
-     */
-    private function getKillboardSettings() {
-        $settings = [
-            'tab_title' => \__('Killboard Settings', 'eve-online-fitting-manager'),
-            'tab_description' => \__('You need to have a connection to a EDK killboard database in order to use this plugin. The database is needed to gather all the ship and item information.', 'eve-online-fitting-manager'),
-            'fields' => $this->getKillboardSettingsFields()
-        ];
-
-        return $settings;
     }
 
     /**
@@ -117,37 +103,6 @@ class PluginSettings {
     }
 
     /**
-     * Get the settings fields for the Killboard settings
-     * @return array Settings fields for the Killboard settings
-     */
-    private function getKillboardSettingsFields() {
-        $settingsFields = [
-            '' => [
-                'type' => 'info',
-            ],
-            'edk-killboard-host' => [
-                'type' => 'text',
-                'title' => \__('DB Host', 'eve-online-fitting-manager'),
-                'default' => 'localhost'
-            ],
-            'edk-killboard-name' => [
-                'type' => 'text',
-                'title' => \__('DB Name', 'eve-online-fitting-manager'),
-            ],
-            'edk-killboard-user' => [
-                'type' => 'text',
-                'title' => \__('DB User', 'eve-online-fitting-manager'),
-            ],
-            'edk-killboard-password' => [
-                'type' => 'password',
-                'title' => \__('DB Password', 'eve-online-fitting-manager'),
-            ]
-        ];
-
-        return $settingsFields;
-    }
-
-    /**
      * get the settings fields for the template related settings
      *
      * @return array Settings fields for the template related settings
@@ -158,7 +113,6 @@ class PluginSettings {
                 'type' => 'radio',
                 'title' => \__('Market Data API', 'eve-online-fitting-manager'),
                 'choices' => [
-                    'eve-central' => \__('EVE Central', 'eve-online-fitting-manager') . ' (<a href="https://eve-central.com/" target="_blank">https://eve-central.com/</a>)',
                     'eve-marketer' => \__('EVE Marketer', 'eve-online-fitting-manager') . ' (<a href="https://evemarketer.com/" target="_blank">https://evemarketer.com/</a>)',
                 ],
             ]
@@ -179,9 +133,7 @@ class PluginSettings {
                 'title' => \__('Image Settings', 'eve-online-fitting-manager'),
                 'choices' => [
                     'show-ship-images-in-loop' => \__('Show ship images in ship list', 'eve-online-fitting-manager'),
-                    'show-doctrine-images-in-loop' => \sprintf(\__('Show doctrine images in doctrine list <small><em>(You need to have the %1$s plugin installed to make this happen)</em></small>', 'eve-online-fitting-manager'), '<a href="https://wordpress.org/plugins/categories-images/" target="_blank">' . \__('Categories Images', 'eve-online-fitting-manager') . '</a>'
-                    ),
-                    'use-image-cache' => \__('Use image cache <small><em>(Cache images from ships and fitting items locally instead of using CCPs image server)</em></small>', 'eve-online-fitting-manager')
+                    'show-doctrine-images-in-loop' => \sprintf(\__('Show doctrine images in doctrine list <small><em>(You need to have the %1$s plugin installed to make this happen)</em></small>', 'eve-online-fitting-manager'), '<a href="https://wordpress.org/plugins/categories-images/" target="_blank">' . \__('Categories Images', 'eve-online-fitting-manager') . '</a>')
                 ],
             ],
             'template-detail-parts-settings' => [
@@ -190,7 +142,6 @@ class PluginSettings {
                 'choices' => [
                     'show-visual-fitting' => \__('Show visual fitting', 'eve-online-fitting-manager'),
                     'show-ship-description' => \__('Show ship description', 'eve-online-fitting-manager'),
-                    'show-osmium-link' => \__('Show Osmium button', 'eve-online-fitting-manager'),
                     'show-copy-eft' => \__('Show "Copy EFT data to clipboard" button', 'eve-online-fitting-manager'),
                     'show-copy-permalink' => \__('Show "Copy permalink to clipboard" button', 'eve-online-fitting-manager'),
                     'show-market-data' => \__('Show "Estimated Prices" section', 'eve-online-fitting-manager'),

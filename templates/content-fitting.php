@@ -1,7 +1,28 @@
 <?php
+
+/*
+ * Copyright (C) 2017 ppfeufer
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\FittingHelper;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper;
+
 defined('ABSPATH') or die();
 
-$pluginOptions = \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\PluginHelper::getPluginSettings();
+$pluginOptions = PluginHelper::getInstance()->getPluginSettings();
 ?>
 
 <article id="post-<?php \the_ID(); ?>" <?php \post_class('clearfix content-single template-content-fitting'); ?>>
@@ -11,20 +32,20 @@ $pluginOptions = \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\PluginHel
             if(isset($pluginOptions['template-image-settings']['show-ship-images-in-loop']) && $pluginOptions['template-image-settings']['show-ship-images-in-loop'] === 'yes') {
                 ?>
                 <a class="fitting-list-item" href="<?php \the_permalink(); ?>" title="<?php \the_title_attribute('echo=0'); ?>">
-                    <figure class="post-loop-thumbnail">
+                    <figure class="fitting-manager-post-loop-thumbnail">
                         <?php
                         if(\has_post_thumbnail()) {
                             if(\function_exists('\fly_get_attachment_image')) {
-                                echo \fly_get_attachment_image(\get_post_thumbnail_id(), 'post-loop-thumbnail');
+                                echo \fly_get_attachment_image(\get_post_thumbnail_id(), 'fitting-manager-post-loop-thumbnail');
                             } else {
-                                \the_post_thumbnail('post-loop-thumbnail');
-                            } // END if(\function_exists('\fly_get_attachment_image'))
+                                \the_post_thumbnail('fitting-manager-post-loop-thumbnail');
+                            }
                         } else {
                             // Load our dummy ...
                             ?>
-                            <img width="705" height="395" src="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\PluginHelper::getPluginUri('images/fitting-dummy.jpg'); ?>" class="attachment-post-loop-thumbnail img-responsive" alt="<?php echo \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_ship_type', true); ?>">
+                            <img width="705" height="395" src="<?php echo PluginHelper::getInstance()->getPluginUri('images/fitting-dummy.jpg'); ?>" class="attachment-fitting-manager-post-loop-thumbnail img-responsive" alt="<?php echo \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_ship_type', true); ?>">
                             <?php
-                        } // END if(\has_post_thumbnail())
+                        }
                         ?>
                     </figure>
 
@@ -42,7 +63,7 @@ $pluginOptions = \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\PluginHel
                     <h3 class="doctrine-shipfitting-header">
                         <span class="doctrine-shipfitting-header-wrapper">
                             <span class="doctrine-shipfitting-header-ship-image">
-                                <img src="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\FittingHelper::getShipImageById(\get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_ship_ID', true), 64); ?>">
+                                <img src="<?php echo FittingHelper::getInstance()->getShipImageById(\get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_ship_ID', true), 64); ?>">
                             </span>
                             <span class="doctrine-shipfitting-header-fitting-name">
                                 <?php echo \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_ship_type', true); ?><br>
@@ -52,7 +73,7 @@ $pluginOptions = \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\PluginHel
                     </h3>
                 </a>
                 <?php
-            } // END if(!empty($pluginOptions['template-image-settings']['show-ship-images-in-loop']))
+            }
             ?>
         </div>
     </section>

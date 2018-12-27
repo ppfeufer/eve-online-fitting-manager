@@ -5,14 +5,39 @@
  * Plugin URI: https://github.com/ppfeufer/eve-online-fitting-manager
  * Git URI: https://github.com/ppfeufer/eve-online-fitting-manager
  * Description: A little management tool for your doctrine fittings in your WordPress website. (Best with a theme running with <a href="http://getbootstrap.com/">Bootstrap</a>)
- * Version: 0.13.5-r20180613
+ * Version: 0.14.0
  * Author: Rounon Dax
- * Author URI: https://yulaifederation.net
+ * Author URI: https://terra-nanotech.de
  * Text Domain: eve-online-fitting-manager
  * Domain Path: /l10n
  */
 
-namespace WordPress\Plugin\EveOnlineFittingManager;
+/*
+ * Copyright (C) 2017 ppfeufer
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+namespace WordPress\Plugins\EveOnlineFittingManager;
+
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\GithubUpdater;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\MetaBoxes;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\PluginSettings;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\ResourceLoader\CssLoader;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\ResourceLoader\JavascriptLoader;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\TemplateLoader;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\WpHooks;
 
 const WP_GITHUB_FORCE_UPDATE = true;
 
@@ -48,35 +73,24 @@ class EveOnlineFittingManager {
      * Initialize the plugin
      */
     public function init() {
-        $this->checkDatabaseUpdate();
+        // Firing hooks
+        new WpHooks();
 
         // Loading CSS
-        $cssLoader = new Libs\ResourceLoader\CssLoader;
+        $cssLoader = new CssLoader;
         $cssLoader->init();
 
         // Loading JavaScript
-        $javascriptLoader = new Libs\ResourceLoader\JavascriptLoader;
+        $javascriptLoader = new JavascriptLoader;
         $javascriptLoader->init();
-
-        \add_action('init', [$this, 'setThumbnailsSizes']);
-        \add_action('pre_get_posts', [$this, 'customPageQueryVars']);
-
-        \add_filter('query_vars', [$this, 'addQueryVarsFilter']);
-
-        new Libs\PostType;
-        new Libs\Shortcodes;
-        new Libs\MarketData;
-
-        $widgets = new Libs\Widgets;
-        $widgets->init();
 
         /**
          * start backend only libs
          */
         if(\is_admin()) {
-            new Libs\PluginSettings;
-            new Libs\MetaBoxes;
-            new Libs\TemplateLoader;
+            new PluginSettings;
+            new MetaBoxes;
+            new TemplateLoader;
 
             /**
              * Check Github for updates
@@ -95,73 +109,8 @@ class EveOnlineFittingManager {
                 'access_token' => '',
             ];
 
-            new Libs\GithubUpdater($githubConfig);
+            new GithubUpdater($githubConfig);
         }
-    }
-
-    /**
-     * Set thumbnail sizes
-     */
-    public function setThumbnailsSizes() {
-        /**
-         * Thumbnails used for the plugin
-         * Compatibilty with Fly Dynamic Image Resizer plugin
-         */
-        if(\function_exists('\fly_add_image_size')) {
-            \fly_add_image_size('header-image', 1680, 500, true);
-            \fly_add_image_size('fitting-helper-post-loop-thumbnail', 768, 432, true);
-        } else {
-            \add_image_size('header-image', 1680, 500, true);
-            \add_image_size('fitting-helper-post-loop-thumbnail', 768, 432, true);
-        }
-    }
-
-    /**
-     * Check if the plugin settings have to be updated
-     */
-    private function checkDatabaseUpdate() {
-        $currentPluginDatabaseVersion = Libs\Helper\PluginHelper::getCurrentPluginDatabaseVersion();
-        $pluginDatabaseVersion = Libs\Helper\PluginHelper::getPluginDatabaseVersion();
-
-        if($pluginDatabaseVersion !== $currentPluginDatabaseVersion) {
-            Libs\Helper\PluginHelper::updateDatabase();
-        }
-    }
-
-    /**
-     * Customized query vars for our search function
-     *
-     * @param \WP_Query $query
-     * @return \WP_Query
-     */
-    public function customPageQueryVars(\WP_Query $query) {
-        if(!\is_admin() && $query->is_main_query()) {
-            if(isset($query->tax_query->queries['0']['taxonomy']) && $query->tax_query->queries['0']['taxonomy'] === 'fitting-doctrines') {
-                $query->set('posts_per_page', 9999);
-                $query->set('orderby', 'title');
-                $query->set('order', 'ASC');
-            }
-
-            if(isset($query->tax_query->queries['0']['taxonomy']) && $query->tax_query->queries['0']['taxonomy'] === 'fitting-ships') {
-                $query->set('posts_per_page', 9999);
-                $query->set('orderby', 'title');
-                $query->set('order', 'ASC');
-            }
-        }
-
-        return $query;
-    }
-
-    /**
-     * Add our own seach key to the search query vars
-     *
-     * @param array $queryVars
-     * @return array
-     */
-    public function addQueryVarsFilter($queryVars) {
-        $queryVars[] = 'fitting_search';
-
-        return $queryVars;
     }
 
     /**
@@ -200,11 +149,9 @@ function initializePlugin() {
 
     /**
      * Initialize the plugin
-     *
-     * @todo https://premium.wpmudev.org/blog/activate-deactivate-uninstall-hooks/
      */
     $fittingManager->init();
 }
 
 // Start the show
-\add_action('plugins_loaded', 'WordPress\Plugin\EveOnlineFittingManager\initializePlugin');
+initializePlugin();

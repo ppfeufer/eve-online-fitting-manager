@@ -1,12 +1,12 @@
 <?php
 
-/**
- * Copyright (C) 2017 Rounon Dax
+/*
+ * Copyright (C) 2017 ppfeufer
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -14,62 +14,61 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace WordPress\Plugin\EveOnlineFittingManager\Libs\Helper;
+namespace WordPress\Plugins\EveOnlineFittingManager\Libs\Helper;
+
+use WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
 
 \defined('ABSPATH') or die();
 
-class MarketDataHelper extends \WordPress\Plugin\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton {
+class MarketDataHelper extends AbstractSingleton {
     /**
      * Available Market APIs:
-     *      EVE Central => https://api.eve-central.com/api/marketstat/json?typeid=3057,2364,3057&regionlimit=10000002&usesystem=30000142
      *      EVE Marketer => https://api.evemarketer.com/ec/marketstat/json?typeid=3057,2364,3057&regionlimit=10000002&usesystem=30000142
      */
-
-    /**
-     * EVE Central API Url
-     *
-     * @var string API Url
-     */
-    public $apiUrlEveCentral = 'https://api.eve-central.com/api/marketstat/json';
 
     /**
      * EVE Marketer API Url
      *
      * @var string API Url
      */
-    public $apiUrlEveMarketer = 'https://api.evemarketer.com/ec/marketstat/json';
+    protected $apiUrlEveMarketer = 'https://api.evemarketer.com/ec/marketstat/json';
 
     /**
      * API Url
      *
      * @var string API Url to use
      */
-    public $apiUrl = null;
+    protected $apiUrl = null;
 
     /**
      * Market Region Limiter
      *
      * @var int Market Region to use
      */
-    public $marketRegion = 10000002; // The Forge
+    protected $marketRegion = 10000002; // The Forge
 
     /**
      * Market System Limiter
      *
      * @var int Market System to use
      */
-    public $marketSystem = 30000142; // Jita
+    protected $marketSystem = 30000142; // Jita
 
     /**
      * Plugin Settings
      *
      * @var array
      */
-    public $pluginSettings = null;
+    protected $pluginSettings = null;
+
+    /**
+     *
+     * @var RemoteHelper
+     */
+    protected $remoteHelper = null;
 
     /**
      * Constructor
@@ -77,7 +76,8 @@ class MarketDataHelper extends \WordPress\Plugin\EveOnlineFittingManager\Libs\Si
     protected function __construct() {
         parent::__construct();
 
-        $this->pluginSettings = PluginHelper::getPluginSettings();
+        $this->pluginSettings = PluginHelper::getInstance()->getPluginSettings();
+        $this->remoteHelper = RemoteHelper::getInstance();
 
         $this->setMarketApi();
     }
@@ -90,13 +90,6 @@ class MarketDataHelper extends \WordPress\Plugin\EveOnlineFittingManager\Libs\Si
 
         switch($this->pluginSettings['market-data-api']) {
             /**
-             * EVE Central
-             */
-            case 'eve-central':
-                $this->apiUrl = $this->apiUrlEveCentral . $urlParameters;
-                break;
-
-            /**
              * EVE Marketer
              */
             case 'eve-marketer':
@@ -104,11 +97,11 @@ class MarketDataHelper extends \WordPress\Plugin\EveOnlineFittingManager\Libs\Si
                 break;
 
             /**
-             * Default: EVE Central
+             * Default: EVE Marketer
              * (If for whatever reason none is set in plugin settings)
              */
             default:
-                $this->apiUrl = $this->apiUrlEveCentral . $urlParameters;
+                $this->apiUrl = $this->apiUrlEveMarketer . $urlParameters;
                 break;
         }
     }
@@ -119,33 +112,35 @@ class MarketDataHelper extends \WordPress\Plugin\EveOnlineFittingManager\Libs\Si
      * @param array $items
      * @return string json string of all item marketdata
      */
-    public function getMarketDataJson(array $items) {
+    public function getMarketData(array $items) {
         $typeIdString = \implode(',', $items);
-        $transientName = 'eve_fitting_tool_' . $this->pluginSettings['market-data-api'] . '-market-data_fitting_' . \md5($typeIdString);
-        $returnValue = CacheHelper::getInstance()->checkTransientCache($transientName);
+        $cacheKey = $this->pluginSettings['market-data-api'] . '/' . \md5($typeIdString);
 
-        if($returnValue === false) {
-            $get = \wp_remote_get($this->apiUrl . $typeIdString);
-            $json = \wp_remote_retrieve_body($get);
+        $marketData = DatabaseHelper::getInstance()->getMarketDataCache($cacheKey);
 
-            CacheHelper::getInstance()->setTransientCache($transientName, $json, 1);
+        if(\is_null($marketData)) {
+            $marketData = $this->remoteHelper->getRemoteData($this->apiUrl . $typeIdString);
 
-            $returnValue = $json;
+            DatabaseHelper::getInstance()->writeMarketDataCache([
+                $cacheKey,
+                \maybe_serialize($marketData),
+                \strtotime('+1 hour')
+            ]);
         }
 
-        return $returnValue;
+        return $marketData;
     }
 
     /**
      * Getting the market prices for our fitting ...
      *
-     * @param array $fittingArray EFT fitting array from WordPress\Plugin\EveOnlineFittingManager\Helper\EftHelper::getFittingArrayFromEftData($eftFitting);
+     * @param array $fittingArray EFT fitting array from WordPress\Plugins\EveOnlineFittingManager\Helper\EftHelper::getFittingArrayFromEftData($eftFitting);
      * @return array Sell and Buy order prices from Jita
      */
     public function getMarketPricesFromFittingArray(array $fittingArray) {
         $returnValue = false;
-        $jitaBuyPrice = 0;
-        $jitaSellPrice = 0;
+        $jitaBuyPrice = [];
+        $jitaSellPrice = [];
 
         // Ship price
         $ship = [
@@ -155,21 +150,18 @@ class MarketDataHelper extends \WordPress\Plugin\EveOnlineFittingManager\Libs\Si
         // Remove the ship from the array
         unset($fittingArray['0']);
 
-        $marketJsonShip = $this->getMarketDataJson($ship);
-        if($marketJsonShip !== false) {
-            $marketArrayShip = \json_decode($marketJsonShip);
+        $marketDataShip = $this->getMarketData($ship);
 
-            if($marketArrayShip !== null) {
-                $jitaBuyPrice = [
-                    'ship' => $marketArrayShip['0']->buy->median,
-                    'total' => $marketArrayShip['0']->buy->median
-                ];
+        if(!\is_null($marketDataShip)) {
+            $jitaBuyPrice = [
+                'ship' => $marketDataShip['0']->buy->median,
+                'total' => $marketDataShip['0']->buy->median
+            ];
 
-                $jitaSellPrice = [
-                    'ship' => $marketArrayShip['0']->sell->median,
-                    'total' => $marketArrayShip['0']->sell->median
-                ];
-            }
+            $jitaSellPrice = [
+                'ship' => $marketDataShip['0']->sell->median,
+                'total' => $marketDataShip['0']->sell->median
+            ];
         }
 
         // Fitting Price
@@ -182,22 +174,18 @@ class MarketDataHelper extends \WordPress\Plugin\EveOnlineFittingManager\Libs\Si
         }
 
         // if we have items
-        if($items !== null) {
-            $marketJsonFitting = $this->getMarketDataJson($items);
+        if(!\is_null($items)) {
+            $marketDataFitting = $this->getMarketData($items);
 
-            // If we have the json data
-            if($marketJsonFitting !== false) {
-                $marketArray = \json_decode($marketJsonFitting);
+            if(!\is_null($marketDataFitting)) {
                 $jitaBuyPrice['fitting'] = 0;
                 $jitaSellPrice['fitting'] = 0;
 
-                if($marketArray !== null) {
-                    foreach($marketArray as $item) {
-                        $jitaBuyPrice['fitting'] += $item->buy->median;
-                        $jitaSellPrice['fitting'] += $item->sell->median;
-                        $jitaBuyPrice['total'] += $item->buy->median;
-                        $jitaSellPrice['total'] += $item->sell->median;
-                    }
+                foreach($marketDataFitting as $item) {
+                    $jitaBuyPrice['fitting'] += $item->buy->median;
+                    $jitaSellPrice['fitting'] += $item->sell->median;
+                    $jitaBuyPrice['total'] += $item->buy->median;
+                    $jitaSellPrice['total'] += $item->sell->median;
                 }
 
                 $returnValue = [

@@ -1,11 +1,12 @@
 <?php
-/**
- * Copyright (C) 2017 Rounon Dax
+
+/*
+ * Copyright (C) 2017 ppfeufer
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -13,11 +14,13 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace WordPress\Plugin\EveOnlineFittingManager\Libs;
+namespace WordPress\Plugins\EveOnlineFittingManager\Libs;
+
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\EftHelper;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\FittingHelper;
 
 \defined('ABSPATH') or die();
 
@@ -52,21 +55,21 @@ class MetaBoxes {
 
         $eftFitting = null;
 
-        if(PostType::isEditPage('edit') && $typenow === 'fitting') {
+        if(PostType::getInstance()->isEditPage('edit') && $typenow === 'fitting') {
             if(\get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_ship_ID', true) !== null) {
-                $eftFitting = Helper\EftHelper::getEftImportFromFitting([
-                        'shipID' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_ship_ID', true),
-                        'fittingType' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_name', true),
-                        'highSlots' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_high_slots', true),
-                        'midSlots' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_mid_slots', true),
-                        'lowSlots' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_low_slots', true),
-                        'rigSlots' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_rig_slots', true),
-                        'subSystems' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_subsystems', true),
-                        'serviceSlots' => \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_upwellservices', true),
-                        'drones' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_drones', true),
-                        'charges' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_charges', true),
-                        'fuel' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_fuel', true),
-                        'implantsAndBooster' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_implants_and_booster', true),
+                $eftFitting = EftHelper::getInstance()->getEftImportFromFitting([
+                    'shipID' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_ship_ID', true),
+                    'fittingType' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_name', true),
+                    'highSlots' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_high_slots', true),
+                    'midSlots' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_mid_slots', true),
+                    'lowSlots' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_low_slots', true),
+                    'rigSlots' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_rig_slots', true),
+                    'subSystems' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_subsystems', true),
+                    'serviceSlots' => \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_upwellservices', true),
+                    'drones' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_drones', true),
+                    'charges' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_charges', true),
+                    'fuel' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_fuel', true),
+                    'implantsAndBooster' => \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_implants_and_booster', true),
                 ]);
             }
         }
@@ -91,7 +94,7 @@ class MetaBoxes {
         $isIdea = null;
         $isUnderDiscussion = null;
 
-        if(PostType::isEditPage('edit') && $typenow === 'fitting') {
+        if(PostType::getInstance()->isEditPage('edit') && $typenow === 'fitting') {
             $isConcept = \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_is_concept', true);
             $isIdea = \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_is_idea', true);
             $isUnderDiscussion = \get_post_meta($post->ID, 'eve-online-fitting-manager_fitting_is_under_discussion', true);
@@ -135,13 +138,11 @@ class MetaBoxes {
 
         // EFT Fitting
         $eftFitting = \filter_input(\INPUT_POST, 'eve-online-fitting-manager_eft-import');
-
-        $shipType = Helper\EftHelper::getShipType($eftFitting);
-        $shipName = Helper\EftHelper::getFittingName($eftFitting);
-        $shipID = Helper\FittingHelper::getItemIdByName($shipType);
-
-        $fittingSlotData = Helper\EftHelper::getSlotDataFromEftData($eftFitting);
-        $fittingDna = Helper\EftHelper::getShipDnaFromEftData($eftFitting);
+        $shipType = EftHelper::getInstance()->getShipType($eftFitting);
+        $shipName = EftHelper::getInstance()->getFittingName($eftFitting);
+        $shipID = FittingHelper::getInstance()->getItemIdByName($shipType, 'inventoryTypes');
+        $fittingSlotData = EftHelper::getInstance()->getSlotDataFromEftData($eftFitting);
+        $fittingDna = EftHelper::getInstance()->getShipDnaFromEftData($eftFitting);
 
         \update_post_meta($postID, 'eve-online-fitting-manager_ship_type', (!empty($shipType)) ? \maybe_serialize($shipType) : null);
         \update_post_meta($postID, 'eve-online-fitting-manager_fitting_name', (!empty($shipName)) ? \maybe_serialize($shipName) : null);

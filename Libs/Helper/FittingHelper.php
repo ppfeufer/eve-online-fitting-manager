@@ -1,12 +1,12 @@
 <?php
 
-/**
- * Copyright (C) 2017 Rounon Dax
+/*
+ * Copyright (C) 2017 ppfeufer
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -14,130 +14,37 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-namespace WordPress\Plugin\EveOnlineFittingManager\Libs\Helper;
+
+namespace WordPress\Plugins\EveOnlineFittingManager\Libs\Helper;
+
+use stdClass;
+use WordPress\EsiClient\Model\Universe\UniverseIds\InventoryTypes;
+use WordPress\EsiClient\Model\Universe\UniverseTypesTypeId;
+use WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
+use WP_Query;
 
 \defined('ABSPATH') or die();
 
-class FittingHelper {
-    /**
-     * Getting High Slot Item Names
-     *
-     * @param string $highSlots
-     * @return array
-     */
-    public static function getHighSlotItemNames($highSlots) {
-        $slots = \maybe_unserialize($highSlots);
-        $arrayHighSlot = [
-            'highSlot_1_itemName' => (!empty($slots['highSlot_1'])) ? self::getItemNameById($slots['highSlot_1']) : null,
-            'highSlot_2_itemName' => (!empty($slots['highSlot_2'])) ? self::getItemNameById($slots['highSlot_2']) : null,
-            'highSlot_3_itemName' => (!empty($slots['highSlot_3'])) ? self::getItemNameById($slots['highSlot_3']) : null,
-            'highSlot_4_itemName' => (!empty($slots['highSlot_4'])) ? self::getItemNameById($slots['highSlot_4']) : null,
-            'highSlot_5_itemName' => (!empty($slots['highSlot_5'])) ? self::getItemNameById($slots['highSlot_5']) : null,
-            'highSlot_6_itemName' => (!empty($slots['highSlot_6'])) ? self::getItemNameById($slots['highSlot_6']) : null,
-            'highSlot_7_itemName' => (!empty($slots['highSlot_7'])) ? self::getItemNameById($slots['highSlot_7']) : null,
-            'highSlot_8_itemName' => (!empty($slots['highSlot_8'])) ? self::getItemNameById($slots['highSlot_8']) : null,
-        ];
-
-        return $arrayHighSlot;
-    }
-
-    /**
-     * Getting Mid Slot Item Names
-     *
-     * @param string $midSlots
-     * @return array
-     */
-    public static function getMidSlotItemNames($midSlots) {
-        $slots = \maybe_unserialize($midSlots);
-
-        $arrayMidSlot = [
-            'midSlot_1_itemName' => (!empty($slots['midSlot_1'])) ? self::getItemNameById($slots['midSlot_1']) : null,
-            'midSlot_2_itemName' => (!empty($slots['midSlot_2'])) ? self::getItemNameById($slots['midSlot_2']) : null,
-            'midSlot_3_itemName' => (!empty($slots['midSlot_3'])) ? self::getItemNameById($slots['midSlot_3']) : null,
-            'midSlot_4_itemName' => (!empty($slots['midSlot_4'])) ? self::getItemNameById($slots['midSlot_4']) : null,
-            'midSlot_5_itemName' => (!empty($slots['midSlot_5'])) ? self::getItemNameById($slots['midSlot_5']) : null,
-            'midSlot_6_itemName' => (!empty($slots['midSlot_6'])) ? self::getItemNameById($slots['midSlot_6']) : null,
-            'midSlot_7_itemName' => (!empty($slots['midSlot_7'])) ? self::getItemNameById($slots['midSlot_7']) : null,
-            'midSlot_8_itemName' => (!empty($slots['midSlot_8'])) ? self::getItemNameById($slots['midSlot_8']) : null,
-        ];
-
-        return $arrayMidSlot;
-    }
-
-    /**
-     * Getting Low Slot Item Names
-     *
-     * @param string $lowSlots
-     * @return srray
-     */
-    public static function getLowSlotItemNames($lowSlots) {
-        $slots = \maybe_unserialize($lowSlots);
-
-        $arrayLowSlot = [
-            'lowSlot_1_itemName' => (!empty($slots['lowSlot_1'])) ? self::getItemNameById($slots['lowSlot_1']) : null,
-            'lowSlot_2_itemName' => (!empty($slots['lowSlot_2'])) ? self::getItemNameById($slots['lowSlot_2']) : null,
-            'lowSlot_3_itemName' => (!empty($slots['lowSlot_3'])) ? self::getItemNameById($slots['lowSlot_3']) : null,
-            'lowSlot_4_itemName' => (!empty($slots['lowSlot_4'])) ? self::getItemNameById($slots['lowSlot_4']) : null,
-            'lowSlot_5_itemName' => (!empty($slots['lowSlot_5'])) ? self::getItemNameById($slots['lowSlot_5']) : null,
-            'lowSlot_6_itemName' => (!empty($slots['lowSlot_6'])) ? self::getItemNameById($slots['lowSlot_6']) : null,
-            'lowSlot_7_itemName' => (!empty($slots['lowSlot_7'])) ? self::getItemNameById($slots['lowSlot_7']) : null,
-            'lowSlot_8_itemName' => (!empty($slots['lowSlot_8'])) ? self::getItemNameById($slots['lowSlot_8']) : null,
-        ];
-
-        return $arrayLowSlot;
-    }
-
-    /**
-     * Getting Rog Slot Item Names
-     *
-     * @param string $rigSlots
-     * @return array
-     */
-    public static function getRigSlotItemNames($rigSlots) {
-        $rigs = \maybe_unserialize($rigSlots);
-
-        $arrayRigSlot = [
-            'rigSlot_1_itemName' => (!empty($rigs['rigSlot_1'])) ? self::getItemNameById($rigs['rigSlot_1']) : null,
-            'rigSlot_2_itemName' => (!empty($rigs['rigSlot_2'])) ? self::getItemNameById($rigs['rigSlot_2']) : null,
-            'rigSlot_3_itemName' => (!empty($rigs['rigSlot_3'])) ? self::getItemNameById($rigs['rigSlot_3']) : null,
-        ];
-
-        return $arrayRigSlot;
-    }
-
-    /**
-     * Getting Subsystem Item Names
-     *
-     * @param string $subSystems
-     * @return array
-     */
-    public static function getSubSystemItemNames($subSystems) {
-        $sub = \maybe_unserialize($subSystems);
-
-        $arraySubSystems = [
-            'subSystem_1_itemName' => (!empty($sub['subSystem_1'])) ? self::getItemNameById($sub['subSystem_1']) : null,
-            'subSystem_2_itemName' => (!empty($sub['subSystem_2'])) ? self::getItemNameById($sub['subSystem_2']) : null,
-            'subSystem_3_itemName' => (!empty($sub['subSystem_3'])) ? self::getItemNameById($sub['subSystem_3']) : null,
-            'subSystem_4_itemName' => (!empty($sub['subSystem_4'])) ? self::getItemNameById($sub['subSystem_4']) : null,
-        ];
-
-        return $arraySubSystems;
-    }
-
+class FittingHelper extends AbstractSingleton {
     /**
      * Getting Item Description
      *
-     * @param string $itemID
+     * @param int $itemID
      * @return array
      */
-    public static function getItemDescription($itemID) {
-        $sql = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `description` FROM `kb3_invtypes` WHERE `typeID` = %d', [$itemID]);
-        $description = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
+    public function getItemDescription(int $itemID) {
+        $returnValue = null;
 
-        return \wpautop($description);
+        /* @var $itemData UniverseTypesTypeId */
+        $itemData = EsiHelper::getInstance()->getItemTypeInformation($itemID);
+
+        if(!\is_null($itemData)) {
+            $returnValue = $itemData->getDescription();
+        }
+
+        return \wpautop($returnValue);
     }
 
     /**
@@ -147,128 +54,96 @@ class FittingHelper {
      * @param int $itemCount
      * @return boolean
      */
-    public static function getItemDetailsByItemName($itemName, $itemCount = 1) {
-        $sql = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT
-                it.typeID AS itemID,
-                it.groupID AS groupID,
-                it.typeName AS itemName,
-                it.description AS itemDescription,
-                itt.itt_cat AS categoryID,
-                e.displayName AS slotName,
-                e.effectId AS slotEffectID
-            FROM kb3_invtypes it
-            LEFT JOIN kb3_dgmtypeeffects te ON te.typeID = it.typeID
-            AND te.effectID IN (
-                12, -- needs high slot
-                13, -- needs med slot
-                11, -- needs lot slow
-                2663, -- needs rig slot
-                3772, -- needs subsystem slot
-                6306 -- needs service slot
-            )
-            INNER JOIN kb3_dgmeffects e ON e.effectID = te.effectID
-            INNER JOIN kb3_item_types itt ON itt.itt_id = it.groupID
-            WHERE it.typeName = %s
-            AND itt.itt_id = it.groupID;', [$itemName]);
-        $itemData = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_results($sql, \OBJECT);
+    public function getItemDetailsByItemName(string $itemName, int $itemCount = 1) {
+        $itemId = FittingHelper::getInstance()->getItemIdByName($itemName, 'inventoryTypes');
+        $itemEsiData = EsiHelper::getInstance()->getItemDataByItemId($itemId);
 
-        /**
-         * If we don't have any result here, we might have an item that cannot be fitted.
-         * So do another check without restricting to slots.
-         */
-        if(!$itemData) {
-            $sql = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT
-                    `kb3_invtypes`.`typeID` AS `itemID`,
-                    `kb3_invtypes`.`groupID` AS `groupID`,
-                    `kb3_invtypes`.`typeName` AS `itemName`,
-                    `kb3_invtypes`.`description` AS `itemDescription`,
-                    `kb3_item_types`.`itt_slot` AS `slotID`,
-                    `kb3_item_types`.`itt_cat` AS `categoryID`,
-                    `kb3_item_locations`.`itl_flagName` AS `slotName`
-                FROM `kb3_invtypes`, `kb3_item_types`, `kb3_item_locations`
-                WHERE `typeName` = %s
-                AND `kb3_item_types`.`itt_id` = `kb3_invtypes`.`groupID`
-                AND `kb3_item_locations`.`itl_flagID` = `kb3_item_types`.`itt_slot`;', [$itemName]);
-            $itemData = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_results($sql, \OBJECT);
-        } // END if(!$itemData)
+        if(!\is_null($itemEsiData['itemTypeInformation']) && !\is_null($itemEsiData['itemGroupInformation']) && !\is_null($itemEsiData['itemCategoryInformation'])) {
+            $returnData = new stdClass;
 
-        if($itemData) {
-            $itemData = $itemData['0'];
+            $returnData->itemID = $itemId;
+            $returnData->groupID = $itemEsiData['itemTypeInformation']->getGroupId();
+            $returnData->categoryID = $itemEsiData['itemGroupInformation']->getCategoryId();
+            $returnData->itemName = $itemEsiData['itemTypeInformation']->getName();
+            $returnData->itemDescription = $itemEsiData['itemTypeInformation']->getDescription();
 
-            if(!empty($itemData->itemID)) {
-                /**
-                 * Category: Ships
-                 */
-                if($itemData->categoryID === '6') {
-                    $itemData->slotName = 'ship';
-                }
+            /**
+             * Category: Fuel
+             */
+            $arrayFuelIDs = [
+                '16273', // Liquid Ozone
+                '16274', // Helium Isotopes
+                '17889', // Hydrogen Isotopes
+                '17887', // Oxygen Isotopes
+                '17888', // Nitrogen Isotopes
+                '16272', // Heavy Water
+                '16275'  // Strontuim Clathrates
+            ];
 
-                /**
-                 * Category: Charges
-                 */
-                if($itemData->categoryID === '8') {
-                    $itemData->slotName = 'charge';
-                }
+            switch($returnData->categoryID) {
+                case 6:
+                    $returnData->slotName = 'ship';
+                    break;
 
-                /**
-                 * Category: Fuel
-                 */
-                $arrayFuelIDs = [
-                    '16273', // Liquid Ozone
-                    '16274', // Helium Isotopes
-                    '17889', // Hydrogen Isotopes
-                    '17887', // Oxygen Isotopes
-                    '17888', // Nitrogen Isotopes
-                    '16272', // Heavy Water
-                    '16275'  // Strontuim Clathrates
-                ];
+                case 8:
+                    $returnData->slotName = 'charge';
+                    break;
 
-                if(\in_array($itemData->itemID, $arrayFuelIDs)) {
-                    $itemData->slotName = 'fuel';
-                }
+                case 18;
+                    $returnData->slotName = 'drone';
+                    break;
 
-                /**
-                 * Category: Implants and Booster
-                 */
-                if($itemData->categoryID === '20') {
-                    $itemData->slotName = 'Implants and Booster';
-                }
-
-                /**
-                 * Category: Dones
-                 */
-                if($itemData->categoryID === '18') {
-                    $itemData->slotName = 'drone';
-                }
-
-
-                if($itemCount != null) {
-                    $itemData->itemCount = $itemCount;
-                }
-
-                return $itemData;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * Getting Items Data
-     *
-     * @param string $itemName
-     * @return boolean
-     */
-    public static function getItems($itemName) {
-        $sql = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `kb3_invtypes`.`typeName` AS `itemName` FROM `kb3_invtypes` WHERE `typeName` LIKE %s', ['%' . $itemName . '%']);
-        $itemData = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_results($sql, \OBJECT);
-
-        if($itemData) {
-            foreach($itemData as $item) {
-                $items[] = $item['itemName'];
+                case 20;
+                    $returnData->slotName = 'Implants and Booster';
+                    break;
             }
 
-            return $items;
+            if(\in_array($returnData->itemID, $arrayFuelIDs)) {
+                $returnData->slotName = 'fuel';
+            }
+
+            // in case we still don't have any slot information ...
+            if(!isset($returnData->slotName)) {
+                foreach($itemEsiData['itemTypeInformation']->getDogmaEffects() as $dogmaEffect) {
+                    switch($dogmaEffect->getEffectId()) {
+                        // low power
+                        case 11:
+                            $returnData->slotName = 'Low power';
+                            $returnData->slotEffectID = $dogmaEffect->getEffectId();
+                            break;
+
+                        // high power
+                        case 12:
+                            $returnData->slotName = 'High power';
+                            $returnData->slotEffectID = $dogmaEffect->getEffectId();
+                            break;
+
+                        // medium power
+                        case 13:
+                            $returnData->slotName = 'Medium power';
+                            $returnData->slotEffectID = $dogmaEffect->getEffectId();
+                            break;
+
+                        // rig slot
+                        case 2663:
+                            $returnData->slotName = 'Rig Slot';
+                            $returnData->slotEffectID = $dogmaEffect->getEffectId();
+                            break;
+
+                        // sub system
+                        case 3772:
+                            $returnData->slotName = 'Sub System';
+                            $returnData->slotEffectID = $dogmaEffect->getEffectId();
+                            break;
+                    }
+                }
+            }
+
+            if($itemCount != null) {
+                $returnData->itemCount = $itemCount;
+            }
+
+            return $returnData;
         }
 
         return false;
@@ -280,12 +155,14 @@ class FittingHelper {
      * @param string $itemName
      * @return type
      */
-    public static function getItemIdByName($itemName) {
+    public function getItemIdByName($itemName, $eveCategory) {
         $returnValue = null;
 
-        if(!empty($itemName)) {
-            $sql = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `kb3_invtypes`.`typeID` AS `itemID` from `kb3_invtypes` WHERE `kb3_invtypes`.`typeName` = %s', [$itemName]);
-            $returnValue = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
+        /* @var $esiResult InventoryTypes */
+        $esiResult = EsiHelper::getInstance()->getIdFromName([$itemName], $eveCategory);
+
+        if(\is_a($esiResult['0'], '\WordPress\EsiClient\Model\Universe\UniverseIds\InventoryTypes')) {
+            $returnValue = $esiResult['0']->getId();
         }
 
         return $returnValue;
@@ -294,31 +171,33 @@ class FittingHelper {
     /**
      * Getting an item name by its iten ID
      *
-     * @param int $itemID
+     * @param int|array $itemID
      * @return type
      */
-    public static function getItemNameById($itemID) {
+    public function getItemNameById($itemID) {
         if(\is_array($itemID)) {
             $itemNames = [];
 
             foreach($itemID as $id) {
-                $sql = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `kb3_invtypes`.`typeName` AS `itemName` from `kb3_invtypes` WHERE `kb3_invtypes`.`typeID` = %d', [$id]);
-                $itemNames[$id] = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
+                /* @var $esiResult UniverseTypesTypeId */
+                $esiResult = EsiHelper::getInstance()->getItemTypeInformation($itemID);
+
+                if(!\is_null($esiResult)) {
+                    $itemNames[$id] = $esiResult->getName();
+                }
             }
 
             return $itemNames;
         }
 
-        $sql = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `kb3_invtypes`.`typeName` AS `itemName` from `kb3_invtypes` WHERE `kb3_invtypes`.`typeID` = %d', [$itemID]);
-        $itemName = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
+        /* @var $esiResult UniverseTypesTypeId */
+        $esiResult = EsiHelper::getInstance()->getItemTypeInformation($itemID);
+
+        if(!\is_null($esiResult)) {
+            $itemName = $esiResult->getName();
+        }
 
         return $itemName;
-    }
-
-    public static function getDescriptionItemDetailsByItemName($itemName) {
-        $itemDetails = self::getItemDetailsByItemName($itemName);
-
-        return $itemDetails;
     }
 
     /**
@@ -327,7 +206,7 @@ class FittingHelper {
      * @param object $fittingData
      * @return string
      */
-    public static function getShipDnaFromFittingData($fittingData) {
+    public function getShipDnaFromFittingData($fittingData) {
         $highSlots = [];
         $midSlots = [];
         $lowSlots = [];
@@ -454,19 +333,22 @@ class FittingHelper {
      * @param array $fitting
      * @return type
      */
-    public static function getSlotLayoutFromFittingArray($fitting) {
-        $currentHighSlots = self::getHighSlotCountForShipID($fitting['shipID']);
-        $currenMidSlots = self::getMidSlotCountForShipID($fitting['shipID']);
-        $currentLowSlots = self::getLowSlotCountForShipID($fitting['shipID']);
-        $currentRigSlots = self::getRigSlotCountForShipID($fitting['shipID']);
+    public function getSlotLayoutFromFittingArray($fitting) {
+        $shipSlotLayout = $this->getShipSlotLayout($fitting['shipID']);
+
+        $currentHighSlots = $shipSlotLayout['hiSlots'];
+        $currenMidSlots = $shipSlotLayout['medSlots'];
+        $currentLowSlots = $shipSlotLayout['loSlots'];
+        $currentRigSlots = $shipSlotLayout['rigSlots'];
+
         $currentSubSystems = 0;
         $currentServiceSlots = 0;
 
         $fittedSubSystems = \maybe_unserialize($fitting['subSystems']);
         $fittedServiceSlots = \maybe_unserialize($fitting['serviceSlots']);
 
-        $arrayStrategicCruiserIDs = self::getStrategicCruiserIds();
-        $arrayUpwellStructureIDs = self::getUpwellStructureIds();
+        $arrayStrategicCruiserIDs = $this->getStrategicCruiserIds();
+        $arrayUpwellStructureIDs = $this->getUpwellStructureIds();
 
         /**
          * Check if:
@@ -482,14 +364,15 @@ class FittingHelper {
 
             for($i = 1; $i <= $maxSubSystems; $i++) {
                 if(isset($fittedSubSystems['subSystem_' . $i])) {
-                    $currentHighSlots += self::getHighSlotModifierCountForShipID($fittedSubSystems['subSystem_' . $i]);
-                    $currenMidSlots += self::getMidSlotModifierCountForShipID($fittedSubSystems['subSystem_' . $i]);
-                    $currentLowSlots += self::getLowSlotModifierCountForShipID($fittedSubSystems['subSystem_' . $i]);
+                    $subSystemModifier = $this->getSubsystemSlotModifier($fittedSubSystems['subSystem_' . $i]);
+
+                    $currentHighSlots += $subSystemModifier['hiSlots'];
+                    $currenMidSlots += $subSystemModifier['medSlots'];
+                    $currentLowSlots += $subSystemModifier['loSlots'];
                 }
             }
 
-            $currentRigSlots = self::getRigSlotCountForShipID($fitting['shipID']);
-            $currentSubSystems = 5;
+            $currentSubSystems = 4;
         } elseif(\in_array($fitting['shipID'], $arrayUpwellStructureIDs) && !empty($fittedServiceSlots)) {
             /**
              * Processing Upwell Structures
@@ -507,9 +390,7 @@ class FittingHelper {
         ];
     }
 
-// END public function getSlotLayoutFromFittingArray($fitting)
-
-    private static function getStrategicCruiserIds() {
+    private function getStrategicCruiserIds() {
         return [
             29984, // Tengu
             29986, // Legion
@@ -518,11 +399,17 @@ class FittingHelper {
         ];
     }
 
-    private static function getUpwellStructureIds() {
+    private function getUpwellStructureIds() {
         return [
             35832, // Astrahus
             35833, // Fortizar
             35834, // Keepstar
+
+            47512, // 'Moreau' Fortizar
+            47513, // 'Draccous' Fortizar
+            47514, // 'Horizon' Fortizar
+            47515, // 'Marginis' Fortizar
+            47516, // 'Prometheus' Fortizar
 
             35825, // Raitaru
             35826, // Azbel
@@ -534,115 +421,87 @@ class FittingHelper {
     }
 
     /**
-     * Getting the count of high slots of a given ship by its ID
+     * get ship slot layout
      *
-     * @param int $shipID
-     * @return int
+     * @param int $shipId
+     * @return array
      */
-    public static function getHighSlotCountForShipID($shipID) {
-        $sql = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `value`
-            FROM `kb3_dgmtypeattributes`
-            JOIN `kb3_dgmattributetypes` ON `attributeName` = "hiSlots"
-            WHERE `kb3_dgmattributetypes`.`attributeID` = `kb3_dgmtypeattributes`.`attributeID`
-            AND `kb3_dgmtypeattributes`.`typeID` = %d', [$shipID]);
+    public function getShipSlotLayout(int $shipId) {
+        $returnValue = [
+            'hiSlots' => 0,
+            'medSlots' => 0,
+            'loSlots' => 0,
+            'rigSlots' => 0
+        ];
 
-        return \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
+        $shipData = EsiHelper::getInstance()->getItemTypeInformation($shipId);
+
+        if(!\is_null($shipData)) {
+            foreach($shipData->getDogmaAttributes() as $dogmaAttribute) {
+                switch($dogmaAttribute->getAttributeId()) {
+                    // hiSlots
+                    case 14;
+                        $returnValue['hiSlots'] = $dogmaAttribute->getValue();
+                        break;
+
+                    // medSlots
+                    case 13;
+                        $returnValue['medSlots'] = $dogmaAttribute->getValue();
+                        break;
+
+                    // loSlots
+                    case 12;
+                        $returnValue['loSlots'] = $dogmaAttribute->getValue();
+                        break;
+
+                    // rigSlots
+                    case 1137;
+                        $returnValue['rigSlots'] = $dogmaAttribute->getValue();
+                        break;
+                }
+            }
+        }
+
+        return $returnValue;
     }
 
     /**
-     * Getting the count of mid slots of a given ship by its ID
-     *
-     * @param int $shipID
-     * @return int
-     */
-    public static function getMidSlotCountForShipID($shipID) {
-        $sql = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `value`
-            FROM `kb3_dgmtypeattributes`
-            JOIN `kb3_dgmattributetypes` ON `attributeName` = "medSlots"
-            WHERE `kb3_dgmattributetypes`.`attributeID` = `kb3_dgmtypeattributes`.`attributeID`
-            AND `kb3_dgmtypeattributes`.`typeID` = %d', [$shipID]);
-
-        return \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
-    }
-
-    /**
-     * Getting the count of low slots of a given ship by its ID
-     *
-     * @param int $shipID
-     * @return int
-     */
-    public static function getLowSlotCountForShipID($shipID) {
-        $sql = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `value`
-            FROM `kb3_dgmtypeattributes`
-            JOIN `kb3_dgmattributetypes` ON `attributeName` = "lowSlots"
-            WHERE `kb3_dgmattributetypes`.`attributeID` = `kb3_dgmtypeattributes`.`attributeID`
-            AND `kb3_dgmtypeattributes`.`typeID` = %d', [$shipID]);
-
-        return \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
-    }
-
-    /**
-     * Getting the amount of high slots modified by a subsystem
+     * get slot modifier from a asub system
      *
      * @param int $subsystemID
-     * @return int
+     * @return array
      */
-    public static function getHighSlotModifierCountForShipID($subsystemID) {
-        $sql = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `value`
-            FROM `kb3_dgmtypeattributes`
-            JOIN `kb3_dgmattributetypes` ON `attributeName` = "hiSlotModifier"
-            WHERE `kb3_dgmattributetypes`.`attributeID` = `kb3_dgmtypeattributes`.`attributeID`
-            AND `kb3_dgmtypeattributes`.`typeID` = %d', [$subsystemID]);
+    public function getSubsystemSlotModifier(int $subsystemID) {
+        $returnValue = [
+            'hiSlots' => 0,
+            'medSlots' => 0,
+            'loSlots' => 0
+        ];
 
-        return \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
-    }
+        $subsystemData = EsiHelper::getInstance()->getItemTypeInformation($subsystemID);
 
-    /**
-     * Getting the amount of mid slots modified by a subsystem
-     *
-     * @param int $subsystemID
-     * @return int
-     */
-    public static function getMidSlotModifierCountForShipID($subsystemID) {
-        $sql = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `value`
-            FROM `kb3_dgmtypeattributes`
-            JOIN `kb3_dgmattributetypes` ON `attributeName` = "medSlotModifier"
-            WHERE `kb3_dgmattributetypes`.`attributeID` = `kb3_dgmtypeattributes`.`attributeID`
-            AND `kb3_dgmtypeattributes`.`typeID` = %d', [$subsystemID]);
+        if(!\is_null($subsystemData)) {
+            foreach($subsystemData->getDogmaAttributes() as $dogmaAttribute) {
+                switch($dogmaAttribute->getAttributeId()) {
+                    // hiSlots
+                    case 1374;
+                        $returnValue['hiSlots'] = $dogmaAttribute->getValue();
+                        break;
 
-        return \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
-    }
+                    // medSlots
+                    case 1375;
+                        $returnValue['medSlots'] = $dogmaAttribute->getValue();
+                        break;
 
-    /**
-     * Getting the amount of low slots modified by a subsystem
-     *
-     * @param int $subsystemID
-     * @return int
-     */
-    public static function getLowSlotModifierCountForShipID($subsystemID) {
-        $sql = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `value`
-            FROM `kb3_dgmtypeattributes`
-            JOIN `kb3_dgmattributetypes` ON `attributeName` = "lowSlotModifier"
-            WHERE `kb3_dgmattributetypes`.`attributeID` = `kb3_dgmtypeattributes`.`attributeID`
-            AND `kb3_dgmtypeattributes`.`typeID` = %d', [$subsystemID]);
+                    // loSlots
+                    case 1376;
+                        $returnValue['loSlots'] = $dogmaAttribute->getValue();
+                        break;
+                }
+            }
+        }
 
-        return \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
-    }
-
-    /**
-     * Getting the count of rig slots of a given ship by its ID
-     *
-     * @param int $shipID
-     * @return int
-     */
-    public static function getRigSlotCountForShipID($shipID) {
-        $sql = \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->prepare('SELECT `value`
-                FROM `kb3_dgmtypeattributes`
-                JOIN `kb3_dgmattributetypes` ON `attributeName` = "rigSlots"
-                WHERE `kb3_dgmattributetypes`.`attributeID` = `kb3_dgmtypeattributes`.`attributeID`
-                AND `kb3_dgmtypeattributes`.`typeID` = %d', [$shipID]);
-
-        return \WordPress\Plugin\EveOnlineFittingManager\Libs\Database::getInstance()->db->get_var($sql);
+        return $returnValue;
     }
 
     /**
@@ -652,8 +511,8 @@ class FittingHelper {
      * @param type $size
      * @return type
      */
-    public static function getShipImageById($itemID = null, $size = 512) {
-        $image = ImageHelper::getInstance()->getLocalCacheImageUriForRemoteImage('ship', ImageHelper::getInstance()->getImageServerUrl('inventory') . $itemID . '_' . $size . '.png');
+    public function getShipImageById($itemID = null, $size = 512) {
+        $image = ImageHelper::getInstance()->getImageServerUrl('inventory') . $itemID . '_' . $size . '.png';
 
         return $image;
     }
@@ -664,7 +523,7 @@ class FittingHelper {
      * @param string $taxonomy
      * @return string
      */
-    public static function getSidebarMenu($taxonomy) {
+    public function getSidebarMenu($taxonomy) {
         $entityListHtml = '<ul class="sidebar-doctrine-list doctrine-list menu-' . $taxonomy . '">';
 
         // get all taxonomy terms
@@ -748,8 +607,8 @@ class FittingHelper {
      * @param string $taxonomy
      * @return string
      */
-    public static function getContentMenu($taxonomy) {
-        $pluginOptions = PluginHelper::getPluginSettings();
+    public function getContentMenu($taxonomy) {
+        $pluginOptions = PluginHelper::getInstance()->getPluginSettings();
         $uniqueID = \uniqid();
 
         $entityListHtml = '<div class="gallery-row row">';
@@ -777,12 +636,12 @@ class FittingHelper {
 
             if(isset($pluginOptions['template-image-settings']['show-doctrine-images-in-loop']) && $pluginOptions['template-image-settings']['show-doctrine-images-in-loop'] === 'yes') {
                 if(\function_exists('\z_taxonomy_image')) {
-                    $doctrineImage .= '<a class="doctrine-link-item" href="' . \get_term_link($entity->term_id) . '"><figure class="fitting-helper-post-loop-thumbnail">';
+                    $doctrineImage .= '<a class="doctrine-link-item" href="' . \get_term_link($entity->term_id) . '"><figure class="fitting-manager-post-loop-thumbnail">';
 
                     if(\function_exists('\fly_get_attachment_image')) {
-                        $doctrineImage .= \fly_get_attachment_image(\z_get_attachment_id_by_url(\z_taxonomy_image_url($entity->term_id)), 'fitting-helper-post-loop-thumbnail');
+                        $doctrineImage .= \fly_get_attachment_image(\z_get_attachment_id_by_url(\z_taxonomy_image_url($entity->term_id)), 'fitting-manager-post-loop-thumbnail');
                     } else {
-                        $doctrineImage .= \z_taxonomy_image($entity->term_id, 'fitting-helper-post-loop-thumbnail', null, false);
+                        $doctrineImage .= \z_taxonomy_image($entity->term_id, 'fitting-manager-post-loop-thumbnail', null, false);
                     }
 
                     $doctrineImage .= '</figure><header class="entry-header"><h2 class="entry-title">' . $entity->name . '</h2></header></a>';
@@ -852,7 +711,7 @@ class FittingHelper {
         $entityListHtml .= '<script type="text/javascript">
                             jQuery(document).ready(function() {
                                 jQuery("ul.bootstrap-post-loop-fittings-' . $uniqueID . '").bootstrapGallery({
-                                    "classes" : "' . \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\PluginHelper::getLoopContentClasses() . '",
+                                    "classes" : "' . PluginHelper::getInstance()->getLoopContentClasses() . '",
                                     "hasModal" : false
                                 });
                             });
@@ -867,14 +726,7 @@ class FittingHelper {
      * @param boolean $escaped wether the query should be escaped or not
      * @return string
      */
-    public static function getFittingSearchQuery($escaped = true) {
-        /**
-         * Filters the contents of the search query variable.
-         *
-         * @since 2.3.0
-         *
-         * @param mixed $search Contents of the search query variable.
-         */
+    public function getFittingSearchQuery($escaped = true) {
         $query = \apply_filters('get_fitting_search_query', \get_query_var('fitting_search'));
 
         if($escaped === true) {
@@ -884,22 +736,22 @@ class FittingHelper {
         return $query;
     }
 
-    public static function searchFittings() {
+    public function searchFittings() {
         $args = [
             'post_type' => 'fitting',
             'posts_per_page' => -1,
-            '_meta_or_title' => self::getFittingSearchQuery(),
+            '_meta_or_title' => $this->getFittingSearchQuery(),
             'compare' => 'LIKE',
             'meta_query' => [
                 'relation' => 'OR',
                 [
                     'key' => 'eve-online-fitting-manager_ship_type',
-                    'value' => self::getFittingSearchQuery(),
+                    'value' => $this->getFittingSearchQuery(),
                     'compare' => 'LIKE'
                 ],
                 [
                     'key' => 'eve-online-fitting-manager_fitting_name',
-                    'value' => self::getFittingSearchQuery(),
+                    'value' => $this->getFittingSearchQuery(),
                     'compare' => 'LIKE'
                 ]
             ],
@@ -907,10 +759,15 @@ class FittingHelper {
             'order' => 'ASC'
         ];
 
-        return new \WP_Query($args);
+        return new WP_Query($args);
     }
 
-    public static function getShipUsedInDoctrine() {
+    /**
+     * Getting a list of doctrines in whic hthe ship is used
+     *
+     * @return array
+     */
+    public function getShipUsedInDoctrine() {
         $terms = \wp_get_object_terms(\get_the_ID(), 'fitting-doctrines');
         $doctrines = null;
 
@@ -931,7 +788,7 @@ class FittingHelper {
      * @param type $shipID
      * @return boolean
      */
-    public static function isUpwellStructure($shipID) {
-        return \in_array($shipID, self::getUpwellStructureIds());
+    public function isUpwellStructure($shipID) {
+        return \in_array($shipID, $this->getUpwellStructureIds());
     }
 }

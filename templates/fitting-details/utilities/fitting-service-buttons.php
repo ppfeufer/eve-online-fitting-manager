@@ -1,18 +1,34 @@
+<?php
+
+/*
+ * Copyright (C) 2017 ppfeufer
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\FittingHelper;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\TemplateHelper;
+
+?>
 <div class="clearfix">
     <?php
-    $isUpwellStructure = \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\FittingHelper::isUpwellStructure($shipID);
+    $isUpwellStructure = FittingHelper::getInstance()->isUpwellStructure($shipID);
 
     /**
      * Get cols count
      */
     $colsCount = null;
-
-    // Check for o.smium button
-    if(isset($pluginSettings['template-detail-parts-settings']['show-osmium-link']) && $pluginSettings['template-detail-parts-settings']['show-osmium-link'] === 'yes') {
-        if($isUpwellStructure === false) {
-            $colsCount++;
-        }
-    }
 
     // Check for copy EFT button
     if(isset($pluginSettings['template-detail-parts-settings']['show-copy-eft']) && $pluginSettings['template-detail-parts-settings']['show-copy-eft'] === 'yes') {
@@ -31,37 +47,25 @@
     }
 
     /**
-     * Show the Osmium fitting link
-     */
-    if(isset($pluginSettings['template-detail-parts-settings']['show-osmium-link']) && $pluginSettings['template-detail-parts-settings']['show-osmium-link'] === 'yes') {
-        if($isUpwellStructure === false) {
-            \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\TemplateHelper::getTemplate('fitting-details/utilities/fitting-osmium', [
-                'fittingDna' => $fittingDna,
-                'columnsPerButton' => $columnsPerButton
-            ]);
-        } // END if(\WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\FittingHelper::isUpwellStructure($shipID) === false)
-    } // END if(isset($pluginSettings['template-detail-parts-settings']['show-osmium-link']) && $pluginSettings['template-detail-parts-settings']['show-osmium-link'] === 'yes')
-
-    /**
      * Show copy eft data to clipboard button
      */
     if(isset($pluginSettings['template-detail-parts-settings']['show-copy-eft']) && $pluginSettings['template-detail-parts-settings']['show-copy-eft'] === 'yes') {
-        \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\TemplateHelper::getTemplate('fitting-details/utilities/fitting-copy-eft-to-clipboard', [
+        TemplateHelper::getInstance()->getTemplate('fitting-details/utilities/fitting-copy-eft-to-clipboard', [
             'eftFitting' => $eftFitting,
             'isUpwellStructure' => $isUpwellStructure,
             'columnsPerButton' => $columnsPerButton
         ]);
-    } // END if(isset($pluginSettings['template-detail-parts-settings']['show-copy-eft']) && $pluginSettings['template-detail-parts-settings']['show-copy-eft'] === 'yes')
+    }
 
     /**
      * Show copy permalink to clipboard button
      */
     if(isset($pluginSettings['template-detail-parts-settings']['show-copy-permalink']) && $pluginSettings['template-detail-parts-settings']['show-copy-permalink'] === 'yes') {
-        \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\TemplateHelper::getTemplate('fitting-details/utilities/fitting-copy-permalink-to-clipboard', [
+        TemplateHelper::getInstance()->getTemplate('fitting-details/utilities/fitting-copy-permalink-to-clipboard', [
             'isUpwellStructure' => $isUpwellStructure,
             'columnsPerButton' => $columnsPerButton
         ]);
-    } // END if(isset($pluginSettings['template-detail-parts-settings']['show-copy-permalink']) && $pluginSettings['template-detail-parts-settings']['show-copy-permalink'] === 'yes')
+    }
     ?>
 </div>
 <div class="fitting-copy-result"></div>

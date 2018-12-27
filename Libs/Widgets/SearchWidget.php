@@ -1,11 +1,12 @@
 <?php
-/**
- * Copyright (C) 2017 Rounon Dax
+
+/*
+ * Copyright (C) 2017 ppfeufer
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -13,15 +14,18 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace WordPress\Plugin\EveOnlineFittingManager\Libs\Widgets;
+namespace WordPress\Plugins\EveOnlineFittingManager\Libs\Widgets;
+
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\FittingHelper;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\PostType;
+use \WP_Widget;
 
 \defined('ABSPATH') or die();
 
-class SearchWidget extends \WP_Widget {
+class SearchWidget extends WP_Widget {
     /**
      * Root ID for all widgets of this type.
      *
@@ -59,7 +63,7 @@ class SearchWidget extends \WP_Widget {
 
         $controlOptions = [];
 
-        parent::__construct('fitting_manager_search_sidebar_widget', __('Fitting Manager Search Widget', 'fitting-manager-search-sidebar-widget'), $widgetOptions, $controlOptions);
+        parent::__construct('fitting_manager_search_sidebar_widget', \__('Fitting Manager Search Widget', 'fitting-manager-search-sidebar-widget'), $widgetOptions, $controlOptions);
     }
 
     /**
@@ -83,10 +87,10 @@ class SearchWidget extends \WP_Widget {
         if($countDoctrineShips > 0) {
             ?>
             <div class="fitting-sidebar-search">
-                <form action="/<?php echo \WordPress\Plugin\EveOnlineFittingManager\Libs\PostType::getPosttypeSlug('fittings'); ?>/" method="GET" id="fitting_search" role="search">
+                <form action="/<?php echo PostType::getInstance()->getPosttypeSlug('fittings'); ?>/" method="GET" id="fitting_search" role="search">
                     <div class="input-group">
                         <label class="sr-only" for="fitting_search"><?php echo \__('Search', 'eve-online-fitting-manager') ?></label>
-                        <input type="text" class="form-control" id="fitting_search" name="fitting_search" placeholder="<?php echo \__('Search Ship Type', 'eve-online-fitting-manager') ?>" value="<?php echo \WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\FittingHelper::getFittingSearchQuery(true); ?>">
+                        <input type="text" class="form-control" id="fitting_search" name="fitting_search" placeholder="<?php echo \__('Search Ship Type', 'eve-online-fitting-manager') ?>" value="<?php echo FittingHelper::getInstance()->getFittingSearchQuery(true); ?>">
                         <div class="input-group-btn">
                             <button type="submit" class="btn btn-default">
                                 <span class="glyphicon glyphicon-search"></span>

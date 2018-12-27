@@ -1,17 +1,38 @@
 <?php
+
+/*
+ * Copyright (C) 2017 ppfeufer
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 /**
  * WordPress Settings API
  * by H.-Peter Pfeufer
  * Inspired by: http://www.wp-load.com/register-settings-api/
  *
  * Usage:
- * 		$settingsApi = new SettingsApi($settingsFilterName, $defaultOptions);
- * 		$settingsApi->init();
+ *      $settingsApi = new SettingsApi($settingsFilterName, $defaultOptions);
+ *      $settingsApi->init();
  *
  * @version 0.1
  */
 
-namespace WordPress\Plugin\EveOnlineFittingManager\Libs;
+namespace WordPress\Plugins\EveOnlineFittingManager\Libs;
+
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\StringHelper;
 
 \defined('ABSPATH') or die();
 
@@ -218,6 +239,7 @@ class SettingsApi {
 
                 if(!empty($nonce)) {
                     $callbackFunction = \filter_input(\INPUT_GET, 'callback');
+
                     if(function_exists($callbackFunction)) {
                         $message = \call_user_func($callbackFunction);
                         \update_option('rsa-message', $message);
@@ -278,7 +300,7 @@ class SettingsApi {
      */
     public function get() {
         if(!empty($this->args['get'])) {
-            $itemArray = \call_user_func_array([$this, 'get' . \ucfirst(Helper\StringHelper::camelCase($this->args['get']))], [$this->args]);
+            $itemArray = \call_user_func_array([$this, 'get' . \ucfirst(StringHelper::getInstance()->camelCase($this->args['get']))], [$this->args]);
         } elseif(!empty($this->args['choices'])) {
             $itemArray = $this->selectChoices($this->args);
         } else {
@@ -925,7 +947,7 @@ class SettingsApi {
                     }
 
                     $i = 0;
-                    $pageFiltered = \filter_input(INPUT_GET, 'page');
+                    $pageFiltered = \filter_input(\INPUT_GET, 'page');
 
                     foreach($settings['tabs'] as $settingsId => $section) {
                         $sanitizedId = \sanitize_title($settingsId);
@@ -965,7 +987,7 @@ class SettingsApi {
 //            \wp_enqueue_script('wp-color-picker');
 //            \wp_enqueue_script('jquery-ui-datepicker');
             \wp_enqueue_script(
-                'settings-api', (\WP_DEBUG === true) ? Helper\PluginHelper::getPluginUri('js/settings-api.js') : Helper\PluginHelper::getPluginUri('js/settings-api.min.js')
+                'settings-api', (\WP_DEBUG === true) ? PluginHelper::getInstance()->getPluginUri('js/settings-api.js') : PluginHelper::getInstance()->getPluginUri('js/settings-api.min.js')
             );
         }
     }
@@ -976,13 +998,13 @@ class SettingsApi {
     public function enqueueStyles() {
         if($this->isSettingsPage() === true) {
 //            \wp_enqueue_style('wp-color-picker');
-//            \wp_enqueue_style('jquery-ui', Helper\PluginHelper::getPluginUri('css/jquery-ui.min.css'));
+//            \wp_enqueue_style('jquery-ui', Helper\PluginHelper::getInstance()->getPluginUri('css/jquery-ui.min.css'));
 //            \wp_enqueue_style(
 //                'font-awesome',
-//                (\WP_DEBUG === true) ? Helper\PluginHelper::getPluginUri('css/font-awesome.css') : Helper\PluginHelper::getPluginUri('css/font-awesome.min.css')
+//                (\WP_DEBUG === true) ? Helper\PluginHelper::getInstance()->getPluginUri('css/font-awesome.css') : Helper\PluginHelper::getInstance()->getPluginUri('css/font-awesome.min.css')
 //            );
             \wp_enqueue_style(
-                'settings-api', (\WP_DEBUG === true) ? Helper\PluginHelper::getPluginUri('css/settings-api.css') : Helper\PluginHelper::getPluginUri('css/settings-api.min.css')
+                'settings-api', (\WP_DEBUG === true) ? PluginHelper::getInstance()->getPluginUri('css/settings-api.css') : PluginHelper::getInstance()->getPluginUri('css/settings-api.min.css')
             );
         }
     }

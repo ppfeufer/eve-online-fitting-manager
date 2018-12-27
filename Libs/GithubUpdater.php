@@ -1,12 +1,12 @@
 <?php
 
-/**
- * Copyright (C) 2017 Rounon Dax
+/*
+ * Copyright (C) 2017 ppfeufer
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -14,11 +14,10 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace WordPress\Plugin\EveOnlineFittingManager\Libs;
+namespace WordPress\Plugins\EveOnlineFittingManager\Libs;
 
 \defined('ABSPATH') or die();
 
@@ -57,13 +56,13 @@ class GithubUpdater {
      * @var $config the config for the updater
      * @access public
      */
-    var $config;
+    public $config;
 
     /**
      * @var $missingConfig any config that is missing from the initialization of this instance
      * @access public
      */
-    var $missingConfig;
+    public $missingConfig;
 
     /**
      * @var $githubData temporiraly store the data fetched from GitHub, allows us to only load the data once per class instance
@@ -153,7 +152,7 @@ class GithubUpdater {
      * @return bool overrule or not
      */
     public function overruleTransients() {
-        return (\defined('\WordPress\Plugin\EveOnlineFittingManager\WP_GITHUB_FORCE_UPDATE') && \WordPress\Plugin\EveOnlineFittingManager\WP_GITHUB_FORCE_UPDATE);
+        return (\defined('\WordPress\Plugins\EveOnlineFittingManager\WP_GITHUB_FORCE_UPDATE') && \WordPress\Plugins\EveOnlineFittingManager\WP_GITHUB_FORCE_UPDATE);
     }
 
     /**
@@ -376,7 +375,7 @@ class GithubUpdater {
      * @return object $data the data
      */
     public function getPluginData() {
-        include_once(ABSPATH . '/wp-admin/includes/plugin.php');
+        include_once(\ABSPATH . '/wp-admin/includes/plugin.php');
 
         $data = \get_plugin_data(\WP_PLUGIN_DIR . '/' . $this->config['slug']);
 

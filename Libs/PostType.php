@@ -1,12 +1,12 @@
 <?php
 
-/**
- * Copyright (C) 2017 Rounon Dax
+/*
+ * Copyright (C) 2017 ppfeufer
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -14,33 +14,26 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace WordPress\Plugin\EveOnlineFittingManager\Libs;
+namespace WordPress\Plugins\EveOnlineFittingManager\Libs;
+
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\TemplateHelper;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
 
 \defined('ABSPATH') or die();
 
 /**
  * Managing the custom post type
  */
-class PostType {
-    /**
-     * Constructor
-     */
-    public function __construct() {
-        \add_action('init', [$this, 'customPostType']);
-
-        \add_filter('template_include', [$this, 'templateLoader']);
-        \add_filter('page_template', [$this, 'registerPageTemplate']);
-    }
-
+class PostType extends AbstractSingleton {
     /**
      * Registering the custom post type
      */
     public function customPostType() {
-        $var_sSlug = self::getPosttypeSlug('fittings');
+        $var_sSlug = $this->getPosttypeSlug('fittings');
 
         $labelsDoctrine = [
             'name' => \__('Doctrines', 'eve-online-fitting-manager'),
@@ -142,7 +135,7 @@ class PostType {
      *
      * @param string $postType
      */
-    public static function getPosttypeSlug($postType) {
+    public function getPosttypeSlug($postType) {
         global $wpdb;
 
         $returnValue = $postType;
@@ -179,8 +172,8 @@ class PostType {
      *
      * @since 1.0.0
      *
-     * @param	string	$template	Template file that is being loaded.
-     * @return	string				Template file that should be loaded.
+     * @param string $template Template file that is being loaded.
+     * @return string Template file that should be loaded.
      */
     public function templateLoader($template) {
         $templateFile = null;
@@ -191,13 +184,13 @@ class PostType {
             $templateFile = 'archive-fitting.php';
         } elseif(\is_archive() && \is_tax('fitting-ships')) {
             $templateFile = 'archive-ship.php';
-        } // END if(\is_singular('fitting'))
+        }
 
         if($templateFile !== null) {
-            if(\file_exists(Helper\TemplateHelper::locateTemplate($templateFile))) {
-                $template = Helper\TemplateHelper::locateTemplate($templateFile);
-            } // END if(\file_exists(Helper\TemplateHelper::locateTemplate($file)))
-        } // END if($templateFile !== null)
+            if(\file_exists(TemplateHelper::getInstance()->locateTemplate($templateFile))) {
+                $template = TemplateHelper::getInstance()->locateTemplate($templateFile);
+            }
+        }
 
         return $template;
     }
@@ -209,21 +202,21 @@ class PostType {
      * @return string
      */
     public function registerPageTemplate($pageTemplate) {
-        if(\is_page(self::getPosttypeSlug('fittings'))) {
-            $pageTemplate = Helper\PluginHelper::getPluginPath('templates/page-fittings.php');
+        if(\is_page($this->getPosttypeSlug('fittings'))) {
+            $pageTemplate = PluginHelper::getInstance()->getPluginPath('templates/page-fittings.php');
         }
 
         return $pageTemplate;
     }
 
     /**
-     * Determine the type of teh edit page in backend
+     * Determine the type of the edit page in backend
      *
      * @global array $pagenow
      * @param string $newEdit
      * @return boolean
      */
-    public static function isEditPage($newEdit = null) {
+    public function isEditPage($newEdit = null) {
         global $pagenow;
 
         //make sure we are on the backend

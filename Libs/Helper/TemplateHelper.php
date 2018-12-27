@@ -1,12 +1,12 @@
 <?php
 
-/**
- * Copyright (C) 2017 Rounon Dax
+/*
+ * Copyright (C) 2017 ppfeufer
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -14,16 +14,16 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace WordPress\Plugin\EveOnlineFittingManager\Libs\Helper;
+namespace WordPress\Plugins\EveOnlineFittingManager\Libs\Helper;
+
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
 
 \defined('ABSPATH') or die();
 
-class TemplateHelper {
-
+class TemplateHelper extends AbstractSingleton {
     /**
      * Locate template.
      *
@@ -40,7 +40,7 @@ class TemplateHelper {
      * @param string $default_path Default path to template files.
      * @return string Path to the template file.
      */
-    public static function locateTemplate($template_name, $template_path = '', $default_path = '') {
+    public function locateTemplate($template_name, $template_path = '', $default_path = '') {
         // Set variable to search in templates folder of theme.
         if(!$template_path) {
             $template_path = 'templates/';
@@ -53,7 +53,7 @@ class TemplateHelper {
 
         // Set default plugin templates path.
         if(!$default_path) {
-            $default_path = PluginHelper::getPluginPath('templates/'); // Path to the template folder
+            $default_path = PluginHelper::getInstance()->getPluginPath('templates/'); // Path to the template folder
         }
 
         // Search template file in theme folder.
@@ -84,7 +84,7 @@ class TemplateHelper {
      * @param string $tempate_path Path to templates.
      * @param string $default_path Default path to template files.
      */
-    public static function getTemplate($template_name, $args = [], $tempate_path = '', $default_path = '') {
+    public function getTemplate($template_name, $args = [], $tempate_path = '', $default_path = '') {
         if(\is_array($args) && isset($args)) {
             \extract($args);
         }
@@ -94,7 +94,7 @@ class TemplateHelper {
             $template_name .= '.php';
         }
 
-        $template_file = self::locateTemplate($template_name, $tempate_path, $default_path);
+        $template_file = $this->locateTemplate($template_name, $tempate_path, $default_path);
 
         if(!\file_exists($template_file)) {
             \_doing_it_wrong(__FUNCTION__, \sprintf('<code>%s</code> does not exist.', $template_file), '1.0.0');

@@ -1,3 +1,25 @@
+<?php
+
+/*
+ * Copyright (C) 2017 ppfeufer
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\FittingHelper;
+
+?>
 <div>
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
@@ -16,7 +38,7 @@
                 <a href="#fitting-description" aria-controls="fitting-description" role="tab" data-toggle="tab"><h4><?php echo \__('Information', 'eve-online-fitting-manager'); ?></h4></a>
             </li>
             <?php
-        } // END if(!empty(\trim($fittingDescription)))
+        }
 
         /**
          * Ship description
@@ -27,7 +49,7 @@
                 <a href="#ship-description" aria-controls="ship-description" role="tab" data-toggle="tab"><h4><?php echo \__('Description', 'eve-online-fitting-manager'); ?></h4></a>
             </li>
             <?php
-        } // END if(!empty($pluginSettings['template-detail-parts-settings']['show-ship-description']))
+        }
         ?>
     </ul>
 
@@ -47,7 +69,7 @@
                 <?php echo \wpautop($fittingDescription); ?>
             </div>
             <?php
-        } // END if(!empty(\trim($fittingDescription)))
+        }
 
         /**
          * Ship description
@@ -55,10 +77,10 @@
         if(isset($pluginSettings['template-detail-parts-settings']['show-ship-description']) && $pluginSettings['template-detail-parts-settings']['show-ship-description'] === 'yes') {
             ?>
             <div role="tabpanel" class="tab-pane ship-description" id="ship-description">
-                <?php echo WordPress\Plugin\EveOnlineFittingManager\Libs\Helper\FittingHelper::getItemDescription($shipID); ?>
+                <?php echo FittingHelper::getInstance()->getItemDescription($shipID); ?>
             </div>
             <?php
-        } // END if(!empty($pluginSettings['template-detail-parts-settings']['show-ship-description']))
+        }
         ?>
     </div>
 </div>
