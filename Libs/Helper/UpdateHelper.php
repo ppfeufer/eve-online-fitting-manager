@@ -28,18 +28,25 @@ use \ZipArchive;
 
 class UpdateHelper extends AbstractSingleton {
     /**
-     * Option field name for database version
+     * Database field name for plugin options
      *
      * @var string
      */
-    protected $optionDatabaseFieldName = 'eve-online-fitting-manager-database-version';
+    protected $optionFieldName = 'eve-online-fitting-manager-options';
+
+    /**
+     * Database field name for database version
+     *
+     * @var string
+     */
+    protected $pluginDatabaseVersionFieldName = 'eve-online-fitting-manager-database-version';
 
     /**
      * Database version
      *
      * @var string
      */
-    protected $databaseVersion = 20181226;
+    protected $databaseVersion = 20181227;
 
     /**
      * Database version
@@ -83,7 +90,7 @@ class UpdateHelper extends AbstractSingleton {
      *
      * @return int
      */
-    public function getNewDatabaseVersion() {
+    public function getNewPluginDatabaseVersion() {
         return $this->databaseVersion;
     }
 
@@ -101,8 +108,12 @@ class UpdateHelper extends AbstractSingleton {
      *
      * @return string
      */
-    public function getDatabaseFieldName() {
-        return $this->optionDatabaseFieldName;
+    public function getDatabaseVersionFieldName() {
+        return $this->pluginDatabaseVersionFieldName;
+    }
+
+    public function getOptionFieldName() {
+        return $this->optionFieldName;
     }
 
     /**
@@ -111,7 +122,7 @@ class UpdateHelper extends AbstractSingleton {
      * @return string
      */
     public function getCurrentDatabaseVersion() {
-        return \get_option($this->getDatabaseFieldName());
+        return \get_option($this->getDatabaseVersionFieldName());
     }
 
     /**
@@ -120,14 +131,14 @@ class UpdateHelper extends AbstractSingleton {
     public function checkDatabaseForUpdates() {
         $currentVersion = $this->getCurrentDatabaseVersion();
 
-        if(\version_compare($currentVersion, $this->getNewDatabaseVersion()) < 0) {
-            $this->updateDatabase($this->getNewDatabaseVersion());
+        if(\version_compare($currentVersion, $this->getNewPluginDatabaseVersion()) < 0) {
+            $this->updateDatabase($this->getNewPluginDatabaseVersion());
         }
 
         /**
          * Update database version
          */
-        \update_option($this->getDatabaseFieldName(), $this->getNewDatabaseVersion());
+        \update_option($this->getCurrentDatabaseVersion(), $this->getNewPluginDatabaseVersion());
     }
 
     /**
@@ -135,6 +146,24 @@ class UpdateHelper extends AbstractSingleton {
      */
     public function updateDatabase() {
         $this->createEsiCacheTable();
+        $this->createMarketDataCacheTable();
+    }
+
+    public function updatePluginOptions() {
+        $defaultSettings = PluginHelper::getInstance()->getPluginDefaultSettings();
+        $pluginSettings = PluginHelper::getInstance()->getPluginSettings(false);
+
+        if(\is_array($pluginSettings)) {
+            $newOptions = \array_merge($defaultSettings, $pluginSettings);
+        } else {
+            $newOptions = $defaultSettings;
+        }
+
+        // Update the options
+        \update_option($this->getOptionFieldName(), $newOptions);
+
+        // Update the DB Version
+        \update_option($this->getDatabaseVersionFieldName(), $this->getNewPluginDatabaseVersion());
     }
 
     private function createEsiCacheTable() {
@@ -146,6 +175,22 @@ class UpdateHelper extends AbstractSingleton {
             value longtext,
             valid_until varchar(255),
             PRIMARY KEY esi_route (esi_route)
+        ) $charsetCollate;";
+
+        require_once(\ABSPATH . 'wp-admin/includes/upgrade.php');
+
+        \dbDelta($sql);
+    }
+
+    private function createMarketDataCacheTable() {
+        $charsetCollate = $this->wpdb->get_charset_collate();
+        $tableName = $this->wpdb->base_prefix . 'eve_online_market_data_cache';
+
+        $sql = "CREATE TABLE $tableName (
+            cache_key varchar(255),
+            value longtext,
+            valid_until varchar(255),
+            PRIMARY KEY cache_key (cache_key)
         ) $charsetCollate;";
 
         require_once(\ABSPATH . 'wp-admin/includes/upgrade.php');

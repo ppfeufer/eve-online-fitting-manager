@@ -24,10 +24,6 @@ use WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
 \defined('ABSPATH') or die();
 
 class PluginHelper extends AbstractSingleton {
-    protected $optionName = 'eve-online-fitting-manager-options';
-    protected $dbVersionFieldName = 'eve-online-fitting-manager-database-version';
-    protected $databaseVersion = '20181226';
-
     /**
      * Getting the Plugin Path
      *
@@ -46,33 +42,6 @@ class PluginHelper extends AbstractSingleton {
      */
     public function getPluginUri($file = '') {
         return \WP_PLUGIN_URL . '/eve-online-fitting-manager/' . $file;
-    }
-
-    /**
-     * Getting thew options field name
-     *
-     * @return string
-     */
-    public function getOptionFieldName() {
-        return $this->optionName;
-    }
-
-    /**
-     * Getting the Database Version field name
-     *
-     * @return string
-     */
-    public function getDatabaseVersionFieldName() {
-        return $this->dbVersionFieldName;
-    }
-
-    /**
-     * Getting the Database Version from plugin
-     *
-     * @return string
-     */
-    public function getNewPluginDatabaseVersion() {
-        return $this->databaseVersion;
     }
 
     /**
@@ -101,35 +70,6 @@ class PluginHelper extends AbstractSingleton {
     }
 
     /**
-     * Getting the Database Version from options
-     *
-     * @return string
-     */
-    public function getPluginDatabaseVersion() {
-        return \get_option($this->getDatabaseVersionFieldName());
-    }
-
-    /**
-     * Update the plugin default settings if needed
-     */
-    public function updateDatabase() {
-        $defaultSettings = $this->getPluginDefaultSettings();
-        $pluginSettings = $this->getPluginSettings(false);
-
-        if(\is_array($pluginSettings)) {
-            $newOptions = \array_merge($defaultSettings, $pluginSettings);
-        } else {
-            $newOptions = $defaultSettings;
-        }
-
-        // Update the options
-        \update_option($this->getOptionFieldName(), $newOptions);
-
-        // Update the DB Version
-        \update_option($this->getDatabaseVersionFieldName(), $this->getNewPluginDatabaseVersion());
-    }
-
-    /**
      * Getting the Plugin's settings
      *
      * @param boolean $merged Merge with default settings (true/false)
@@ -137,9 +77,9 @@ class PluginHelper extends AbstractSingleton {
      */
     public function getPluginSettings($merged = true) {
         if($merged === true) {
-            $pluginSettings = \get_option($this->getOptionFieldName(), $this->getPluginDefaultSettings());
+            $pluginSettings = \get_option(UpdateHelper::getInstance()->getOptionFieldName(), $this->getPluginDefaultSettings());
         } else {
-            $pluginSettings = \get_option($this->getOptionFieldName());
+            $pluginSettings = \get_option(UpdateHelper::getInstance()->getOptionFieldName());
         }
 
         return $pluginSettings;

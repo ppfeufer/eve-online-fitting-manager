@@ -50,7 +50,7 @@ class DatabaseHelper extends AbstractSingleton {
      * @param string $route
      * @return Esi Object
      */
-    public function getCachedEsiDataFromDb($route) {
+    public function getCachedEsiDataFromDb(string $route) {
         $returnValue = null;
 
         $cacheResult = $this->wpdb->get_results($this->wpdb->prepare(
@@ -75,6 +75,29 @@ class DatabaseHelper extends AbstractSingleton {
     public function writeEsiCacheDataToDb(array $data) {
         $this->wpdb->query($this->wpdb->prepare(
             'REPLACE INTO ' . $this->wpdb->base_prefix . 'eve_online_esi_cache' . ' (esi_route, value, valid_until) VALUES (%s, %s, %s)', $data
+        ));
+    }
+
+    public function getMarketDataCache(string $cacheKey) {
+        $returnValue = null;
+
+        $cacheResult = $this->wpdb->get_results($this->wpdb->prepare(
+            'SELECT * FROM ' . $this->wpdb->base_prefix . 'eve_online_market_data_cache' . ' WHERE cache_key = %s AND valid_until > %s', [
+                $cacheKey,
+                \time()
+            ]
+        ));
+
+        if($cacheResult) {
+            $returnValue = \maybe_unserialize($cacheResult['0']->value);
+        }
+
+        return $returnValue;
+    }
+
+    public function writeMarketDataCache(array $data) {
+        $this->wpdb->query($this->wpdb->prepare(
+            'REPLACE INTO ' . $this->wpdb->base_prefix . 'eve_online_market_data_cache' . ' (cache_key, value, valid_until) VALUES (%s, %s, %s)', $data
         ));
     }
 }

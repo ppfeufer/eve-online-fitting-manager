@@ -112,20 +112,23 @@ class MarketDataHelper extends AbstractSingleton {
      * @param array $items
      * @return string json string of all item marketdata
      */
-    public function getMarketDataJson(array $items) {
+    public function getMarketData(array $items) {
         $typeIdString = \implode(',', $items);
-        $transientName = 'eve_fitting_tool_' . $this->pluginSettings['market-data-api'] . '-market-data_fitting_' . \md5($typeIdString);
-        $returnValue = CacheHelper::getInstance()->checkTransientCache($transientName);
+        $cacheKey = $this->pluginSettings['market-data-api'] . '/' . \md5($typeIdString);
 
-        if($returnValue === false) {
+        $marketData = DatabaseHelper::getInstance()->getMarketDataCache($cacheKey);
+
+        if(\is_null($marketData)) {
             $marketData = $this->remoteHelper->getRemoteData($this->apiUrl . $typeIdString);
 
-            CacheHelper::getInstance()->setTransientCache($transientName, \json_encode($marketData), 1);
-
-            $returnValue = \json_encode($marketData);
+            DatabaseHelper::getInstance()->writeMarketDataCache([
+                $cacheKey,
+                \maybe_serialize($marketData),
+                \strtotime('+1 hour')
+            ]);
         }
 
-        return $returnValue;
+        return $marketData;
     }
 
     /**
@@ -147,22 +150,18 @@ class MarketDataHelper extends AbstractSingleton {
         // Remove the ship from the array
         unset($fittingArray['0']);
 
-        $marketJsonShip = $this->getMarketDataJson($ship);
+        $marketDataShip = $this->getMarketData($ship);
 
-        if($marketJsonShip !== false) {
-            $marketArrayShip = \json_decode($marketJsonShip);
+        if(!\is_null($marketDataShip)) {
+            $jitaBuyPrice = [
+                'ship' => $marketDataShip['0']->buy->median,
+                'total' => $marketDataShip['0']->buy->median
+            ];
 
-            if($marketArrayShip !== null) {
-                $jitaBuyPrice = [
-                    'ship' => $marketArrayShip['0']->buy->median,
-                    'total' => $marketArrayShip['0']->buy->median
-                ];
-
-                $jitaSellPrice = [
-                    'ship' => $marketArrayShip['0']->sell->median,
-                    'total' => $marketArrayShip['0']->sell->median
-                ];
-            }
+            $jitaSellPrice = [
+                'ship' => $marketDataShip['0']->sell->median,
+                'total' => $marketDataShip['0']->sell->median
+            ];
         }
 
         // Fitting Price
@@ -175,22 +174,18 @@ class MarketDataHelper extends AbstractSingleton {
         }
 
         // if we have items
-        if($items !== null) {
-            $marketJsonFitting = $this->getMarketDataJson($items);
+        if(!\is_null($items)) {
+            $marketDataFitting = $this->getMarketData($items);
 
-            // If we have the json data
-            if($marketJsonFitting !== false) {
-                $marketArray = \json_decode($marketJsonFitting);
+            if(!\is_null($marketDataFitting)) {
                 $jitaBuyPrice['fitting'] = 0;
                 $jitaSellPrice['fitting'] = 0;
 
-                if($marketArray !== null) {
-                    foreach($marketArray as $item) {
-                        $jitaBuyPrice['fitting'] += $item->buy->median;
-                        $jitaSellPrice['fitting'] += $item->sell->median;
-                        $jitaBuyPrice['total'] += $item->buy->median;
-                        $jitaSellPrice['total'] += $item->sell->median;
-                    }
+                foreach($marketDataFitting as $item) {
+                    $jitaBuyPrice['fitting'] += $item->buy->median;
+                    $jitaSellPrice['fitting'] += $item->sell->median;
+                    $jitaBuyPrice['total'] += $item->buy->median;
+                    $jitaSellPrice['total'] += $item->sell->median;
                 }
 
                 $returnValue = [

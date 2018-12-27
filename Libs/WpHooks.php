@@ -54,8 +54,8 @@ class WpHooks {
      */
     public function __construct() {
         $this->pluginFile = PluginHelper::getInstance()->getPluginPath('eve-online-fitting-manager.php');
-        $this->newDatabaseVersion = PluginHelper::getInstance()->getNewPluginDatabaseVersion();
-        $this->currentDatabaseVersion = PluginHelper::getInstance()->getPluginDatabaseVersion();
+        $this->newDatabaseVersion = UpdateHelper::getInstance()->getNewPluginDatabaseVersion();
+        $this->currentDatabaseVersion = UpdateHelper::getInstance()->getCurrentDatabaseVersion();
 
         $this->init();
     }
@@ -74,11 +74,17 @@ class WpHooks {
      * Initialize our hooks
      */
     public function initHooks() {
-        \register_activation_hook($this->pluginFile, [$this, 'checkDatabaseForUpdates']);
+        /**
+         * Hoks fired on plugin activation
+         */
         \register_activation_hook($this->pluginFile, [UpdateHelper::getInstance(), 'checkDatabaseForUpdates']);
         \register_activation_hook($this->pluginFile, [UpdateHelper::getInstance(), 'checkEsiClientForUpdates']);
+        \register_activation_hook($this->pluginFile, [$this, 'checkPluginOptionsForUpdates']);
         \register_activation_hook($this->pluginFile, [$this, 'flushRewriteRulesOnActivation']);
 
+        /**
+         * Hooks fired on plugin deactivation
+         */
         \register_deactivation_hook($this->pluginFile, [$this, 'flushRewriteRulesOnDeactivation']);
     }
 
@@ -91,9 +97,9 @@ class WpHooks {
          * since the activation doesn't fire on update
          * thx wordpress for removing update hooks ...
          */
-        \add_action('plugins_loaded', [$this, 'checkDatabaseForUpdates']);
         \add_action('plugins_loaded', [UpdateHelper::getInstance(), 'checkDatabaseForUpdates']);
         \add_action('plugins_loaded', [UpdateHelper::getInstance(), 'checkEsiClientForUpdates']);
+        \add_action('plugins_loaded', [$this, 'checkPluginOptionsForUpdates']);
 
         /**
          * Adding some query vars for the fitting search
@@ -147,7 +153,7 @@ class WpHooks {
      * @param string $file
      * @return array
      */
-    public function addPluginRowMeta(array $links, $file) {
+    public function addPluginRowMeta(array $links, string $file) {
         if(\strpos($file, 'eve-online-fitting-manager.php') !== false) {
             $newLinks = [
                 'issue_tracker' => '<a href="https://github.com/ppfeufer/eve-online-fitting-manager/issues" target="_blank">GitHub Issue Tracker</a>',
@@ -170,9 +176,9 @@ class WpHooks {
      * Hook: checkDatabaseForUpdates
      * Fired on: register_activation_hook
      */
-    public function checkDatabaseForUpdates() {
+    public function checkPluginOptionsForUpdates() {
         if($this->currentDatabaseVersion !== $this->newDatabaseVersion) {
-            PluginHelper::getInstance()->updateDatabase();
+            UpdateHelper::getInstance()->updatePluginOptions();
         }
     }
 
