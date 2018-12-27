@@ -7,7 +7,7 @@
  * Description: A little management tool for your doctrine fittings in your WordPress website. (Best with a theme running with <a href="http://getbootstrap.com/">Bootstrap</a>)
  * Version: 0.13.5-r20180613
  * Author: Rounon Dax
- * Author URI: https://yulaifederation.net
+ * Author URI: https://terra-nanotech.de
  * Text Domain: eve-online-fitting-manager
  * Domain Path: /l10n
  */
