@@ -3,9 +3,9 @@ msgstr ""
 "Project-Id-Version: EVE Online Fitting Manager for WordPress\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-27 03:31+0000\n"
-"PO-Revision-Date: 2018-12-27 03:32+0000\n"
+"PO-Revision-Date: 2018-12-27 14:01+0000\n"
 "Last-Translator: ppfeufer <develop@ppfeufer.de>\n"
-"Language-Team: Deutsch\n"
+"Language-Team: German\n"
 "Language: de_DE\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
@@ -355,7 +355,7 @@ msgstr ""
 
 #: templates/fitting-details/information/fitting-market-prices.php:39
 msgid "Jita Buy Order Price"
-msgstr "Jita Kaufpreis"
+msgstr "Jita Ankaufspreis"
 
 #: templates/fitting-details/information/fitting-market-prices.php:46
 #: templates/fitting-details/information/fitting-market-prices.php:66
