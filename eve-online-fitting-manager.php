@@ -31,13 +31,14 @@
 
 namespace WordPress\Plugins\EveOnlineFittingManager;
 
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\GithubUpdater;
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\MetaBoxes;
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\PluginSettings;
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\ResourceLoader\CssLoader;
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\ResourceLoader\JavascriptLoader;
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\TemplateLoader;
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\WpHooks;
+use WordPress\Plugins\EveOnlineFittingManager\Libs\GithubUpdater;
+use WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper;
+use WordPress\Plugins\EveOnlineFittingManager\Libs\MetaBoxes;
+use WordPress\Plugins\EveOnlineFittingManager\Libs\PluginSettings;
+use WordPress\Plugins\EveOnlineFittingManager\Libs\ResourceLoader\CssLoader;
+use WordPress\Plugins\EveOnlineFittingManager\Libs\ResourceLoader\JavascriptLoader;
+use WordPress\Plugins\EveOnlineFittingManager\Libs\TemplateLoader;
+use WordPress\Plugins\EveOnlineFittingManager\Libs\WpHooks;
 
 const WP_GITHUB_FORCE_UPDATE = true;
 
@@ -62,8 +63,6 @@ class EveOnlineFittingManager {
          * Initializing Variables
          */
         $this->textDomain = 'eve-online-fitting-manager';
-        $this->pluginDir = \plugin_dir_path(__FILE__);
-        $this->pluginUri = \trailingslashit(\plugins_url('/', __FILE__));
         $this->localizationDirectory = \basename(\dirname(__FILE__)) . '/l10n/';
 
         $this->loadTextDomain();
@@ -92,25 +91,30 @@ class EveOnlineFittingManager {
             new MetaBoxes;
             new TemplateLoader;
 
-            /**
-             * Check Github for updates
-             */
-            $githubConfig = [
-                'slug' => \plugin_basename(__FILE__),
-                'proper_folder_name' => 'eve-online-fitting-manager',
-                'api_url' => 'https://api.github.com/repos/ppfeufer/eve-online-fitting-manager',
-                'raw_url' => 'https://raw.github.com/ppfeufer/eve-online-fitting-manager/master',
-                'github_url' => 'https://github.com/ppfeufer/eve-online-fitting-manager',
-                'zip_url' => 'https://github.com/ppfeufer/eve-online-fitting-manager/archive/master.zip',
-                'sslverify' => true,
-                'requires' => '4.7',
-                'tested' => '4.8',
-                'readme' => 'README.md',
-                'access_token' => '',
-            ];
+            $this->initGitHubUpdater();
 
-            new GithubUpdater($githubConfig);
         }
+    }
+
+    public function initGitHubUpdater() {
+        /**
+         * Check Github for updates
+         */
+        $githubConfig = [
+            'slug' => \plugin_basename(__FILE__),
+            'proper_folder_name' => PluginHelper::getInstance()->getPluginDirName(),
+            'api_url' => 'https://api.github.com/repos/ppfeufer/eve-online-fitting-manager',
+            'raw_url' => 'https://raw.github.com/ppfeufer/eve-online-fitting-manager/master',
+            'github_url' => 'https://github.com/ppfeufer/eve-online-fitting-manager',
+            'zip_url' => 'https://github.com/ppfeufer/eve-online-fitting-manager/archive/master.zip',
+            'sslverify' => true,
+            'requires' => '4.7',
+            'tested' => '5.0.2',
+            'readme' => 'README.md',
+            'access_token' => '',
+        ];
+
+        new GithubUpdater($githubConfig);
     }
 
     /**
