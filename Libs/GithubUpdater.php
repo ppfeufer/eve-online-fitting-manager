@@ -111,12 +111,6 @@ class GithubUpdater {
         // Hook into the plugin details screen
         \add_filter('plugins_api', [$this, 'getPluginInfo'], 10, 3);
         \add_filter('upgrader_post_install', [$this, 'upgraderPostInstall'], 10, 3);
-
-        // set timeout
-        \add_filter('http_request_timeout', [$this, 'httpRequestTimeout']);
-
-        // set sslverify for zip download
-        \add_filter('http_request_args', [$this, 'httpRequestSslVerify'], 10, 2);
     }
 
     /**
@@ -297,6 +291,12 @@ class GithubUpdater {
      * @return mixed
      */
     public function remoteGet($query) {
+        // set timeout
+        \add_filter('http_request_timeout', [$this, 'httpRequestTimeout']);
+
+        // set sslverify for zip download
+        \add_filter('http_request_args', [$this, 'httpRequestSslVerify'], 10, 2);
+
         if(!empty($this->config['access_token'])) {
             $query = \add_query_arg(['access_token' => $this->config['access_token']], $query);
         }
@@ -304,6 +304,10 @@ class GithubUpdater {
         $rawResponse = \wp_remote_get($query, [
             'sslverify' => $this->config['sslverify']
         ]);
+
+        // Remove filters so we don't globally impact http requets.
+        \remove_filter('http_request_timeout', [$this, 'http_request_timeout']);
+        \remove_filter('http_request_args', [$this, 'http_request_sslverify']);
 
         return $rawResponse;
     }
