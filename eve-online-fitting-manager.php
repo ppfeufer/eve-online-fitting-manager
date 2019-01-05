@@ -40,7 +40,7 @@ use WordPress\Plugins\EveOnlineFittingManager\Libs\ResourceLoader\JavascriptLoad
 use WordPress\Plugins\EveOnlineFittingManager\Libs\TemplateLoader;
 use WordPress\Plugins\EveOnlineFittingManager\Libs\WpHooks;
 
-const WP_GITHUB_FORCE_UPDATE = true;
+const WP_GITHUB_FORCE_UPDATE = false;
 
 \defined('ABSPATH') or die();
 
