@@ -160,7 +160,7 @@ class EveOnlineFittingManager {
  * Start the show ....
  */
 function initializePlugin() {
-    $fittingManager = new EveOnlineFittingManager;
+    $fittingManager = new \WordPress\Plugins\EveOnlineFittingManager\EveOnlineFittingManager;
 
     /**
      * Initialize the plugin
