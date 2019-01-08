@@ -24,12 +24,14 @@
  */
 namespace WordPress\Plugins\EveOnlineFittingManager\Libs\Helper;
 
-use WordPress\EsiClient\Model\Universe\UniverseGroupsGroupId;
-use WordPress\EsiClient\Model\Universe\UniverseIds;
-use WordPress\EsiClient\Model\Universe\UniverseTypesTypeId;
-use WordPress\EsiClient\Repository\DogmaRepository;
-use WordPress\EsiClient\Repository\UniverseRepository;
-use WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
+use \WordPress\ {
+    EsiClient\Model\Universe\UniverseGroupsGroupId,
+    EsiClient\Model\Universe\UniverseIds,
+    EsiClient\Model\Universe\UniverseTypesTypeId,
+    EsiClient\Repository\DogmaRepository,
+    EsiClient\Repository\UniverseRepository,
+    Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton
+};
 
 \defined('ABSPATH') or die();
 

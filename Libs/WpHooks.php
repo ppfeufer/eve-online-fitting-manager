@@ -19,9 +19,11 @@
 
 namespace WordPress\Plugins\EveOnlineFittingManager\Libs;
 
-use WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper;
-use WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\UpdateHelper;
-use WP_Query;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\ {
+    PluginHelper,
+    UpdateHelper
+};
+use \WP_Query;
 
 \defined('ABSPATH') or die();
 
@@ -125,8 +127,8 @@ class WpHooks {
         /**
          * Market Data API
          */
-        \add_action('wp_ajax_nopriv_get-eve-fitting-market-data', [MarketData::getInstance(), 'ajaxGetFittingMarketData']);
-        \add_action('wp_ajax_get-eve-fitting-market-data', [MarketData::getInstance(), 'ajaxGetFittingMarketData']);
+        \add_action('wp_ajax_nopriv_get-eve-fitting-market-data', [\WordPress\Plugins\EveOnlineFittingManager\Libs\MarketData::getInstance(), 'ajaxGetFittingMarketData']);
+        \add_action('wp_ajax_get-eve-fitting-market-data', [\WordPress\Plugins\EveOnlineFittingManager\Libs\MarketData::getInstance(), 'ajaxGetFittingMarketData']);
     }
 
     /**

@@ -19,9 +19,11 @@
 
 namespace WordPress\Plugins\EveOnlineFittingManager\Libs\ResourceLoader;
 
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper;
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\Interfaces\AssetsInterface;
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\PostType;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\ {
+    Helper\PluginHelper,
+    Interfaces\AssetsInterface,
+    PostType
+};
 
 \defined('ABSPATH') or die();
 

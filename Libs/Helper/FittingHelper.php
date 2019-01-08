@@ -19,11 +19,13 @@
 
 namespace WordPress\Plugins\EveOnlineFittingManager\Libs\Helper;
 
-use stdClass;
-use WordPress\EsiClient\Model\Universe\UniverseIds\InventoryTypes;
-use WordPress\EsiClient\Model\Universe\UniverseTypesTypeId;
-use WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
-use WP_Query;
+use \stdClass;
+use \WordPress\ {
+    EsiClient\Model\Universe\UniverseIds\InventoryTypes,
+    EsiClient\Model\Universe\UniverseTypesTypeId,
+    Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton
+};
+use \WP_Query;
 
 \defined('ABSPATH') or die();
 
@@ -55,7 +57,7 @@ class FittingHelper extends AbstractSingleton {
      * @return boolean
      */
     public function getItemDetailsByItemName(string $itemName, int $itemCount = 1) {
-        $itemId = FittingHelper::getInstance()->getItemIdByName($itemName, 'inventoryTypes');
+        $itemId = \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\FittingHelper::getInstance()->getItemIdByName($itemName, 'inventoryTypes');
         $itemEsiData = EsiHelper::getInstance()->getItemDataByItemId($itemId);
 
         if(!\is_null($itemEsiData['itemTypeInformation']) && !\is_null($itemEsiData['itemGroupInformation']) && !\is_null($itemEsiData['itemCategoryInformation'])) {
