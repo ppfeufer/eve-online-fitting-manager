@@ -176,11 +176,13 @@ class EsiHelper extends AbstractSingleton {
         if(\is_null($itemTypeInformation)) {
             $itemTypeInformation = $this->universeApi->universeTypesTypeId($itemId);
 
-            $this->databaseHelper->writeEsiCacheDataToDb([
-                'universe/types/' . $itemId,
-                \maybe_serialize($itemTypeInformation),
-                \strtotime('+1 week')
-            ]);
+            if(\is_a($itemTypeInformation, '\WordPress\EsiClient\Model\Universe\UniverseTypesTypeId')) {
+                $this->databaseHelper->writeEsiCacheDataToDb([
+                    'universe/types/' . $itemId,
+                    \maybe_serialize($itemTypeInformation),
+                    \strtotime('+1 week')
+                ]);
+            }
         }
 
         return $itemTypeInformation;
@@ -199,11 +201,13 @@ class EsiHelper extends AbstractSingleton {
         if(\is_null($groupData)) {
             $groupData = $this->universeApi->universeGroupsGroupId($groupId);
 
-            $this->databaseHelper->writeEsiCacheDataToDb([
-                'universe/groups/' . $groupId,
-                \maybe_serialize($groupData),
-                \strtotime('+1 week')
-            ]);
+            if(\is_a($groupData, '\WordPress\EsiClient\Model\Universe\UniverseGroupsGroupId')) {
+                $this->databaseHelper->writeEsiCacheDataToDb([
+                    'universe/groups/' . $groupId,
+                    \maybe_serialize($groupData),
+                    \strtotime('+1 week')
+                ]);
+            }
         }
 
         return $groupData;
@@ -222,11 +226,13 @@ class EsiHelper extends AbstractSingleton {
         if(\is_null($categoryData)) {
             $categoryData = $this->universeApi->universeCategoriesCategoryId($categoryId);
 
-            $this->databaseHelper->writeEsiCacheDataToDb([
-                'universe/categories/' . $categoryId,
-                \maybe_serialize($categoryData),
-                \strtotime('+1 week')
-            ]);
+            if(\is_a($categoryData, '\WordPress\EsiClient\Model\Universe\UniverseCategoriesCategoryId')) {
+                $this->databaseHelper->writeEsiCacheDataToDb([
+                    'universe/categories/' . $categoryId,
+                    \maybe_serialize($categoryData),
+                    \strtotime('+1 week')
+                ]);
+            }
         }
 
         return $categoryData;
@@ -245,66 +251,68 @@ class EsiHelper extends AbstractSingleton {
         /* @var $esiData UniverseIds */
         $esiData = $this->universeApi->universeIds(\array_values($names));
 
-        switch($type) {
-            case 'agents':
-                $returnData = $esiData->getAgents();
-                break;
+        if(\is_a($esiData, '\WordPress\EsiClient\Model\Universe\UniverseIds')) {
+            switch($type) {
+                case 'agents':
+                    $returnData = $esiData->getAgents();
+                    break;
 
-            case 'alliances':
-                $returnData = $esiData->getAlliances();
-                break;
+                case 'alliances':
+                    $returnData = $esiData->getAlliances();
+                    break;
 
-            case 'constellations':
-                $returnData = $esiData->getConstellations();
-                break;
+                case 'constellations':
+                    $returnData = $esiData->getConstellations();
+                    break;
 
-            case 'characters':
-                $returnData = $esiData->getCharacters();
-                break;
+                case 'characters':
+                    $returnData = $esiData->getCharacters();
+                    break;
 
-            case 'corporations':
-                $returnData = $esiData->getCorporations();
-                break;
+                case 'corporations':
+                    $returnData = $esiData->getCorporations();
+                    break;
 
-            case 'factions':
-                $returnData = $esiData->getFactions();
-                break;
+                case 'factions':
+                    $returnData = $esiData->getFactions();
+                    break;
 
-            case 'inventoryTypes':
-                $returnData = $esiData->getInventoryTypes();
-                break;
+                case 'inventoryTypes':
+                    $returnData = $esiData->getInventoryTypes();
+                    break;
 
-            case 'regions':
-                $returnData = $esiData->getRegions();
-                break;
+                case 'regions':
+                    $returnData = $esiData->getRegions();
+                    break;
 
-            case 'stations':
-                $returnData = $esiData->getStations();
-                break;
+                case 'stations':
+                    $returnData = $esiData->getStations();
+                    break;
 
-            case 'systems':
-                $returnData = $esiData->getSystems();
-                break;
+                case 'systems':
+                    $returnData = $esiData->getSystems();
+                    break;
+            }
         }
 
         return $returnData;
     }
 
-    public function getDogmaAttribute(int $dogmaAttributeId) {
-        $dogmaAttributeData = $this->databaseHelper->getCachedEsiDataFromDb('dogma/attributes/' . $dogmaAttributeId);
-
-        if(\is_null($dogmaAttributeData)) {
-            $dogmaAttributeData = $this->dogmaApi->dogmaAttributesAttributeId($dogmaAttributeId);
-
-            if(!\is_null($dogmaAttributeData)) {
-                $this->databaseHelper->writeEsiCacheDataToDb([
-                    'dogma/attributes/' . $dogmaAttributeId,
-                    \maybe_serialize($dogmaAttributeData),
-                    \strtotime('+1 week')
-                ]);
-            }
-        }
-
-        return $dogmaAttributeData;
-    }
+//    public function getDogmaAttribute(int $dogmaAttributeId) {
+//        $dogmaAttributeData = $this->databaseHelper->getCachedEsiDataFromDb('dogma/attributes/' . $dogmaAttributeId);
+//
+//        if(\is_null($dogmaAttributeData)) {
+//            $dogmaAttributeData = $this->dogmaApi->dogmaAttributesAttributeId($dogmaAttributeId);
+//
+//            if(\is_a($dogmaAttributeData, '\WordPress\EsiClient\Model\Dogma\DogmaAttributesAttributeId')) {
+//                $this->databaseHelper->writeEsiCacheDataToDb([
+//                    'dogma/attributes/' . $dogmaAttributeId,
+//                    \maybe_serialize($dogmaAttributeData),
+//                    \strtotime('+1 week')
+//                ]);
+//            }
+//        }
+//
+//        return $dogmaAttributeData;
+//    }
 }

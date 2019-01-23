@@ -438,7 +438,7 @@ class FittingHelper extends AbstractSingleton {
 
         $shipData = EsiHelper::getInstance()->getItemTypeInformation($shipId);
 
-        if(!\is_null($shipData)) {
+        if(\is_a($shipData, '\WordPress\EsiClient\Model\Universe\UniverseTypesTypeId')) {
             foreach($shipData->getDogmaAttributes() as $dogmaAttribute) {
                 switch($dogmaAttribute->getAttributeId()) {
                     // hiSlots
@@ -482,7 +482,7 @@ class FittingHelper extends AbstractSingleton {
 
         $subsystemData = EsiHelper::getInstance()->getItemTypeInformation($subsystemID);
 
-        if(!\is_null($subsystemData)) {
+        if(\is_a($subsystemData, '\WordPress\EsiClient\Model\Universe\UniverseTypesTypeId')) {
             foreach($subsystemData->getDogmaAttributes() as $dogmaAttribute) {
                 switch($dogmaAttribute->getAttributeId()) {
                     // hiSlots
