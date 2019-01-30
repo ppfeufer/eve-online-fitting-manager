@@ -117,7 +117,7 @@ class WpHooks {
         /**
          * Adding our custom post type
          */
-        \add_action('init', [PostType::getInstance(), 'customPostType']);
+        \add_action('init', [PostType::getInstance(), 'registerCustomPostType']);
 
         /**
          * Registering our widgets
