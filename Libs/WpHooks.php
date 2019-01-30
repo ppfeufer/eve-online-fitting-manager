@@ -241,7 +241,7 @@ class WpHooks {
      * Fired on: register_activation_hook
      */
     public function flushRewriteRulesOnActivation() {
-        PostType::getInstance()->customPostType();
+        PostType::getInstance()->registerCustomPostType();
 
         \flush_rewrite_rules();
     }
@@ -251,6 +251,8 @@ class WpHooks {
      * Fired on: register_deactivation_hook
      */
     public function flushRewriteRulesOnDeactivation() {
+        PostType::getInstance()->unregisterCustomPostType();
+
         \flush_rewrite_rules();
     }
 
