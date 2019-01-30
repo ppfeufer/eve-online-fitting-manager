@@ -88,6 +88,7 @@ class WpHooks {
          * Hooks fired on plugin deactivation
          */
         \register_deactivation_hook($this->pluginFile, [$this, 'flushRewriteRulesOnDeactivation']);
+        \register_deactivation_hook($this->pluginFile, [$this, 'removeDatabaseVersionOnDeactivation']);
     }
 
     /**
@@ -251,5 +252,13 @@ class WpHooks {
      */
     public function flushRewriteRulesOnDeactivation() {
         \flush_rewrite_rules();
+    }
+
+    /**
+     * Removing the DB version on plugin decativation
+     * Issue: https://github.com/ppfeufer/eve-online-killboard-widget/issues/50
+     */
+    public function removeDatabaseVersionOnDeactivation() {
+        \delete_option(UpdateHelper::getInstance()->getDatabaseVersionFieldName());
     }
 }

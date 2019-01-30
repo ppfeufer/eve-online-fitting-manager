@@ -2,7 +2,8 @@
 
 ## [In Development](https://github.com/ppfeufer/eve-online-fitting-manager/tree/development)
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.14.0...HEAD)
-- in development
+### Fixed
+- An issue that on rare occasions the database cache tables are not created properly after moving the WordPress installation and somehow losing the cache tables. Reactivating the plugin should do the trick now.
 
 ## [v0.14.0](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.14.0) - 2018-12-27
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.13.4...v0.14.0)
