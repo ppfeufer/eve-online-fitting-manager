@@ -19,8 +19,10 @@
 
 namespace WordPress\Plugins\EveOnlineFittingManager\Libs\Widgets;
 
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\FittingHelper;
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\PostType;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\ {
+    Helper\FittingHelper,
+    PostType
+};
 use \WP_Widget;
 
 \defined('ABSPATH') or die();

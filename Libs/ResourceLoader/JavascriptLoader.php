@@ -19,9 +19,11 @@
 
 namespace WordPress\Plugins\EveOnlineFittingManager\Libs\ResourceLoader;
 
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper;
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\Interfaces\AssetsInterface;
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\PostType;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\ {
+    Helper\PluginHelper,
+    Interfaces\AssetsInterface,
+    PostType
+};
 
 \defined('ABSPATH') or die();
 
@@ -46,7 +48,6 @@ class JavascriptLoader implements AssetsInterface {
         if(!\is_admin()) {
             if(\is_page(PostType::getInstance()->getPosttypeSlug('fittings')) || \get_post_type() === 'fitting') {
                 \wp_enqueue_script('bootstrap-js', PluginHelper::getInstance()->getPluginUri('bootstrap/js/bootstrap.min.js'), ['jquery'], '', true);
-                \wp_enqueue_script('bootstrap-toolkit-js', PluginHelper::getInstance()->getPluginUri('bootstrap/bootstrap-toolkit/bootstrap-toolkit.min.js'), ['jquery', 'bootstrap-js'], '', true);
                 \wp_enqueue_script('bootstrap-gallery-js', PluginHelper::getInstance()->getPluginUri('js/jquery.bootstrap-gallery.min.js'), ['jquery', 'bootstrap-js'], '', true);
                 \wp_enqueue_script('copy-to-clipboard-js', PluginHelper::getInstance()->getPluginUri('js/copy-to-clipboard.min.js'), ['jquery'], '', true);
                 \wp_enqueue_script('eve-online-fitting-manager-js', PluginHelper::getInstance()->getPluginUri('js/eve-online-fitting-manager.min.js'), ['jquery'], '', true);

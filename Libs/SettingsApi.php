@@ -31,8 +31,10 @@
 
 namespace WordPress\Plugins\EveOnlineFittingManager\Libs;
 
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper;
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\StringHelper;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\ {
+    PluginHelper,
+    StringHelper
+};
 
 \defined('ABSPATH') or die();
 

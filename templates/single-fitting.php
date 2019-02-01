@@ -17,8 +17,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper;
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\TemplateHelper;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\ {
+    PluginHelper,
+    TemplateHelper
+};
+
+$contentBootstrapClasses = '';
+if(PluginHelper::getInstance()->hasSidebar('sidebar-fitting-manager')) {
+    $contentBootstrapClasses = 'col-lg-9 col-md-9 col-sm-9 col-9 ';
+}
 
 defined('ABSPATH') or die();
 
@@ -27,7 +34,7 @@ defined('ABSPATH') or die();
 
 <div class="container main template-single-fitting">
     <div class="main-content clearfix">
-        <div class="col-lg-9 col-md-9 col-sm-9 col-9 content-wrapper">
+        <div class="<?php echo $contentBootstrapClasses; ?>content-wrapper">
             <div class="content content-inner content-single content-fitting">
                 <?php
                 if(\have_posts()) {

@@ -19,9 +19,11 @@
 
 namespace WordPress\Plugins\EveOnlineFittingManager\Libs;
 
-use WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper;
-use WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\UpdateHelper;
-use WP_Query;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\ {
+    PluginHelper,
+    UpdateHelper
+};
+use \WP_Query;
 
 \defined('ABSPATH') or die();
 
@@ -86,6 +88,7 @@ class WpHooks {
          * Hooks fired on plugin deactivation
          */
         \register_deactivation_hook($this->pluginFile, [$this, 'flushRewriteRulesOnDeactivation']);
+        \register_deactivation_hook($this->pluginFile, [$this, 'removeDatabaseVersionOnDeactivation']);
     }
 
     /**
@@ -114,7 +117,7 @@ class WpHooks {
         /**
          * Adding our custom post type
          */
-        \add_action('init', [PostType::getInstance(), 'customPostType']);
+        \add_action('init', [PostType::getInstance(), 'registerCustomPostType']);
 
         /**
          * Registering our widgets
@@ -125,8 +128,8 @@ class WpHooks {
         /**
          * Market Data API
          */
-        \add_action('wp_ajax_nopriv_get-eve-fitting-market-data', [MarketData::getInstance(), 'ajaxGetFittingMarketData']);
-        \add_action('wp_ajax_get-eve-fitting-market-data', [MarketData::getInstance(), 'ajaxGetFittingMarketData']);
+        \add_action('wp_ajax_nopriv_get-eve-fitting-market-data', [\WordPress\Plugins\EveOnlineFittingManager\Libs\MarketData::getInstance(), 'ajaxGetFittingMarketData']);
+        \add_action('wp_ajax_get-eve-fitting-market-data', [\WordPress\Plugins\EveOnlineFittingManager\Libs\MarketData::getInstance(), 'ajaxGetFittingMarketData']);
     }
 
     /**
@@ -238,7 +241,7 @@ class WpHooks {
      * Fired on: register_activation_hook
      */
     public function flushRewriteRulesOnActivation() {
-        PostType::getInstance()->customPostType();
+        PostType::getInstance()->registerCustomPostType();
 
         \flush_rewrite_rules();
     }
@@ -248,6 +251,16 @@ class WpHooks {
      * Fired on: register_deactivation_hook
      */
     public function flushRewriteRulesOnDeactivation() {
+        PostType::getInstance()->unregisterCustomPostType();
+
         \flush_rewrite_rules();
+    }
+
+    /**
+     * Removing the DB version on plugin decativation
+     * Issue: https://github.com/ppfeufer/eve-online-killboard-widget/issues/50
+     */
+    public function removeDatabaseVersionOnDeactivation() {
+        \delete_option(UpdateHelper::getInstance()->getDatabaseVersionFieldName());
     }
 }

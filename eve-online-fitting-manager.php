@@ -5,7 +5,7 @@
  * Plugin URI: https://github.com/ppfeufer/eve-online-fitting-manager
  * Git URI: https://github.com/ppfeufer/eve-online-fitting-manager
  * Description: A little management tool for your doctrine fittings in your WordPress website. (Best with a theme running with <a href="http://getbootstrap.com/">Bootstrap</a>)
- * Version: 0.14.0
+ * Version: 0.14.1
  * Author: Rounon Dax
  * Author URI: https://terra-nanotech.de
  * Text Domain: eve-online-fitting-manager
@@ -31,15 +31,18 @@
 
 namespace WordPress\Plugins\EveOnlineFittingManager;
 
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\GithubUpdater;
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\MetaBoxes;
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\PluginSettings;
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\ResourceLoader\CssLoader;
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\ResourceLoader\JavascriptLoader;
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\TemplateLoader;
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\WpHooks;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\ {
+    GithubUpdater,
+    Helper\PluginHelper,
+    MetaBoxes,
+    PluginSettings,
+    ResourceLoader\CssLoader,
+    ResourceLoader\JavascriptLoader,
+    TemplateLoader,
+    WpHooks
+};
 
-const WP_GITHUB_FORCE_UPDATE = true;
+const WP_GITHUB_FORCE_UPDATE = false;
 
 \defined('ABSPATH') or die();
 
@@ -47,10 +50,19 @@ const WP_GITHUB_FORCE_UPDATE = true;
 require_once(\trailingslashit(\dirname(__FILE__)) . 'inc/autoloader.php');
 
 class EveOnlineFittingManager {
+    /**
+     * textDomain
+     *
+     * @var string
+     */
     private $textDomain = null;
+
+    /**
+     * localizationDirectory
+     *
+     * @var string
+     */
     private $localizationDirectory = null;
-    private $pluginDir = null;
-    private $pluginUri = null;
 
     /**
      * Plugin constructor
@@ -62,8 +74,6 @@ class EveOnlineFittingManager {
          * Initializing Variables
          */
         $this->textDomain = 'eve-online-fitting-manager';
-        $this->pluginDir = \plugin_dir_path(__FILE__);
-        $this->pluginUri = \trailingslashit(\plugins_url('/', __FILE__));
         $this->localizationDirectory = \basename(\dirname(__FILE__)) . '/l10n/';
 
         $this->loadTextDomain();
@@ -92,25 +102,30 @@ class EveOnlineFittingManager {
             new MetaBoxes;
             new TemplateLoader;
 
-            /**
-             * Check Github for updates
-             */
-            $githubConfig = [
-                'slug' => \plugin_basename(__FILE__),
-                'proper_folder_name' => 'eve-online-fitting-manager',
-                'api_url' => 'https://api.github.com/repos/ppfeufer/eve-online-fitting-manager',
-                'raw_url' => 'https://raw.github.com/ppfeufer/eve-online-fitting-manager/master',
-                'github_url' => 'https://github.com/ppfeufer/eve-online-fitting-manager',
-                'zip_url' => 'https://github.com/ppfeufer/eve-online-fitting-manager/archive/master.zip',
-                'sslverify' => true,
-                'requires' => '4.7',
-                'tested' => '4.8',
-                'readme' => 'README.md',
-                'access_token' => '',
-            ];
+            $this->initGitHubUpdater();
 
-            new GithubUpdater($githubConfig);
         }
+    }
+
+    public function initGitHubUpdater() {
+        /**
+         * Check Github for updates
+         */
+        $githubConfig = [
+            'slug' => \plugin_basename(__FILE__),
+            'proper_folder_name' => PluginHelper::getInstance()->getPluginDirName(),
+            'api_url' => 'https://api.github.com/repos/ppfeufer/eve-online-fitting-manager',
+            'raw_url' => 'https://raw.github.com/ppfeufer/eve-online-fitting-manager/master',
+            'github_url' => 'https://github.com/ppfeufer/eve-online-fitting-manager',
+            'zip_url' => 'https://github.com/ppfeufer/eve-online-fitting-manager/archive/master.zip',
+            'sslverify' => true,
+            'requires' => '4.7',
+            'tested' => '5.0.2',
+            'readme' => 'README.md',
+            'access_token' => '',
+        ];
+
+        new GithubUpdater($githubConfig);
     }
 
     /**
@@ -145,7 +160,7 @@ class EveOnlineFittingManager {
  * Start the show ....
  */
 function initializePlugin() {
-    $fittingManager = new EveOnlineFittingManager;
+    $fittingManager = new \WordPress\Plugins\EveOnlineFittingManager\EveOnlineFittingManager;
 
     /**
      * Initialize the plugin

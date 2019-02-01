@@ -19,11 +19,13 @@
 
 namespace WordPress\Plugins\EveOnlineFittingManager\Libs\Helper;
 
-use stdClass;
-use WordPress\EsiClient\Model\Universe\UniverseIds\InventoryTypes;
-use WordPress\EsiClient\Model\Universe\UniverseTypesTypeId;
-use WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
-use WP_Query;
+use \stdClass;
+use \WordPress\ {
+    EsiClient\Model\Universe\UniverseIds\InventoryTypes,
+    EsiClient\Model\Universe\UniverseTypesTypeId,
+    Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton
+};
+use \WP_Query;
 
 \defined('ABSPATH') or die();
 
@@ -55,7 +57,7 @@ class FittingHelper extends AbstractSingleton {
      * @return boolean
      */
     public function getItemDetailsByItemName(string $itemName, int $itemCount = 1) {
-        $itemId = FittingHelper::getInstance()->getItemIdByName($itemName, 'inventoryTypes');
+        $itemId = \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\FittingHelper::getInstance()->getItemIdByName($itemName, 'inventoryTypes');
         $itemEsiData = EsiHelper::getInstance()->getItemDataByItemId($itemId);
 
         if(!\is_null($itemEsiData['itemTypeInformation']) && !\is_null($itemEsiData['itemGroupInformation']) && !\is_null($itemEsiData['itemCategoryInformation'])) {
@@ -436,7 +438,7 @@ class FittingHelper extends AbstractSingleton {
 
         $shipData = EsiHelper::getInstance()->getItemTypeInformation($shipId);
 
-        if(!\is_null($shipData)) {
+        if(\is_a($shipData, '\WordPress\EsiClient\Model\Universe\UniverseTypesTypeId')) {
             foreach($shipData->getDogmaAttributes() as $dogmaAttribute) {
                 switch($dogmaAttribute->getAttributeId()) {
                     // hiSlots
@@ -480,7 +482,7 @@ class FittingHelper extends AbstractSingleton {
 
         $subsystemData = EsiHelper::getInstance()->getItemTypeInformation($subsystemID);
 
-        if(!\is_null($subsystemData)) {
+        if(\is_a($subsystemData, '\WordPress\EsiClient\Model\Universe\UniverseTypesTypeId')) {
             foreach($subsystemData->getDogmaAttributes() as $dogmaAttribute) {
                 switch($dogmaAttribute->getAttributeId()) {
                     // hiSlots

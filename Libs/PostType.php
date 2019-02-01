@@ -19,9 +19,11 @@
 
 namespace WordPress\Plugins\EveOnlineFittingManager\Libs;
 
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper;
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\TemplateHelper;
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\ {
+    Helper\PluginHelper,
+    Helper\TemplateHelper,
+    Singletons\AbstractSingleton
+};
 
 \defined('ABSPATH') or die();
 
@@ -32,7 +34,7 @@ class PostType extends AbstractSingleton {
     /**
      * Registering the custom post type
      */
-    public function customPostType() {
+    public function registerCustomPostType() {
         $var_sSlug = $this->getPosttypeSlug('fittings');
 
         $labelsDoctrine = [
@@ -125,6 +127,13 @@ class PostType extends AbstractSingleton {
                 'with_front' => true
             ]
         ]);
+    }
+
+    /**
+     * Fired on plugin deactivation
+     */
+    public function unregisterCustomPostType() {
+        \unregister_post_type('intel');
     }
 
     /**

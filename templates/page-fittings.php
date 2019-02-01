@@ -21,9 +21,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\FittingHelper;
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper;
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\TemplateHelper;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\ {
+    FittingHelper,
+    PluginHelper,
+    TemplateHelper
+};
 
 \get_header();
 ?>
