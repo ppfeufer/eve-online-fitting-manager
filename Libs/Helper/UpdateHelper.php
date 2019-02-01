@@ -53,7 +53,7 @@ class UpdateHelper extends AbstractSingleton {
      *
      * @var string
      */
-    protected $esiClientVersion = 20181226;
+    protected $esiClientVersion = 20190201;
 
     /**
      * WordPress Database Instance
