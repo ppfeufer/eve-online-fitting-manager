@@ -19,11 +19,9 @@
 
 namespace WordPress\Plugins\EveOnlineFittingManager\Libs;
 
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\ {
-    Helper\PluginHelper,
-    Helper\TemplateHelper,
-    Singletons\AbstractSingleton
-};
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\TemplateHelper;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
 
 \defined('ABSPATH') or die();
 

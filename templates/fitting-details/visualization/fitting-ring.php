@@ -17,11 +17,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\ {
-    FittingHelper,
-    ImageHelper,
-    PluginHelper
-};
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\FittingHelper;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\ImageHelper;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper;
 
 $fittingSlotLayout = FittingHelper::getInstance()->getSlotLayoutFromFittingArray([
     'shipID' => $shipID,

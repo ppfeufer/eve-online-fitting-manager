@@ -17,10 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\ {
-    PluginHelper,
-    TemplateHelper
-};
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\TemplateHelper;
 
 $subDoctrines = \get_terms([
     'taxonomy' => $taxonomy,

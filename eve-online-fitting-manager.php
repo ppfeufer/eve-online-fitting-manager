@@ -31,16 +31,14 @@
 
 namespace WordPress\Plugins\EveOnlineFittingManager;
 
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\ {
-    GithubUpdater,
-    Helper\PluginHelper,
-    MetaBoxes,
-    PluginSettings,
-    ResourceLoader\CssLoader,
-    ResourceLoader\JavascriptLoader,
-    TemplateLoader,
-    WpHooks
-};
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\GithubUpdater;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\MetaBoxes;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\PluginSettings;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\ResourceLoader\CssLoader;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\ResourceLoader\JavascriptLoader;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\TemplateLoader;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\WpHooks;
 
 const WP_GITHUB_FORCE_UPDATE = false;
 

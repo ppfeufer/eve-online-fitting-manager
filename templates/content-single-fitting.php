@@ -17,12 +17,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\ {
-    EftHelper,
-    FittingHelper,
-    PluginHelper,
-    TemplateHelper
-};
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\EftHelper;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\FittingHelper;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\TemplateHelper;
 
 defined('ABSPATH') or die();
 
