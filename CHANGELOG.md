@@ -1,8 +1,13 @@
 # Change Log
 
 ## [In Development](https://github.com/ppfeufer/eve-online-fitting-manager/tree/development)
-[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.14.2...HEAD)
+[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.14.3...HEAD)
 - in development
+
+## [v0.14.3](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.14.3) - 2019-06-11
+[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.14.2...v0.14.3)
+### Hotfix
+- Backwards compatibility with older ESI clients on update
 
 ## [v0.14.2](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.14.2) - 2019-06-11
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.14.1...v0.14.2)
