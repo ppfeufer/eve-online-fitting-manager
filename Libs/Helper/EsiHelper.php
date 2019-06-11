@@ -24,14 +24,9 @@
  */
 namespace WordPress\Plugins\EveOnlineFittingManager\Libs\Helper;
 
-use \WordPress\ {
-    EsiClient\Model\Universe\UniverseGroupsGroupId,
-    EsiClient\Model\Universe\UniverseIds,
-    EsiClient\Model\Universe\UniverseTypesTypeId,
-    EsiClient\Repository\DogmaRepository,
-    EsiClient\Repository\UniverseRepository,
-    Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton
-};
+use \WordPress\EsiClient\Repository\DogmaRepository;
+use \WordPress\EsiClient\Repository\UniverseRepository;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
 
 \defined('ABSPATH') or die();
 
@@ -139,7 +134,7 @@ class EsiHelper extends AbstractSingleton {
             'itemCategoryInformation' => null
         ];
 
-        /* @var $itemTypeInformation UniverseTypesTypeId */
+        /* @var $itemTypeInformation \WordPress\EsiClient\Model\Universe\Types\TypeId */
         $itemTypeInformation = $this->getItemTypeInformation($itemId);
 
         $itemGroupInformation = null;
@@ -148,7 +143,7 @@ class EsiHelper extends AbstractSingleton {
         if(!\is_null($itemTypeInformation)) {
             $returnData['itemTypeInformation'] = $itemTypeInformation;
 
-            /* @var $itemGroupInformation UniverseGroupsGroupId */
+            /* @var $itemGroupInformation \WordPress\EsiClient\Model\Universe\Groups\GroupId */
             $itemGroupInformation = $this->getItemGroupInformation($itemTypeInformation->getGroupId());
 
             if(!\is_null($itemGroupInformation)) {
@@ -167,16 +162,16 @@ class EsiHelper extends AbstractSingleton {
      * Gettingitem data
      *
      * @param int $itemId
-     * @return UniverseTypesTypeId
+     * @return \WordPress\EsiClient\Model\Universe\Types\TypeId
      */
     public function getItemTypeInformation(int $itemId) {
-        /* @var $itemTypeInformation UniverseTypesTypeId */
+        /* @var $itemTypeInformation \WordPress\EsiClient\Model\Universe\Types\TypeId */
         $itemTypeInformation = $this->databaseHelper->getCachedEsiDataFromDb('universe/types/' . $itemId);
 
         if(\is_null($itemTypeInformation)) {
             $itemTypeInformation = $this->universeApi->universeTypesTypeId($itemId);
 
-            if(\is_a($itemTypeInformation, '\WordPress\EsiClient\Model\Universe\UniverseTypesTypeId')) {
+            if(\is_a($itemTypeInformation, '\WordPress\EsiClient\Model\Universe\Types\TypeId')) {
                 $this->databaseHelper->writeEsiCacheDataToDb([
                     'universe/types/' . $itemId,
                     \maybe_serialize($itemTypeInformation),
@@ -192,16 +187,16 @@ class EsiHelper extends AbstractSingleton {
      * Get item group data
      *
      * @param int $groupId
-     * @return UniverseGroupsGroupId
+     * @return \WordPress\EsiClient\Model\Universe\Groups\GroupId
      */
     public function getItemGroupInformation(int $groupId) {
-        /* @var $groupData UniverseGroupsGroupId */
+        /* @var $groupData \WordPress\EsiClient\Model\Universe\Groups\GroupId */
         $groupData = $this->databaseHelper->getCachedEsiDataFromDb('universe/groups/' . $groupId);
 
         if(\is_null($groupData)) {
             $groupData = $this->universeApi->universeGroupsGroupId($groupId);
 
-            if(\is_a($groupData, '\WordPress\EsiClient\Model\Universe\UniverseGroupsGroupId')) {
+            if(\is_a($groupData, '\WordPress\EsiClient\Model\Universe\Groups\GroupId')) {
                 $this->databaseHelper->writeEsiCacheDataToDb([
                     'universe/groups/' . $groupId,
                     \maybe_serialize($groupData),
@@ -217,16 +212,16 @@ class EsiHelper extends AbstractSingleton {
      * Get item category data
      *
      * @param int $categoryId
-     * @return Universe
+     * @return \WordPress\EsiClient\Model\Universe\Categories\CategoryId
      */
     public function getItemCategoryInformation(int $categoryId) {
-        /* @var $categoryData UniverseGroupsGroupId */
+        /* @var $categoryData \WordPress\EsiClient\Model\Universe\Categories\CategoryId */
         $categoryData = $this->databaseHelper->getCachedEsiDataFromDb('universe/categories/' . $categoryId);
 
         if(\is_null($categoryData)) {
             $categoryData = $this->universeApi->universeCategoriesCategoryId($categoryId);
 
-            if(\is_a($categoryData, '\WordPress\EsiClient\Model\Universe\UniverseCategoriesCategoryId')) {
+            if(\is_a($categoryData, '\WordPress\EsiClient\Model\Universe\Categories\CategoryId')) {
                 $this->databaseHelper->writeEsiCacheDataToDb([
                     'universe/categories/' . $categoryId,
                     \maybe_serialize($categoryData),
@@ -248,10 +243,10 @@ class EsiHelper extends AbstractSingleton {
     public function getIdFromName(array $names, $type) {
         $returnData = null;
 
-        /* @var $esiData UniverseIds */
+        /* @var $esiData \WordPress\EsiClient\Model\Universe\Ids */
         $esiData = $this->universeApi->universeIds(\array_values($names));
 
-        if(\is_a($esiData, '\WordPress\EsiClient\Model\Universe\UniverseIds')) {
+        if(\is_a($esiData, '\WordPress\EsiClient\Model\Universe\Ids')) {
             switch($type) {
                 case 'agents':
                     $returnData = $esiData->getAgents();
@@ -304,7 +299,7 @@ class EsiHelper extends AbstractSingleton {
 //        if(\is_null($dogmaAttributeData)) {
 //            $dogmaAttributeData = $this->dogmaApi->dogmaAttributesAttributeId($dogmaAttributeId);
 //
-//            if(\is_a($dogmaAttributeData, '\WordPress\EsiClient\Model\Dogma\DogmaAttributesAttributeId')) {
+//            if(\is_a($dogmaAttributeData, '\WordPress\EsiClient\Model\Dogma\Attributes\AttributeId')) {
 //                $this->databaseHelper->writeEsiCacheDataToDb([
 //                    'dogma/attributes/' . $dogmaAttributeId,
 //                    \maybe_serialize($dogmaAttributeData),

@@ -19,10 +19,8 @@
 
 namespace WordPress\Plugins\EveOnlineFittingManager\Libs;
 
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\ {
-    PluginHelper,
-    UpdateHelper
-};
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\UpdateHelper;
 
 \defined('ABSPATH') or die();
 

@@ -20,11 +20,7 @@
 namespace WordPress\Plugins\EveOnlineFittingManager\Libs\Helper;
 
 use \stdClass;
-use \WordPress\ {
-    EsiClient\Model\Universe\UniverseIds\InventoryTypes,
-    EsiClient\Model\Universe\UniverseTypesTypeId,
-    Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton
-};
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
 use \WP_Query;
 
 \defined('ABSPATH') or die();
@@ -39,7 +35,7 @@ class FittingHelper extends AbstractSingleton {
     public function getItemDescription(int $itemID) {
         $returnValue = null;
 
-        /* @var $itemData UniverseTypesTypeId */
+        /* @var $itemData \WordPress\EsiClient\Model\Universe\Types\TypeId */
         $itemData = EsiHelper::getInstance()->getItemTypeInformation($itemID);
 
         if(!\is_null($itemData)) {
@@ -160,10 +156,10 @@ class FittingHelper extends AbstractSingleton {
     public function getItemIdByName($itemName, $eveCategory) {
         $returnValue = null;
 
-        /* @var $esiResult InventoryTypes */
+        /* @var $esiResult \WordPress\EsiClient\Model\Universe\Ids\InventoryTypes */
         $esiResult = EsiHelper::getInstance()->getIdFromName([$itemName], $eveCategory);
 
-        if(\is_a($esiResult['0'], '\WordPress\EsiClient\Model\Universe\UniverseIds\InventoryTypes')) {
+        if(\is_a($esiResult['0'], '\WordPress\EsiClient\Model\Universe\Ids\InventoryTypes')) {
             $returnValue = $esiResult['0']->getId();
         }
 
@@ -181,7 +177,7 @@ class FittingHelper extends AbstractSingleton {
             $itemNames = [];
 
             foreach($itemID as $id) {
-                /* @var $esiResult UniverseTypesTypeId */
+                /* @var $esiResult \WordPress\EsiClient\Model\Universe\Types\TypeId */
                 $esiResult = EsiHelper::getInstance()->getItemTypeInformation($itemID);
 
                 if(!\is_null($esiResult)) {
@@ -438,7 +434,7 @@ class FittingHelper extends AbstractSingleton {
 
         $shipData = EsiHelper::getInstance()->getItemTypeInformation($shipId);
 
-        if(\is_a($shipData, '\WordPress\EsiClient\Model\Universe\UniverseTypesTypeId')) {
+        if(\is_a($shipData, '\WordPress\EsiClient\Model\Universe\Types\TypeId')) {
             foreach($shipData->getDogmaAttributes() as $dogmaAttribute) {
                 switch($dogmaAttribute->getAttributeId()) {
                     // hiSlots
@@ -482,7 +478,7 @@ class FittingHelper extends AbstractSingleton {
 
         $subsystemData = EsiHelper::getInstance()->getItemTypeInformation($subsystemID);
 
-        if(\is_a($subsystemData, '\WordPress\EsiClient\Model\Universe\UniverseTypesTypeId')) {
+        if(\is_a($subsystemData, '\WordPress\EsiClient\Model\Universe\Types\TypeId')) {
             foreach($subsystemData->getDogmaAttributes() as $dogmaAttribute) {
                 switch($dogmaAttribute->getAttributeId()) {
                     // hiSlots
