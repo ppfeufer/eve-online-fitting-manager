@@ -46,14 +46,14 @@ class UpdateHelper extends AbstractSingleton {
      *
      * @var string
      */
-    protected $databaseVersion = 20181227;
+    protected $databaseVersion = 20190611;
 
     /**
      * Database version
      *
      * @var string
      */
-    protected $esiClientVersion = 20190201;
+    protected $esiClientVersion = 20190611;
 
     /**
      * WordPress Database Instance
@@ -136,6 +136,13 @@ class UpdateHelper extends AbstractSingleton {
         }
 
         /**
+         * truncate cache table
+         */
+        if($currentVersion < 20190611) {
+            $this->truncateCacheTable();
+        }
+
+        /**
          * Update database version
          */
         \update_option($this->getCurrentDatabaseVersion(), $this->getNewPluginDatabaseVersion());
@@ -147,6 +154,13 @@ class UpdateHelper extends AbstractSingleton {
     public function updateDatabase() {
         $this->createEsiCacheTable();
         $this->createMarketDataCacheTable();
+    }
+
+    private function truncateCacheTable() {
+        $tableName = $this->wpdb->base_prefix . 'eve_online_esi_cache';
+
+        $sql = "TRUNCATE $tableName;";
+        $this->wpdb->query($sql);
     }
 
     public function updatePluginOptions() {
