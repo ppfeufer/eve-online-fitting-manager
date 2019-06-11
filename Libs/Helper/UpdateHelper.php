@@ -46,7 +46,7 @@ class UpdateHelper extends AbstractSingleton {
      *
      * @var string
      */
-    protected $databaseVersion = 20181227;
+    protected $databaseVersion = 20190201;
 
     /**
      * Database version
