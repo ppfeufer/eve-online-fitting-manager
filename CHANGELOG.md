@@ -1,8 +1,13 @@
 # Change Log
 
 ## [In Development](https://github.com/ppfeufer/eve-online-fitting-manager/tree/development)
-[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.14.3...HEAD)
+[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.14.4...HEAD)
 - in development
+
+## [v0.14.4](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.14.4) - 2019-06-11
+[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.14.3...v0.14.4)
+### Fixed
+- Hotfix for new ESI client and cache database table
 
 ## [v0.14.3](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.14.3) - 2019-06-11
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.14.2...v0.14.3)
