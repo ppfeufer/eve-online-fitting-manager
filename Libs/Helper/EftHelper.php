@@ -80,7 +80,7 @@ class EftHelper extends AbstractSingleton {
         $returnValue = null;
 
         if(!empty($eftFitting)) {
-            $fittingArray = \explode("\n", \trim(StringHelper::getInstance()->fixLineBreaks($eftFitting)));
+            $fittingArray = $this->removeEmptySlotsFromEftFittingDataArray(\explode("\n", \trim(StringHelper::getInstance()->fixLineBreaks($eftFitting))));
 
             $fittingArray['0'] = \str_replace('[', '', $fittingArray['0']);
             $fittingArray['0'] = \str_replace(']', '', $fittingArray['0']);
@@ -227,7 +227,7 @@ class EftHelper extends AbstractSingleton {
      * @return type
      */
     public function getFittingArrayFromEftData($eftFitting) {
-        $fittingArray = \explode("\n", \trim(StringHelper::getInstance()->fixLineBreaks($eftFitting)));
+        $fittingArray = $this->removeEmptySlotsFromEftFittingDataArray(\explode("\n", \trim(StringHelper::getInstance()->fixLineBreaks($eftFitting))));
 
         $fittingData = [];
         $fittingArray['0'] = \str_replace('[', '', $fittingArray['0']);
@@ -437,4 +437,27 @@ class EftHelper extends AbstractSingleton {
 
         return $returnValue;
     }
+
+    /**
+     * Removing [Empty High|Med|Low Slot] lines
+     *
+     * Fixes GitHub issue #48
+     *
+     * @param array $eftFittingArray
+     * @return array
+     */
+    private function removeEmptySlotsFromEftFittingDataArray(array $eftFittingArray) {
+        $returnData = null;
+
+        foreach($eftFittingArray as $line) {
+            if(\preg_match('/\[Empty/', $line)) {
+                continue;
+            }
+
+            $returnData[] = $line;
+        }
+
+        return $returnData;
+    }
+
 }

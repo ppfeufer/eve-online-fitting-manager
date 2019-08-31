@@ -50,98 +50,106 @@ class FittingHelper extends AbstractSingleton {
      *
      * @param string $itemName
      * @param int $itemCount
-     * @return boolean
+     * @return object|boolean
      */
     public function getItemDetailsByItemName(string $itemName, int $itemCount = 1) {
         $itemId = \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\FittingHelper::getInstance()->getItemIdByName($itemName, 'inventoryTypes');
-        $itemEsiData = EsiHelper::getInstance()->getItemDataByItemId($itemId);
 
-        if(!\is_null($itemEsiData['itemTypeInformation']) && !\is_null($itemEsiData['itemGroupInformation']) && !\is_null($itemEsiData['itemCategoryInformation'])) {
-            $returnData = new stdClass;
+        /**
+         * continue only if we have a valid itemID
+         *
+         * GitHug issue #48
+         */
+        if(!\is_null($itemId)) {
+            $itemEsiData = EsiHelper::getInstance()->getItemDataByItemId($itemId);
 
-            $returnData->itemID = $itemId;
-            $returnData->groupID = $itemEsiData['itemTypeInformation']->getGroupId();
-            $returnData->categoryID = $itemEsiData['itemGroupInformation']->getCategoryId();
-            $returnData->itemName = $itemEsiData['itemTypeInformation']->getName();
-            $returnData->itemDescription = $itemEsiData['itemTypeInformation']->getDescription();
+            if(!\is_null($itemEsiData['itemTypeInformation']) && !\is_null($itemEsiData['itemGroupInformation']) && !\is_null($itemEsiData['itemCategoryInformation'])) {
+                $returnData = new stdClass;
 
-            /**
-             * Category: Fuel
-             */
-            $arrayFuelIDs = [
-                '16273', // Liquid Ozone
-                '16274', // Helium Isotopes
-                '17889', // Hydrogen Isotopes
-                '17887', // Oxygen Isotopes
-                '17888', // Nitrogen Isotopes
-                '16272', // Heavy Water
-                '16275'  // Strontuim Clathrates
-            ];
+                $returnData->itemID = $itemId;
+                $returnData->groupID = $itemEsiData['itemTypeInformation']->getGroupId();
+                $returnData->categoryID = $itemEsiData['itemGroupInformation']->getCategoryId();
+                $returnData->itemName = $itemEsiData['itemTypeInformation']->getName();
+                $returnData->itemDescription = $itemEsiData['itemTypeInformation']->getDescription();
 
-            switch($returnData->categoryID) {
-                case 6:
-                    $returnData->slotName = 'ship';
-                    break;
+                /**
+                 * Category: Fuel
+                 */
+                $arrayFuelIDs = [
+                    '16273', // Liquid Ozone
+                    '16274', // Helium Isotopes
+                    '17889', // Hydrogen Isotopes
+                    '17887', // Oxygen Isotopes
+                    '17888', // Nitrogen Isotopes
+                    '16272', // Heavy Water
+                    '16275'  // Strontuim Clathrates
+                ];
 
-                case 8:
-                    $returnData->slotName = 'charge';
-                    break;
+                switch($returnData->categoryID) {
+                    case 6:
+                        $returnData->slotName = 'ship';
+                        break;
 
-                case 18;
-                    $returnData->slotName = 'drone';
-                    break;
+                    case 8:
+                        $returnData->slotName = 'charge';
+                        break;
 
-                case 20;
-                    $returnData->slotName = 'Implants and Booster';
-                    break;
-            }
+                    case 18;
+                        $returnData->slotName = 'drone';
+                        break;
 
-            if(\in_array($returnData->itemID, $arrayFuelIDs)) {
-                $returnData->slotName = 'fuel';
-            }
+                    case 20;
+                        $returnData->slotName = 'Implants and Booster';
+                        break;
+                }
 
-            // in case we still don't have any slot information ...
-            if(!isset($returnData->slotName)) {
-                foreach($itemEsiData['itemTypeInformation']->getDogmaEffects() as $dogmaEffect) {
-                    switch($dogmaEffect->getEffectId()) {
-                        // low power
-                        case 11:
-                            $returnData->slotName = 'Low power';
-                            $returnData->slotEffectID = $dogmaEffect->getEffectId();
-                            break;
+                if(\in_array($returnData->itemID, $arrayFuelIDs)) {
+                    $returnData->slotName = 'fuel';
+                }
 
-                        // high power
-                        case 12:
-                            $returnData->slotName = 'High power';
-                            $returnData->slotEffectID = $dogmaEffect->getEffectId();
-                            break;
+                // in case we still don't have any slot information ...
+                if(!isset($returnData->slotName)) {
+                    foreach($itemEsiData['itemTypeInformation']->getDogmaEffects() as $dogmaEffect) {
+                        switch($dogmaEffect->getEffectId()) {
+                            // low power
+                            case 11:
+                                $returnData->slotName = 'Low power';
+                                $returnData->slotEffectID = $dogmaEffect->getEffectId();
+                                break;
 
-                        // medium power
-                        case 13:
-                            $returnData->slotName = 'Medium power';
-                            $returnData->slotEffectID = $dogmaEffect->getEffectId();
-                            break;
+                            // high power
+                            case 12:
+                                $returnData->slotName = 'High power';
+                                $returnData->slotEffectID = $dogmaEffect->getEffectId();
+                                break;
 
-                        // rig slot
-                        case 2663:
-                            $returnData->slotName = 'Rig Slot';
-                            $returnData->slotEffectID = $dogmaEffect->getEffectId();
-                            break;
+                            // medium power
+                            case 13:
+                                $returnData->slotName = 'Medium power';
+                                $returnData->slotEffectID = $dogmaEffect->getEffectId();
+                                break;
 
-                        // sub system
-                        case 3772:
-                            $returnData->slotName = 'Sub System';
-                            $returnData->slotEffectID = $dogmaEffect->getEffectId();
-                            break;
+                            // rig slot
+                            case 2663:
+                                $returnData->slotName = 'Rig Slot';
+                                $returnData->slotEffectID = $dogmaEffect->getEffectId();
+                                break;
+
+                            // sub system
+                            case 3772:
+                                $returnData->slotName = 'Sub System';
+                                $returnData->slotEffectID = $dogmaEffect->getEffectId();
+                                break;
+                        }
                     }
                 }
-            }
 
-            if($itemCount != null) {
-                $returnData->itemCount = $itemCount;
-            }
+                if($itemCount != null) {
+                    $returnData->itemCount = $itemCount;
+                }
 
-            return $returnData;
+                return $returnData;
+            }
         }
 
         return false;

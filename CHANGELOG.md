@@ -2,7 +2,9 @@
 
 ## [In Development](https://github.com/ppfeufer/eve-online-fitting-manager/tree/development)
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.14.4...HEAD)
-- in development
+### Fixed
+- Parsing from items with old names failed to get a propper EVE item ID and stopped with a nasty error message. (Issue: #48)
+- Paresing of fittings that include ``[Empty High Slot]`` lines was broken and is now fixed as well. (Discovered while working on issue #48)
 
 ## [v0.14.4](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.14.4) - 2019-06-11
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.14.3...v0.14.4)
