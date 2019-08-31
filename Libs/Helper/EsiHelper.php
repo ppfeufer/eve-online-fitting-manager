@@ -127,7 +127,7 @@ class EsiHelper extends AbstractSingleton {
      * @param int $itemId
      * @return array
      */
-    public function getItemDataByItemId($itemId) {
+    public function getItemDataByItemId(int $itemId) {
         $returnData = [
             'itemTypeInformation' => null,
             'itemGroupInformation' => null,
