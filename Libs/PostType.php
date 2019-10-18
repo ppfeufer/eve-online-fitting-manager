@@ -232,7 +232,7 @@ class PostType extends AbstractSingleton {
             ['name' => 'Industrial Ships'],
             ['name' => 'Mining Barges'],
             ['name' => 'Shuttles'],
-            ['name' => 'Special Edition Ships'],
+            ['name' => 'Special Edition Ships']
         ];
 
         $this->insertTaxonomyTerms('fitting-ships', $shipTypes);
