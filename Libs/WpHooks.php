@@ -130,12 +130,12 @@ class WpHooks {
         \add_action('wp_ajax_get-eve-fitting-market-data', [\WordPress\Plugins\EveOnlineFittingManager\Libs\MarketData::getInstance(), 'ajaxGetFittingMarketData']);
 
         /**
-         * Remove the automagically xreates taxonomie box for fleet roles.
+         * Remove the automagically creates taxonomy box for fleet roles.
          * We establish our own, since a ship can only serve one fleet role
          */
         \add_action('admin_menu', [PostType::getInstance(), 'removeWpFlettRolesMetaBox']);
         \add_action('add_meta_boxes_fitting', [PostType::getInstance(), 'createFleetRolesMetaBox']);
-        \add_action('admin_enqueue_scripts', [PostType::getInstance(), 'fleetRolesTaxonomieJavaScript']);
+        \add_action('admin_enqueue_scripts', [PostType::getInstance(), 'fleetRolesTaxonomyJavaScript']);
     }
 
     /**

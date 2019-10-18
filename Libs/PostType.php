@@ -160,6 +160,10 @@ class PostType extends AbstractSingleton {
         ]);
     }
 
+    private function insertTaxonomyTerms() {
+
+    }
+
     /**
      * Fired on plugin deactivation
      */
@@ -309,7 +313,7 @@ class PostType extends AbstractSingleton {
      *
      * @param \WP_Post $post
      */
-    function renderFleetRolesMetaBox(\WP_Post $post) {
+    public function renderFleetRolesMetaBox(\WP_Post $post) {
         // Get taxonomy and terms
         $taxonomy = 'fitting-fleet-roles';
 
@@ -382,8 +386,8 @@ class PostType extends AbstractSingleton {
     /**
      * Add our JS to the fleet role meta box.
      */
-    function fleetRolesTaxonomieJavaScript() {
-        \wp_register_script('radiotaxonomie', PluginHelper::getInstance()->getPluginUri('/js/radiotaxonomie.min.js'), ['jquery'], null, true);
-        \wp_enqueue_script('radiotaxonomie');
+    public function fleetRolesTaxonomyJavaScript() {
+        \wp_register_script('radiotaxonomy', PluginHelper::getInstance()->getPluginUri('/js/radiotaxonomy.min.js'), ['jquery'], null, true);
+        \wp_enqueue_script('radiotaxonomy');
     }
 }
