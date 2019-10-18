@@ -137,6 +137,10 @@ class PostType extends AbstractSingleton {
         \register_taxonomy('fitting-fleet-roles', ['fitting'], $argsTaxFleetRole);
         \register_taxonomy('fitting-ships', ['fitting'], $argsTaxShip);
 
+        // add defaults
+        $this->insertFleetRoles();
+        $this->insertShipTypes();
+
         \register_post_type('fitting', [
             'labels' => [
                 'name' => \__('Fittings', 'eve-online-fitting-manager'),
@@ -160,11 +164,80 @@ class PostType extends AbstractSingleton {
         ]);
     }
 
-    private function insertTaxonomyTerms() {
+    /**
+     * Insert taxonomy terms
+     */
+    private function insertTaxonomyTerms(string $taxonomy, array $terms) {
+        $arguments = [];
 
+        foreach($terms as $term) {
+            $arguments = [
+                'slug' => \sanitize_title($term['name']),
+                'parent' => 0
+            ];
+
+            if(isset($term['parent'])) {
+                $parent = \get_term_by('name', $term['parent'], $taxonomy);
+
+                if(!$parent === false) {
+                    $arguments['parent'] = $parent->term_id;
+                }
+            }
+
+            \wp_insert_term($term['name'], $taxonomy, $arguments);
+        }
     }
 
     /**
+     * Insert fleet roles tax terms
+     */
+    private function insertFleetRoles() {
+        $fleetRoles = [
+            ['name' => 'Anti-Tackle'],
+            ['name' => 'Bait'],
+            ['name' => 'Booster'],
+            ['name' => 'Bridge'],
+            ['name' => 'Bubbler'],
+            ['name' => 'Capital'],
+            ['name' => 'Command'],
+            ['name' => 'Cyno'],
+            ['name' => 'DPS'],
+            ['name' => 'E-War'],
+            ['name' => 'Hauler'],
+            ['name' => 'Hunter-Killer'],
+            ['name' => 'Logistics'],
+            ['name' => 'Miner'],
+            ['name' => 'Recon'],
+            ['name' => 'Scout'],
+            ['name' => 'Support'],
+            ['name' => 'Tackle']
+        ];
+
+        $this->insertTaxonomyTerms('fitting-fleet-roles', $fleetRoles);
+    }
+
+    private function insertShipTypes() {
+        $shipTypes = [
+            ['name' => 'Battlecruisers'],
+            ['name' => 'Battleships'],
+            ['name' => 'Carriers'],
+            ['name' => 'Dreadnoughts'],
+            ['name' => 'Force Auxiliaries'],
+            ['name' => 'Supercarriers'],
+            ['name' => 'Titans'],
+            ['name' => 'Corvettes'],
+            ['name' => 'Cruisers'],
+            ['name' => 'Destroyers'],
+            ['name' => 'Frigates'],
+            ['name' => 'Industrial Ships'],
+            ['name' => 'Mining Barges'],
+            ['name' => 'Shuttles'],
+            ['name' => 'Special Edition Ships'],
+        ];
+
+        $this->insertTaxonomyTerms('fitting-ships', $shipTypes);
+    }
+        /**
      * Fired on plugin deactivation
      */
     public function unregisterCustomPostType() {
