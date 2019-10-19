@@ -167,5 +167,23 @@ class MetaBoxes {
         \update_post_meta($postID, 'eve-online-fitting-manager_fitting_is_concept', \maybe_serialize($isConcept));
         \update_post_meta($postID, 'eve-online-fitting-manager_fitting_is_idea', \maybe_serialize($isIdea));
         \update_post_meta($postID, 'eve-online-fitting-manager_fitting_is_under_discussion', \maybe_serialize($isUnderDiscussion));
+
+        /**
+         * If the post title is empty, set it to shiptype, fitting name
+         */
+        if(empty(\filter_input(\INPUT_POST, 'post_title'))) {
+            // unhook this function so it doesn't loop infinitely
+            \remove_action('save_post', [$this, 'saveMetaBoxes']);
+
+            // update the post, which calls save_post again
+            \wp_update_post([
+                'ID' => $postID,
+                'post_title' => $shipType . ', ' . $shipName,
+                'post_name' => \sanitize_title($shipType . ', ' . $shipName)
+            ]);
+
+            // re-hook this function
+            \add_action('save_post', [$this, 'saveMetaBoxes']);
+        }
     }
 }

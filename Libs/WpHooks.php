@@ -269,5 +269,4 @@ class WpHooks {
     public function removeDatabaseVersionOnDeactivation() {
         \delete_option(UpdateHelper::getInstance()->getDatabaseVersionFieldName());
     }
-
 }

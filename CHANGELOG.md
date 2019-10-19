@@ -8,6 +8,7 @@
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.14.5...v0.15.0)
 ### Added
 - Fleet Roles
+- Post title will now be set to "Shiptype, Fittingname" if left empty/blank on saving your post
 
 ## [v0.14.5](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.14.5) - 2019-08-31
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.14.4...v0.14.5)
