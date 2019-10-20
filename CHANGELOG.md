@@ -4,7 +4,7 @@
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.15.0...HEAD)
 - in development
 
-## [v0.15.0](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.15.0) - 2019-10-18
+## [v0.15.0](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.15.0) - 2019-10-20
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.14.5...v0.15.0)
 ### Added
 - Fleet Roles

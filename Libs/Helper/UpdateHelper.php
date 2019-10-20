@@ -127,6 +127,7 @@ class UpdateHelper extends AbstractSingleton {
 
     /**
      * Check if the database needs to be updated
+     * https://codex.wordpress.org/Creating_Tables_with_Plugins
      */
     public function checkDatabaseForUpdates() {
         $currentVersion = $this->getCurrentDatabaseVersion();
