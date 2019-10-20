@@ -121,7 +121,7 @@ class MetaBoxes {
      * @param int $postID ID of the current post
      * @return boolean
      */
-    public function saveMetaBoxes($postID) {
+    public function saveMetaBoxes(int $postID) {
         $postNonce = \filter_input(\INPUT_POST, '_eve-online-fitting-manager_nonce');
 
         if(empty($postNonce) || !\wp_verify_nonce($postNonce, 'save')) {
@@ -136,8 +136,27 @@ class MetaBoxes {
             return false;
         }
 
-        // EFT Fitting
-        $eftFitting = \filter_input(\INPUT_POST, 'eve-online-fitting-manager_eft-import');
+        // EFT Fitting Update
+        if(!empty(\filter_input(\INPUT_POST, 'eve-online-fitting-manager_eft-import'))) {
+            $this->updateFittingInformation($postID, \filter_input(\INPUT_POST, 'eve-online-fitting-manager_eft-import'));
+        }
+
+        $fittingmarker = [
+            'eve-online-fitting-manager_fitting_is_concept' => \filter_input(\INPUT_POST, 'eve-online-fitting-manager_fitting_is_concept') === 'on',
+            'eve-online-fitting-manager_fitting_is_idea' => \filter_input(\INPUT_POST, 'eve-online-fitting-manager_fitting_is_idea') === 'on',
+            'eve-online-fitting-manager_fitting_is_under_discussion' => \filter_input(\INPUT_POST, 'eve-online-fitting-manager_fitting_is_under_discussion') === 'on'
+        ];
+
+        $this->updateFittingMarker($postID, $fittingmarker);
+    }
+
+    /**
+     * Updating fitting information and, if needed, post title
+     *
+     * @param int $postID
+     * @param string $eftFitting
+     */
+    private function updateFittingInformation(int $postID, string $eftFitting) {
         $shipType = EftHelper::getInstance()->getShipType($eftFitting);
         $shipName = EftHelper::getInstance()->getFittingName($eftFitting);
         $shipID = FittingHelper::getInstance()->getItemIdByName($shipType, 'inventoryTypes');
@@ -159,13 +178,44 @@ class MetaBoxes {
         \update_post_meta($postID, 'eve-online-fitting-manager_fitting_implants_and_booster', (!empty($fittingSlotData['implantsAndBooster'])) ? \maybe_serialize($fittingSlotData['implantsAndBooster']) : null);
         \update_post_meta($postID, 'eve-online-fitting-manager_fitting_dna', (!empty($fittingDna)) ? \maybe_serialize($fittingDna) : null);
 
-        // Mark Fitting As
-        $isConcept = \filter_input(\INPUT_POST, 'eve-online-fitting-manager_fitting_is_concept') === 'on';
-        $isIdea = \filter_input(\INPUT_POST, 'eve-online-fitting-manager_fitting_is_idea') === 'on';
-        $isUnderDiscussion = \filter_input(\INPUT_POST, 'eve-online-fitting-manager_fitting_is_under_discussion') === 'on';
+        /**
+         * If the post title is empty, set it to shiptype, fitting name
+         */
+        if(empty(\filter_input(\INPUT_POST, 'post_title'))) {
+            $this->updateFittingPostTitle($postID, $shipType . ', ' . $shipName);
+        }
+    }
 
-        \update_post_meta($postID, 'eve-online-fitting-manager_fitting_is_concept', \maybe_serialize($isConcept));
-        \update_post_meta($postID, 'eve-online-fitting-manager_fitting_is_idea', \maybe_serialize($isIdea));
-        \update_post_meta($postID, 'eve-online-fitting-manager_fitting_is_under_discussion', \maybe_serialize($isUnderDiscussion));
+    /**
+     * Updating fitting marker
+     *
+     * @param int $postID
+     * @param array $fittingMarker
+     */
+    private function updateFittingMarker(int $postID, array $fittingMarker) {
+        foreach($fittingMarker as $marker => $value) {
+            \update_post_meta($postID, $marker, \maybe_serialize($value));
+        }
+    }
+
+    /**
+     * Updating fitting post title if needed
+     *
+     * @param int $postID
+     * @param string $fittingTitle
+     */
+    private function updateFittingPostTitle(int $postID, string $fittingTitle) {
+        // unhook this function so it doesn't loop infinitely
+        \remove_action('save_post', [$this, 'saveMetaBoxes']);
+
+        // update the post, which calls save_post again
+        \wp_update_post([
+            'ID' => $postID,
+            'post_title' => $fittingTitle,
+            'post_name' => \sanitize_title($fittingTitle)
+        ]);
+
+        // re-hook this function
+        \add_action('save_post', [$this, 'saveMetaBoxes']);
     }
 }

@@ -1,5 +1,4 @@
 <?php
-
 /*
  * Copyright (C) 2017 ppfeufer
  *
@@ -51,6 +50,22 @@ class PostType extends AbstractSingleton {
             'choose_from_most_used' => \__('Choose from most used Doctrines', 'eve-online-fitting-manager')
         ];
 
+        $labelsFleetRole = [
+            'name' => \__('Fleet Roles', 'eve-online-fitting-manager'),
+            'singular_name' => \__('Fleet Role', 'eve-online-fitting-manager'),
+            'search_items' => \__('Search Fleet Roles', 'eve-online-fitting-manager'),
+            'popular_items' => \__('Popular Fleet Roles', 'eve-online-fitting-manager'),
+            'all_items' => \__('All Fleet Roles', 'eve-online-fitting-manager'),
+            'parent_item' => \__('Parent Fleet Role', 'eve-online-fitting-manager'),
+            'edit_item' => \__('Edit Fleet Role', 'eve-online-fitting-manager'),
+            'update_item' => \__('Update Fleet Role', 'eve-online-fitting-manager'),
+            'add_new_item' => \__('Add New Fleet Role', 'eve-online-fitting-manager'),
+            'new_item_name' => \__('New Fleet Role', 'eve-online-fitting-manager'),
+            'separate_items_with_commas' => \__('Separate Fleet Roles with commas', 'eve-online-fitting-manager'),
+            'add_or_remove_items' => \__('Add or remove Fleet Role', 'eve-online-fitting-manager'),
+            'choose_from_most_used' => \__('Choose from most used Fleet Roles', 'eve-online-fitting-manager')
+        ];
+
         $labelsShip = [
             'name' => \__('Ship Types', 'eve-online-fitting-manager'),
             'singular_name' => \__('Ship Type', 'eve-online-fitting-manager'),
@@ -84,6 +99,23 @@ class PostType extends AbstractSingleton {
             'query_var' => true
         ];
 
+        $argsTaxFleetRole = [
+            'label' => \__('Fleet Role', 'eve-online-fitting-manager'),
+            'labels' => $labelsFleetRole,
+            'public' => true,
+            'hierarchical' => true,
+            'show_ui' => true,
+            'show_in_nav_menus' => true,
+            'args' => [
+                'orderby' => 'term_order'
+            ],
+            'rewrite' => [
+                'slug' => $var_sSlug . '/fleet-role',
+                'with_front' => true
+            ],
+            'query_var' => true
+        ];
+
         $argsTaxShip = [
             'label' => \__('Ship Types', 'eve-online-fitting-manager'),
             'labels' => $labelsShip,
@@ -102,7 +134,12 @@ class PostType extends AbstractSingleton {
         ];
 
         \register_taxonomy('fitting-doctrines', ['fitting'], $argsTaxDoctrine);
+        \register_taxonomy('fitting-fleet-roles', ['fitting'], $argsTaxFleetRole);
         \register_taxonomy('fitting-ships', ['fitting'], $argsTaxShip);
+
+        // add defaults
+        $this->insertFleetRoles();
+        $this->insertShipTypes();
 
         \register_post_type('fitting', [
             'labels' => [
@@ -128,6 +165,79 @@ class PostType extends AbstractSingleton {
     }
 
     /**
+     * Insert taxonomy terms
+     */
+    private function insertTaxonomyTerms(string $taxonomy, array $terms) {
+        $arguments = [];
+
+        foreach($terms as $term) {
+            $arguments = [
+                'slug' => \sanitize_title($term['name']),
+                'parent' => 0
+            ];
+
+            if(isset($term['parent'])) {
+                $parent = \get_term_by('name', $term['parent'], $taxonomy);
+
+                if(!$parent === false) {
+                    $arguments['parent'] = $parent->term_id;
+                }
+            }
+
+            \wp_insert_term($term['name'], $taxonomy, $arguments);
+        }
+    }
+
+    /**
+     * Insert fleet roles tax terms
+     */
+    private function insertFleetRoles() {
+        $fleetRoles = [
+            ['name' => 'Anti-Tackle'],
+            ['name' => 'Bait'],
+            ['name' => 'Booster'],
+            ['name' => 'Bridge'],
+            ['name' => 'Bubbler'],
+            ['name' => 'Capital'],
+            ['name' => 'Command'],
+            ['name' => 'Cyno'],
+            ['name' => 'DPS'],
+            ['name' => 'E-War'],
+            ['name' => 'Hauler'],
+            ['name' => 'Hunter-Killer'],
+            ['name' => 'Logistics'],
+            ['name' => 'Miner'],
+            ['name' => 'Recon'],
+            ['name' => 'Scout'],
+            ['name' => 'Support'],
+            ['name' => 'Tackle']
+        ];
+
+        $this->insertTaxonomyTerms('fitting-fleet-roles', $fleetRoles);
+    }
+
+    private function insertShipTypes() {
+        $shipTypes = [
+            ['name' => 'Battlecruisers'],
+            ['name' => 'Battleships'],
+            ['name' => 'Carriers'],
+            ['name' => 'Dreadnoughts'],
+            ['name' => 'Force Auxiliaries'],
+            ['name' => 'Supercarriers'],
+            ['name' => 'Titans'],
+            ['name' => 'Corvettes'],
+            ['name' => 'Cruisers'],
+            ['name' => 'Destroyers'],
+            ['name' => 'Frigates'],
+            ['name' => 'Industrial Ships'],
+            ['name' => 'Mining Barges'],
+            ['name' => 'Shuttles'],
+            ['name' => 'Special Edition Ships']
+        ];
+
+        $this->insertTaxonomyTerms('fitting-ships', $shipTypes);
+    }
+        /**
      * Fired on plugin deactivation
      */
     public function unregisterCustomPostType() {
@@ -244,5 +354,113 @@ class PostType extends AbstractSingleton {
                 return \in_array($pagenow, ['post.php', 'post-new.php']);
                 break;
         }
+    }
+
+    /**
+     * Remove the automagically created meta box.
+     * We build our own later ...
+     */
+    public function removeWpFlettRolesMetaBox() {
+        \remove_meta_box('fitting-fleet-rolesdiv', 'fitting', 'normal');
+    }
+
+    /**
+     * Creating our own meta box for fleet roles, because we need it to be
+     * single select. A ship can only fill one fleet role.
+     *
+     * @param \WP_Post $post
+     */
+    public function createFleetRolesMetaBox(\WP_Post $post) {
+        \add_meta_box(
+            'my-meta-box',
+            \__('Fleet Role', 'eve-online-fitting-manager'),
+            [$this, 'renderFleetRolesMetaBox'],
+            'fitting',
+            'side',
+            'default'
+        );
+    }
+
+    /**
+     * Render our fleet roles meta box
+     *
+     * @param \WP_Post $post
+     */
+    public function renderFleetRolesMetaBox(\WP_Post $post) {
+        // Get taxonomy and terms
+        $taxonomy = 'fitting-fleet-roles';
+
+        //Set up the taxonomy object and get terms
+        $tax = \get_taxonomy($taxonomy);
+        $terms = \get_terms($taxonomy, [
+            'hide_empty' => 0
+        ]);
+
+        // Name of the form
+        $name = 'tax_input[' . $taxonomy . '][]';
+
+        //Get current and popular terms
+        $popular = \get_terms($taxonomy, [
+            'orderby' => 'count',
+            'order' => 'DESC',
+            'number' => 10,
+            'hierarchical' => false
+        ]);
+
+        $postTerms = \get_the_terms($post->ID, $taxonomy);
+        $current = ($postTerms) ? \array_pop($postTerms) : false;
+        $currentPostTerm = ($current) ? $current->term_id : 0;
+        ?>
+
+        <div id="taxonomy-<?php echo $taxonomy; ?>" class="categorydiv">
+            <!-- Display tabs-->
+            <ul id="<?php echo $taxonomy; ?>-tabs" class="category-tabs">
+                <li class="tabs"><a href="#<?php echo $taxonomy; ?>-all" tabindex="3"><?php echo $tax->labels->all_items; ?></a></li>
+                <li class="hide-if-no-js"><a href="#<?php echo $taxonomy; ?>-pop" tabindex="3"><?php \_e('Most Used'); ?></a></li>
+            </ul>
+
+            <!-- Display taxonomy terms -->
+            <div id="<?php echo $taxonomy; ?>-all" class="tabs-panel">
+                <ul id="<?php echo $taxonomy; ?>checklist" class="list:<?php echo $taxonomy; ?> categorychecklist form-no-clear">
+                    <?php
+                    foreach($terms as $term) {
+                        $id = $taxonomy . '-' . $term->term_id;
+
+                        echo '<li id=' . $id . '>';
+                        echo '<label class="selectit select-fleet-role">';
+                        echo '<input type="radio" id="in-' . $id . '" name="' . $name . '" ' . \checked($currentPostTerm, $term->term_id, false) . ' value="' . $term->term_id . '" />' . $term->name;
+                        echo '</label>';
+                        echo '</li>';
+                    }
+                    ?>
+                </ul>
+            </div>
+
+            <!-- Display popular taxonomy terms -->
+            <div id="<?php echo $taxonomy; ?>-pop" class="tabs-panel" style="display: none;">
+                <ul id="<?php echo $taxonomy; ?>checklist-pop" class="categorychecklist form-no-clear" >
+                    <?php
+                    foreach($popular as $term) {
+                        $id = 'popular-' . $taxonomy . '-' . $term->term_id;
+
+                        echo '<li id=' . $id . '>';
+                        echo '<label class="selectit select-fleet-role">';
+                        echo '<input type="radio" id="in-' . $id . '" ' . \checked($currentPostTerm, $term->term_id, false) . ' value="' . $term->term_id . '" />' . $term->name;
+                        echo '</label>';
+                        echo '</li>';
+                    }
+                    ?>
+                </ul>
+            </div>
+        </div>
+        <?php
+    }
+
+    /**
+     * Add our JS to the fleet role meta box.
+     */
+    public function fleetRolesTaxonomyJavaScript() {
+        \wp_register_script('radiotaxonomy', PluginHelper::getInstance()->getPluginUri('/js/radiotaxonomy.min.js'), ['jquery'], null, true);
+        \wp_enqueue_script('radiotaxonomy');
     }
 }

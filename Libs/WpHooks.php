@@ -128,6 +128,14 @@ class WpHooks {
          */
         \add_action('wp_ajax_nopriv_get-eve-fitting-market-data', [\WordPress\Plugins\EveOnlineFittingManager\Libs\MarketData::getInstance(), 'ajaxGetFittingMarketData']);
         \add_action('wp_ajax_get-eve-fitting-market-data', [\WordPress\Plugins\EveOnlineFittingManager\Libs\MarketData::getInstance(), 'ajaxGetFittingMarketData']);
+
+        /**
+         * Remove the automagically creates taxonomy box for fleet roles.
+         * We establish our own, since a ship can only serve one fleet role
+         */
+        \add_action('admin_menu', [PostType::getInstance(), 'removeWpFlettRolesMetaBox']);
+        \add_action('add_meta_boxes_fitting', [PostType::getInstance(), 'createFleetRolesMetaBox']);
+        \add_action('admin_enqueue_scripts', [PostType::getInstance(), 'fleetRolesTaxonomyJavaScript']);
     }
 
     /**
@@ -135,8 +143,8 @@ class WpHooks {
      */
     public function initFilter() {
         \add_filter('plugin_row_meta', [$this, 'addPluginRowMeta'], 10, 2);
-        \add_filter('plugin_action_links_eve-online-fitting-manager/eve-online-fitting-manager.php', [$this, 'addPluginSettingsLink'], 10, 2 );
-        \add_filter('network_admin_plugin_action_links_eve-online-fitting-manager/eve-online-fitting-manager.php', [$this, 'addPluginSettingsLink'], 10, 2 );
+        \add_filter('plugin_action_links_eve-online-fitting-manager/eve-online-fitting-manager.php', [$this, 'addPluginSettingsLink'], 10, 2);
+        \add_filter('network_admin_plugin_action_links_eve-online-fitting-manager/eve-online-fitting-manager.php', [$this, 'addPluginSettingsLink'], 10, 2);
         \add_filter('query_vars', [$this, 'addQueryVarsFilter']);
 
         \add_filter('template_include', [PostType::getInstance(), 'templateLoader']);
