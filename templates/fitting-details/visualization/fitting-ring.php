@@ -33,32 +33,32 @@ $fittingSlotLayout = FittingHelper::getInstance()->getSlotLayoutFromFittingArray
 
 $itemsHighSlots = null;
 if(!empty($highSlots)) {
-    $itemsHighSlots = \maybe_unserialize($highSlots);
+    $itemsHighSlots = maybe_unserialize($highSlots);
 }
 
 $itemsMidSlots = null;
 if(!empty($midSlots)) {
-    $itemsMidSlots = \maybe_unserialize($midSlots);
+    $itemsMidSlots = maybe_unserialize($midSlots);
 }
 
 $itemsLowSlots = null;
 if(!empty($lowSlots)) {
-    $itemsLowSlots = \maybe_unserialize($lowSlots);
+    $itemsLowSlots = maybe_unserialize($lowSlots);
 }
 
 $itemsRigSlots = null;
 if(!empty($rigSlots)) {
-    $itemsRigSlots = \maybe_unserialize($rigSlots);
+    $itemsRigSlots = maybe_unserialize($rigSlots);
 }
 
 $itemsSubSystems = null;
 if(!empty($subSystems)) {
-    $itemsSubSystems = \maybe_unserialize($subSystems);
+    $itemsSubSystems = maybe_unserialize($subSystems);
 }
 
 $itemsServiceSlots = null;
 if(!empty($serviceSlots)) {
-    $itemsServiceSlots = \maybe_unserialize($serviceSlots);
+    $itemsServiceSlots = maybe_unserialize($serviceSlots);
 }
 ?>
 
@@ -83,7 +83,7 @@ if(!empty($serviceSlots)) {
             if(!empty($highSlotItemID)) {
                 ?>
                 <div class="highSlot_<?php echo $hsCount; ?>" data-toggle="tooltip" data-title="<?php echo FittingHelper::getInstance()->getItemNameById($highSlotItemID); ?>" data-placement="top">
-                    <img width="32" height="32" src="<?php echo ImageHelper::getInstance()->getImageServerUrl('item') . $highSlotItemID . '_32.png'; ?>" class="img-rounded">
+                    <img width="32" height="32" src="<?php echo sprintf(ImageHelper::getInstance()->getImageServerUrl('typeIcon') . '?size=32', $highSlotItemID); ?>" class="img-rounded">
                 </div>
                 <?php
             }
@@ -107,7 +107,7 @@ if(!empty($serviceSlots)) {
             if(!empty($midSlotItemID)) {
                 ?>
                 <div class="midSlot_<?php echo $msCount; ?>" data-toggle="tooltip" data-title="<?php echo FittingHelper::getInstance()->getItemNameById($midSlotItemID); ?>" data-placement="top">
-                    <img width="32" height="32" src="<?php echo ImageHelper::getInstance()->getImageServerUrl('item') . $midSlotItemID . '_32.png'; ?>" class="img-rounded">
+                    <img width="32" height="32" src="<?php echo sprintf(ImageHelper::getInstance()->getImageServerUrl('typeIcon') . '?size=32', $midSlotItemID); ?>" class="img-rounded">
                 </div>
                 <?php
             }
@@ -131,7 +131,7 @@ if(!empty($serviceSlots)) {
             if(!empty($lowSlotItemID)) {
                 ?>
                 <div class="lowSlot_<?php echo $lsCount; ?>" data-toggle="tooltip" data-title="<?php echo FittingHelper::getInstance()->getItemNameById($lowSlotItemID); ?>" data-placement="top">
-                    <img width="32" height="32" src="<?php echo ImageHelper::getInstance()->getImageServerUrl('item') . $lowSlotItemID . '_32.png'; ?>" class="img-rounded">
+                    <img width="32" height="32" src="<?php echo sprintf(ImageHelper::getInstance()->getImageServerUrl('typeIcon') . '?size=32', $lowSlotItemID); ?>" class="img-rounded">
                 </div>
                 <?php
             }
@@ -155,7 +155,7 @@ if(!empty($serviceSlots)) {
             if(!empty($rigSlotItemID)) {
                 ?>
                 <div class="rigSlot_<?php echo $rsCount; ?>" data-toggle="tooltip" data-title="<?php echo FittingHelper::getInstance()->getItemNameById($rigSlotItemID); ?>" data-placement="top">
-                    <img width="32" height="32" src="<?php echo ImageHelper::getInstance()->getImageServerUrl('item') . $rigSlotItemID . '_32.png'; ?>" class="img-rounded">
+                    <img width="32" height="32" src="<?php echo sprintf(ImageHelper::getInstance()->getImageServerUrl('typeIcon') . '?size=32', $rigSlotItemID); ?>" class="img-rounded">
                 </div>
                 <?php
             }
@@ -179,7 +179,7 @@ if(!empty($serviceSlots)) {
             if(!empty($subSystemItemID)) {
                 ?>
                 <div class="subSystem_<?php echo $ssCount; ?>" data-toggle="tooltip" data-title="<?php echo FittingHelper::getInstance()->getItemNameById($subSystemItemID); ?>" data-placement="top">
-                    <img width="32" height="32" src="<?php echo ImageHelper::getInstance()->getImageServerUrl('item') . $subSystemItemID . '_32.png'; ?>" class="img-rounded">
+                    <img width="32" height="32" src="<?php echo sprintf(ImageHelper::getInstance()->getImageServerUrl('typeIcon') . '?size=32', $subSystemItemID); ?>" class="img-rounded">
                 </div>
                 <?php
             }
@@ -203,7 +203,7 @@ if(!empty($serviceSlots)) {
             if(!empty($serviceSlotItemID)) {
                 ?>
                 <div class="serviceSlot_<?php echo $ssCount; ?>" data-toggle="tooltip" data-title="<?php echo FittingHelper::getInstance()->getItemNameById($serviceSlotItemID); ?>" data-placement="top">
-                    <img width="32" height="32" src="<?php echo ImageHelper::getInstance()->getImageServerUrl('item') . $serviceSlotItemID . '_32.png'; ?>" class="img-rounded">
+                    <img width="32" height="32" src="<?php echo sprintf(ImageHelper::getInstance()->getImageServerUrl('typeIcon') . '?size=32', $serviceSlotItemID); ?>" class="img-rounded">
                 </div>
                 <?php
             }
@@ -217,7 +217,7 @@ if(!empty($serviceSlots)) {
     // Ship
     -->
     <div class="shipImage">
-        <img width="256" height="256" class="eveimage img-rounded" src="<?php echo ImageHelper::getInstance()->getImageServerUrl('ship') . $shipID . '_256.png'; ?>">
+        <img width="256" height="256" class="eveimage img-rounded" src="<?php echo sprintf(ImageHelper::getInstance()->getImageServerUrl('typeRender') . '?size=256', $shipID); ?>">
     </div>
 </div>
 
@@ -225,6 +225,6 @@ if(!empty($serviceSlots)) {
 jQuery(document).ready(function($) {
     $(function() {
         $('[data-toggle="tooltip"]').tooltip();
-    })
+    });
 });
 </script>

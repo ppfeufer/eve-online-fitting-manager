@@ -1,8 +1,13 @@
 # Change Log
 
 ## [In Development](https://github.com/ppfeufer/eve-online-fitting-manager/tree/development)
-[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.15.0...HEAD)
+[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.16.0...HEAD)
 - in development
+
+## [v0.16.0](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.16.0) - 2019-11-01
+[Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.15.0...v0.16.0)
+## Changed
+- CCP Imageserver, we're using their new Image API now
 
 ## [v0.15.0](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.15.0) - 2019-10-20
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.14.5...v0.15.0)
