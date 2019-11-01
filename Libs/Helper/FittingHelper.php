@@ -518,7 +518,10 @@ class FittingHelper extends AbstractSingleton {
      * @return type
      */
     public function getShipImageById($itemID = null, $size = 512) {
-        $image = ImageHelper::getInstance()->getImageServerUrl('inventory') . $itemID . '_' . $size . '.png';
+        $image = \sprintf(
+            ImageHelper::getInstance()->getImageServerUrl('typeRender') . '?size=' . $size,
+            $itemID
+        );
 
         return $image;
     }
