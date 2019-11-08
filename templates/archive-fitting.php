@@ -26,6 +26,7 @@ defined('ABSPATH') or die();
 
 $taxonomy = 'fitting-doctrines';
 $doctrineData = \get_queried_object();
+$doctrineHirarchy = \WordPress\Plugins\EveOnlineFittingManager\Libs\WpTerms::getInstance()->getTermHierarchy($doctrineData);
 ?>
 
 <div class="container main template-archive-fitting" data-doctrine="<?php echo $doctrineData->slug; ?>">
@@ -34,7 +35,17 @@ $doctrineData = \get_queried_object();
             <div class="content content-archive doctrine-list">
                 <header class="page-title">
                     <h2>
-                        <?php echo \__('Doctrine:', 'eve-online-fitting-manager') . ' ' . $doctrineData->name; ?>
+                        <?php
+                        echo \__('Doctrine:', 'eve-online-fitting-manager') . ' ';
+
+                        if(count($doctrineHirarchy) > 0) {
+                            foreach($doctrineHirarchy as $docrineParent) {
+                                echo '<a class="doctrine-breadcrumb-item" href="' . get_term_link($docrineParent) . '">' . $docrineParent->name . '</a> » ';
+                            }
+                        }
+
+                        echo $doctrineData->name;
+                        ?>
                     </h2>
                 </header>
 

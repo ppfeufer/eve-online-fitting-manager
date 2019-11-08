@@ -1,4 +1,10 @@
 @media all {
+    .doctrine-breadcrumb-item,
+    .doctrine-breadcrumb-item:hover {
+        color: inherit;
+        text-decoration: none;
+    }
+
     .bootstrap-post-loop-fittings {
         list-style-type: none;
         padding-left: 0;

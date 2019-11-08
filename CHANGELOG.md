@@ -2,7 +2,8 @@
 
 ## [In Development](https://github.com/ppfeufer/eve-online-fitting-manager/tree/development)
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.16.0...HEAD)
-- in development
+### Changed
+- Headline in Doctrine view is now also a breadcrumb navigation if current doctrine has parents
 
 ## [v0.16.0](https://github.com/ppfeufer/eve-online-fitting-manager/releases/tag/v0.16.0) - 2019-11-01
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.15.0...v0.16.0)
