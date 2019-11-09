@@ -17,13 +17,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace WordPress\Plugins\EveOnlineFittingManager\Libs;
+namespace WordPress\Plugins\EveOnlineFittingManager\Libs\Helper;
 
 use \WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
 
 \defined('ABSPATH') or die();
 
-class WpTerms extends AbstractSingleton {
+class WpTermsHelper extends AbstractSingleton {
     /**
      * Get the term root
      *
@@ -61,20 +61,20 @@ class WpTerms extends AbstractSingleton {
     }
 
     /**
-     * Get term hierarchy
+     * Get term breadcrumb as array
      *
      * @param \WP_Term $term
      * @return array
      */
-    public function getTermHierarchy(\WP_Term $term) : array {
+    public function getTermBreadcrumbArray(\WP_Term $term) : array {
         $termHierarchy = [];
         $parentTerm = $term;
 
         while($parentTerm->parent != '0') {
-            $parentTerm = \get_term($parentTerm->parent, $parentTerm->taxonomy);
+            $parentTerm = $this->getTermParent($parentTerm);
             $termHierarchy[] = $parentTerm;
         }
 
-        return array_reverse($termHierarchy);
+        return \array_reverse($termHierarchy);
     }
 }

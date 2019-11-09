@@ -22,10 +22,10 @@ use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\TemplateHelper;
 
 defined('ABSPATH') or die();
 
-\get_header();
+get_header();
 
 $taxonomy = 'fitting-ships';
-$doctrineData = \get_queried_object();
+$doctrineData = get_queried_object();
 ?>
 
 <div class="container main template-archive-ship" data-doctrine="<?php echo $doctrineData->slug; ?>">
@@ -34,14 +34,14 @@ $doctrineData = \get_queried_object();
             <div class="content content-archive doctrine-list">
                 <header class="page-title">
                     <h2>
-                        <?php echo \__('Ship:', 'eve-online-fitting-manager') . ' ' . $doctrineData->name; ?>
+                        <?php echo __('Ship:', 'eve-online-fitting-manager') . ' ' . $doctrineData->name; ?>
                     </h2>
                 </header>
 
                 <?php
                 // Show an optional category description
                 if(!empty($doctrineData->description)) {
-                    echo \apply_filters('category_archive_meta', '<div class="category-archive-meta">' . \do_shortcode(\wpautop($doctrineData->description)) . '</div>');
+                    echo apply_filters('category_archive_meta', '<div class="category-archive-meta">' . do_shortcode(wpautop($doctrineData->description)) . '</div>');
                 }
 
                 TemplateHelper::getInstance()->getTemplate('archive/archive-loop', [
@@ -67,4 +67,4 @@ $doctrineData = \get_queried_object();
 </div><!-- container -->
 
 <?php
-\get_footer();
+get_footer();

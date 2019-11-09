@@ -22,8 +22,8 @@ defined('ABSPATH') or die();
 
 <section class="sidebar-fitting-manager">
     <?php
-    if(\function_exists('\dynamic_sidebar')) {
-        \dynamic_sidebar('sidebar-fitting-manager');
+    if(\function_exists('dynamic_sidebar')) {
+        dynamic_sidebar('sidebar-fitting-manager');
         ?>
         <script type="text/javascript">
         jQuery(document).ready(function($) {

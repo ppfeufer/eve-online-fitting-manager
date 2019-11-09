@@ -19,14 +19,15 @@
 
 use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper;
 use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\TemplateHelper;
+use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\WpTermsHelper;
 
 defined('ABSPATH') or die();
 
-\get_header();
+get_header();
 
 $taxonomy = 'fitting-doctrines';
-$doctrineData = \get_queried_object();
-$doctrineHirarchy = \WordPress\Plugins\EveOnlineFittingManager\Libs\WpTerms::getInstance()->getTermHierarchy($doctrineData);
+$doctrineData = get_queried_object();
+$doctrineBreadcrumbArray = WpTermsHelper::getInstance()->getTermBreadcrumbArray($doctrineData);
 ?>
 
 <div class="container main template-archive-fitting" data-doctrine="<?php echo $doctrineData->slug; ?>">
@@ -38,8 +39,8 @@ $doctrineHirarchy = \WordPress\Plugins\EveOnlineFittingManager\Libs\WpTerms::get
                         <?php
                         echo \__('Doctrine:', 'eve-online-fitting-manager') . ' ';
 
-                        if(count($doctrineHirarchy) > 0) {
-                            foreach($doctrineHirarchy as $docrineParent) {
+                        if(count($doctrineBreadcrumbArray) > 0) {
+                            foreach($doctrineBreadcrumbArray as $docrineParent) {
                                 echo '<a class="doctrine-breadcrumb-item" href="' . get_term_link($docrineParent) . '">' . $docrineParent->name . '</a> » ';
                             }
                         }
@@ -52,7 +53,7 @@ $doctrineHirarchy = \WordPress\Plugins\EveOnlineFittingManager\Libs\WpTerms::get
                 <?php
                 // Show an optional category description
                 if(!empty($doctrineData->description)) {
-                    echo \apply_filters('category_archive_meta', '<div class="category-archive-meta">' . \do_shortcode(\wpautop($doctrineData->description)) . '</div>');
+                    echo apply_filters('category_archive_meta', '<div class="category-archive-meta">' . do_shortcode(wpautop($doctrineData->description)) . '</div>');
                 }
 
                 TemplateHelper::getInstance()->getTemplate('archive/archive-loop', [
@@ -78,4 +79,4 @@ $doctrineHirarchy = \WordPress\Plugins\EveOnlineFittingManager\Libs\WpTerms::get
 </div><!-- container -->
 
 <?php
-\get_footer();
+get_footer();
