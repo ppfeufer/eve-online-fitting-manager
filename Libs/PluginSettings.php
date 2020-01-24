@@ -145,6 +145,7 @@ class PluginSettings {
                     'show-copy-eft' => \__('Show "Copy EFT data to clipboard" button', 'eve-online-fitting-manager'),
                     'show-copy-permalink' => \__('Show "Copy permalink to clipboard" button', 'eve-online-fitting-manager'),
                     'show-market-data' => \__('Show "Estimated Prices" section', 'eve-online-fitting-manager'),
+                    'show-insurance-details' => \__('Show "Ship Insurance Details" section', 'eve-online-fitting-manager'),
                     'show-doctrines' => \__('Show "Doctrines using this fitting" section', 'eve-online-fitting-manager')
                 ],
             ]

@@ -120,6 +120,15 @@ $eftFitting = EftHelper::getInstance()->getEftImportFromFitting([
                     }
 
                     /**
+                     * Show insurance details
+                     */
+                    if(isset($pluginSettings['template-detail-parts-settings']['show-insurance-details']) && $pluginSettings['template-detail-parts-settings']['show-insurance-details'] === 'yes') {
+                        TemplateHelper::getInstance()->getTemplate('fitting-details/information/fitting-ship-insurance', [
+                            'insurance' => \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\EsiHelper::getInstance()->getShipInsuranceDetails($shipID)
+                        ]);
+                    }
+
+                    /**
                      * Show doctrines that fitting is used in
                      */
                     if(isset($pluginSettings['template-detail-parts-settings']['show-doctrines']) && $pluginSettings['template-detail-parts-settings']['show-doctrines'] === 'yes') {
