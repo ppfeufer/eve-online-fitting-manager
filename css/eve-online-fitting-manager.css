@@ -93,6 +93,18 @@
         font-size: 1.5rem;
         border-bottom: 1px solid rgb(220,220,220);
     }
+
+    .text-align-right {
+        text-align: right;
+    }
+
+    .text-align-left {
+        text-align: left;
+    }
+
+    .text-align-center {
+        text-align: center;
+    }
 }
 
 /* Market Data Table

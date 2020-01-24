@@ -71,6 +71,7 @@ class PluginHelper extends AbstractSingleton {
                 'show-copy-eft' => 'yes',
                 'show-copy-permalink' => 'yes',
                 'show-market-data' => 'yes',
+                'show-insurance-details' => 'yes',
                 'show-doctrines' => 'yes',
             ]
         ];

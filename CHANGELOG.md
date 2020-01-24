@@ -2,6 +2,9 @@
 
 ## [In Development](https://github.com/ppfeufer/eve-online-fitting-manager/tree/development)
 [Full Changelog](https://github.com/ppfeufer/eve-online-fitting-manager/compare/v0.16.0...HEAD)
+### Added
+- Insurance panel to fitting detail page
+
 ### Changed
 - Headline in Doctrine view is now also a breadcrumb navigation if current doctrine has parents
 

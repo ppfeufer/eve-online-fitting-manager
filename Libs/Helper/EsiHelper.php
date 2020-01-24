@@ -88,6 +88,13 @@ class EsiHelper extends AbstractSingleton {
     private $universeApi = null;
 
     /**
+     * ESI Insurance API
+     *
+     * @var \WordPress\EsiClient\Repository\InsuranceRepository
+     */
+    private $insuranceApi = null;
+
+    /**
      * ESI Universe API
      *
      * @var DogmaRepository
@@ -119,6 +126,7 @@ class EsiHelper extends AbstractSingleton {
          */
         $this->universeApi = new UniverseRepository;
         $this->dogmaApi = new DogmaRepository;
+        $this->insuranceApi = new \WordPress\EsiClient\Repository\InsuranceRepository;
     }
 
     /**
@@ -238,9 +246,9 @@ class EsiHelper extends AbstractSingleton {
      *
      * @param array $names
      * @param string $type
-     * @return type
+     * @return mixed|null
      */
-    public function getIdFromName(array $names, $type) {
+    public function getIdFromName(array $names, string $type) {
         $returnData = null;
 
         /* @var $esiData \WordPress\EsiClient\Model\Universe\Ids */
@@ -291,6 +299,39 @@ class EsiHelper extends AbstractSingleton {
         }
 
         return $returnData;
+    }
+
+    /**
+     * Getting insurance prices for ship ID
+     *
+     * @param int $shipId
+     * @return \WordPress\EsiClient\Model\Insurance\Prices|null
+     */
+    public function getShipInsuranceDetails(int $shipId) : ?\WordPress\EsiClient\Model\Insurance\Prices {
+        $returnValue = null;
+
+        $insurances = $this->databaseHelper->getCachedEsiDataFromDb('insurance/prices');
+
+        if(\is_null($insurances)) {
+            $insurances = $this->insuranceApi->insurancePrices('en-us');
+
+            if(\is_a($insurances['0'], '\WordPress\EsiClient\Model\Insurance\Prices')) {
+                $this->databaseHelper->writeEsiCacheDataToDb([
+                    'insurance/prices',
+                    \maybe_serialize($insurances),
+                    \strtotime('+1 day')
+                ]);
+            }
+        }
+
+        /* @var $insurance \WordPress\EsiClient\Model\Insurance\Prices */
+        foreach($insurances as $insurance) {
+            if($insurance->getTypeId() === $shipId) {
+                $returnValue = $insurance;
+            }
+        }
+
+        return $returnValue;
     }
 
 //    public function getDogmaAttribute(int $dogmaAttributeId) {
