@@ -31,56 +31,94 @@
 
 namespace WordPress\Plugins\EveOnlineFittingManager;
 
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\GithubUpdater;
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper;
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\MetaBoxes;
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\PluginSettings;
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\ResourceLoader\CssLoader;
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\ResourceLoader\JavascriptLoader;
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\TemplateLoader;
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\WpHooks;
+use WordPress\Plugins\EveOnlineFittingManager\Libs\GithubUpdater;
+use WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper;
+use WordPress\Plugins\EveOnlineFittingManager\Libs\MetaBoxes;
+use WordPress\Plugins\EveOnlineFittingManager\Libs\PluginSettings;
+use WordPress\Plugins\EveOnlineFittingManager\Libs\ResourceLoader\CssLoader;
+use WordPress\Plugins\EveOnlineFittingManager\Libs\ResourceLoader\JavascriptLoader;
+use WordPress\Plugins\EveOnlineFittingManager\Libs\TemplateLoader;
+use WordPress\Plugins\EveOnlineFittingManager\Libs\WpHooks;
+
+use function basename;
+use function defined;
+use function function_exists;
+use function is_admin;
+use function load_plugin_textdomain;
+use function plugin_basename;
 
 const WP_GITHUB_FORCE_UPDATE = false;
 
-\defined('ABSPATH') or die();
+defined('ABSPATH') or die();
 
 // Include the autoloader so we can dynamically include the rest of the classes.
-require_once(\trailingslashit(\dirname(__FILE__)) . 'inc/autoloader.php');
+require_once(__DIR__ . '/inc/autoloader.php');
 
-class EveOnlineFittingManager {
+class EveOnlineFittingManager
+{
     /**
      * textDomain
      *
      * @var string
      */
-    private $textDomain = null;
+    private string $textDomain;
 
     /**
      * localizationDirectory
      *
      * @var string
      */
-    private $localizationDirectory = null;
+    private string $localizationDirectory;
 
     /**
      * Plugin constructor
-     *
-     * @param boolean $init
      */
-    public function __construct() {
+    public function __construct()
+    {
         /**
          * Initializing Variables
          */
         $this->textDomain = 'eve-online-fitting-manager';
-        $this->localizationDirectory = \basename(\dirname(__FILE__)) . '/l10n/';
+        $this->localizationDirectory = basename(__DIR__) . '/l10n/';
 
         $this->loadTextDomain();
     }
 
     /**
+     * Setting up our text domain for translations
+     */
+    public function loadTextDomain(): void
+    {
+        if (function_exists('\load_plugin_textdomain')) {
+            load_plugin_textdomain($this->getTextDomain(), false, $this->getLocalizationDirectory());
+        }
+    }
+
+    /**
+     * Getting the Plugin's Textdomain for translations
+     *
+     * @return string Plugin Textdomain
+     */
+    public function getTextDomain(): string
+    {
+        return $this->textDomain;
+    }
+
+    /**
+     * Getting the Plugin's Localization Directory for translations
+     *
+     * @return string Plugin Localization Directory
+     */
+    public function getLocalizationDirectory(): string
+    {
+        return $this->localizationDirectory;
+    }
+
+    /**
      * Initialize the plugin
      */
-    public function init() {
+    public function init(): void
+    {
         // Firing hooks
         new WpHooks();
 
@@ -95,7 +133,7 @@ class EveOnlineFittingManager {
         /**
          * start backend only libs
          */
-        if(\is_admin()) {
+        if (is_admin()) {
             new PluginSettings;
             new MetaBoxes;
             new TemplateLoader;
@@ -105,12 +143,13 @@ class EveOnlineFittingManager {
         }
     }
 
-    public function initGitHubUpdater() {
+    public function initGitHubUpdater(): void
+    {
         /**
          * Check Github for updates
          */
         $githubConfig = [
-            'slug' => \plugin_basename(__FILE__),
+            'slug' => plugin_basename(__FILE__),
             'proper_folder_name' => PluginHelper::getInstance()->getPluginDirName(),
             'api_url' => 'https://api.github.com/repos/ppfeufer/eve-online-fitting-manager',
             'raw_url' => 'https://raw.github.com/ppfeufer/eve-online-fitting-manager/master',
@@ -125,40 +164,14 @@ class EveOnlineFittingManager {
 
         new GithubUpdater($githubConfig);
     }
-
-    /**
-     * Setting up our text domain for translations
-     */
-    public function loadTextDomain() {
-        if(\function_exists('\load_plugin_textdomain')) {
-            \load_plugin_textdomain($this->getTextDomain(), false, $this->getLocalizationDirectory());
-        }
-    }
-
-    /**
-     * Getting the Plugin's Textdomain for translations
-     *
-     * @return string Plugin Textdomain
-     */
-    public function getTextDomain() {
-        return $this->textDomain;
-    }
-
-    /**
-     * Getting the Plugin's Localization Directory for translations
-     *
-     * @return string Plugin Localization Directory
-     */
-    public function getLocalizationDirectory() {
-        return $this->localizationDirectory;
-    }
 }
 
 /**
  * Start the show ....
  */
-function initializePlugin() {
-    $fittingManager = new \WordPress\Plugins\EveOnlineFittingManager\EveOnlineFittingManager;
+function initializePlugin()
+{
+    $fittingManager = new EveOnlineFittingManager;
 
     /**
      * Initialize the plugin
