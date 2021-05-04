@@ -19,62 +19,67 @@
 
 namespace WordPress\Plugins\EveOnlineFittingManager\Libs\Helper;
 
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
+use WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
+use WP_Term;
 
-\defined('ABSPATH') or die();
+defined('ABSPATH') or die();
 
-class WpTermsHelper extends AbstractSingleton {
+class WpTermsHelper extends AbstractSingleton
+{
     /**
      * Get the term root
      *
-     * @param \WP_Term $term
-     * @return \WP_Term
+     * @param WP_Term $term
+     * @return WP_Term
      */
-    public function getTermRoot(\WP_Term $term): \WP_Term {
+    public function getTermRoot(WP_Term $term): WP_Term
+    {
         // Start from the current term
         $rootTerm = $term;
 
         // Climb up the hierarchy until we reach a term with parent = '0'
-        while($rootTerm->parent != '0') {
-            $rootTerm = \get_term($rootTerm->parent, $rootTerm->taxonomy);
+        while ($rootTerm->parent !== 0) {
+            $rootTerm = get_term($rootTerm->parent, $rootTerm->taxonomy);
         }
 
         return $rootTerm;
     }
 
     /**
-     * Get the term parent
-     *
-     * @param \WP_Term $term
-     * @return \WP_Term
-     */
-    public function getTermParent(\WP_Term $term): \WP_Term {
-        // Start from the current term
-        $parentTerm = $term;
-
-        // Climb up the hierarchy until we reach a term with parent = '0'
-        if($parentTerm->parent != '0') {
-            $parentTerm = \get_term($parentTerm->parent, $parentTerm->taxonomy);
-        }
-
-        return $parentTerm;
-    }
-
-    /**
      * Get term breadcrumb as array
      *
-     * @param \WP_Term $term
+     * @param WP_Term $term
      * @return array
      */
-    public function getTermBreadcrumbArray(\WP_Term $term) : array {
+    public function getTermBreadcrumbArray(WP_Term $term): array
+    {
         $termHierarchy = [];
         $parentTerm = $term;
 
-        while($parentTerm->parent != '0') {
+        while ($parentTerm->parent !== 0) {
             $parentTerm = $this->getTermParent($parentTerm);
             $termHierarchy[] = $parentTerm;
         }
 
-        return \array_reverse($termHierarchy);
+        return array_reverse($termHierarchy);
+    }
+
+    /**
+     * Get the term parent
+     *
+     * @param WP_Term $term
+     * @return WP_Term
+     */
+    public function getTermParent(WP_Term $term): WP_Term
+    {
+        // Start from the current term
+        $parentTerm = $term;
+
+        // Climb up the hierarchy until we reach a term with parent = '0'
+        if ($parentTerm->parent !== 0) {
+            $parentTerm = get_term($parentTerm->parent, $parentTerm->taxonomy);
+        }
+
+        return $parentTerm;
     }
 }

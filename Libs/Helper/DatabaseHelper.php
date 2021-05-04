@@ -19,24 +19,27 @@
 
 namespace WordPress\Plugins\EveOnlineFittingManager\Libs\Helper;
 
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
+use WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
+use WPDB;
 
-\defined('ABSPATH') or die();
+defined('ABSPATH') or die();
 
-class DatabaseHelper extends AbstractSingleton {
+class DatabaseHelper extends AbstractSingleton
+{
     /**
      * WordPress Database Instance
      *
-     * @var \WPDB
+     * @var WPDB
      */
-    private $wpdb = null;
+    private $wpdb;
 
     /**
      * Constructor
      *
-     * @global \WPDB $wpdb
+     * @global WPDB $wpdb
      */
-    protected function __construct() {
+    protected function __construct()
+    {
         parent::__construct();
 
         global $wpdb;
@@ -48,20 +51,21 @@ class DatabaseHelper extends AbstractSingleton {
      * Getting cached Data from DB
      *
      * @param string $route
-     * @return Esi Object
+     * @return mixed|string|null
      */
-    public function getCachedEsiDataFromDb(string $route) {
+    public function getCachedEsiDataFromDb(string $route)
+    {
         $returnValue = null;
 
         $cacheResult = $this->wpdb->get_results($this->wpdb->prepare(
             'SELECT * FROM ' . $this->wpdb->base_prefix . 'eve_online_esi_cache' . ' WHERE esi_route = %s AND valid_until > %s', [
                 $route,
-                \time()
+                time()
             ]
         ));
 
-        if($cacheResult) {
-            $returnValue = \maybe_unserialize($cacheResult['0']->value);
+        if ($cacheResult) {
+            $returnValue = maybe_unserialize($cacheResult['0']->value);
         }
 
         return $returnValue;
@@ -72,30 +76,40 @@ class DatabaseHelper extends AbstractSingleton {
      *
      * @param array $data ([esi_route, value, valid_until])
      */
-    public function writeEsiCacheDataToDb(array $data) {
+    public function writeEsiCacheDataToDb(array $data): void
+    {
         $this->wpdb->query($this->wpdb->prepare(
             'REPLACE INTO ' . $this->wpdb->base_prefix . 'eve_online_esi_cache' . ' (esi_route, value, valid_until) VALUES (%s, %s, %s)', $data
         ));
     }
 
-    public function getMarketDataCache(string $cacheKey) {
+    /**
+     * @param string $cacheKey
+     * @return mixed|string|null
+     */
+    public function getMarketDataCache(string $cacheKey)
+    {
         $returnValue = null;
 
         $cacheResult = $this->wpdb->get_results($this->wpdb->prepare(
             'SELECT * FROM ' . $this->wpdb->base_prefix . 'eve_online_market_data_cache' . ' WHERE cache_key = %s AND valid_until > %s', [
                 $cacheKey,
-                \time()
+                time()
             ]
         ));
 
-        if($cacheResult) {
-            $returnValue = \maybe_unserialize($cacheResult['0']->value);
+        if ($cacheResult) {
+            $returnValue = maybe_unserialize($cacheResult['0']->value);
         }
 
         return $returnValue;
     }
 
-    public function writeMarketDataCache(array $data) {
+    /**
+     * @param array $data
+     */
+    public function writeMarketDataCache(array $data): void
+    {
         $this->wpdb->query($this->wpdb->prepare(
             'REPLACE INTO ' . $this->wpdb->base_prefix . 'eve_online_market_data_cache' . ' (cache_key, value, valid_until) VALUES (%s, %s, %s)', $data
         ));

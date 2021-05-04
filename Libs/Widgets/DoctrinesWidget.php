@@ -19,12 +19,13 @@
 
 namespace WordPress\Plugins\EveOnlineFittingManager\Libs\Widgets;
 
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\FittingHelper;
-use \WP_Widget;
+use WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\FittingHelper;
+use WP_Widget;
 
-\defined('ABSPATH') or die();
+defined('ABSPATH') or die();
 
-class DoctrinesWidget extends WP_Widget {
+class DoctrinesWidget extends WP_Widget
+{
     /**
      * Root ID for all widgets of this type.
      *
@@ -47,22 +48,23 @@ class DoctrinesWidget extends WP_Widget {
      * Unique ID number of the current instance.
      *
      * @since 2.8.0
-     * @var bool|int
+     * @var int
      */
-    public $number = false;
+    public $number;
 
     /**
      * Constructor
      */
-    public function __construct() {
+    public function __construct()
+    {
         $widgetOptions = [
             'classname' => 'fitting-manager-doctrine-sidebar-widget',
-            'description' => \__('Displaying the doctrine list in your sidebar.', 'eve-online-fitting-manager')
+            'description' => __('Displaying the doctrine list in your sidebar.', 'eve-online-fitting-manager')
         ];
 
         $controlOptions = [];
 
-        parent::__construct('fitting_manager_doctrine_sidebar_widget', \__('Fitting Manager Doctrine Widget', 'fitting-manager-doctrine-sidebar-widget'), $widgetOptions, $controlOptions);
+        parent::__construct('fitting_manager_doctrine_sidebar_widget', __('Fitting Manager Doctrine Widget', 'fitting-manager-doctrine-sidebar-widget'), $widgetOptions, $controlOptions);
     }
 
     /**
@@ -71,20 +73,21 @@ class DoctrinesWidget extends WP_Widget {
      * @param array $args
      * @param array $instance
      */
-    public function widget($args, $instance) {
+    public function widget($args, $instance): void
+    {
         echo $args['before_widget'];
 
         /**
          * Filter the Navigation by doctrines
          */
-        $countDoctrineShips = \get_terms([
+        $countDoctrineShips = get_terms([
             'taxonomy' => 'fitting-doctrines',
             'fields' => 'count'
         ]);
 
-        if($countDoctrineShips > 0) {
+        if ($countDoctrineShips > 0) {
             echo $args['before_title'];
-            echo \__('Doctrines', 'eve-online-fitting-manager');
+            echo __('Doctrines', 'eve-online-fitting-manager');
             echo $args['after_title'];
             echo FittingHelper::getInstance()->getSidebarMenu('fitting-doctrines');
         }

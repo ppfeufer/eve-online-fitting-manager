@@ -19,25 +19,27 @@
 
 namespace WordPress\Plugins\EveOnlineFittingManager\Libs;
 
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\EftHelper;
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\MarketDataHelper;
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
+use WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\EftHelper;
+use WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\MarketDataHelper;
+use WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
 
-\defined('ABSPATH') or die();
+defined('ABSPATH') or die();
 
 /**
  * Registering the Killboard Database as its own instance of wpdb
  */
-class MarketData extends AbstractSingleton {
+class MarketData extends AbstractSingleton
+{
     /**
      * Getting the market data for a fitting
      */
-    public function ajaxGetFittingMarketData() {
-        $eftFitting = \filter_input(\INPUT_POST, 'eftData');
+    public function ajaxGetFittingMarketData(): void
+    {
+        $eftFitting = filter_input(INPUT_POST, 'eftData');
         $fittingArray = EftHelper::getInstance()->getFittingArrayFromEftData($eftFitting);
         $marketPrices = MarketDataHelper::getInstance()->getMarketPricesFromFittingArray($fittingArray);
 
-        \wp_send_json($marketPrices);
+        wp_send_json($marketPrices);
 
         // always exit this API function
         exit;

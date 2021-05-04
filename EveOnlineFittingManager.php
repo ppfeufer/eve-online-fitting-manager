@@ -40,13 +40,6 @@ use WordPress\Plugins\EveOnlineFittingManager\Libs\ResourceLoader\JavascriptLoad
 use WordPress\Plugins\EveOnlineFittingManager\Libs\TemplateLoader;
 use WordPress\Plugins\EveOnlineFittingManager\Libs\WpHooks;
 
-use function basename;
-use function defined;
-use function function_exists;
-use function is_admin;
-use function load_plugin_textdomain;
-use function plugin_basename;
-
 const WP_GITHUB_FORCE_UPDATE = false;
 
 defined('ABSPATH') or die();

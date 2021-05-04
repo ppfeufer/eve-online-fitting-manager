@@ -1,10 +1,12 @@
 /* global fittingManagerL10n, Clipboard, eftData */
 
-jQuery(document).ready(function($) {
+jQuery(document).ready(function ($) {
+    'use strict';
+
     /**
      * Remove copy buttons if the browser doesn't supprt it
      */
-    if(!Clipboard.isSupported()) {
+    if (!Clipboard.isSupported()) {
         $('.fitting-copy-to-clipboard').remove();
     } // END if(!Clipboard.isSupported())
 
@@ -12,8 +14,8 @@ jQuery(document).ready(function($) {
         /**
          * close after 5 seconds
          */
-        $(element).fadeTo(2000, 500).slideUp(500, function() {
-            $(this).slideUp(500, function() {
+        $(element).fadeTo(2000, 500).slideUp(500, function () {
+            $(this).slideUp(500, function () {
                 $(this).remove();
             });
         });
@@ -24,14 +26,15 @@ jQuery(document).ready(function($) {
      *
      * @param {string} message
      * @param {string} element
-     * @returns {undefined}
      */
     function showSuccess(message, element) {
-        $(element).html('<div class="alert alert-success alert-dismissable alert-copy-success"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' + message + '</div>');
+        $(element).html(
+            '<div class="alert alert-success alert-dismissable alert-copy-success">' +
+            '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' + message +
+            '</div>'
+        );
 
         closeCopyMessageElement('.alert-copy-success');
-
-        return;
     } // END function showSuccess(message, element)
 
     /**
@@ -39,33 +42,34 @@ jQuery(document).ready(function($) {
      *
      * @param {string} message
      * @param {string} element
-     * @returns {undefined}
      */
     function showError(message, element) {
-        $(element).html('<div class="alert alert-danger alert-dismissable alert-copy-error"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' + message + '</div>');
+        $(element).html(
+            '<div class="alert alert-danger alert-dismissable alert-copy-error">' +
+            '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' + message +
+            '</div>'
+        );
 
         closeCopyMessageElement('.alert-copy-error');
-
-        return;
     } // END function showError(message, element)
 
     /**
      * Copy EFT data to clipboard
      */
-    $('.btn-copy-eft-to-clipboard').on('click', function() {
+    $('.btn-copy-eft-to-clipboard').on('click', function () {
         /**
          * Copy EFT fitting to clipboard
          *
          * @type Clipboard
          */
-        var clipboardEftData = new Clipboard('.btn-copy-eft-to-clipboard');
+        let clipboardEftData = new Clipboard('.btn-copy-eft-to-clipboard');
 
         /**
          * Copy success
          *
          * @param {type} e
          */
-        clipboardEftData.on('success', function(e) {
+        clipboardEftData.on('success', function (e) {
             showSuccess(fittingManagerL10n.copyToClipboard.eft.text.success, '.fitting-copy-result');
 
             e.clearSelection();
@@ -75,7 +79,7 @@ jQuery(document).ready(function($) {
         /**
          * Copy error
          */
-        clipboardEftData.on('error', function() {
+        clipboardEftData.on('error', function () {
             showError(fittingManagerL10n.copyToClipboard.eft.text.error, '.fitting-copy-result');
 
             clipboardEftData.destroy();
@@ -85,20 +89,20 @@ jQuery(document).ready(function($) {
     /**
      * Copy permalink to clipboard
      */
-    $('.btn-copy-permalink-to-clipboard').on('click', function() {
+    $('.btn-copy-permalink-to-clipboard').on('click', function () {
         /**
          * Copy EFT fitting to clipboard
          *
          * @type Clipboard
          */
-        var clipboardPermalinkData = new Clipboard('.btn-copy-permalink-to-clipboard');
+        let clipboardPermalinkData = new Clipboard('.btn-copy-permalink-to-clipboard');
 
         /**
          * Copy success
          *
          * @param {type} e
          */
-        clipboardPermalinkData.on('success', function(e) {
+        clipboardPermalinkData.on('success', function (e) {
             showSuccess(fittingManagerL10n.copyToClipboard.permalink.text.success, '.fitting-copy-result');
 
             e.clearSelection();
@@ -108,7 +112,7 @@ jQuery(document).ready(function($) {
         /**
          * Copy error
          */
-        clipboardPermalinkData.on('error', function() {
+        clipboardPermalinkData.on('error', function () {
             showError(fittingManagerL10n.copyToClipboard.permalink.text.error, '.fitting-copy-result');
 
             clipboardPermalinkData.destroy();
@@ -118,19 +122,19 @@ jQuery(document).ready(function($) {
     /**
      * Market Data Ajax Update
      */
-    if($('.fitting-market-price').length) {
+    if ($('.fitting-market-price').length) {
         /**
          * Ajax Call EVE Market Data
          */
-        var getEveFittingMarketData = {
-            ajaxCall: function() {
+        let getEveFittingMarketData = {
+            ajaxCall: function () {
                 $.ajax({
                     type: 'post',
                     url: fittingManagerL10n.ajax.url,
                     data: 'action=get-eve-fitting-market-data&eftData=' + eftData,
                     dataType: 'json',
-                    success: function(result) {
-                        if(result !== null) {
+                    success: function (result) {
+                        if (result !== null) {
                             $('.table-fitting-marketdata .eve-market-ship-buy').html(result.ship.jitaBuyPrice);
                             $('.table-fitting-marketdata .eve-market-fitting-buy').html(result.fitting.jitaBuyPrice);
                             $('.table-fitting-marketdata .eve-market-total-buy').html(result.total.jitaBuyPrice);
@@ -140,38 +144,39 @@ jQuery(document).ready(function($) {
                             $('.table-fitting-marketdata .eve-market-total-sell').html(result.total.jitaSellPrice);
                         }
                     },
-                    error: function(jqXHR, textStatus, errorThrow) {
+                    error: function (jqXHR, textStatus, errorThrow) {
                         console.log('Ajax request - ' + textStatus + ': ' + errorThrow);
                     }
                 });
             }
         };
 
-        var cSpeed = 5;
-        var cWidth = 127;
-        var cHeight = 19;
-        var cTotalFrames = 20;
-        var cFrameWidth = 127;
-        var cImageSrc = fittingManagerL10n.ajax.loaderImage;
+        let cSpeed = 5;
+        let cWidth = 127;
+        let cHeight = 19;
+        let cTotalFrames = 20;
+        let cFrameWidth = 127;
+        let cImageSrc = fittingManagerL10n.ajax.loaderImage;
 
-        var cImageTimeout = false;
-        var cIndex = 0;
-        var cXpos = 0;
-        var cPreloaderTimeout = false;
-        var SECONDS_BETWEEN_FRAMES = 0;
+        let cImageTimeout = false;
+        let cIndex = 0;
+        let cXpos = 0;
+        let cPreloaderTimeout = false;
+        let SECONDS_BETWEEN_FRAMES = 0;
 
         /**
          * Start animation
          *
          * @returns {undefined}
          */
-        var startAnimation = function() {
-            $('.table-fitting-marketdata .loaderImage').css('display', 'block');
-            $('.table-fitting-marketdata .loaderImage').css('backgroundImage', 'url(' + cImageSrc + ')');
-            $('.table-fitting-marketdata .loaderImage').css('width', cWidth + 'px');
-            $('.table-fitting-marketdata .loaderImage').css('height', cHeight + 'px');
+        let startAnimation = function () {
+            let loaderImageElement = $('.table-fitting-marketdata .loaderImage');
+            loaderImageElement.css('display', 'block');
+            loaderImageElement.css('backgroundImage', 'url(' + cImageSrc + ')');
+            loaderImageElement.css('width', cWidth + 'px');
+            loaderImageElement.css('height', cHeight + 'px');
 
-            var FPS = Math.round(100 / cSpeed);
+            let FPS = Math.round(100 / cSpeed);
             SECONDS_BETWEEN_FRAMES = 1 / FPS;
 
             cPreloaderTimeout = setTimeout(continueAnimation, SECONDS_BETWEEN_FRAMES / 1000);
@@ -182,7 +187,7 @@ jQuery(document).ready(function($) {
          *
          * @returns {undefined}
          */
-        var continueAnimation = function() {
+        let continueAnimation = function () {
             cXpos += cFrameWidth;
 
             /**
@@ -195,13 +200,14 @@ jQuery(document).ready(function($) {
              * if our cIndex is higher than our total number of frames,
              * we're at the end and should restart
              */
-            if(cIndex >= cTotalFrames) {
+            if (cIndex >= cTotalFrames) {
                 cXpos = 0;
                 cIndex = 0;
             }
 
-            if($('.table-fitting-marketdata .loaderImage')) {
-                $('.table-fitting-marketdata .loaderImage').css('backgroundPosition', (-cXpos) + 'px 0');
+            let loaderImageElement = $('.table-fitting-marketdata .loaderImage');
+            if (loaderImageElement) {
+                loaderImageElement.css('backgroundPosition', (-cXpos) + 'px 0');
             }
 
             cPreloaderTimeout = setTimeout(continueAnimation, SECONDS_BETWEEN_FRAMES * 1000);
@@ -209,10 +215,8 @@ jQuery(document).ready(function($) {
 
         /**
          * stops animation
-         *
-         * @returns {undefined}
          */
-        var stopAnimation = function() {
+        let stopAnimation = function () {
             clearTimeout(cPreloaderTimeout);
             cPreloaderTimeout = false;
         };
@@ -224,15 +228,15 @@ jQuery(document).ready(function($) {
          * @param {type} fun
          * @returns {undefined}
          */
-        var imageLoader = function(s, fun) {
+        let imageLoader = function (s, fun) {
             clearTimeout(cImageTimeout);
             cImageTimeout = 0;
 
-            var genImage = new Image();
-            genImage.onload = function() {
+            let genImage = new Image();
+            genImage.onload = function () {
                 cImageTimeout = setTimeout(fun, 0);
             };
-            genImage.onerror = new Function('alert(\'Could not load the image\')');
+            genImage.onerror = console.log('Could not load the image');
             genImage.src = s;
         };
 

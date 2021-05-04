@@ -21,17 +21,30 @@ namespace WordPress\Plugins\EveOnlineFittingManager\Libs\Helper;
 
 use WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
 
-\defined('ABSPATH') or die();
+defined('ABSPATH') or die();
 
-class PluginHelper extends AbstractSingleton {
+class PluginHelper extends AbstractSingleton
+{
     /**
      * Getting the Plugin Path
      *
      * @param string $file
      * @return string
      */
-    public function getPluginPath(string $file = '') {
-        return \WP_PLUGIN_DIR . '/' . $this->getPluginDirName() . '/' . $file;
+    public function getPluginPath(string $file = ''): string
+    {
+        return WP_PLUGIN_DIR . '/' . $this->getPluginDirName() . '/' . $file;
+    }
+
+    /**
+     * Get the plugins directory base name
+     *
+     * @return string
+     */
+    public function getPluginDirName(): string
+    {
+//        return dirname(dirname(dirname(plugin_basename(__FILE__))));
+        return dirname(plugin_basename(__FILE__), 3);
     }
 
     /**
@@ -40,17 +53,26 @@ class PluginHelper extends AbstractSingleton {
      * @param string $file
      * @return string
      */
-    public function getPluginUri(string $file = '') {
-        return \WP_PLUGIN_URL . '/' . $this->getPluginDirName() . '/' . $file;
+    public function getPluginUri(string $file = ''): string
+    {
+        return WP_PLUGIN_URL . '/' . $this->getPluginDirName() . '/' . $file;
     }
 
     /**
-     * Get the plugins directory base name
+     * Getting the Plugin's settings
      *
-     * @return string
+     * @param boolean $merged Merge with default settings (true/false)
+     * @return array
      */
-    public function getPluginDirName() {
-        return \dirname(\dirname(\dirname(\plugin_basename(__FILE__))));
+    public function getPluginSettings(bool $merged = true): array
+    {
+        if ($merged === true) {
+            $pluginSettings = get_option(UpdateHelper::getInstance()->getOptionFieldName(), $this->getPluginDefaultSettings());
+        } else {
+            $pluginSettings = get_option(UpdateHelper::getInstance()->getOptionFieldName());
+        }
+
+        return $pluginSettings;
     }
 
     /**
@@ -58,8 +80,9 @@ class PluginHelper extends AbstractSingleton {
      *
      * @return array
      */
-    public function getPluginDefaultSettings() {
-        $defaultSettings = [
+    public function getPluginDefaultSettings(): array
+    {
+        return [
             'market-data-api' => 'eve-marketer',
             'template-image-settings' => [
                 'show-ship-images-in-loop' => '',
@@ -75,24 +98,21 @@ class PluginHelper extends AbstractSingleton {
                 'show-doctrines' => 'yes',
             ]
         ];
-
-        return $defaultSettings;
     }
 
-    /**
-     * Getting the Plugin's settings
-     *
-     * @param boolean $merged Merge with default settings (true/false)
-     * @return array
-     */
-    public function getPluginSettings($merged = true) {
-        if($merged === true) {
-            $pluginSettings = \get_option(UpdateHelper::getInstance()->getOptionFieldName(), $this->getPluginDefaultSettings());
-        } else {
-            $pluginSettings = \get_option(UpdateHelper::getInstance()->getOptionFieldName());
+    public function getMainContentColClasses($echo = false): string
+    {
+        $contentColClass = 'col-lg-12 col-md-12 col-sm-12 col-12';
+
+        if ($this->hasSidebar('sidebar-fitting-manager')) {
+            $contentColClass = 'col-lg-9 col-md-9 col-sm-9 col-9';
         }
 
-        return $pluginSettings;
+        if ($echo === true) {
+            echo $contentColClass;
+        } else {
+            return $contentColClass;
+        }
     }
 
     /**
@@ -102,36 +122,20 @@ class PluginHelper extends AbstractSingleton {
      * @return boolean
      * @uses is_active_sidebar() Whether a sidebar is in use.
      */
-    public function hasSidebar($sidebarPosition) {
-        return \is_active_sidebar($sidebarPosition);
+    public function hasSidebar($sidebarPosition): bool
+    {
+        return is_active_sidebar($sidebarPosition);
     }
 
-    public function getMainContentColClasses($echo = false) {
-        $contentColClass = 'col-lg-12 col-md-12 col-sm-12 col-12';
-
-        if($this->hasSidebar('sidebar-fitting-manager')) {
-            $contentColClass = 'col-lg-9 col-md-9 col-sm-9 col-9';
-        } else {
-            $contentColClass = 'col-lg-12 col-md-12 col-sm-12 col-12';
-        }
-
-        if($echo === true) {
-            echo $contentColClass;
-        } else {
-            return $contentColClass;
-        }
-    }
-
-    public function getLoopContentClasses($echo = false) {
+    public function getLoopContentClasses($echo = false): string
+    {
         $contentColClass = 'col-lg-3 col-md-4 col-sm-6 col-xs-12';
 
-        if($this->hasSidebar('sidebar-fitting-manager')) {
+        if ($this->hasSidebar('sidebar-fitting-manager')) {
             $contentColClass = 'col-lg-4 col-md-6 col-sm-12 col-xs-12';
-        } else {
-            $contentColClass = 'col-lg-3 col-md-4 col-sm-6 col-xs-12';
         }
 
-        if($echo === true) {
+        if ($echo === true) {
             echo $contentColClass;
         } else {
             return $contentColClass;

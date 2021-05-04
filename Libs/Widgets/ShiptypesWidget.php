@@ -19,12 +19,13 @@
 
 namespace WordPress\Plugins\EveOnlineFittingManager\Libs\Widgets;
 
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\FittingHelper;
-use \WP_Widget;
+use WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\FittingHelper;
+use WP_Widget;
 
-\defined('ABSPATH') or die();
+defined('ABSPATH') or die();
 
-class ShiptypesWidget extends WP_Widget {
+class ShiptypesWidget extends WP_Widget
+{
     /**
      * Root ID for all widgets of this type.
      *
@@ -49,20 +50,21 @@ class ShiptypesWidget extends WP_Widget {
      * @since 2.8.0
      * @var bool|int
      */
-    public $number = false;
+    public $number;
 
     /**
      * Constructor
      */
-    public function __construct() {
+    public function __construct()
+    {
         $widgetOptions = [
             'classname' => 'fitting-manager-shiptypes-sidebar-widget',
-            'description' => \__('Displaying the ship types list in your sidebar.', 'eve-online-fitting-manager')
+            'description' => __('Displaying the ship types list in your sidebar.', 'eve-online-fitting-manager')
         ];
 
         $controlOptions = [];
 
-        parent::__construct('fitting_manager_shiptypes_sidebar_widget', \__('Fitting Manager Ship Types Widget', 'fitting-manager-shiptypes-sidebar-widget'), $widgetOptions, $controlOptions);
+        parent::__construct('fitting_manager_shiptypes_sidebar_widget', __('Fitting Manager Ship Types Widget', 'fitting-manager-shiptypes-sidebar-widget'), $widgetOptions, $controlOptions);
     }
 
     /**
@@ -71,20 +73,21 @@ class ShiptypesWidget extends WP_Widget {
      * @param array $args
      * @param array $instance
      */
-    public function widget($args, $instance) {
+    public function widget($args, $instance): void
+    {
         echo $args['before_widget'];
 
         /**
          * Filter the Navigation by ship types
          */
-        $countShipTypes = \get_terms([
+        $countShipTypes = get_terms([
             'taxonomy' => 'fitting-ships',
             'fields' => 'count'
         ]);
 
-        if($countShipTypes > 0) {
+        if ($countShipTypes > 0) {
             echo $args['before_title'];
-            echo \__('Ship Types', 'eve-online-fitting-manager');
+            echo __('Ship Types', 'eve-online-fitting-manager');
             echo $args['after_title'];
             echo FittingHelper::getInstance()->getSidebarMenu('fitting-ships');
         }

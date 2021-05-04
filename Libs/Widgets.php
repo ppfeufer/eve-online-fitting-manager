@@ -19,18 +19,23 @@
 
 namespace WordPress\Plugins\EveOnlineFittingManager\Libs;
 
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
+use WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
+use WordPress\Plugins\EveOnlineFittingManager\Libs\Widgets\DoctrinesWidget;
+use WordPress\Plugins\EveOnlineFittingManager\Libs\Widgets\ShiptypesWidget;
+use WordPress\Plugins\EveOnlineFittingManager\Libs\Widgets\SearchWidget;
 
-\defined('ABSPATH') or die();
+defined('ABSPATH') or die();
 
-class Widgets extends AbstractSingleton {
+class Widgets extends AbstractSingleton
+{
     /**
      * Register our sidebar
      */
-    public function registerSidebar() {
-        \register_sidebar([
-            'name' => \__('Fitting Manager Sidebar', 'eve-online-fitting-manager'),
-            'description' => \__('Sidebar to use with your Fitting Manager pages.', 'eve-online-fitting-manager'),
+    public function registerSidebar(): void
+    {
+        register_sidebar([
+            'name' => __('Fitting Manager Sidebar', 'eve-online-fitting-manager'),
+            'description' => __('Sidebar to use with your Fitting Manager pages.', 'eve-online-fitting-manager'),
             'id' => 'sidebar-fitting-manager',
             'before_widget' => '<aside><div id="%1$s" class="widget %2$s">',
             'after_widget' => "</div></aside>",
@@ -42,9 +47,10 @@ class Widgets extends AbstractSingleton {
     /**
      * Registering our widgets
      */
-    public function registerWidgets() {
-        \register_widget('\\WordPress\Plugins\EveOnlineFittingManager\Libs\Widgets\DoctrinesWidget');
-        \register_widget('\\WordPress\Plugins\EveOnlineFittingManager\Libs\Widgets\ShiptypesWidget');
-        \register_widget('\\WordPress\Plugins\EveOnlineFittingManager\Libs\Widgets\SearchWidget');
+    public function registerWidgets(): void
+    {
+        register_widget(DoctrinesWidget::class);
+        register_widget(ShiptypesWidget::class);
+        register_widget(SearchWidget::class);
     }
 }

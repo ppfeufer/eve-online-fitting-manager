@@ -19,27 +19,27 @@
 
 namespace WordPress\Plugins\EveOnlineFittingManager\Libs\Helper;
 
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
+use WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
 
-\defined('ABSPATH') or die();
+defined('ABSPATH') or die();
 
 /**
  * WP Filesystem API
  */
-require_once(\ABSPATH . 'wp-admin/includes/class-wp-filesystem-base.php');
-require_once(\ABSPATH . 'wp-admin/includes/class-wp-filesystem-direct.php');
+require_once(ABSPATH . 'wp-admin/includes/class-wp-filesystem-base.php');
+require_once(ABSPATH . 'wp-admin/includes/class-wp-filesystem-direct.php');
 
-class CacheHelper extends AbstractSingleton {
+class CacheHelper extends AbstractSingleton
+{
     /**
      * Getting transient cache information / data
      *
      * @param string $transientName
      * @return mixed
      */
-    public function checkTransientCache($transientName) {
-        $data = \get_transient($transientName);
-
-        return $data;
+    public function checkTransientCache(string $transientName)
+    {
+        return get_transient($transientName);
     }
 
     /**
@@ -47,9 +47,10 @@ class CacheHelper extends AbstractSingleton {
      *
      * @param string $transientName cache name
      * @param mixed $data the data that is needed to be cached
-     * @param type $time cache time in hours (default: 2)
+     * @param mixed $time cache time in hours (default: 2)
      */
-    public function setTransientCache($transientName, $data, $time = 2) {
-        \set_transient($transientName, $data, $time * \HOUR_IN_SECONDS);
+    public function setTransientCache(string $transientName, $data, $time = 2): void
+    {
+        set_transient($transientName, $data, $time * HOUR_IN_SECONDS);
     }
 }

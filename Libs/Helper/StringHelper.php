@@ -19,14 +19,15 @@
 
 namespace WordPress\Plugins\EveOnlineFittingManager\Libs\Helper;
 
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
+use WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
 
-\defined('ABSPATH') or die();
+defined('ABSPATH') or die();
 
 /**
  * Helper Class for manipulating and/or checking strings
  */
-class StringHelper extends AbstractSingleton {
+class StringHelper extends AbstractSingleton
+{
     /**
      * Make a string camelCase
      *
@@ -35,20 +36,21 @@ class StringHelper extends AbstractSingleton {
      * @param array $noStrip
      * @return string
      */
-    public function camelCase($string, $ucFirst = false, $noStrip = []) {
+    public function camelCase(string $string, bool $ucFirst = false, array $noStrip = []): string
+    {
         // First we make sure all is lower case
-        $string = \strtolower($string);
+        $string = strtolower($string);
 
         // non-alpha and non-numeric characters become spaces
-        $string = \preg_replace('/[^a-z0-9' . \implode('', $noStrip) . ']+/i', ' ', $string);
-        $string = \trim($string);
+        $string = preg_replace('/[^a-z0-9' . implode('', $noStrip) . ']+/i', ' ', $string);
+        $string = trim($string);
 
         // uppercase the first character of each word
-        $string = \ucwords($string);
-        $string = \str_replace(' ', '', $string);
+        $string = ucwords($string);
+        $string = str_replace(' ', '', $string);
 
-        if($ucFirst === false) {
-            $string = \lcfirst($string);
+        if ($ucFirst === false) {
+            $string = lcfirst($string);
         }
 
         return $string;
@@ -63,9 +65,10 @@ class StringHelper extends AbstractSingleton {
      * @param string $scanData
      * @return string
      */
-    public function fixLineBreaks($scanData) {
-        $cleanedScanData = \str_replace("\r", "\n", \str_replace("\r\n", "\n", $scanData)); // mac -> linux
+    public function fixLineBreaks(string $scanData): string
+    {
+//        $cleanedScanData = str_replace("\r", "\n", str_replace("\r\n", "\n", $scanData)); // mac -> linux
 
-        return $cleanedScanData;
+        return str_replace(array("\r\n", "\r"), "\n", $scanData); // mac -> linux
     }
 }

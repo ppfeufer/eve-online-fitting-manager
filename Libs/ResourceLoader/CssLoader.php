@@ -19,37 +19,40 @@
 
 namespace WordPress\Plugins\EveOnlineFittingManager\Libs\ResourceLoader;
 
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper;
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\Interfaces\AssetsInterface;
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\PostType;
+use WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper;
+use WordPress\Plugins\EveOnlineFittingManager\Libs\Interfaces\AssetsInterface;
+use WordPress\Plugins\EveOnlineFittingManager\Libs\PostType;
 
-\defined('ABSPATH') or die();
+defined('ABSPATH') or die();
 
 /**
  * CSS Loader
  */
-class CssLoader implements AssetsInterface {
+class CssLoader implements AssetsInterface
+{
     /**
      * Initialize the loader
      */
-    public function init() {
-        \add_action('wp_enqueue_scripts', [$this, 'enqueue'], 99);
+    public function init(): void
+    {
+        add_action('wp_enqueue_scripts', [$this, 'enqueue'], 99);
     }
 
     /**
      * Load the styles
      */
-    public function enqueue() {
+    public function enqueue(): void
+    {
         /**
          * Only in Frontend
          */
-        if(!\is_admin()) {
+        if (!is_admin()) {
             /**
              * load only when needed
              */
-            if(\is_page(PostType::getInstance()->getPosttypeSlug('fittings')) || \get_post_type() === 'fitting') {
-                \wp_enqueue_style('bootstrap', PluginHelper::getInstance()->getPluginUri('bootstrap/css/bootstrap.min.css'));
-                \wp_enqueue_style('eve-online-fitting-manager', PluginHelper::getInstance()->getPluginUri('css/eve-online-fitting-manager.min.css'));
+            if (get_post_type() === 'fitting' || is_page(PostType::getInstance()->getPosttypeSlug('fittings'))) {
+                wp_enqueue_style('bootstrap', PluginHelper::getInstance()->getPluginUri('bootstrap/css/bootstrap.min.css'));
+                wp_enqueue_style('eve-online-fitting-manager', PluginHelper::getInstance()->getPluginUri('css/eve-online-fitting-manager.min.css'));
             }
         }
     }
