@@ -1,0 +1,17 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.4.0
+    hooks:
+      - id: check-case-conflict
+      - id: check-json
+      - id: check-xml
+      - id: check-yaml
+      - id: fix-byte-order-marker
+      - id: trailing-whitespace
+        exclude: \.(min\.css|min\.js|po|mo)$
+      - id: end-of-file-fixer
+        exclude: \.(min\.css|min\.js|po|mo)$
+      - id: mixed-line-ending
+        args: [ '--fix=lf' ]
+      - id: fix-encoding-pragma
+        args: [ '--remove' ]
