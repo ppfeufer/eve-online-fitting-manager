@@ -22,103 +22,57 @@
  *
  * Getting some stuff from CCP's EVE API
  */
+
 namespace WordPress\Plugins\EveOnlineFittingManager\Libs\Helper;
 
-use \WordPress\EsiClient\Repository\DogmaRepository;
-use \WordPress\EsiClient\Repository\UniverseRepository;
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
+use WordPress\EsiClient\Model\Insurance\Prices;
+use WordPress\EsiClient\Model\Universe\Categories\CategoryId;
+use WordPress\EsiClient\Model\Universe\Groups\GroupId;
+use WordPress\EsiClient\Model\Universe\Ids;
+use WordPress\EsiClient\Model\Universe\Types\TypeId;
+use WordPress\EsiClient\Repository\InsuranceRepository;
+use WordPress\EsiClient\Repository\UniverseRepository;
+use WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
 
-\defined('ABSPATH') or die();
+defined('ABSPATH') or die();
 
-class EsiHelper extends AbstractSingleton {
-    /**
-     * Image Server URL
-     *
-     * @var string
-     */
-    private $imageserverUrl = null;
-
-    /**
-     * Image Server Endpoints
-     *
-     * @var array
-     */
-    private $imageserverEndpoints = null;
-
-    /**
-     * Plugin Helper
-     *
-     * @var ImageHelper
-     */
-    private $imageHelper = null;
-
-    /**
-     * Plugin Helper
-     *
-     * @var PluginHelper
-     */
-    private $pluginHelper = null;
-
-    /**
-     * Plugin Settings
-     *
-     * @var array
-     */
-    private $pluginSettings = null;
-
-    /**
-     * Remote Helper
-     *
-     * @var RemoteHelper
-     */
-    private $remoteHelper = null;
-
+class EsiHelper extends AbstractSingleton
+{
     /**
      * Database Helper
      *
      * @var DatabaseHelper
      */
-    private $databaseHelper = null;
+    private DatabaseHelper $databaseHelper;
 
     /**
      * ESI Universe API
      *
      * @var UniverseRepository
      */
-    private $universeApi = null;
+    private UniverseRepository $universeApi;
 
     /**
-     * ESI Universe API
+     * ESI Insurance API
      *
-     * @var DogmaRepository
+     * @var InsuranceRepository
      */
-    private $dogmaApi = null;
+    private InsuranceRepository $insuranceApi;
 
     /**
      * The Constructor
      */
-    protected function __construct() {
+    protected function __construct()
+    {
         parent::__construct();
 
-        if(!$this->pluginHelper instanceof PluginHelper) {
-            $this->pluginHelper = PluginHelper::getInstance();
-            $this->pluginSettings = $this->pluginHelper->getPluginSettings();
-        }
-
-        if(!$this->imageHelper instanceof ImageHelper) {
-            $this->imageHelper = ImageHelper::getInstance();
-            $this->imageserverEndpoints = $this->imageHelper->getImageserverEndpoints();
-            $this->imageserverUrl = $this->imageHelper->getImageServerUrl();
-        }
-
         $this->databaseHelper = DatabaseHelper::getInstance();
-        $this->remoteHelper = RemoteHelper::getInstance();
 
         /**
          * ESI API Client
          */
         $this->universeApi = new UniverseRepository;
-        $this->dogmaApi = new DogmaRepository;
+        $this->insuranceApi = new InsuranceRepository;
     }
 
     /**
@@ -127,26 +81,22 @@ class EsiHelper extends AbstractSingleton {
      * @param int $itemId
      * @return array
      */
-    public function getItemDataByItemId(int $itemId) {
+    public function getItemDataByItemId(int $itemId): array
+    {
         $returnData = [
             'itemTypeInformation' => null,
             'itemGroupInformation' => null,
             'itemCategoryInformation' => null
         ];
 
-        /* @var $itemTypeInformation \WordPress\EsiClient\Model\Universe\Types\TypeId */
         $itemTypeInformation = $this->getItemTypeInformation($itemId);
 
-        $itemGroupInformation = null;
-        $itemCategoryInformation = null;
-
-        if(!\is_null($itemTypeInformation)) {
+        if (!is_null($itemTypeInformation)) {
             $returnData['itemTypeInformation'] = $itemTypeInformation;
 
-            /* @var $itemGroupInformation \WordPress\EsiClient\Model\Universe\Groups\GroupId */
             $itemGroupInformation = $this->getItemGroupInformation($itemTypeInformation->getGroupId());
 
-            if(!\is_null($itemGroupInformation)) {
+            if (!is_null($itemGroupInformation)) {
                 $returnData['itemGroupInformation'] = $itemGroupInformation;
 
                 $itemCategoryInformation = $this->getItemCategoryInformation($itemGroupInformation->getCategoryId());
@@ -162,20 +112,21 @@ class EsiHelper extends AbstractSingleton {
      * Gettingitem data
      *
      * @param int $itemId
-     * @return \WordPress\EsiClient\Model\Universe\Types\TypeId
+     * @return TypeId
      */
-    public function getItemTypeInformation(int $itemId) {
-        /* @var $itemTypeInformation \WordPress\EsiClient\Model\Universe\Types\TypeId */
+    public function getItemTypeInformation(int $itemId): TypeId
+    {
+        /* @var $itemTypeInformation TypeId */
         $itemTypeInformation = $this->databaseHelper->getCachedEsiDataFromDb('universe/types/' . $itemId);
 
-        if(\is_null($itemTypeInformation)) {
+        if (is_null($itemTypeInformation)) {
             $itemTypeInformation = $this->universeApi->universeTypesTypeId($itemId);
 
-            if(\is_a($itemTypeInformation, '\WordPress\EsiClient\Model\Universe\Types\TypeId')) {
+            if (is_a($itemTypeInformation, '\WordPress\EsiClient\Model\Universe\Types\TypeId')) {
                 $this->databaseHelper->writeEsiCacheDataToDb([
                     'universe/types/' . $itemId,
-                    \maybe_serialize($itemTypeInformation),
-                    \strtotime('+1 week')
+                    maybe_serialize($itemTypeInformation),
+                    strtotime('+1 week')
                 ]);
             }
         }
@@ -187,20 +138,21 @@ class EsiHelper extends AbstractSingleton {
      * Get item group data
      *
      * @param int $groupId
-     * @return \WordPress\EsiClient\Model\Universe\Groups\GroupId
+     * @return GroupId
      */
-    public function getItemGroupInformation(int $groupId) {
-        /* @var $groupData \WordPress\EsiClient\Model\Universe\Groups\GroupId */
+    public function getItemGroupInformation(int $groupId): GroupId
+    {
+        /* @var $groupData GroupId */
         $groupData = $this->databaseHelper->getCachedEsiDataFromDb('universe/groups/' . $groupId);
 
-        if(\is_null($groupData)) {
+        if (is_null($groupData)) {
             $groupData = $this->universeApi->universeGroupsGroupId($groupId);
 
-            if(\is_a($groupData, '\WordPress\EsiClient\Model\Universe\Groups\GroupId')) {
+            if (is_a($groupData, '\WordPress\EsiClient\Model\Universe\Groups\GroupId')) {
                 $this->databaseHelper->writeEsiCacheDataToDb([
                     'universe/groups/' . $groupId,
-                    \maybe_serialize($groupData),
-                    \strtotime('+1 week')
+                    maybe_serialize($groupData),
+                    strtotime('+1 week')
                 ]);
             }
         }
@@ -212,20 +164,21 @@ class EsiHelper extends AbstractSingleton {
      * Get item category data
      *
      * @param int $categoryId
-     * @return \WordPress\EsiClient\Model\Universe\Categories\CategoryId
+     * @return CategoryId
      */
-    public function getItemCategoryInformation(int $categoryId) {
-        /* @var $categoryData \WordPress\EsiClient\Model\Universe\Categories\CategoryId */
+    public function getItemCategoryInformation(int $categoryId): CategoryId
+    {
+        /* @var $categoryData CategoryId */
         $categoryData = $this->databaseHelper->getCachedEsiDataFromDb('universe/categories/' . $categoryId);
 
-        if(\is_null($categoryData)) {
+        if (is_null($categoryData)) {
             $categoryData = $this->universeApi->universeCategoriesCategoryId($categoryId);
 
-            if(\is_a($categoryData, '\WordPress\EsiClient\Model\Universe\Categories\CategoryId')) {
+            if (is_a($categoryData, '\WordPress\EsiClient\Model\Universe\Categories\CategoryId')) {
                 $this->databaseHelper->writeEsiCacheDataToDb([
                     'universe/categories/' . $categoryId,
-                    \maybe_serialize($categoryData),
-                    \strtotime('+1 week')
+                    maybe_serialize($categoryData),
+                    strtotime('+1 week')
                 ]);
             }
         }
@@ -238,16 +191,17 @@ class EsiHelper extends AbstractSingleton {
      *
      * @param array $names
      * @param string $type
-     * @return type
+     * @return array|null
      */
-    public function getIdFromName(array $names, $type) {
+    public function getIdFromName(array $names, string $type): ?array
+    {
         $returnData = null;
 
-        /* @var $esiData \WordPress\EsiClient\Model\Universe\Ids */
-        $esiData = $this->universeApi->universeIds(\array_values($names));
+        /* @var $esiData Ids */
+        $esiData = $this->universeApi->universeIds(array_values($names));
 
-        if(\is_a($esiData, '\WordPress\EsiClient\Model\Universe\Ids')) {
-            switch($type) {
+        if (is_a($esiData, '\WordPress\EsiClient\Model\Universe\Ids')) {
+            switch ($type) {
                 case 'agents':
                     $returnData = $esiData->getAgents();
                     break;
@@ -293,21 +247,37 @@ class EsiHelper extends AbstractSingleton {
         return $returnData;
     }
 
-//    public function getDogmaAttribute(int $dogmaAttributeId) {
-//        $dogmaAttributeData = $this->databaseHelper->getCachedEsiDataFromDb('dogma/attributes/' . $dogmaAttributeId);
-//
-//        if(\is_null($dogmaAttributeData)) {
-//            $dogmaAttributeData = $this->dogmaApi->dogmaAttributesAttributeId($dogmaAttributeId);
-//
-//            if(\is_a($dogmaAttributeData, '\WordPress\EsiClient\Model\Dogma\Attributes\AttributeId')) {
-//                $this->databaseHelper->writeEsiCacheDataToDb([
-//                    'dogma/attributes/' . $dogmaAttributeId,
-//                    \maybe_serialize($dogmaAttributeData),
-//                    \strtotime('+1 week')
-//                ]);
-//            }
-//        }
-//
-//        return $dogmaAttributeData;
-//    }
+    /**
+     * Getting insurance prices for ship ID
+     *
+     * @param int $shipId
+     * @return Prices|null
+     */
+    public function getShipInsuranceDetails(int $shipId): ?Prices
+    {
+        $returnValue = null;
+
+        $insurances = $this->databaseHelper->getCachedEsiDataFromDb('insurance/prices');
+
+        if (is_null($insurances)) {
+            $insurances = $this->insuranceApi->insurancePrices('en-us');
+
+            if (is_a($insurances['0'], '\WordPress\EsiClient\Model\Insurance\Prices')) {
+                $this->databaseHelper->writeEsiCacheDataToDb([
+                    'insurance/prices',
+                    maybe_serialize($insurances),
+                    strtotime('+1 day')
+                ]);
+            }
+        }
+
+        /* @var $insurance Prices */
+        foreach ($insurances as $insurance) {
+            if ($insurance->getTypeId() === $shipId) {
+                $returnValue = $insurance;
+            }
+        }
+
+        return $returnValue;
+    }
 }

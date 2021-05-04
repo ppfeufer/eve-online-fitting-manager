@@ -21,9 +21,10 @@ namespace WordPress\Plugins\EveOnlineFittingManager\Libs\Helper;
 
 use WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
 
-\defined('ABSPATH') or die();
+defined('ABSPATH') or die();
 
-class MarketDataHelper extends AbstractSingleton {
+class MarketDataHelper extends AbstractSingleton
+{
     /**
      * Available Market APIs:
      *      EVE Marketer => https://api.evemarketer.com/ec/marketstat/json?typeid=3057,2364,3057&regionlimit=10000002&usesystem=30000142
@@ -34,46 +35,47 @@ class MarketDataHelper extends AbstractSingleton {
      *
      * @var string API Url
      */
-    protected $apiUrlEveMarketer = 'https://api.evemarketer.com/ec/marketstat/json';
+    protected string $apiUrlEveMarketer = 'https://api.evemarketer.com/ec/marketstat/json';
 
     /**
      * API Url
      *
      * @var string API Url to use
      */
-    protected $apiUrl = null;
+    protected string $apiUrl;
 
     /**
      * Market Region Limiter
      *
      * @var int Market Region to use
      */
-    protected $marketRegion = 10000002; // The Forge
+    protected int $marketRegion = 10000002; // The Forge
 
     /**
      * Market System Limiter
      *
      * @var int Market System to use
      */
-    protected $marketSystem = 30000142; // Jita
+    protected int $marketSystem = 30000142; // Jita
 
     /**
      * Plugin Settings
      *
      * @var array
      */
-    protected $pluginSettings = null;
+    protected $pluginSettings;
 
     /**
      *
      * @var RemoteHelper
      */
-    protected $remoteHelper = null;
+    protected $remoteHelper;
 
     /**
      * Constructor
      */
-    protected function __construct() {
+    protected function __construct()
+    {
         parent::__construct();
 
         $this->pluginSettings = PluginHelper::getInstance()->getPluginSettings();
@@ -85,59 +87,37 @@ class MarketDataHelper extends AbstractSingleton {
     /**
      * Set the market API that is to be used
      */
-    public function setMarketApi() {
+    public function setMarketApi(): void
+    {
         $urlParameters = '?regionlimit=' . $this->marketRegion . '&usesystem=' . $this->marketSystem . '&typeid=';
+        $this->apiUrl = $this->apiUrlEveMarketer . $urlParameters;
 
-        switch($this->pluginSettings['market-data-api']) {
-            /**
-             * EVE Marketer
-             */
-            case 'eve-marketer':
-                $this->apiUrl = $this->apiUrlEveMarketer . $urlParameters;
-                break;
-
-            /**
-             * Default: EVE Marketer
-             * (If for whatever reason none is set in plugin settings)
-             */
-            default:
-                $this->apiUrl = $this->apiUrlEveMarketer . $urlParameters;
-                break;
-        }
-    }
-
-    /**
-     * Getting the marketdata json
-     *
-     * @param array $items
-     * @return string json string of all item marketdata
-     */
-    public function getMarketData(array $items) {
-        $typeIdString = \implode(',', $items);
-        $cacheKey = $this->pluginSettings['market-data-api'] . '/' . \md5($typeIdString);
-
-        $marketData = DatabaseHelper::getInstance()->getMarketDataCache($cacheKey);
-
-        if(\is_null($marketData)) {
-            $marketData = $this->remoteHelper->getRemoteData($this->apiUrl . $typeIdString);
-
-            DatabaseHelper::getInstance()->writeMarketDataCache([
-                $cacheKey,
-                \maybe_serialize($marketData),
-                \strtotime('+1 hour')
-            ]);
-        }
-
-        return $marketData;
+//        switch ($this->pluginSettings['market-data-api']) {
+//            /**
+//             * EVE Marketer
+//             */
+//            case 'eve-marketer':
+//                $this->apiUrl = $this->apiUrlEveMarketer . $urlParameters;
+//                break;
+//
+//            /**
+//             * Default: EVE Marketer
+//             * (If for whatever reason none is set in plugin settings)
+//             */
+//            default:
+//                $this->apiUrl = $this->apiUrlEveMarketer . $urlParameters;
+//                break;
+//        }
     }
 
     /**
      * Getting the market prices for our fitting ...
      *
      * @param array $fittingArray EFT fitting array from WordPress\Plugins\EveOnlineFittingManager\Helper\EftHelper::getFittingArrayFromEftData($eftFitting);
-     * @return array Sell and Buy order prices from Jita
+     * @return bool|array Sell and Buy order prices from Jita
      */
-    public function getMarketPricesFromFittingArray(array $fittingArray) {
+    public function getMarketPricesFromFittingArray(array $fittingArray)
+    {
         $returnValue = false;
         $jitaBuyPrice = [];
         $jitaSellPrice = [];
@@ -152,7 +132,7 @@ class MarketDataHelper extends AbstractSingleton {
 
         $marketDataShip = $this->getMarketData($ship);
 
-        if(!\is_null($marketDataShip)) {
+        if (!is_null($marketDataShip)) {
             $jitaBuyPrice = [
                 'ship' => $marketDataShip['0']->buy->median,
                 'total' => $marketDataShip['0']->buy->median
@@ -167,21 +147,21 @@ class MarketDataHelper extends AbstractSingleton {
         // Fitting Price
         $items = null;
 
-        if(\is_array($fittingArray)) {
-            foreach($fittingArray as $item) {
+        if (is_array($fittingArray)) {
+            foreach ($fittingArray as $item) {
                 $items[] = $item->itemID;
             }
         }
 
         // if we have items
-        if(!\is_null($items)) {
+        if (!is_null($items)) {
             $marketDataFitting = $this->getMarketData($items);
 
-            if(!\is_null($marketDataFitting)) {
+            if (!is_null($marketDataFitting)) {
                 $jitaBuyPrice['fitting'] = 0;
                 $jitaSellPrice['fitting'] = 0;
 
-                foreach($marketDataFitting as $item) {
+                foreach ($marketDataFitting as $item) {
                     $jitaBuyPrice['fitting'] += $item->buy->median;
                     $jitaSellPrice['fitting'] += $item->sell->median;
                     $jitaBuyPrice['total'] += $item->buy->median;
@@ -190,21 +170,47 @@ class MarketDataHelper extends AbstractSingleton {
 
                 $returnValue = [
                     'ship' => [
-                        'jitaBuyPrice' => \number_format($jitaBuyPrice['ship'], 2, ',', '.') . ' ISK',
-                        'jitaSellPrice' => \number_format($jitaSellPrice['ship'], 2, ',', '.') . ' ISK'
+                        'jitaBuyPrice' => number_format($jitaBuyPrice['ship'], 2, ',', '.') . ' ISK',
+                        'jitaSellPrice' => number_format($jitaSellPrice['ship'], 2, ',', '.') . ' ISK'
                     ],
                     'fitting' => [
-                        'jitaBuyPrice' => \number_format($jitaBuyPrice['fitting'], 2, ',', '.') . ' ISK',
-                        'jitaSellPrice' => \number_format($jitaSellPrice['fitting'], 2, ',', '.') . ' ISK'
+                        'jitaBuyPrice' => number_format($jitaBuyPrice['fitting'], 2, ',', '.') . ' ISK',
+                        'jitaSellPrice' => number_format($jitaSellPrice['fitting'], 2, ',', '.') . ' ISK'
                     ],
                     'total' => [
-                        'jitaBuyPrice' => \number_format($jitaBuyPrice['total'], 2, ',', '.') . ' ISK',
-                        'jitaSellPrice' => \number_format($jitaSellPrice['total'], 2, ',', '.') . ' ISK'
+                        'jitaBuyPrice' => number_format($jitaBuyPrice['total'], 2, ',', '.') . ' ISK',
+                        'jitaSellPrice' => number_format($jitaSellPrice['total'], 2, ',', '.') . ' ISK'
                     ]
                 ];
             }
         }
 
         return $returnValue;
+    }
+
+    /**
+     * Getting the marketdata json
+     *
+     * @param array $items
+     * @return array marketdata as deserialized jason array
+     */
+    public function getMarketData(array $items): array
+    {
+        $typeIdString = implode(',', $items);
+        $cacheKey = $this->pluginSettings['market-data-api'] . '/' . md5($typeIdString);
+
+        $marketData = DatabaseHelper::getInstance()->getMarketDataCache($cacheKey);
+
+        if (is_null($marketData)) {
+            $marketData = $this->remoteHelper->getRemoteData($this->apiUrl . $typeIdString);
+
+            DatabaseHelper::getInstance()->writeMarketDataCache([
+                $cacheKey,
+                maybe_serialize($marketData),
+                strtotime('+1 hour')
+            ]);
+        }
+
+        return $marketData;
     }
 }

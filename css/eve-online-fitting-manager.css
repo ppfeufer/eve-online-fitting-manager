@@ -1,11 +1,16 @@
 @media all {
+    .doctrine-breadcrumb-item,
+    .doctrine-breadcrumb-item:hover {
+        color: inherit;
+        text-decoration: none;
+    }
+
     .bootstrap-post-loop-fittings {
         list-style-type: none;
         padding-left: 0;
     }
 
     .single-fitting .content-wrapper {
-        padding-top: 8px;
         padding-top: 0.5rem;
     }
 
@@ -23,13 +28,11 @@
     }
 
     .doctrine-shipfitting-header-ship-image img {
-        width: 48px;
         width: 3rem;
     }
 
     .ship-fitting-visualization,
     .fitting-copy-to-clipboard {
-        margin-bottom: 24px;
         margin-bottom: 1.5rem;
     }
 
@@ -53,7 +56,6 @@
     }
 
     .fitting-used-in-doctrines {
-        padding-left: 16px;
         padding-left: 1rem;
     }
 
@@ -62,12 +64,10 @@
     }
 
     .doctrine-shipfitting-header {
-        font-size: 18px;
         font-size: 1.125rem;
     }
 
     .tab-pane p:first-child {
-        margin-top: 24px;
         margin-top: 1.5rem;
     }
 
@@ -78,14 +78,24 @@
     }
 
     .doctrine-list header.header-doctrine {
-        margin-bottom: 16px;
         margin-bottom: 1rem;
     }
 
     .doctrine-list header.header-doctrine .header-subdoctrine {
-        font-size: 24px;
         font-size: 1.5rem;
-        border-bottom: 1px solid rgb(220,220,220);
+        border-bottom: 1px solid rgb(220, 220, 220);
+    }
+
+    .text-align-right {
+        text-align: right;
+    }
+
+    .text-align-left {
+        text-align: left;
+    }
+
+    .text-align-center {
+        text-align: center;
     }
 }
 
@@ -121,7 +131,7 @@
 
 @media screen and (min-width: 560px) {
     .nav-tabs > li {
-        border-left: 1px solid #ddd;
+        border-left: 1px solid #dddddd;
     }
 
     .nav-tabs > li:first-child {
@@ -137,7 +147,7 @@
 
 @media screen and (min-width: 1600px) {
     .nav-tabs > li {
-        border-left: 1px solid #ddd;
+        border-left: 1px solid #dddddd;
     }
 }
 
@@ -155,12 +165,10 @@
     }
 
     .content-doctrine-list h2.entry-title {
-        font-size: 18px;
         font-size: 1.125rem;
     }
 
     .content-doctrine-list .child-doctrine-list {
-        padding-left: 25px;
         padding-left: 1.5625rem;
     }
 
@@ -169,7 +177,6 @@
     }
 
     .content-doctrine-list .child-doctrine-second-level {
-        font-size: 14px;
         font-size: 0.875rem;
     }
 
@@ -183,7 +190,6 @@
 
     .content-doctrine-list div.child-doctrine-second-level {
         display: block;
-        padding-left: 25px;
         padding-left: 1.5625rem;
         position: relative;
         z-index: 999;
@@ -208,7 +214,6 @@
     }
 
     .sidebar-doctrine-list > li > .child-doctrine-list {
-        font-size: 16px;
         font-size: 1rem;
     }
 
@@ -224,8 +229,7 @@
         top: 0;
         z-index: 1;
         cursor: pointer;
-        background-color: rgba(0,0,0,0.05);
-        border-bottom: 1px solid #999;
+        background-color: rgba(0, 0, 0, 0.05);
         display: block;
         height: 40px;
         width: 40px;
@@ -236,10 +240,10 @@
         display: block;
         width: .625rem;
         height: .625rem;
-        -webkit-transform: translate(-50%,-50%) rotate(45deg);
-        -moz-transform: translate(-50%,-50%) rotate(45deg);
-        -ms-transform: translate(-50%,-50%) rotate(45deg);
-        transform: translate(-50%,-50%) rotate(45deg);
+        -webkit-transform: translate(-50%, -50%) rotate(45deg);
+        -moz-transform: translate(-50%, -50%) rotate(45deg);
+        -ms-transform: translate(-50%, -50%) rotate(45deg);
+        transform: translate(-50%, -50%) rotate(45deg);
         border: 2px solid currentColor;
         border-width: 0 2px 2px 0;
         transition: all .2s;
@@ -249,10 +253,10 @@
     }
 
     .doctrine.has-children.open .caret i {
-        -webkit-transform: translate(-50%,-50%) rotate(225deg);
-        -moz-transform: translate(-50%,-50%) rotate(225deg);
-        -ms-transform: translate(-50%,-50%) rotate(225deg);
-        transform: translate(-50%,-50%) rotate(225deg);
+        -webkit-transform: translate(-50%, -50%) rotate(225deg);
+        -moz-transform: translate(-50%, -50%) rotate(225deg);
+        -ms-transform: translate(-50%, -50%) rotate(225deg);
+        transform: translate(-50%, -50%) rotate(225deg);
     }
 
     .sidebar-doctrine-list .dropdown-menu {
@@ -266,7 +270,6 @@
 
     .sidebar-doctrine-list .dropdown-menu.child-doctrine-second-level {
         display: block;
-        padding-left: 25px;
         padding-left: 1.5625rem;
     }
 
@@ -309,14 +312,13 @@
         width: 243px;
         z-index: 3;
         margin: 0 auto;
-        margin-bottom: 24px;
         margin-bottom: 1.5rem;
     }
 
     .fittingRing {
         position: absolute;
-        left: 0px;
-        top: 0px;
+        left: 0;
+        top: 0;
         width: 243px;
         height: 243px;
         z-index: -1;
@@ -324,11 +326,11 @@
 
     .fittingRingImage {
         position: absolute;
-        left: 0px;
-        top: 0px;
+        left: 0;
+        top: 0;
         width: 100%;
         height: auto;
-        border: 0px
+        border: 0;
     }
 
     .highSlots,
@@ -338,8 +340,8 @@
     .subSystems,
     .serviceSlots {
         position: absolute;
-        left: 0px;
-        top: 0px;
+        left: 0;
+        top: 0;
         width: 243px;
         height: 243px;
         z-index: -1;
@@ -501,7 +503,7 @@
         top: 62px;
     }
 
-    .subSystem_3,.serviceSlot_3 {
+    .subSystem_3, .serviceSlot_3 {
         left: 110px;
         top: 56px;
     }
@@ -702,7 +704,7 @@
         top: 107px;
     }
 
-    .subSystem_3,.serviceSlot_3 {
+    .subSystem_3, .serviceSlot_3 {
         left: 183px;
         top: 99px;
     }
@@ -736,7 +738,7 @@
     .bs-callout {
         padding: 20px;
         margin: 20px 0;
-        border: 1px solid #eee;
+        border: 1px solid #eeeeee;
         border-left-width: 5px;
         border-radius: 3px;
     }

@@ -21,7 +21,7 @@ use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper;
 use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\TemplateHelper;
 
 
-$fleetRoles = \get_terms([
+$fleetRoles = get_terms([
     'taxonomy' => 'fitting-fleet-roles',
     'orderby' => 'name',
     'order' => 'ASC',
@@ -60,8 +60,8 @@ if(\count($fleetRoles) > 0) {
         ]);
 
         if($resultWithFleetRoles->have_posts()) {
-            if(\get_post_type() === 'fitting') {
-                $uniqueID = \uniqid();
+            if(get_post_type() === 'fitting') {
+                $uniqueID = uniqid();
 
                 echo '<header class="entry-header header-doctrine"><h2 class="entry-title header-subdoctrine">' . $fleetRole->name . '</h2></header>';
                 echo '<div class="gallery-row row">';
@@ -72,22 +72,22 @@ if(\count($fleetRoles) > 0) {
             while($resultWithFleetRoles->have_posts()) {
                 $resultWithFleetRoles->the_post();
 
-                if(\get_post_type() === 'fitting') {
+                if(get_post_type() === 'fitting') {
                     echo '<li>';
                 }
 
                 TemplateHelper::getInstance()->getTemplate('content-fitting');
 
-                if(\get_post_type() === 'fitting') {
+                if(get_post_type() === 'fitting') {
                     echo '</li>';
                 }
 
-                $fittingWithFleetRoleId[] = \get_the_ID();
+                $fittingWithFleetRoleId[] = get_the_ID();
             }
 
-            \wp_reset_postdata();
+            wp_reset_postdata();
 
-            if(\get_post_type() === 'fitting') {
+            if(get_post_type() === 'fitting') {
                 echo '</ul>';
                 echo '</div>';
 
@@ -125,10 +125,10 @@ $resultWithoutFleetRoles = new \WP_Query([
 
 // loop through the main doctrine
 if($resultWithoutFleetRoles->have_posts()) {
-    if(\get_post_type() === 'fitting') {
-        $uniqueID = \uniqid();
+    if(get_post_type() === 'fitting') {
+        $uniqueID = uniqid();
 
-        echo '<header class="entry-header header-doctrine"><h2 class="entry-title header-subdoctrine">' . \__('No dedicated fleet role assigned to these ships', 'eve-online-fitting-manager') . '</h2></header>';
+        echo '<header class="entry-header header-doctrine"><h2 class="entry-title header-subdoctrine">' . __('No dedicated fleet role assigned to these ships', 'eve-online-fitting-manager') . '</h2></header>';
         echo '<div class="gallery-row row">';
         echo '<ul class="bootstrap-post-loop-fittings bootstrap-post-loop-fittings-' . $uniqueID . ' clearfix">';
     }
@@ -136,20 +136,20 @@ if($resultWithoutFleetRoles->have_posts()) {
     while($resultWithoutFleetRoles->have_posts()) {
         $resultWithoutFleetRoles->the_post();
 
-        if(\get_post_type() === 'fitting') {
+        if(get_post_type() === 'fitting') {
             echo '<li>';
         }
 
         TemplateHelper::getInstance()->getTemplate('content-fitting');
 
-        if(\get_post_type() === 'fitting') {
+        if(get_post_type() === 'fitting') {
             echo '</li>';
         }
     }
 
-    \wp_reset_postdata();
+    wp_reset_postdata();
 
-    if(\get_post_type() === 'fitting') {
+    if(get_post_type() === 'fitting') {
         echo '</ul>';
         echo '</div>';
 

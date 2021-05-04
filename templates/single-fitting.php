@@ -27,7 +27,7 @@ if(PluginHelper::getInstance()->hasSidebar('sidebar-fitting-manager')) {
 
 defined('ABSPATH') or die();
 
-\get_header();
+get_header();
 ?>
 
 <div class="container main template-single-fitting">
@@ -35,15 +35,16 @@ defined('ABSPATH') or die();
         <div class="<?php echo $contentBootstrapClasses; ?>content-wrapper">
             <div class="content content-inner content-single content-fitting">
                 <?php
-                if(\have_posts()) {
-                    while(\have_posts()) {
-                        \the_post();
+                if(have_posts()) {
+                    while(have_posts()) {
+                        the_post();
                         TemplateHelper::getInstance()->getTemplate('content-single-fitting');
                     }
                 }
                 ?>
             </div> <!-- /.content -->
         </div> <!-- /.col-lg-9 /.col-md-9 /.col-sm-9 /.col-9 -->
+
         <?php
         if(PluginHelper::getInstance()->hasSidebar('sidebar-fitting-manager')) {
             ?>
@@ -59,4 +60,4 @@ defined('ABSPATH') or die();
 </div> <!-- /.container -->
 
 <?php
-\get_footer();
+get_footer();

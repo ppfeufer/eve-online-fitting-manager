@@ -19,13 +19,14 @@
 
 namespace WordPress\Plugins\EveOnlineFittingManager\Libs\Interfaces;
 
-\defined('ABSPATH') or die();
+defined('ABSPATH') or die();
 
 /**
  * Defines a common set of functions that any class responsible for loading
  * stylesheets, JavaScript, or other assets should implement.
  */
-interface AssetsInterface {
+interface AssetsInterface
+{
     public function init();
 
     public function enqueue();

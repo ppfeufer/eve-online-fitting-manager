@@ -19,42 +19,47 @@
 
 namespace WordPress\Plugins\EveOnlineFittingManager\Libs\Helper;
 
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
+use stdClass;
+use WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
 
-\defined('ABSPATH') or die();
+defined('ABSPATH') or die();
 
-class RemoteHelper extends AbstractSingleton {
+class RemoteHelper extends AbstractSingleton
+{
     /**
      * Getting data from a remote source
      *
      * @param string $url
+     * @param string $method
      * @param array $parameter
-     * @return mixed
+     * @return array|bool|float|int|mixed|stdClass|string|null
      */
-    public function getRemoteData($url, $method = 'get', $parameter = []) {
+    public function getRemoteData(string $url, string $method = 'get', array $parameter = [])
+    {
         $returnValue = null;
+        $remoteData = null;
         $params = '';
 
-        switch($method) {
+        switch ($method) {
             case 'get':
-                if(\count($parameter) > 0) {
-                    $params = '?' . \http_build_query($parameter);
+                if (count($parameter) > 0) {
+                    $params = '?' . http_build_query($parameter);
                 }
 
-                $remoteData = \wp_remote_get($url . $params);
+                $remoteData = wp_remote_get($url . $params);
                 break;
 
             case 'post':
-                $remoteData = \wp_remote_post($url, [
+                $remoteData = wp_remote_post($url, [
                     'headers' => ['Content-Type' => 'application/json; charset=utf-8'],
-                    'body' => \json_encode($parameter),
+                    'body' => json_encode($parameter),
                     'method' => 'POST'
                 ]);
                 break;
         }
 
-        if(\wp_remote_retrieve_response_code($remoteData) === 200) {
-            $returnValue = \json_decode(\wp_remote_retrieve_body($remoteData));
+        if ($remoteData !== null && wp_remote_retrieve_response_code($remoteData) === 200) {
+            $returnValue = json_decode(wp_remote_retrieve_body($remoteData));
         }
 
         return $returnValue;

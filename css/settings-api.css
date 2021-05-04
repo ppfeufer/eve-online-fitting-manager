@@ -29,8 +29,7 @@
     }
 
     .settings-type-radio figure {
-        margin: 0rem;
-        margin-top: 0.5rem;
+        margin: 0.5rem 0 0;
     }
 
     .upload-button a {
@@ -46,7 +45,7 @@
     }
 
     .image img {
-        border: 1px solid #ddd;
+        border: 1px solid #dddddd;
         vertical-align: bottom;
     }
 
@@ -61,10 +60,10 @@
     }
 
     .rsa-delete {
-        color: rgb(170,0,0);
+        color: rgb(170, 0, 0);
     }
 
     .rsa-delete:hover {
-        color: rgb(255,0,0);
+        color: rgb(255, 0, 0);
     }
 }

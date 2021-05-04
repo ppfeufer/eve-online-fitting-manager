@@ -28,19 +28,19 @@ defined('ABSPATH') or die();
 $pluginSettings = PluginHelper::getInstance()->getPluginSettings();
 
 // Information to build the EFT data structure
-$shipID = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_ship_ID', true);
-$fittingType = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_name', true);
-$highSlots = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_high_slots', true);
-$midSlots = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_mid_slots', true);
-$lowSlots = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_low_slots', true);
-$rigSlots = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_rig_slots', true);
-$subSystems = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_subsystems', true);
-$serviceSlots = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_upwellservices', true);
-$drones = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_drones', true);
-$charges = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_charges', true);
-$fuel = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_fuel', true);
-$implantsAndBooster = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_implants_and_booster', true);
-$fittingDna = \get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_dna', true);
+$shipID = get_post_meta(get_the_ID(), 'eve-online-fitting-manager_fitting_ship_ID', true);
+$fittingType = get_post_meta(get_the_ID(), 'eve-online-fitting-manager_fitting_name', true);
+$highSlots = get_post_meta(get_the_ID(), 'eve-online-fitting-manager_fitting_high_slots', true);
+$midSlots = get_post_meta(get_the_ID(), 'eve-online-fitting-manager_fitting_mid_slots', true);
+$lowSlots = get_post_meta(get_the_ID(), 'eve-online-fitting-manager_fitting_low_slots', true);
+$rigSlots = get_post_meta(get_the_ID(), 'eve-online-fitting-manager_fitting_rig_slots', true);
+$subSystems = get_post_meta(get_the_ID(), 'eve-online-fitting-manager_fitting_subsystems', true);
+$serviceSlots = get_post_meta(get_the_ID(), 'eve-online-fitting-manager_fitting_upwellservices', true);
+$drones = get_post_meta(get_the_ID(), 'eve-online-fitting-manager_fitting_drones', true);
+$charges = get_post_meta(get_the_ID(), 'eve-online-fitting-manager_fitting_charges', true);
+$fuel = get_post_meta(get_the_ID(), 'eve-online-fitting-manager_fitting_fuel', true);
+$implantsAndBooster = get_post_meta(get_the_ID(), 'eve-online-fitting-manager_fitting_implants_and_booster', true);
+$fittingDna = get_post_meta(get_the_ID(), 'eve-online-fitting-manager_fitting_dna', true);
 
 // Build EFT data
 $eftFitting = EftHelper::getInstance()->getEftImportFromFitting([
@@ -61,18 +61,18 @@ $eftFitting = EftHelper::getInstance()->getEftImportFromFitting([
 
 <header class="entry-header">
     <h1 class="entry-title">
-        <img src="<?php echo FittingHelper::getInstance()->getShipImageById(\get_post_meta(\get_the_ID(), 'eve-online-fitting-manager_fitting_ship_ID', true), 64); ?>">
-        <?php \the_title(); ?>
+        <img src="<?php echo FittingHelper::getInstance()->getShipImageById(get_post_meta(get_the_ID(), 'eve-online-fitting-manager_fitting_ship_ID', true), 64); ?>">
+        <?php the_title(); ?>
     </h1>
 
     <aside class="entry-details">
         <p class="meta">
-            <?php \edit_post_link(\__('Edit', 'eve-online-fitting-manager')); ?>
+            <?php edit_post_link(__('Edit', 'eve-online-fitting-manager')); ?>
         </p>
     </aside><!--end .entry-details -->
 </header><!--end .entry-header -->
 
-<article id="post-<?php \the_ID(); ?>" <?php \post_class('clearfix content-single template-content-single-fitting'); ?>>
+<article id="post-<?php the_ID(); ?>" <?php post_class('clearfix content-single template-content-single-fitting'); ?>>
     <section class="post-content">
         <div class="entry-content">
             <?php
@@ -116,6 +116,15 @@ $eftFitting = EftHelper::getInstance()->getEftImportFromFitting([
                     if(isset($pluginSettings['template-detail-parts-settings']['show-market-data']) && $pluginSettings['template-detail-parts-settings']['show-market-data'] === 'yes') {
                         TemplateHelper::getInstance()->getTemplate('fitting-details/information/fitting-market-prices', [
                             'eftFitting' => $eftFitting
+                        ]);
+                    }
+
+                    /**
+                     * Show insurance details
+                     */
+                    if(isset($pluginSettings['template-detail-parts-settings']['show-insurance-details']) && $pluginSettings['template-detail-parts-settings']['show-insurance-details'] === 'yes') {
+                        TemplateHelper::getInstance()->getTemplate('fitting-details/information/fitting-ship-insurance', [
+                            'insurance' => \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\EsiHelper::getInstance()->getShipInsuranceDetails($shipID)
                         ]);
                     }
 

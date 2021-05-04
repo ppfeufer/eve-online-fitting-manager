@@ -19,29 +19,31 @@
 
 namespace WordPress\Plugins\EveOnlineFittingManager\Libs\Helper;
 
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
+use WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
 
-\defined('ABSPATH') or die();
+defined('ABSPATH') or die();
 
-class ImageHelper extends AbstractSingleton {
+class ImageHelper extends AbstractSingleton
+{
     /**
      * base URL to CCP's image server
      *
-     * @var var
+     * @var string
      */
-    protected $imageserverUrl = 'https://images.evetech.net/';
+    protected string $imageserverUrl = 'https://images.evetech.net/';
 
     /**
      * Array with possible end point on CCP's image server
      *
      * @var array
      */
-    protected $imageserverEndpoints = null;
+    protected array $imageserverEndpoints;
 
     /**
      * The Construtor
      */
-    protected function __construct() {
+    protected function __construct()
+    {
         parent::__construct();
 
         $this->imageserverEndpoints = [
@@ -56,20 +58,22 @@ class ImageHelper extends AbstractSingleton {
     /**
      * Assigning Imagesever Endpoints
      */
-    public function getImageserverEndpoints() {
+    public function getImageserverEndpoints(): array
+    {
         return $this->imageserverEndpoints;
     }
 
     /**
      * Getting the EVE Imageserver Url
      *
-     * @param string $type
+     * @param string|null $type
      * @return string
      */
-    public function getImageServerUrl($type = null) {
+    public function getImageServerUrl(string $type = null): string
+    {
         $endpoint = '';
 
-        if($type !== null) {
+        if ($type !== null) {
             $endpoint = $this->imageserverEndpoints[$type];
         }
 

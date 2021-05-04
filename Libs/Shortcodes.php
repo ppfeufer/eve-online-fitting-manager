@@ -19,12 +19,13 @@
 
 namespace WordPress\Plugins\EveOnlineFittingManager\Libs;
 
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\FittingHelper;
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
+use WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\FittingHelper;
+use WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
 
-\defined('ABSPATH') or die();
+defined('ABSPATH') or die();
 
-class Shortcodes extends AbstractSingleton {
+class Shortcodes extends AbstractSingleton
+{
     /**
      * Shortcode for fitting navigation inside a page or post
      *
@@ -32,9 +33,11 @@ class Shortcodes extends AbstractSingleton {
      *      list => doctrines or shiptypes
      *
      * @param array $atts
+     * @return string
      */
-    public function shortcodeFittings($atts) {
-        $args = \shortcode_atts([
+    public function shortcodeFittings(string $atts): string
+    {
+        $args = shortcode_atts([
             'list' => 'doctrines'
         ], $atts);
 

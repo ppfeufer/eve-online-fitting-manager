@@ -19,30 +19,34 @@
 
 namespace WordPress\Plugins\EveOnlineFittingManager\Libs\Helper;
 
-use \stdClass;
-use \WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
-use \WP_Query;
+use stdClass;
+use WordPress\EsiClient\Model\Universe\Ids\InventoryTypes;
+use WordPress\EsiClient\Model\Universe\Types\TypeId;
+use WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons\AbstractSingleton;
+use WP_Query;
 
-\defined('ABSPATH') or die();
+defined('ABSPATH') or die();
 
-class FittingHelper extends AbstractSingleton {
+class FittingHelper extends AbstractSingleton
+{
     /**
      * Getting Item Description
      *
      * @param int $itemID
-     * @return array
+     * @return string
      */
-    public function getItemDescription(int $itemID) {
+    public function getItemDescription(int $itemID): string
+    {
         $returnValue = null;
 
-        /* @var $itemData \WordPress\EsiClient\Model\Universe\Types\TypeId */
+        /* @var $itemData TypeId */
         $itemData = EsiHelper::getInstance()->getItemTypeInformation($itemID);
 
-        if(!\is_null($itemData)) {
+        if (!is_null($itemData)) {
             $returnValue = $itemData->getDescription();
         }
 
-        return \wpautop($returnValue);
+        return wpautop($returnValue);
     }
 
     /**
@@ -52,18 +56,19 @@ class FittingHelper extends AbstractSingleton {
      * @param int $itemCount
      * @return object|boolean
      */
-    public function getItemDetailsByItemName(string $itemName, int $itemCount = 1) {
-        $itemId = \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\FittingHelper::getInstance()->getItemIdByName($itemName, 'inventoryTypes');
+    public function getItemDetailsByItemName(string $itemName, int $itemCount = 1)
+    {
+        $itemId = $this->getItemIdByName($itemName, 'inventoryTypes');
 
         /**
          * continue only if we have a valid itemID
          *
          * GitHug issue #48
          */
-        if(!\is_null($itemId)) {
+        if (!is_null($itemId)) {
             $itemEsiData = EsiHelper::getInstance()->getItemDataByItemId($itemId);
 
-            if(!\is_null($itemEsiData['itemTypeInformation']) && !\is_null($itemEsiData['itemGroupInformation']) && !\is_null($itemEsiData['itemCategoryInformation'])) {
+            if (!is_null($itemEsiData['itemTypeInformation']) && !is_null($itemEsiData['itemGroupInformation']) && !is_null($itemEsiData['itemCategoryInformation'])) {
                 $returnData = new stdClass;
 
                 $returnData->itemID = $itemId;
@@ -85,7 +90,7 @@ class FittingHelper extends AbstractSingleton {
                     '16275'  // Strontuim Clathrates
                 ];
 
-                switch($returnData->categoryID) {
+                switch ($returnData->categoryID) {
                     case 6:
                         $returnData->slotName = 'ship';
                         break;
@@ -103,14 +108,14 @@ class FittingHelper extends AbstractSingleton {
                         break;
                 }
 
-                if(\in_array($returnData->itemID, $arrayFuelIDs)) {
+                if (in_array($returnData->itemID, $arrayFuelIDs, true)) {
                     $returnData->slotName = 'fuel';
                 }
 
                 // in case we still don't have any slot information ...
-                if(!isset($returnData->slotName)) {
-                    foreach($itemEsiData['itemTypeInformation']->getDogmaEffects() as $dogmaEffect) {
-                        switch($dogmaEffect->getEffectId()) {
+                if (!isset($returnData->slotName)) {
+                    foreach ($itemEsiData['itemTypeInformation']->getDogmaEffects() as $dogmaEffect) {
+                        switch ($dogmaEffect->getEffectId()) {
                             // low power
                             case 11:
                                 $returnData->slotName = 'Low power';
@@ -144,7 +149,7 @@ class FittingHelper extends AbstractSingleton {
                     }
                 }
 
-                if($itemCount != null) {
+                if ($itemCount !== null) {
                     $returnData->itemCount = $itemCount;
                 }
 
@@ -159,15 +164,17 @@ class FittingHelper extends AbstractSingleton {
      * Getting an item ID ny its item name
      *
      * @param string $itemName
-     * @return type
+     * @param string $eveCategory
+     * @return int|null
      */
-    public function getItemIdByName($itemName, $eveCategory) {
+    public function getItemIdByName(string $itemName, string $eveCategory): ?int
+    {
         $returnValue = null;
 
-        /* @var $esiResult \WordPress\EsiClient\Model\Universe\Ids\InventoryTypes */
+        /* @var $esiResult InventoryTypes */
         $esiResult = EsiHelper::getInstance()->getIdFromName([$itemName], $eveCategory);
 
-        if(\is_a($esiResult['0'], '\WordPress\EsiClient\Model\Universe\Ids\InventoryTypes')) {
+        if (is_a($esiResult['0'], '\WordPress\EsiClient\Model\Universe\Ids\InventoryTypes')) {
             $returnValue = $esiResult['0']->getId();
         }
 
@@ -175,31 +182,19 @@ class FittingHelper extends AbstractSingleton {
     }
 
     /**
-     * Getting an item name by its iten ID
+     * Getting an item name by its item ID
      *
-     * @param int|array $itemID
-     * @return type
+     * @param int $itemID
+     * @return string|null
      */
-    public function getItemNameById($itemID) {
-        if(\is_array($itemID)) {
-            $itemNames = [];
+    public function getItemNameById(int $itemID): ?string
+    {
+        $itemName = null;
 
-            foreach($itemID as $id) {
-                /* @var $esiResult \WordPress\EsiClient\Model\Universe\Types\TypeId */
-                $esiResult = EsiHelper::getInstance()->getItemTypeInformation($itemID);
-
-                if(!\is_null($esiResult)) {
-                    $itemNames[$id] = $esiResult->getName();
-                }
-            }
-
-            return $itemNames;
-        }
-
-        /* @var $esiResult UniverseTypesTypeId */
+        /* @var $esiResult TypeId */
         $esiResult = EsiHelper::getInstance()->getItemTypeInformation($itemID);
 
-        if(!\is_null($esiResult)) {
+        if (!is_null($esiResult)) {
             $itemName = $esiResult->getName();
         }
 
@@ -207,12 +202,34 @@ class FittingHelper extends AbstractSingleton {
     }
 
     /**
+     * @param array $itemIDs
+     * @return array|null
+     */
+    public function getItemNameByIdMultiple(array $itemIDs): ?array
+    {
+        $itemNames = [];
+
+        if (is_array($itemIDs)) {
+            foreach ($itemIDs as $id) {
+                $esiResult = $this->getItemNameById($id);
+
+                if (!is_null($esiResult)) {
+                    $itemNames[$id] = $esiResult;
+                }
+            }
+        }
+
+        return $itemNames;
+    }
+
+    /**
      * Getting a fitting DNA from its fitting data
      *
-     * @param object $fittingData
+     * @param array $fittingData
      * @return string
      */
-    public function getShipDnaFromFittingData($fittingData) {
+    public function getShipDnaFromFittingData(array $fittingData): string
+    {
         $highSlots = [];
         $midSlots = [];
         $lowSlots = [];
@@ -222,8 +239,8 @@ class FittingHelper extends AbstractSingleton {
         $charges = [];
         $drones = [];
 
-        foreach($fittingData as $data) {
-            switch($data->slotName) {
+        foreach ($fittingData as $data) {
+            switch ($data->slotName) {
                 case 'ship':
                     $shipData = $data;
                     break;
@@ -262,14 +279,13 @@ class FittingHelper extends AbstractSingleton {
             }
         }
 
-        $shipDnaString = '';
-        $shipDnaString .= $shipData->itemID . ':';
+        $shipDnaString = $shipData->itemID . ':';
 
         /**
          * Subsystems, if its a T3 Tactical Cruiser
          */
-        if(!empty($subSystems)) {
-            foreach($subSystems as $sub) {
+        if (!empty($subSystems)) {
+            foreach ($subSystems as $sub) {
                 $shipDnaString .= $sub->itemID . ';' . $sub->itemCount . ':';
             }
         }
@@ -277,8 +293,8 @@ class FittingHelper extends AbstractSingleton {
         /**
          * Highslots
          */
-        if(!empty($highSlots)) {
-            foreach($highSlots as $high) {
+        if (!empty($highSlots)) {
+            foreach ($highSlots as $high) {
                 $shipDnaString .= $high->itemID . ';' . $high->itemCount . ':';
             }
         }
@@ -286,8 +302,8 @@ class FittingHelper extends AbstractSingleton {
         /**
          * Medslots
          */
-        if(!empty($midSlots)) {
-            foreach($midSlots as $mid) {
+        if (!empty($midSlots)) {
+            foreach ($midSlots as $mid) {
                 $shipDnaString .= $mid->itemID . ';' . $mid->itemCount . ':';
             }
         }
@@ -295,8 +311,8 @@ class FittingHelper extends AbstractSingleton {
         /**
          * Lowslots
          */
-        if(!empty($lowSlots)) {
-            foreach($lowSlots as $low) {
+        if (!empty($lowSlots)) {
+            foreach ($lowSlots as $low) {
                 $shipDnaString .= $low->itemID . ';' . $low->itemCount . ':';
             }
         }
@@ -304,8 +320,8 @@ class FittingHelper extends AbstractSingleton {
         /**
          * Rigs
          */
-        if(!empty($rigSlots)) {
-            foreach($rigSlots as $rig) {
+        if (!empty($rigSlots)) {
+            foreach ($rigSlots as $rig) {
                 $shipDnaString .= $rig->itemID . ';' . $rig->itemCount . ':';
             }
         }
@@ -313,8 +329,8 @@ class FittingHelper extends AbstractSingleton {
         /**
          * Charges
          */
-        if(!empty($charges)) {
-            foreach($charges as $charge) {
+        if (!empty($charges)) {
+            foreach ($charges as $charge) {
                 $shipDnaString .= $charge->itemID . ';' . $charge->itemCount . ':';
             }
         }
@@ -322,8 +338,8 @@ class FittingHelper extends AbstractSingleton {
         /**
          * Drones
          */
-        if(!empty($drones)) {
-            foreach($drones as $drone) {
+        if (!empty($drones)) {
+            foreach ($drones as $drone) {
                 $shipDnaString .= $drone->itemID . ';' . $drone->itemCount . ':';
             }
         }
@@ -337,9 +353,10 @@ class FittingHelper extends AbstractSingleton {
      * Getting the slot layout from fitting data
      *
      * @param array $fitting
-     * @return type
+     * @return array
      */
-    public function getSlotLayoutFromFittingArray($fitting) {
+    public function getSlotLayoutFromFittingArray(array $fitting): array
+    {
         $shipSlotLayout = $this->getShipSlotLayout($fitting['shipID']);
 
         $currentHighSlots = $shipSlotLayout['hiSlots'];
@@ -350,8 +367,8 @@ class FittingHelper extends AbstractSingleton {
         $currentSubSystems = 0;
         $currentServiceSlots = 0;
 
-        $fittedSubSystems = \maybe_unserialize($fitting['subSystems']);
-        $fittedServiceSlots = \maybe_unserialize($fitting['serviceSlots']);
+        $fittedSubSystems = maybe_unserialize($fitting['subSystems']);
+        $fittedServiceSlots = maybe_unserialize($fitting['serviceSlots']);
 
         $arrayStrategicCruiserIDs = $this->getStrategicCruiserIds();
         $arrayUpwellStructureIDs = $this->getUpwellStructureIds();
@@ -361,16 +378,18 @@ class FittingHelper extends AbstractSingleton {
          *      it's a strategic cruiser and has sub systems
          *      it's an Upwell Structure
          */
-        if(\in_array($fitting['shipID'], $arrayStrategicCruiserIDs) && !empty($fittedSubSystems)) {
+        if (!empty($fittedSubSystems) && in_array($fitting['shipID'], $arrayStrategicCruiserIDs, true)) {
             /**
              * Processing Strategic Cruiser
              * Those ships have their slot layout from their subsystem modifiers
              */
             $maxSubSystems = 4;
 
-            for($i = 1; $i <= $maxSubSystems; $i++) {
-                if(isset($fittedSubSystems['subSystem_' . $i])) {
-                    $subSystemModifier = $this->getSubsystemSlotModifier($fittedSubSystems['subSystem_' . $i]);
+            for ($i = 1; $i <= $maxSubSystems; $i++) {
+                $subSystemSlot = 'subSystem_' . $i;
+
+                if (isset($fittedSubSystems[$subSystemSlot])) {
+                    $subSystemModifier = $this->getSubsystemSlotModifier($fittedSubSystems[$subSystemSlot]);
 
                     $currentHighSlots += $subSystemModifier['hiSlots'];
                     $currenMidSlots += $subSystemModifier['medSlots'];
@@ -379,7 +398,7 @@ class FittingHelper extends AbstractSingleton {
             }
 
             $currentSubSystems = 4;
-        } elseif(\in_array($fitting['shipID'], $arrayUpwellStructureIDs) && !empty($fittedServiceSlots)) {
+        } elseif (!empty($fittedServiceSlots) && in_array($fitting['shipID'], $arrayUpwellStructureIDs, true)) {
             /**
              * Processing Upwell Structures
              */
@@ -396,43 +415,14 @@ class FittingHelper extends AbstractSingleton {
         ];
     }
 
-    private function getStrategicCruiserIds() {
-        return [
-            29984, // Tengu
-            29986, // Legion
-            29988, // Proteus
-            29990 // Loki
-        ];
-    }
-
-    private function getUpwellStructureIds() {
-        return [
-            35832, // Astrahus
-            35833, // Fortizar
-            35834, // Keepstar
-
-            47512, // 'Moreau' Fortizar
-            47513, // 'Draccous' Fortizar
-            47514, // 'Horizon' Fortizar
-            47515, // 'Marginis' Fortizar
-            47516, // 'Prometheus' Fortizar
-
-            35825, // Raitaru
-            35826, // Azbel
-            35827, // Sotiyo
-
-            35835, // Athanor
-            35836 // Tatara
-        ];
-    }
-
     /**
      * get ship slot layout
      *
      * @param int $shipId
      * @return array
      */
-    public function getShipSlotLayout(int $shipId) {
+    public function getShipSlotLayout(int $shipId): array
+    {
         $returnValue = [
             'hiSlots' => 0,
             'medSlots' => 0,
@@ -442,9 +432,9 @@ class FittingHelper extends AbstractSingleton {
 
         $shipData = EsiHelper::getInstance()->getItemTypeInformation($shipId);
 
-        if(\is_a($shipData, '\WordPress\EsiClient\Model\Universe\Types\TypeId')) {
-            foreach($shipData->getDogmaAttributes() as $dogmaAttribute) {
-                switch($dogmaAttribute->getAttributeId()) {
+        if (is_a($shipData, '\WordPress\EsiClient\Model\Universe\Types\TypeId')) {
+            foreach ($shipData->getDogmaAttributes() as $dogmaAttribute) {
+                switch ($dogmaAttribute->getAttributeId()) {
                     // hiSlots
                     case 14;
                         $returnValue['hiSlots'] = $dogmaAttribute->getValue();
@@ -471,13 +461,46 @@ class FittingHelper extends AbstractSingleton {
         return $returnValue;
     }
 
+    private function getStrategicCruiserIds(): array
+    {
+        return [
+            29984, // Tengu
+            29986, // Legion
+            29988, // Proteus
+            29990 // Loki
+        ];
+    }
+
+    private function getUpwellStructureIds(): array
+    {
+        return [
+            35832, // Astrahus
+            35833, // Fortizar
+            35834, // Keepstar
+
+            47512, // 'Moreau' Fortizar
+            47513, // 'Draccous' Fortizar
+            47514, // 'Horizon' Fortizar
+            47515, // 'Marginis' Fortizar
+            47516, // 'Prometheus' Fortizar
+
+            35825, // Raitaru
+            35826, // Azbel
+            35827, // Sotiyo
+
+            35835, // Athanor
+            35836 // Tatara
+        ];
+    }
+
     /**
      * get slot modifier from a asub system
      *
      * @param int $subsystemID
      * @return array
      */
-    public function getSubsystemSlotModifier(int $subsystemID) {
+    public function getSubsystemSlotModifier(int $subsystemID): array
+    {
         $returnValue = [
             'hiSlots' => 0,
             'medSlots' => 0,
@@ -486,9 +509,9 @@ class FittingHelper extends AbstractSingleton {
 
         $subsystemData = EsiHelper::getInstance()->getItemTypeInformation($subsystemID);
 
-        if(\is_a($subsystemData, '\WordPress\EsiClient\Model\Universe\Types\TypeId')) {
-            foreach($subsystemData->getDogmaAttributes() as $dogmaAttribute) {
-                switch($dogmaAttribute->getAttributeId()) {
+        if (is_a($subsystemData, '\WordPress\EsiClient\Model\Universe\Types\TypeId')) {
+            foreach ($subsystemData->getDogmaAttributes() as $dogmaAttribute) {
+                switch ($dogmaAttribute->getAttributeId()) {
                     // hiSlots
                     case 1374;
                         $returnValue['hiSlots'] = $dogmaAttribute->getValue();
@@ -513,17 +536,16 @@ class FittingHelper extends AbstractSingleton {
     /**
      * Getting the ship image by ID
      *
-     * @param type $itemID
-     * @param type $size
-     * @return type
+     * @param int $itemID
+     * @param int $size
+     * @return string
      */
-    public function getShipImageById($itemID = null, $size = 512) {
-        $image = \sprintf(
+    public function getShipImageById(int $itemID, int $size = 512): string
+    {
+        return sprintf(
             ImageHelper::getInstance()->getImageServerUrl('typeRender') . '?size=' . $size,
             $itemID
         );
-
-        return $image;
     }
 
     /**
@@ -532,62 +554,61 @@ class FittingHelper extends AbstractSingleton {
      * @param string $taxonomy
      * @return string
      */
-    public function getSidebarMenu($taxonomy) {
+    public function getSidebarMenu(string $taxonomy): string
+    {
         $entityListHtml = '<ul class="sidebar-doctrine-list doctrine-list menu-' . $taxonomy . '">';
 
         // get all taxonomy terms
-        $entities = \get_terms([
+        $entities = get_terms([
             'taxonomy' => $taxonomy,
             'orderby' => 'name',
             'order' => 'ASC'
         ]);
 
         // get terms that have children
-        $hierarchy = \_get_term_hierarchy($taxonomy);
+        $hierarchy = _get_term_hierarchy($taxonomy);
 
         // Loop through every entity
-        foreach($entities as $entity) {
+        foreach ($entities as $entity) {
             // skip term if it has children or is empty
-            if($entity->parent) {
+            if ($entity->parent) {
                 continue;
             }
 
-            $doctrineListHtml = '<li class="doctrine entity-' . $entity->slug . ' doctrine-id-' . $entity->term_id . '" data-doctrine="' . $entity->slug . '"><a class="doctrine-link-item" href="' . \get_term_link($entity->term_id) . '">' . $entity->name . '</a></li>';
+            $doctrineListHtml = '<li class="doctrine entity-' . $entity->slug . ' doctrine-id-' . $entity->term_id . '" data-doctrine="' . $entity->slug . '"><a class="doctrine-link-item" href="' . get_term_link($entity->term_id) . '">' . $entity->name . '</a></li>';
 
             // If the entity has doctrines...
-            if(isset($hierarchy[$entity->term_id])) {
-                $doctrines = \get_terms([
+            if (isset($hierarchy[$entity->term_id])) {
+                $doctrines = get_terms([
                     'taxonomy' => $taxonomy,
                     'orderby' => 'name',
                     'order' => 'ASC',
                     'child_of' => $entity->term_id
                 ]);
 
-                $doctrineListHtml = '<li class="doctrine entity-' . $entity->slug . ' doctrine-id-' . $entity->term_id . ' has-children" data-doctrine="' . $entity->slug . '"><a class="doctrine-link-item" href="' . \get_term_link($entity->term_id) . '">' . $entity->name . '</a><span class="caret dropdown-toggle" data-toggle="dropdown"><i></i></span>';
+                $doctrineListHtml = '<li class="doctrine entity-' . $entity->slug . ' doctrine-id-' . $entity->term_id . ' has-children" data-doctrine="' . $entity->slug . '"><a class="doctrine-link-item" href="' . get_term_link($entity->term_id) . '">' . $entity->name . '</a><span class="caret dropdown-toggle" data-toggle="dropdown"><i></i></span>';
                 $doctrineListHtml .= '<ul class="dropdown-menu child-doctrine-list">';
 
-                foreach($doctrines as $doctrine) {
-                    if($doctrine->parent && $doctrine->parent !== $entity->term_id) {
+                foreach ($doctrines as $doctrine) {
+                    if ($doctrine->parent && $doctrine->parent !== $entity->term_id) {
                         continue;
                     }
 
-                    $wingListHtml = '<li class="doctrine entity-' . $entity->slug . ' doctrine-' . $doctrine->slug . ' doctrine-id-' . $doctrine->term_id . '" data-doctrine="' . $doctrine->slug . '"><a class="doctrine-link-item" href="' . \get_term_link($doctrine->term_id) . '">' . $doctrine->name . '</a></li>';
+                    $wingListHtml = '<li class="doctrine entity-' . $entity->slug . ' doctrine-' . $doctrine->slug . ' doctrine-id-' . $doctrine->term_id . '" data-doctrine="' . $doctrine->slug . '"><a class="doctrine-link-item" href="' . get_term_link($doctrine->term_id) . '">' . $doctrine->name . '</a></li>';
 
-                    if(isset($hierarchy[$doctrine->term_id])) {
-                        $wings = \get_terms([
+                    if (isset($hierarchy[$doctrine->term_id])) {
+                        $wings = get_terms([
                             'taxonomy' => $taxonomy,
                             'orderby' => 'name',
                             'order' => 'ASC',
                             'child_of' => $doctrine->term_id
                         ]);
 
-                        $wingListHtml = '<li class="doctrine entity-' . $entity->slug . ' doctrine-' . $doctrine->slug . ' doctrine-id-' . $doctrine->term_id . ' has-children" data-doctrine="' . $doctrine->slug . '"><a class="doctrine-link-item" href="' . \get_term_link($doctrine->term_id) . '">' . $doctrine->name . '</a>';
+                        $wingListHtml = '<li class="doctrine entity-' . $entity->slug . ' doctrine-' . $doctrine->slug . ' doctrine-id-' . $doctrine->term_id . ' has-children" data-doctrine="' . $doctrine->slug . '"><a class="doctrine-link-item" href="' . get_term_link($doctrine->term_id) . '">' . $doctrine->name . '</a>';
                         $wingListHtml .= '<ul class="dropdown-menu child-doctrine-second-level child-doctrine-list">';
 
-                        if(isset($hierarchy[$doctrine->term_id])) {
-                            foreach($wings as $wing) {
-                                $wingListHtml .= '<li class="doctrine entity-' . $entity->slug . ' doctrine-' . $doctrine->slug . ' doctrine-wing-' . $wing->slug . ' doctrine-id-' . $wing->term_id . '" data-doctrine="' . $wing->slug . '"><a class="doctrine-link-item" href="' . \get_term_link($wing->term_id) . '">' . $wing->name . '</a></li>';
-                            }
+                        foreach ($wings as $wing) {
+                            $wingListHtml .= '<li class="doctrine entity-' . $entity->slug . ' doctrine-' . $doctrine->slug . ' doctrine-wing-' . $wing->slug . ' doctrine-id-' . $wing->term_id . '" data-doctrine="' . $wing->slug . '"><a class="doctrine-link-item" href="' . get_term_link($wing->term_id) . '">' . $wing->name . '</a></li>';
                         }
 
                         $wingListHtml .= '</li>';
@@ -611,93 +632,70 @@ class FittingHelper extends AbstractSingleton {
     }
 
     /**
-     * Gettng the doctrine menu for the conten shortcode
+     * Gettng the doctrine menu for the content shortcode
      *
      * @param string $taxonomy
      * @return string
      */
-    public function getContentMenu($taxonomy) {
-        $pluginOptions = PluginHelper::getInstance()->getPluginSettings();
-        $uniqueID = \uniqid();
+    public function getContentMenu(string $taxonomy): string
+    {
+        $uniqueID = uniqid('', false);
 
         $entityListHtml = '<div class="gallery-row row">';
         $entityListHtml .= '<ul class="content-doctrine-list doctrine-list menu-' . $taxonomy . ' bootstrap-gallery bootstrap-post-loop-fittings bootstrap-post-loop-fittings-' . $uniqueID . ' clearfix">';
 
         // get all taxonomy terms
-        $entities = \get_terms([
+        $entities = get_terms([
             'taxonomy' => $taxonomy,
             'orderby' => 'name',
             'order' => 'ASC'
         ]);
 
         // get terms that have children
-        $hierarchy = \_get_term_hierarchy($taxonomy);
+        $hierarchy = _get_term_hierarchy($taxonomy);
 
         // Loop through every entity
-        foreach($entities as $entity) {
+        foreach ($entities as $entity) {
             // skip term if it has children or is empty
-            if($entity->parent) {
+            if ($entity->parent) {
                 continue;
             }
 
-            $doctrineListHtml = '<li class="doctrine entity-' . $entity->slug . ' doctrine-id-' . $entity->term_id . '"><header class="entry-header"><h2 class="entry-title"><a class="doctrine-link-item" href="' . \get_term_link($entity->term_id) . '">' . $entity->name . '</a></h2></header></li>';
-            $doctrineImage = null;
-
-            if(isset($pluginOptions['template-image-settings']['show-doctrine-images-in-loop']) && $pluginOptions['template-image-settings']['show-doctrine-images-in-loop'] === 'yes') {
-                if(\function_exists('\z_taxonomy_image')) {
-                    $doctrineImage .= '<a class="doctrine-link-item" href="' . \get_term_link($entity->term_id) . '"><figure class="fitting-manager-post-loop-thumbnail">';
-
-                    if(\function_exists('\fly_get_attachment_image')) {
-                        $doctrineImage .= \fly_get_attachment_image(\z_get_attachment_id_by_url(\z_taxonomy_image_url($entity->term_id)), 'fitting-manager-post-loop-thumbnail');
-                    } else {
-                        $doctrineImage .= \z_taxonomy_image($entity->term_id, 'fitting-manager-post-loop-thumbnail', null, false);
-                    }
-
-                    $doctrineImage .= '</figure><header class="entry-header"><h2 class="entry-title">' . $entity->name . '</h2></header></a>';
-                }
-
-                $doctrineListHtml = '<li class="doctrine entity-' . $entity->slug . ' doctrine-id-' . $entity->term_id . '">' . $doctrineImage . '</li>';
-            }
+            $doctrineListHtml = '<li class="doctrine entity-' . $entity->slug . ' doctrine-id-' . $entity->term_id . '"><header class="entry-header"><h2 class="entry-title"><a class="doctrine-link-item" href="' . get_term_link($entity->term_id) . '">' . $entity->name . '</a></h2></header></li>';
 
             // If the entity has doctrines...
-            if(isset($hierarchy[$entity->term_id])) {
-                $doctrines = \get_terms([
+            if (isset($hierarchy[$entity->term_id])) {
+                $doctrines = get_terms([
                     'taxonomy' => $taxonomy,
                     'orderby' => 'name',
                     'order' => 'ASC',
                     'child_of' => $entity->term_id
                 ]);
 
-                $doctrineListHtml = '<li class="doctrine entity-' . $entity->slug . ' doctrine-id-' . $entity->term_id . ' has-children">' . $doctrineImage . '<header class="entry-header"><h2 class="entry-title"><a class="doctrine-link-item" href="' . \get_term_link($entity->term_id) . '">' . $entity->name . '</a></h2></header>';
-
-                if(isset($pluginOptions['template-image-settings']['show-doctrine-images-in-loop']) && $pluginOptions['template-image-settings']['show-doctrine-images-in-loop'] === 'yes') {
-                    $doctrineListHtml = '<li class="doctrine entity-' . $entity->slug . ' doctrine-id-' . $entity->term_id . '">' . $doctrineImage;
-                }
+                $doctrineListHtml = '<li class="doctrine entity-' . $entity->slug . ' doctrine-id-' . $entity->term_id . ' has-children"><header class="entry-header"><h2 class="entry-title"><a class="doctrine-link-item" href="' . get_term_link($entity->term_id) . '">' . $entity->name . '</a></h2></header>';
 
                 $doctrineListHtml .= '<div class="child-doctrine-list">';
 
-                foreach($doctrines as $doctrine) {
-                    if($doctrine->parent && $doctrine->parent !== $entity->term_id) {
+                foreach ($doctrines as $doctrine) {
+                    if ($doctrine->parent && $doctrine->parent !== $entity->term_id) {
                         continue;
                     }
 
-                    $wingListHtml = '<div class="doctrine sub-first-level doctrine entity-' . $entity->slug . ' doctrine-' . $doctrine->slug . ' doctrine-id-' . $doctrine->term_id . '"><a class="doctrine-link-item" href="' . \get_term_link($doctrine->term_id) . '">' . $doctrine->name . '</a></div>';
+                    $wingListHtml = '<div class="doctrine sub-first-level doctrine entity-' . $entity->slug . ' doctrine-' . $doctrine->slug . ' doctrine-id-' . $doctrine->term_id . '"><a class="doctrine-link-item" href="' . get_term_link($doctrine->term_id) . '">' . $doctrine->name . '</a></div>';
 
-                    if(isset($hierarchy[$doctrine->term_id])) {
-                        $wings = \get_terms([
+                    if (isset($hierarchy[$doctrine->term_id])) {
+                        $wings = get_terms([
                             'taxonomy' => $taxonomy,
                             'orderby' => 'name',
                             'order' => 'ASC',
                             'child_of' => $doctrine->term_id
                         ]);
 
-                        $wingListHtml = '<div class="doctrine sub-first-level doctrine entity-' . $entity->slug . ' doctrine-' . $doctrine->slug . ' doctrine-id-' . $doctrine->term_id . ' has-children"><a class="doctrine-link-item" href="' . \get_term_link($doctrine->term_id) . '">' . $doctrine->name . '</a><span class="caret dropdown-toggle" data-toggle="dropdown"><i></i></span>';
+                        $wingListHtml = '<div class="doctrine sub-first-level doctrine entity-' . $entity->slug . ' doctrine-' . $doctrine->slug . ' doctrine-id-' . $doctrine->term_id . ' has-children"><a class="doctrine-link-item" href="' . get_term_link($doctrine->term_id) . '">' . $doctrine->name . '</a><span class="caret dropdown-toggle" data-toggle="dropdown"><i></i></span>';
                         $wingListHtml .= '<div class="child-doctrine-second-level child-doctrine-list">';
 
-                        if(isset($hierarchy[$doctrine->term_id])) {
-                            foreach($wings as $wing) {
-                                $wingListHtml .= '<div class="doctrine entity-' . $entity->slug . ' doctrine-' . $doctrine->slug . ' doctrine-wing-' . $wing->slug . ' doctrine-id-' . $wing->term_id . '"><a class="doctrine-link-item" href="' . \get_term_link($wing->term_id) . '">' . $wing->name . '</a></div>';
-                            }
+                        foreach ($wings as $wing) {
+                            $wingListHtml .= '<div class="doctrine entity-' . $entity->slug . ' doctrine-' . $doctrine->slug . ' doctrine-wing-' . $wing->slug . ' doctrine-id-' . $wing->term_id . '"><a class="doctrine-link-item" href="' . get_term_link($wing->term_id) . '">' . $wing->name . '</a></div>';
                         }
 
                         $wingListHtml .= '</div>';
@@ -730,22 +728,10 @@ class FittingHelper extends AbstractSingleton {
     }
 
     /**
-     * Get the search query for fittings search
-     *
-     * @param boolean $escaped wether the query should be escaped or not
-     * @return string
+     * @return WP_Query
      */
-    public function getFittingSearchQuery($escaped = true) {
-        $query = \apply_filters('get_fitting_search_query', \get_query_var('fitting_search'));
-
-        if($escaped === true) {
-            $query = \esc_attr($query);
-        }
-
-        return $query;
-    }
-
-    public function searchFittings() {
+    public function searchFittings(): WP_Query
+    {
         $args = [
             'post_type' => 'fitting',
             'posts_per_page' => -1,
@@ -772,32 +758,51 @@ class FittingHelper extends AbstractSingleton {
     }
 
     /**
+     * Get the search query for fittings search
+     *
+     * @param boolean $escaped wether the query should be escaped or not
+     * @return string
+     */
+    public function getFittingSearchQuery(bool $escaped = true): string
+    {
+        $query = apply_filters('get_fitting_search_query', get_query_var('fitting_search'));
+
+        if ($escaped === true) {
+            $query = esc_attr($query);
+        }
+
+        return $query;
+    }
+
+    /**
      * Getting a list of doctrines in whic hthe ship is used
      *
-     * @return array
+     * @return array|null
      */
-    public function getShipUsedInDoctrine() {
-        $terms = \wp_get_object_terms(\get_the_ID(), 'fitting-doctrines');
+    public function getShipUsedInDoctrine(): ?array
+    {
+        $terms = wp_get_object_terms(get_the_ID(), 'fitting-doctrines');
         $doctrines = null;
 
-        foreach($terms as $term) {
+        foreach ($terms as $term) {
             $doctrines[$term->name] = $term;
         }
 
-        if($doctrines !== null) {
-            \ksort($doctrines);
+        if ($doctrines !== null) {
+            ksort($doctrines);
         }
 
         return $doctrines;
     }
 
     /**
-     * Checl if a shipID is an Upwell Structure or not
+     * Check if a shipID is an Upwell Structure or not
      *
-     * @param type $shipID
+     * @param int $shipID
      * @return boolean
      */
-    public function isUpwellStructure($shipID) {
-        return \in_array($shipID, $this->getUpwellStructureIds());
+    public function isUpwellStructure(int $shipID): bool
+    {
+        return in_array($shipID, $this->getUpwellStructureIds());
     }
 }

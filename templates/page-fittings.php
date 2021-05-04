@@ -25,14 +25,14 @@ use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\FittingHelper;
 use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper;
 use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\TemplateHelper;
 
-\get_header();
+get_header();
 ?>
 
 <div class="container main template-page-fittings">
     <?php
-    if(\have_posts()) {
-        while(\have_posts()) {
-            \the_post();
+    if(have_posts()) {
+        while(have_posts()) {
+            the_post();
             ?>
             <!--<div class="row main-content">-->
             <div class="main-content clearfix">
@@ -40,24 +40,24 @@ use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\TemplateHelper;
                     <div class="content content-inner content-full-width content-page doctrine-fittings">
                         <header>
                             <?php
-                            if(\is_front_page()) {
+                            if(is_front_page()) {
                                 ?>
-                                <h1><?php echo \get_bloginfo('name'); ?></h1>
+                                <h1><?php echo get_bloginfo('name'); ?></h1>
                                 <?php
                             } else {
                                 ?>
-                                <h1><?php \the_title(); ?></h1>
+                                <h1><?php the_title(); ?></h1>
                                 <?php
                             }
                             ?>
                         </header>
-                        <article class="post clearfix" id="post-<?php \the_ID(); ?>">
+                        <article class="post clearfix" id="post-<?php the_ID(); ?>">
                             <?php
-                            if(!empty(\get_query_var('fitting_search'))) {
+                            if(!empty(get_query_var('fitting_search'))) {
                                 $query = FittingHelper::getInstance()->searchFittings();
 
                                 if($query->have_posts()) {
-                                    $uniqueID = \uniqid();
+                                    $uniqueID = uniqid();
 
                                     echo '<div class="gallery-row row">';
                                     echo '<ul class="bootstrap-post-loop-fittings bootstrap-post-loop-fittings-' . $uniqueID . ' clearfix">';
@@ -83,7 +83,7 @@ use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\TemplateHelper;
                                             </script>';
                                 }
                             } else {
-                                echo \the_content();
+                                echo the_content();
                             }
                             ?>
                         </article>
@@ -99,7 +99,7 @@ use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\TemplateHelper;
                         ?>
                     </div><!--/.col -->
                     <?php
-                } // END if(\WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper::hasSidebar('sidebar-fitting-manager'))
+                }
                 ?>
             </div> <!--/.row -->
             <?php
@@ -109,4 +109,4 @@ use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\TemplateHelper;
 </div><!-- /.container -->
 
 <?php
-\get_footer();
+get_footer();
