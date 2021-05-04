@@ -24,7 +24,7 @@
     </h4>
 
     <div class="row">
-        <div class="col-sm-6 col-md-6 col-lg-12 col-xl-6">
+        <div class="col-sm-12">
             <div class="table-responsive">
                 <table class="table table-condensed table-fitting-marketdata">
                     <tr>
