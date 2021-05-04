@@ -86,7 +86,6 @@ class PluginHelper extends AbstractSingleton
             'market-data-api' => 'eve-marketer',
             'template-image-settings' => [
                 'show-ship-images-in-loop' => '',
-                'show-doctrine-images-in-loop' => '',
             ],
             'template-detail-parts-settings' => [
                 'show-visual-fitting' => 'yes',

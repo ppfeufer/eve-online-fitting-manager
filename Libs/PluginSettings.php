@@ -142,7 +142,6 @@ class PluginSettings
                 'title' => __('Image Settings', 'eve-online-fitting-manager'),
                 'choices' => [
                     'show-ship-images-in-loop' => __('Show ship images in ship list', 'eve-online-fitting-manager'),
-                    'show-doctrine-images-in-loop' => sprintf(__('Show doctrine images in doctrine list <small><em>(You need to have the %1$s plugin installed to make this happen)</em></small>', 'eve-online-fitting-manager'), '<a href="https://wordpress.org/plugins/categories-images/" target="_blank">' . __('Categories Images', 'eve-online-fitting-manager') . '</a>')
                 ],
             ],
             'template-detail-parts-settings' => [
