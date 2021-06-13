@@ -18,6 +18,7 @@
  */
 
 use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\EftHelper;
+use WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\EsiHelper;
 use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\FittingHelper;
 use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\PluginHelper;
 use \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\TemplateHelper;
@@ -124,7 +125,7 @@ $eftFitting = EftHelper::getInstance()->getEftImportFromFitting([
                      */
                     if(isset($pluginSettings['template-detail-parts-settings']['show-insurance-details']) && $pluginSettings['template-detail-parts-settings']['show-insurance-details'] === 'yes') {
                         TemplateHelper::getInstance()->getTemplate('fitting-details/information/fitting-ship-insurance', [
-                            'insurance' => \WordPress\Plugins\EveOnlineFittingManager\Libs\Helper\EsiHelper::getInstance()->getShipInsuranceDetails($shipID)
+                            'insurance' => EsiHelper::getInstance()->getShipInsuranceDetails($shipID)
                         ]);
                     }
 

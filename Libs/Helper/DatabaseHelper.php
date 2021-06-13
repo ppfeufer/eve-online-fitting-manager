@@ -58,7 +58,8 @@ class DatabaseHelper extends AbstractSingleton
         $returnValue = null;
 
         $cacheResult = $this->wpdb->get_results($this->wpdb->prepare(
-            'SELECT * FROM ' . $this->wpdb->base_prefix . 'eve_online_esi_cache' . ' WHERE esi_route = %s AND valid_until > %s', [
+            'SELECT * FROM ' . $this->wpdb->base_prefix . 'eve_online_esi_cache WHERE esi_route = %s AND valid_until > %s',
+            [
                 $route,
                 time()
             ]
@@ -79,7 +80,8 @@ class DatabaseHelper extends AbstractSingleton
     public function writeEsiCacheDataToDb(array $data): void
     {
         $this->wpdb->query($this->wpdb->prepare(
-            'REPLACE INTO ' . $this->wpdb->base_prefix . 'eve_online_esi_cache' . ' (esi_route, value, valid_until) VALUES (%s, %s, %s)', $data
+            'REPLACE INTO ' . $this->wpdb->base_prefix . 'eve_online_esi_cache (esi_route, value, valid_until) VALUES (%s, %s, %s)',
+            $data
         ));
     }
 
@@ -92,7 +94,8 @@ class DatabaseHelper extends AbstractSingleton
         $returnValue = null;
 
         $cacheResult = $this->wpdb->get_results($this->wpdb->prepare(
-            'SELECT * FROM ' . $this->wpdb->base_prefix . 'eve_online_market_data_cache' . ' WHERE cache_key = %s AND valid_until > %s', [
+            'SELECT * FROM ' . $this->wpdb->base_prefix . 'eve_online_market_data_cache WHERE cache_key = %s AND valid_until > %s',
+            [
                 $cacheKey,
                 time()
             ]
@@ -111,7 +114,8 @@ class DatabaseHelper extends AbstractSingleton
     public function writeMarketDataCache(array $data): void
     {
         $this->wpdb->query($this->wpdb->prepare(
-            'REPLACE INTO ' . $this->wpdb->base_prefix . 'eve_online_market_data_cache' . ' (cache_key, value, valid_until) VALUES (%s, %s, %s)', $data
+            'REPLACE INTO ' . $this->wpdb->base_prefix . 'eve_online_market_data_cache (cache_key, value, valid_until) VALUES (%s, %s, %s)',
+            $data
         ));
     }
 }
