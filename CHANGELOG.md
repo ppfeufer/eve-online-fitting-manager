@@ -1,6 +1,13 @@
 # Change Log
 
 
+## [v0.18.0] - 2021-09-29
+
+### Changed
+
+- Required ESI Client version
+
+
 ## [v0.17.0] - 2021-05-04
 
 ### Added

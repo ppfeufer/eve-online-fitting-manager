@@ -56,7 +56,7 @@ class UpdateHelper extends AbstractSingleton
      *
      * @var string
      */
-    protected $esiClientVersion = 20190611;
+    protected $esiClientVersion = 20210929;
     /**
      * hasZipArchive
      *
