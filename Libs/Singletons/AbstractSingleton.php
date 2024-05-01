@@ -1,7 +1,7 @@
 <?php
 
-/*
- * Copyright (C) 2017 ppfeufer
+/**
+ * Copyright (C) 2017 Rounon Dax
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,14 +21,11 @@ namespace WordPress\Plugins\EveOnlineFittingManager\Libs\Singletons;
 
 defined('ABSPATH') or die();
 
-abstract class AbstractSingleton
-{
-    protected function __construct()
-    {
+abstract class AbstractSingleton {
+    protected function __construct() {
     }
 
-    final public static function getInstance()
-    {
+    final public static function getInstance() {
         static $instances = [];
 
         $calledClass = static::class;
@@ -40,7 +37,6 @@ abstract class AbstractSingleton
         return $instances[$calledClass];
     }
 
-    final private function __clone()
-    {
+    final public function __clone() {
     }
 }
